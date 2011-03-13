@@ -1,0 +1,7 @@
+<% if products.any? %>
+  <%= content_tag :div, :class => "products hfeed" do %>
+    <%= render :partial => "/partials/commerce/product", :collection => products %>
+  <% end %>
+<% else %>
+  <p>There are no products to display.</p>
+<% end %>

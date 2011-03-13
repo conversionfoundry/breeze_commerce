@@ -1,0 +1,11 @@
+<% content_for :title, "Products" %>
+
+<%= tabbed_layout do |tabs| %>
+  <% tabs.header do %>
+    <%= link_to "New product", new_admin_commerce_product_path, :class => "large new blog_post button" %>
+  <% end %>
+<% end %>
+
+<%= content_for :left do %>
+  <% render :partial => "/breeze/commerce/commerce/left" %>
+<% end %>

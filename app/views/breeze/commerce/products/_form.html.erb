@@ -1,0 +1,32 @@
+<%= pane_layout do |main| %>
+  <% main.inner do %>
+    <%= breeze_form_for @product, :as => :product, :url => url do |form| %>
+      <%= scrollable_layout do %>
+        <h1><%= @product.new_record? ? 'New' : 'Edit' %> product</h1>
+        <%= render "/breeze/admin/shared/error_messages", :target => @product, :object_name => :product %>
+        <%= form.fieldset do %>
+          <%= form.text_field :name, :required => true %>
+          <%= form.text_field :description, :required => true %>
+        <% end %>
+      <% end %>
+
+      <%= fake_right_sidebar do %>
+        <%= scrollable_layout do %>
+          <%= submit_tag "Save", :class => "large green save button" %>
+        <% end %> 
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= render :partial => "/breeze/commerce/commerce/left" %>
+<% end %>
+
+<% content_for :right do %>
+  <%= pane_layout do |right| %>
+    <% right.header do %>
+
+    <% end %>
+  <% end %>
+<% end %>

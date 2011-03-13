@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= page.title %></title>
+  </head>
+  <body>
+    <div id="container">
+    <% if product %>
+      <h1><%= product.name %></h1>
+      <h2><%= product.description %></h2>
+    <% else %>
+      <p>The product you are looking for was not found.<p>
+    <% end %>
+    </div>
+  </body>
+</html>
