@@ -14,12 +14,35 @@
       });
   });  
 </script>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  h1 {
+    font-size: 2em;
+    color: #767676;
+  }
+  table {
+    background-color:#f6fbff;
+    width: 900px;
+  }
+  thead {
+    background-color: #297fc3;
+    color: #ffffff;
+  }
+  .buttons {
+    float:right;
+  }
+</style>
 
 <h1>Shopping Cart</h1>
 
 <% if @order.line_items.empty? %>
   <p>You do not have any products in your cart.</p>
 <% else %>
+    <div class="buttons">
+      <button class="">Checkout Now!</button>
+    </div>
       <table id="cart">
       <thead>
         <tr>
