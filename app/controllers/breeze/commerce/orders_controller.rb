@@ -8,7 +8,10 @@ module Breeze
       end
 
       def remove_item
-
+        @order = current_order
+        @line_item = @order.line_items.find(params[:id])
+        @order.line_item_ids.delete(params[:id]) if @line_item
+        @order.save
       end
 
       def populate

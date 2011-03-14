@@ -2,8 +2,15 @@
 <script type="text/javascript">
   $(function() {
       $('a').click(function(e) {
-        e.preventDefault();
-        $(this).parent().parent().hide();
+        var link = $(this);
+        $.ajax({
+          type: "POST",
+          url: link.attr('href'),
+          success: function(data) {
+            link.parent().parent().remove();
+          }
+          });
+        return false;
       });
   });  
 </script>
@@ -34,7 +41,7 @@
           <td></td>
           <td><%= f.text_field :quantity %></td>    
           <td>$250.00 NZD</td>
-          <td><%= link_to 'Remove', order_remove_item_path(@order) %></td>  
+          <td><%= link_to 'Remove', :controller => "orders", :action => "remove_item", :id => line_item.id %></td>  
         </tr>
         <% end %>
         <% end %>

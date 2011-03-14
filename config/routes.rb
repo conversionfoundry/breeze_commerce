@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   scope :module => "breeze/commerce" do
     resources :orders do
       post :populate, :on => :collection
-      post :remove_item
+      post :remove_item, :on => :member
     end
     match 'cart', :to => 'orders#edit', :via => :get, :as => :cart
   end
