@@ -1,0 +1,12 @@
+<% content_for :title, "Product Categories"%>
+
+<% pane_layout do |panes| %>
+  <% panes.inner do %>
+    <h1>Product Categories</h1>
+    <%= render :partial => "categories", :locals => { :categories => @categories } %> 
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= render :partial => "breeze/commerce/commerce/left" %>
+<% end %>

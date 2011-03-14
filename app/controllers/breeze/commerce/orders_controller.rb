@@ -9,17 +9,14 @@ module Breeze
 
       def remove_item
         @order = current_order
-        @line_item = @order.line_items.find(params[:id])
-        @order.line_item_ids.delete(params[:id]) if @line_item
-        @order.save
+        line_item = @order.line_items.find(params[:id])
+        line_item.delete if line_item
       end
 
       def populate
         @order = current_order
-        params[:products].each do |product_id|
-        end if params[:products]
         
-        @order.line_items << LineItem.new
+        @order.line_items << LineItem.new(:product_id => params[:product_id], :quantity => params[:quantity])
         @order.save
 
         redirect_to cart_path

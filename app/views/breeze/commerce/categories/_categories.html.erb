@@ -1,0 +1,23 @@
+<div class="posts-container container">
+  <table class="fancy posts">
+    <thead>
+      <tr>
+        <th class="first" style="">Name</th>
+        <th style="width:15%;">Slug</th>
+        <th style="width:20%;">Product Count</th>
+        <th class="last" style="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if categories.any? -%>
+              <%= render :partial => "category", :collection => categories %>
+      <% else -%>
+              <tr><td class="empty" colspan="4">There are no categories to show here.</td></tr>
+      <% end -%>
+    </tbody>
+    <tfoot>
+      <tr>
+      </tr>
+    </tfoot>
+  </table>
+</div>

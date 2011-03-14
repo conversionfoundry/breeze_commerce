@@ -9,6 +9,9 @@
         <%= form_for :order, :url => populate_orders_url do |f| %>
           <h1><%= product.name %></h1>
           <h2><%= product.description %></h2>
+          <label>Quantity:</label>
+          <%= select_tag :quantity, options_for_select((1..10).to_a) %>
+          <%= hidden_field_tag :product_id, product.id %> 
           <button type='submit'>
             Add to cart
           </button>

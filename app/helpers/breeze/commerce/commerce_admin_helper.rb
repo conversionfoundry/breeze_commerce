@@ -4,7 +4,7 @@ module Breeze
       def commerce_menu
         content_tag :ul, [
           commerce_menu_item("Products", admin_commerce_products_path),
-          commerce_menu_item("Categories", ""),
+          commerce_menu_item("Categories", admin_commerce_categories_path),
           commerce_menu_item("Option Types", ""),
           commerce_menu_item("Custom Fields", ""),
           commerce_menu_item("Gift Certificates / Coupons", ""),

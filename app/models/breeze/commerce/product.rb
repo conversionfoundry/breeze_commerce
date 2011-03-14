@@ -15,6 +15,8 @@ module Breeze
       field :available_stock, :type => Integer
       field :price, :type => Integer
       field :content, :markdown => true
+        
+      referenced_in :line_item
 
       validates_presence_of :name, :slug
     end

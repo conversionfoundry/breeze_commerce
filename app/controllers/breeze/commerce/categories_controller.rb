@@ -1,10 +1,13 @@
 module Breeze
-  module Blog
-    class CategoriesController < Breeze::Blog::Controller
-      before_filter :check_for_blogs
-      
+  module Commerce
+    class CategoriesController < Breeze::Commerce::Controller
+
+      def index
+        @categories = Category.all
+      end
+
       def create
-        @category = blog.categories.create params[:category]
+        @category = Category.create params[:category]
       end
       
       def edit

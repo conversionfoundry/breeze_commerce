@@ -1,7 +1,7 @@
 <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
 <script type="text/javascript">
   $(function() {
-      $('a').click(function(e) {
+      $('td a').click(function(e) {
         var link = $(this);
         $.ajax({
           type: "POST",
@@ -33,6 +33,103 @@
   .buttons {
     float:right;
   }
+
+  /* multi line buttons */
+a.multi-line-button {
+    -moz-background-clip: padding;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -moz-box-shadow: 1px 1px 0 0 rgba(255, 255, 255, 0.5) inset;
+    background-color: #60A3D8;
+    background-image: -moz-linear-gradient(center top , #89BBE2 0%, #60A3D8 50%, #378BCE 100%);
+    border-color: #60A3D8 #2970A9 #2970A9 #60A3D8;
+    border-right: 1px solid #2970A9;
+    border-style: solid;
+    border-width: 1px;
+    color: white;
+    display: block;
+    margin: 0.2em auto;
+    padding: 12px 15px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 2px #2E7EBD;
+}
+a.multi-line-button .title {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 0.9;
+}
+a.multi-line-button .subtitle {
+    display: block;
+    font-size: 14px;
+    margin-top: 4px;
+    opacity: 0.7;
+}
+a.multi-line-button:hover .title {
+    opacity: 1;
+}
+a.multi-line-button:hover .subtitle {
+    opacity: 0.8;
+}
+a.multi-line-button:active {
+    padding: 13px 15px 11px;
+}
+a.multi-line-button:hover, a.multi-line-button:focus {
+    background-image: -moz-linear-gradient(center top , #9DC7E7 0%, #74AFDD 50%, #378BCE 100%);
+}
+a.multi-line-button:active, a.multi-line-button.depressed {
+    -moz-box-shadow: none;
+    background-image: -moz-linear-gradient(center top , #5796C8 0%, #6AA2CE 100%);
+    border-color: #2970A9;
+}
+a.multi-line-button.green {
+    -moz-box-shadow: 1px 1px 0 0 rgba(233, 233, 233, 0.5) inset;
+    background-color: #63BB4A;
+    background-image: -moz-linear-gradient(center top , #83C96F 0%, #63BB4A 50%, #4E9939 100%);
+    border-color: #63BB4A #3B742B #3B742B #63BB4A;
+    color: white;
+    text-shadow: 0 1px 2px #458632;
+}
+a.multi-line-button.green:hover, a.multi-line-button.green:focus {
+    background-image: -moz-linear-gradient(center top , #93D082 0%, #73C25D 50%, #4E9939 100%);
+}
+a.multi-line-button.green:active, a.multi-line-button.green.depressed {
+    -moz-box-shadow: none;
+    background-image: -moz-linear-gradient(center top , #5F9F4C 0%, #6AAF56 100%);
+    border-color: #3B742B;
+}
+a.multi-line-button.red {
+    -moz-box-shadow: 1px 1px 0 0 rgba(230, 230, 230, 0.5) inset;
+    background-color: #BF4040;
+    background-image: -moz-linear-gradient(center top , #CC6666 0%, #BF4040 50%, #993333 100%);
+    border-color: #BF4040 #732626 #732626 #BF4040;
+    color: white;
+    text-shadow: 0 1px 2px #862D2D;
+}
+a.multi-line-button.red:hover, a.multi-line-button.red:focus {
+    background-image: -moz-linear-gradient(center top , #D27979 0%, #C55353 50%, #993333 100%);
+}
+a.multi-line-button.red:active, a.multi-line-button.red.depressed {
+    -moz-box-shadow: none;
+    background-image: -moz-linear-gradient(center top , #A04545 0%, #B24D4D 100%);
+    border-color: #732626;
+}
+a.multi-line-button.orange {
+    -moz-box-shadow: 1px 1px 0 0 rgba(235, 230, 224, 0.5) inset;
+    background-color: #D98026;
+    background-image: -moz-linear-gradient(center top , #E19951 0%, #D98026 50%, #AE661E 100%);
+    border-color: #D98026 #824D17 #824D17 #D98026;
+    color: white;
+    text-shadow: 0 1px 2px #985A1B;
+}
+a.multi-line-button.orange:hover, a.multi-line-button.orange:focus {
+    background-image: -moz-linear-gradient(center top , #E4A667 0%, #DD8D3C 50%, #AE661E 100%);
+}
+a.multi-line-button.orange:active, a.multi-line-button.orange.depressed {
+    -moz-box-shadow: none;
+    background-image: -moz-linear-gradient(center top , #B8732E 0%, #CC8033 100%);
+    border-color: #824D17;
+}  
 </style>
 
 <h1>Shopping Cart</h1>
@@ -40,8 +137,14 @@
 <% if @order.line_items.empty? %>
   <p>You do not have any products in your cart.</p>
 <% else %>
-    <div class="buttons">
-      <button class="">Checkout Now!</button>
+  <div class="buttons">
+    <%= link_to '/products', :class => "multi-line-button" do %>
+      <span class="title">Continue Shopping</span>
+      <span class="subtitle">your information will be saved</span>
+    <% end %>
+      <%= link_to checkout_path, :class => "multi-line-button green" do %>
+        <span class="title">Checkout NOW!</span>  
+      <% end %> 
     </div>
       <table id="cart">
       <thead>
@@ -59,7 +162,7 @@
           <%= form_for :line_item do |f| %>
             <tr>
           <td></td>
-          <td>Product Description</td>
+          <td><%= line_item.product.name %></td>
           <td></td>
           <td></td>
           <td><%= f.text_field :quantity %></td>    
