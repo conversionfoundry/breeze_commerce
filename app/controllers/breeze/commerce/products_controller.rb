@@ -32,19 +32,6 @@ module Breeze
         end
       end
       
-      def edit
-        @post = blog.posts.find params[:id]
-      end
-      
-      def update
-        @post = blog.posts.find params[:id]
-        if @post.update_attributes(params[:post])
-          flash[:notice] = "Your post was saved. <a href=\"#{@post.permalink}\">View your changes</a>, <a href=\"#{admin_blog_posts_path}\">return to the list of posts</a>, or close this message to continue editing."
-          redirect_to edit_admin_blog_post_path(@post)
-        else
-          render :action => "edit"
-        end
-      end 
     end
   end
 end

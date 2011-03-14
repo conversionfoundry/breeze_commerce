@@ -1,0 +1,43 @@
+<%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
+<script type="text/javascript">
+  $(function() {
+      $('a').click(function(e) {
+        e.preventDefault();
+        $(this).parent().parent().hide();
+      });
+  });  
+</script>
+
+<h1>Shopping Cart</h1>
+
+<% if @order.line_items.empty? %>
+  <p>You do not have any products in your cart.</p>
+<% else %>
+      <table id="cart">
+      <thead>
+        <tr>
+          <th colspan="2">Item</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>TOTAL</th>
+          <td></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.line_items.each do |line_item| %>
+          <%= form_for :line_item do |f| %>
+            <tr>
+          <td></td>
+          <td>Product Description</td>
+          <td></td>
+          <td></td>
+          <td><%= f.text_field :quantity %></td>    
+          <td>$250.00 NZD</td>
+          <td><%= link_to 'Remove', order_remove_item_path(@order) %></td>  
+        </tr>
+        <% end %>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>

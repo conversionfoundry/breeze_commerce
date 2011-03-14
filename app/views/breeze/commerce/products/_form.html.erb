@@ -6,7 +6,9 @@
         <%= render "/breeze/admin/shared/error_messages", :target => @product, :object_name => :product %>
         <%= form.fieldset do %>
           <%= form.text_field :name, :required => true %>
-          <%= form.text_field :description, :required => true %>
+          <%= form.text_field :slug, :required => true %>
+          <%= form.text_area :description %>
+          <%= form.number_field :available_stock, :required => true %>
         <% end %>
       <% end %>
 
