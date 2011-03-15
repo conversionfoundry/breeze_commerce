@@ -1,12 +1,14 @@
   body {
-    font-family: Helvetica, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
   }
-  #cart-container h1 {
-    float:left;
+  #cart-container h1, #checkout-container h1 {
     font-size: 2.5em;
     color: #767676;
     font-weight: normal;
   }
+  #cart-container h1 {
+    float:left;
+  };
   table.rounded {
     border-collapse: separate; 
     border-spacing: 0px;   
@@ -80,6 +82,98 @@
   div#cart-header {
     overflow: auto;
     width: 100%;
+  }
+
+  /* checkout styling */
+  div#checkout-container {
+    width: 953px;
+  }
+  div#left {
+    width: 660px;
+    float: left;
+  }
+  div#right {
+    float: right;
+  }
+  div.heading {
+    border: 1px solid #d7d7d7;
+    float: left;
+    width: 605px;
+    background-color: #f2f2f2;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+  }
+  div.heading>span {
+    margin-left: 70px;
+    font-size: 1.2em;
+    color: #686868;
+  }
+  div.checkout-header>span {
+    float: left;
+    width: 50px;
+    color: #d7d7d7;
+    font-size: 1.2em;
+  }
+  div.checkout-header>span.active {
+    color: #8cc63f;
+  }
+  div.checkout-header, div.checkout-body {
+    overflow: auto;
+    width: 100%;
+  }
+  div.checkout-header {
+    line-height: 32px; 
+  }
+  div.checkout-body {
+    margin-left: 50px;
+    width: 605px;
+  }
+  
+  legend {
+    color: #297fc3;
+    font-weight: bold;
+  }
+  fieldset {
+    border: none;
+    border-bottom: 1px solid #d7d7d7;
+    margin-left: 0px;
+    margin-top: 20px;
+    padding-left: 0px;
+  }
+  fieldset ol {
+    margin: 0;
+    padding: 0;
+  }
+  fieldset li {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+  }
+  label {
+    display: inline-block;
+    line-height: 1.8;
+    width: 88px;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #777;
+  }
+  label.long {
+    width: 260px;
+  }
+  ol.form input[type=text] {
+    background-image: url(/breeze/images/form_bg.jpg);
+    background-repeat: repeat-x;
+    border: 1px solid #d7d7d7;
+    padding: 3px;
+    width: 204px;
+  }
+  ol.form input[type=text].long {
+    width: 260px;
+  }
+  div.checkout-body a.multi-line-button {
+    float: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   /* multi line buttons */

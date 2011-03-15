@@ -1,11 +1,48 @@
 <%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
-
+<div id="checkout-container">
 <div id="checkout-header">
   <h1>Secure Checkout</h1>
 </div>
 <div id="left">
+<div id="finalise-order">
+  <div class="sign-in">
+    <span>Step</span>
+    <div class="heading">
+      <span>Sign In or Proceed as a Guest</span>
+    </div>
+  </div>
+  <div class="checkout-body">
+    <fieldset>
+      <legend>Returning Customer</legend>
+      <ol class="form">
+        <li>
+          
+        </li> 
+      </ol>
+    </fieldset>
+  </div>
+</div>  
   <%= form_for :order do |order_form| %>
     <div id="shipping-address">
+      <div class="checkout-header">
+        <span class="active">Step</span>
+        <div class="heading">
+          <span>Shipping Information</span>
+        </div>
+      </div>
+      <div class="checkout-body">
+        <fieldset>
+          <legend>Enter an Email Address </legend>
+          <ol class="form">
+            <li>
+            <%= order_form.text_field :email, :class => :long %>
+            </li>
+            <li>  
+            <%= order_form.check_box :subscribe %>
+            <%= order_form.label :subscribe, "Subscribe to our newsletter", :class => :long %>
+            </li>
+          </ol>
+        </fieldset>
       <%= order_form.fields_for :shipping_address do |ship_form| %>
     <fieldset>
       <legend>Enter Shipping Address</legend>
@@ -37,7 +74,90 @@
       </ol>
     </fieldset>
   <% end %>
+    <fieldset>
+      <legend>Shipping Method</legend>
+      <ol class="form">
+        <li>    
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset>
+      <legend>Gift Options</legend>
+      <ol class="form">
+        <li>
+          <%= order_form.check_box :gift %>
+          <%= order_form.label :gift, "Is this order being sent as a gift?", :class => :long %>
+        </li>
+      </ol>
+    </fieldset>
+    <%= link_to '/products', :class => "multi-line-button green" do %>
+      <span class="title">Continue to next step</span>
+      <span class="subtitle">Payment Information</span>
+    <% end %>    
   </div>
+</div>
+<div id="payment-information">
+  <div class="checkout-header">
+    <span>Step</span>
+    <div class="heading">
+      <span>Payment Information</span>
+    </div>
+  </div>
+  <div class="checkout-body">
+    <fieldset>
+      <legend>Enter Payment Address</legend>
+      <ol class="form">
+        <li>
+
+        </li> 
+      </ol>
+    </fieldset>
+  </div>
+</div>
+<div id="create-acount">
+  <div class="checkout-header">
+    <span>Step</span>
+    <div class="heading">
+      <span>Create Account (optional)</span>
+    </div>
+  </div>
+  <div class="checkout-body">
+    <fieldset>
+      <legend>Would you like to create an account?</legend>
+      <ol class="form">
+        <li>
+          
+        </li> 
+      </ol>
+    </fieldset>
+    <%= link_to '/products', :class => "multi-line-button green" do %>
+      <span class="title">No Thanks, Checkout as Guest</span>
+      <span class="subtitle">Finalise order & Checkout</span>
+    <% end %>        
+    <%= link_to '/products', :class => "multi-line-button green" do %>
+      <span class="title">Yes, Create me an Account</span>
+      <span class="subtitle">Finalise order & Checkout</span>
+    <% end %>            
+  </div>
+</div>
+<div id="finalise-order">
+  <div class="checkout-header">
+    <span>Step</span>
+    <div class="heading">
+      <span>Finalise Order & Checkout</span>
+    </div>
+  </div>
+  <div class="checkout-body">
+    <fieldset>
+      <legend>Your Cart Items</legend>
+      <ol class="form">
+        <li>
+
+        </li> 
+      </ol>
+    </fieldset>
+  </div>
+</div>
 <% end %>
 </div>
 <div id="right">
@@ -75,4 +195,5 @@
       </tr>
     </tfoot>
   </table>
+</div>
 </div>

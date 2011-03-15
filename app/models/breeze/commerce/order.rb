@@ -3,6 +3,10 @@ module Breeze
     class Order
       include Mongoid::Document
       include Mongoid::Timestamps
+      
+      field :email
+      field :subscribe, :type => Boolean
+      field :gift, :type => Boolean
 
       # TODO: belongs_to :user
       embeds_many :line_items, :class_name => "Breeze::Commerce::LineItem"
