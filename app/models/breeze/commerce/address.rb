@@ -4,6 +4,8 @@ module Breeze
       include Mongoid::Document
       
       field :first_name
+      field :last_name
+      field :phone
     end
   end
 end

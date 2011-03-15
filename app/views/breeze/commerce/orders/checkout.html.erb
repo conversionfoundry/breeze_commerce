@@ -6,18 +6,34 @@
 <div id="left">
   <%= form_for :order do |order_form| %>
     <div id="shipping-address">
-      <%= order_form.fields_for :billing_address do |bill_form| %>
+      <%= order_form.fields_for :shipping_address do |ship_form| %>
     <fieldset>
       <legend>Enter Shipping Address</legend>
       <ol class="form">
         <li>
-          <%= bill_form.label :first_name %>
-          <%= bill_form.text_field :first_name %>
+          <%= ship_form.label :first_name %>
+          <%= ship_form.text_field :first_name %>
           </li>
           <li>
-            <%= bill_form.label :last_name %>
-            <%= bill_form.text_field :last_name %>
-          </li>
+            <%= ship_form.label :last_name %>
+            <%= ship_form.text_field :last_name %>
+            </li>
+          <li>
+            <%= ship_form.label :phone %>
+            <%= ship_form.text_field :phone %>
+            </li>
+            <li>
+              <%= ship_form.label :address %>
+              <%= ship_form.text_field :address %>
+            </li>
+          <li>
+            <%= ship_form.label :suburb %>
+            <%= ship_form.text_field :suburb %>
+            </li> 
+            <li>
+              <%= ship_form.label :city %>
+              <%= ship_form.text_field :city %>
+            </li>
       </ol>
     </fieldset>
   <% end %>
