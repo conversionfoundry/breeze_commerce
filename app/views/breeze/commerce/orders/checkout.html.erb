@@ -4,8 +4,8 @@
   <h1>Secure Checkout</h1>
 </div>
 <div id="left">
-<div id="finalise-order">
-  <div class="sign-in">
+<div id="sign-in">
+  <div class="checkout-header">
     <span>Step</span>
     <div class="heading">
       <span>Sign In or Proceed as a Guest</span>
@@ -161,39 +161,34 @@
 <% end %>
 </div>
 <div id="right">
-  <table id="checkout" class="rounded order">
-    <thead>
-      <tr><th>Order Summary</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td></td>
-        <td>Mullet Wig</th>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td></td>
-        <td>Total cost:</td>
-      </tr>
-    </tfoot>
-  </table>
-  <table id="help" class="rounded order">
-    <thead>
-      <tr>
-        <th>Need Help?</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>0800 123 456</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="order-summary">
+    <div class="header"><span>Order Summary<span></div>
+        <div class="body">
+          <div class="products">
+            <div class="product">
+              <span class="name">Mullet Wig</span>
+              <span class="price">$250.00 NZD</span>
+              <br />
+              <span class="option">(1) Ginga</span>
+            </div>
+            <div class="product">
+              <span>Mr T Wig</span>
+              <span>$435.00 NZD</span>
+              <span>(1) Black</span>
+            </div>
+          </div>
+          <div class="costs">
+            
+          </div>
+          <div class="subtotal">
+            <span class="name">Subtotal:</span>
+            <span class="price">$706.50 NZD</span>
+          </div>
+          <div class="total">
+            <span class="name">Total cost:</span>
+            <span class="price">$706.50 NZD</span>
+          </div>
+        </div>
+  </div>
 </div>
 </div>
