@@ -1,0 +1,62 @@
+<%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
+
+<div id="checkout-header">
+  <h1>Secure Checkout</h1>
+</div>
+<div id="left">
+  <%= form_for :order do |order_form| %>
+    <div id="shipping-address">
+      <%= order_form.fields_for :billing_address do |bill_form| %>
+    <fieldset>
+      <legend>Enter Shipping Address</legend>
+      <ol class="form">
+        <li>
+          <%= bill_form.label :first_name %>
+          <%= bill_form.text_field :first_name %>
+          </li>
+          <li>
+            <%= bill_form.label :last_name %>
+            <%= bill_form.text_field :last_name %>
+          </li>
+      </ol>
+    </fieldset>
+  <% end %>
+  </div>
+<% end %>
+</div>
+<div id="right">
+  <table id="checkout" class="rounded order">
+    <thead>
+      <tr><th>Order Summary</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td>Mullet Wig</th>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td>Total cost:</td>
+      </tr>
+    </tfoot>
+  </table>
+  <table id="help" class="rounded order">
+    <thead>
+      <tr>
+        <th>Need Help?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0800 123 456</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

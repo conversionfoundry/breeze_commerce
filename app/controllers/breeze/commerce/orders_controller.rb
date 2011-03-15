@@ -22,6 +22,10 @@ module Breeze
         redirect_to cart_path
       end
 
+      def checkout
+        @order = current_order 
+      end
+
       protected
       def current_order  # TODO: move this to a helper
         return @current_order if @current_order

@@ -15,12 +15,10 @@
   });  
 </script>
 <%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
-
+<div id="cart-container">
+  <div id="cart-header">
 <h1>Shopping Cart</h1>
 
-<% if @order.line_items.empty? %>
-  <p>You do not have any products in your cart.</p>
-<% else %>
   <div class="buttons">
     <%= link_to '/products', :class => "multi-line-button" do %>
       <span class="title">Continue Shopping</span>
@@ -30,22 +28,28 @@
         <span class="title">Checkout NOW!</span>  
       <% end %> 
     </div>
-      <table id="cart">
+  </div>
+      <table id="cart" class="rounded order">
       <thead>
         <tr>
-          <th colspan="2">Item</th>
+          <th colspan="3">Item</th>
           <th>Description</th>
           <th>Price</th>
           <th>Quantity</th>
           <th>TOTAL</th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
+        <% if @order.line_items.empty? %>
+
+        <% else %>
         <% @order.line_items.each do |line_item| %>
           <%= form_for :line_item do |f| %>
             <tr>
           <td></td>
+          <td>[Image here]</td>
           <td><%= line_item.product.name %></td>
           <td></td>
           <td></td>
@@ -53,10 +57,17 @@
           <td>$250.00 NZD</td>
           <td>
             <%= link_to 'Remove', :controller => "orders", :action => "remove_item", :id => line_item.id, :class => "remove" %>
-          </td>  
+          </td>
+          <td></td>  
         </tr>
         <% end %>
-        <% end %>
+      <% end %>
+    <% end %>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9">Price</td>
+        </tr>        
+      </tfoot>
     </table>
-<% end %>
+</div>
