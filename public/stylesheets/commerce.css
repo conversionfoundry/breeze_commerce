@@ -32,14 +32,25 @@
     margin-left: 12px;
     margin-right: 12px;
   }
+  div.order-summary div.products {
+    font-size: 0.9em;
+    padding-top: 12px;
+  }
+  div.order-summary div.product {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
   div.order-summary div.product span.name {
+    color: #555;
+    font-weight: bold;
     float:left;
   }
   div.order-summary div.product span.price {
+    color: #297fc3;
     float:right;
   }
   div.order-summary div.product span.option {
-    display:block;
+    
   }
   div.order-summary div.total {
     line-height: 54px;
@@ -213,6 +224,17 @@
     float: right;
     margin-top: 20px;
     margin-bottom: 20px;
+  }
+  div#new-customer {
+    float: left;
+    width: 292px;
+    padding: 16px;
+    background-color:#f6fbff;
+    border: 1px #e6f5fe solid;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
   }
 
   /* multi line buttons */

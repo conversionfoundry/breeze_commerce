@@ -1,4 +1,10 @@
-<%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
+  <%= javascript_include_tag "/breeze/javascript/jquery.validate.min.js" %>
+  <%= javascript_include_tag "/breeze/javascript/jquery.callout-min.js" %>
+  <%= javascript_include_tag "/breeze/javascript/checkout" %> 
+<% end %>
 <div id="checkout-container">
 <div id="checkout-header">
   <h1>Secure Checkout</h1>
@@ -6,12 +12,19 @@
 <div id="left">
 <div id="sign-in">
   <div class="checkout-header">
-    <span>Step</span>
+    <span class="active">Step</span>
     <div class="heading">
       <span>Sign In or Proceed as a Guest</span>
     </div>
   </div>
   <div class="checkout-body">
+    <div id="new-customer">
+      <span>I am a New Customer</span>
+      <p>Proceed to checkout, and you will have a chance at the end to create an account if you wish to!</p>
+      <%= link_to '#', :class => "multi-line-button green", :id => "continue-1" do %>
+      <span class="title">Continue to Checkout</span>
+    <% end %> 
+    </div>
     <fieldset>
       <legend>Returning Customer</legend>
       <ol class="form">
@@ -25,7 +38,7 @@
   <%= form_for :order do |order_form| %>
     <div id="shipping-address">
       <div class="checkout-header">
-        <span class="active">Step</span>
+        <span>Step</span>
         <div class="heading">
           <span>Shipping Information</span>
         </div>
@@ -49,7 +62,7 @@
       <ol class="form">
         <li>
           <%= ship_form.label :first_name %>
-          <%= ship_form.text_field :first_name %>
+          <%= ship_form.text_field :first_name, :class => :required %>
           </li>
           <li>
             <%= ship_form.label :last_name %>
@@ -64,7 +77,7 @@
               <%= ship_form.text_field :address %>
             </li>
           <li>
-            <%= ship_form.label :suburb %>
+          <%= ship_form.label :suburb %>
             <%= ship_form.text_field :suburb %>
             </li> 
             <li>
@@ -90,7 +103,7 @@
         </li>
       </ol>
     </fieldset>
-    <%= link_to '/products', :class => "multi-line-button green" do %>
+    <%= link_to '/products', :class => "multi-line-button green", :id => "continue-2" do %>
       <span class="title">Continue to next step</span>
       <span class="subtitle">Payment Information</span>
     <% end %>    
@@ -112,9 +125,13 @@
         </li> 
       </ol>
     </fieldset>
+    <%= link_to '#', :class => "multi-line-button green", :id => "continue-3" do %>
+      <span class="title">Continue to next step</span>
+      <span class="subtitle">Create Account</span>
+    <% end %>        
   </div>
 </div>
-<div id="create-acount">
+<div id="create-account">
   <div class="checkout-header">
     <span>Step</span>
     <div class="heading">
@@ -130,11 +147,11 @@
         </li> 
       </ol>
     </fieldset>
-    <%= link_to '/products', :class => "multi-line-button green" do %>
+    <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4b" do %>
       <span class="title">No Thanks, Checkout as Guest</span>
       <span class="subtitle">Finalise order & Checkout</span>
     <% end %>        
-    <%= link_to '/products', :class => "multi-line-button green" do %>
+    <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4a" do %>
       <span class="title">Yes, Create me an Account</span>
       <span class="subtitle">Finalise order & Checkout</span>
     <% end %>            
@@ -156,6 +173,9 @@
         </li> 
       </ol>
     </fieldset>
+    <%= link_to '/products', :class => "multi-line-button green", :id => "checkout-now" do %>
+      <span class="title">Checkout NOW!</span>
+    <% end %>            
   </div>
 </div>
 <% end %>
@@ -172,9 +192,10 @@
               <span class="option">(1) Ginga</span>
             </div>
             <div class="product">
-              <span>Mr T Wig</span>
-              <span>$435.00 NZD</span>
-              <span>(1) Black</span>
+              <span class="name">Mr T Wig</span>
+              <span class="price">$435.00 NZD</span>
+              <br />
+              <span class"option">(1) Black</span>
             </div>
           </div>
           <div class="costs">
