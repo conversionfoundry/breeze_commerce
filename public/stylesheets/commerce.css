@@ -158,6 +158,9 @@
     font-size: 1.2em;
     color: #686868;
   }
+  div.checkout-header {
+    margin-bottom: 10px;
+  }
   div.checkout-header>span {
     float: left;
     width: 50px;
@@ -207,8 +210,14 @@
     font-size: 0.8em;
     color: #777;
   }
+  label:after {
+    content: ":";
+  }
   label.long {
     width: 260px;
+  }
+  label.long:after {
+    content: "";
   }
   ol.form input[type=text] {
     background-image: url(/breeze/images/form_bg.jpg);
@@ -219,6 +228,20 @@
   }
   ol.form input[type=text].long {
     width: 260px;
+  }
+  ol.form input[type=text].error {
+    border: 1px solid #8cc63f;
+    background-color: #f2fbe6;
+    background-image: none;
+  }
+  ol.form abbr {
+    font-size: 200%;
+    font-weight: bold;
+    color: #8cc63f;
+    margin-left: -234px;
+    line-height: 0.2em;
+    vertical-align: bottom;
+    border: none;
   }
   div.checkout-body a.multi-line-button {
     float: right;
@@ -235,6 +258,19 @@
     margin-bottom: 20px;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
+  }
+  .callout {
+    padding: 5px;
+    border: 2px solid #8cc63f;
+    color: #8cc63f;
+    background-color: #f2fbe5;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    margin-left: -100px;
+    margin-top: 7px;
+    font-size: 0.8em;
+    font-weight: bold;
   }
 
   /* multi line buttons */

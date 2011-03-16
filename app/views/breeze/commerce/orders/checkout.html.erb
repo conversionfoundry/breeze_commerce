@@ -34,8 +34,10 @@
       </ol>
     </fieldset>
   </div>
-</div>  
-  <%= form_for :order do |order_form| %>
+</div> 
+  <form>
+  </form>
+  <%= form_for :order, :html => {:id => "checkout-form"} do |order_form| %>
     <div id="shipping-address">
       <div class="checkout-header">
         <span>Step</span>
@@ -63,10 +65,12 @@
         <li>
           <%= ship_form.label :first_name %>
           <%= ship_form.text_field :first_name, :class => :required %>
+          <abbr title="required">*</abbr>
           </li>
           <li>
             <%= ship_form.label :last_name %>
-            <%= ship_form.text_field :last_name %>
+            <%= ship_form.text_field :last_name, :class => :required %>
+          <abbr title="required">*</abbr>
             </li>
           <li>
             <%= ship_form.label :phone %>
@@ -74,15 +78,20 @@
             </li>
             <li>
               <%= ship_form.label :address %>
-              <%= ship_form.text_field :address %>
+              <%= ship_form.text_field :address, :class => :required %>
+          <abbr title="required">*</abbr>
+              
             </li>
           <li>
           <%= ship_form.label :suburb %>
-            <%= ship_form.text_field :suburb %>
+          <%= ship_form.text_field :suburb, :class => :required %>
+          <abbr title="required">*</abbr>          
             </li> 
             <li>
               <%= ship_form.label :city %>
-              <%= ship_form.text_field :city %>
+              <%= ship_form.text_field :city, :class => :required %>
+          <abbr title="required">*</abbr>
+              
             </li>
       </ol>
     </fieldset>

@@ -2,21 +2,40 @@ var panels = ['#sign-in', '#shipping-address', '#payment-information','#create-a
 
 $(function() { 
   $(panels.slice(1).join()).children('.checkout-body').hide();
-      $('form').validate({
-      rules: {
-        "order[email]": "required"
-      } 
-    });
   
   $('#continue-1').click(function(event) {
     return change(0, 1);
   });
 
   $('#continue-2').click(function(event) {
-    $('form').validate();
+    var firstError = true;
+    var validator = $('#checkout-form').validate({
+        rules: {
+          'order[email]': { email: true }
+        },
+        errorPlacement: function(error, element) {
+          if (firstError) {
+            element.closest('li').callout({ 
+              msg: "Please complete this required field",
+              pointer: "left"
+            });
+            element.change(function(event) {
+              if(!element.hasClass('error')) {
+                element.closest('li').callout('hide');
+              }
+            });
+            element.focus();
+            firstError = false;
+          }
+        }
+      });
+
+    var valid = validator.form();
+    if (valid) {
+      return change(1, 2);
+    }
+
     return false;
-     // $("li").callout({ show: true, msg:"What is this?" });
-    //return change(1, 2);
   });
 
   $('#continue-3').click(function(event) {
