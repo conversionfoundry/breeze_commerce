@@ -11,10 +11,15 @@
 </div>
 <div id="left">
 <div id="sign-in">
-  <div class="checkout-header">
-    <span class="active">Step</span>
-    <div class="heading">
-      <span>Sign In or Proceed as a Guest</span>
+    <div class="checkout-header active">
+      <span>Step</span>
+      <div class="heading">
+        <div class="number">
+          <span>1</span>
+          </div>
+        <div class="step">
+          <span>Sign In or Proceed as a Guest</span>
+        </div>
     </div>
   </div>
   <div class="checkout-body">
@@ -34,6 +39,9 @@
       </ol>
     </fieldset>
   </div>
+  <div class="checkout-summary">
+
+  </div>
 </div> 
   <form>
   </form>
@@ -42,7 +50,14 @@
       <div class="checkout-header">
         <span>Step</span>
         <div class="heading">
-          <span>Shipping Information</span>
+          <div class="number">
+            <span>
+              2
+            </span>
+          </div>
+            <div class="step">
+                <span>Shipping Information</span>
+          </div>
         </div>
       </div>
       <div class="checkout-body">
@@ -57,6 +72,10 @@
             <%= order_form.label :subscribe, "Subscribe to our newsletter", :class => :long %>
             </li>
           </ol>
+          <div class="notes">
+            <span>Cras blandit, nulla sit amet?</span>
+            <p>Nam rutrum dolor ut dolor lacinia varius. Donec hendrerit bibendum metus quis blandit. Phasellus iaculis justo et velit egestas vulputate. Fusce pretium blandit vestibulum.</p>
+          </div>
         </fieldset>
       <%= order_form.fields_for :shipping_address do |ship_form| %>
     <fieldset>
@@ -91,9 +110,12 @@
               <%= ship_form.label :city %>
               <%= ship_form.text_field :city, :class => :required %>
           <abbr title="required">*</abbr>
-              
             </li>
-      </ol>
+          </ol>
+        <div class="notes">
+          <span>Can I Ship to a different address?</span>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat diam et erat pellentesque ac condimentum augue viverra. Integer eu quam eu erat sagittis porttitor id nec leo. Sed ultrices eros eget justo semper eleifend ac nec nunc.</p>
+        </div>
     </fieldset>
   <% end %>
     <fieldset>

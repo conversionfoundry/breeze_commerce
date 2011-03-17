@@ -4,6 +4,7 @@ $(function() {
   $(panels.slice(1).join()).children('.checkout-body').hide();
   
   $('#continue-1').click(function(event) {
+    $(this).closest('div.checkout-body').parent().children('div.checkout-summary').html('<p>Signed in as Guest.</p>');
     return change(0, 1);
   });
 
@@ -53,10 +54,10 @@ $(function() {
 
 
   function change(from, to) {
-    $(panels[from]).children('.checkout-body').fadeOut();
-    $(panels[from]).children('.checkout-header').children('span').removeClass('active');
-    $(panels[to]).children('.checkout-body').fadeIn();
-    $(panels[to]).children('.checkout-header').children('span').addClass('active');
+    $(panels[from]).children('.checkout-body').slideUp();
+    $(panels[from]).children('.checkout-header').removeClass('active');
+    $(panels[to]).children('.checkout-body').slideDown();
+    $(panels[to]).children('.checkout-header').addClass('active');
     return false;
   }
 });

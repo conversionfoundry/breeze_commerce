@@ -146,20 +146,42 @@
     float: right;
   }
   div.heading {
-    border: 1px solid #d7d7d7;
     float: left;
     width: 605px;
+    line-height: 40px;
+  }
+  div.checkout-header div.heading div.number {
+    background-image: url(/breeze/images/disabled.png);
+    background-repeat: no-repeat;
+    z-index: 2;
+    position: absolute;
+    line-height: 40px;
+    padding-top: 2px;
+  }
+  div.checkout-header.active div.heading div.number {
+    background-image: url(/breeze/images/active.png);
+  }
+  div.heading div.step {
+    border: 1px solid #d7d7d7;
     background-color: #f2f2f2;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
+    width: 585px;
+    line-height: 28px;
+    overflow: auto;
+    margin-top: 5px;
+    margin-left: 20px;
   }
-  div.heading>span {
+  div.heading div.step span {
     margin-left: 70px;
     font-size: 1.2em;
     color: #686868;
   }
-  div.checkout-header {
-    margin-bottom: 10px;
+  div.heading div.number span {
+    color: #fff;
+    margin-top: 5px;
+    padding-left:16px;
+    padding-right: 15px;
   }
   div.checkout-header>span {
     float: left;
@@ -167,7 +189,7 @@
     color: #d7d7d7;
     font-size: 1.2em;
   }
-  div.checkout-header>span.active {
+  div.checkout-header.active > span {
     color: #8cc63f;
   }
   div.checkout-header, div.checkout-body {
@@ -175,7 +197,7 @@
     width: 100%;
   }
   div.checkout-header {
-    line-height: 32px; 
+    line-height: 40px;
   }
   div.checkout-body {
     margin-left: 50px;
@@ -196,6 +218,7 @@
   fieldset ol {
     margin: 0;
     padding: 0;
+    float: left;
   }
   fieldset li {
     list-style: none;
@@ -267,10 +290,25 @@
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    margin-left: -100px;
+    margin-left: 50px;
     margin-top: 7px;
     font-size: 0.8em;
     font-weight: bold;
+  }
+  fieldset div.notes {
+    float: left;
+    width: 250px;
+    margin-left: 26px;
+  }
+  fieldset div.notes span {
+    color: #297fc3;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
+  fieldset div.notes p {
+    font-size: 0.8em;
+    color: #bbb;
+    margin-top: 0.5em;
   }
 
   /* multi line buttons */
