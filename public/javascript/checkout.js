@@ -2,9 +2,20 @@ var panels = ['#sign-in', '#shipping-address', '#payment-information','#create-a
 
 $(function() { 
   $(panels.slice(1).join()).children('.checkout-body').hide();
+  $(panels.join()).children('.checkout-summary').hide();
+
+  jQuery.validator.prototype.subset = function(container) {
+    var ok = true;
+    var self = this;
+    $(container).find(':input').each(function() {
+      if (!self.element($(this))) {
+        ok = false;
+      }
+    });
+    return ok;
+  }
   
   $('#continue-1').click(function(event) {
-    $(this).closest('div.checkout-body').parent().children('div.checkout-summary').html('<p>Signed in as Guest.</p>');
     return change(0, 1);
   });
 
@@ -31,7 +42,7 @@ $(function() {
         }
       });
 
-    var valid = validator.form();
+    var valid = validator.subset("#shipping-address");
     if (valid) {
       return change(1, 2);
     }
@@ -51,13 +62,23 @@ $(function() {
     return change(3, 4);
   });
 
-
+  $('#edit-sign-in').click(function(event) {
+    return change(currentStepIndex(), 0);
+  });
 
   function change(from, to) {
     $(panels[from]).children('.checkout-body').slideUp();
     $(panels[from]).children('.checkout-header').removeClass('active');
+    $(panels[from]).children('.checkout-summary').slideDown().children('div.summary').html('<p>Signed in as Guest.</p>');
+
     $(panels[to]).children('.checkout-body').slideDown();
     $(panels[to]).children('.checkout-header').addClass('active');
+    $(panels[to]).children('.checkout-summary').slideUp();
     return false;
+  }
+
+  function currentStepIndex() {
+    var element = $(panels.join()).children('.checkout-body').filter(':visible').first().parent().attr('id');
+    return panels.indexOf('#' + element);
   }
 });

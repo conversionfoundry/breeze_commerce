@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       get :checkout, :on => :collection
       post :populate, :on => :collection
       post :remove_item, :on => :member
+      post :submit, :on => :collection
+      get :thankyou, :on => :collection
     end
     match 'cart', :to => 'orders#edit', :via => :get, :as => :cart
     match 'checkout', :to => 'orders#checkout', :via => :get, :as => :checkout

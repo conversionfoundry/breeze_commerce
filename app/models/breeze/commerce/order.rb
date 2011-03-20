@@ -12,6 +12,10 @@ module Breeze
       embeds_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
+
+      def item_total
+        line_items.map(&:amount).sum
+      end
     end
   end
 end

@@ -26,6 +26,20 @@ module Breeze
         @order = current_order 
       end
 
+      def submit
+        @order = current_order
+
+        if @order.save
+          redirect_to :action => "thankyou"
+        else
+          render :action => "checkout"
+        end
+      end 
+
+      def thankyou 
+        @order = current_order
+      end
+
       protected
       def current_order  # TODO: move this to a helper
         return @current_order if @current_order

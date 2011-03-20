@@ -1,5 +1,6 @@
   body {
     font-family: Helvetica, Arial, sans-serif;
+    font-size: small;
   }
   #cart-container h1, #checkout-container h1 {
     font-size: 2.5em;
@@ -27,6 +28,8 @@
   }
   div.order-summary div.header span {
     margin-left: 12px;
+    font-size: 120%;
+    font-weight: bold;
   }
   div.order-summary div.body>div {
     margin-left: 12px;
@@ -140,7 +143,6 @@
     background-repeat: no-repeat;
     background-position: 0px 6px;
     padding-left: 26px;
-    font-size: xx-small;
   }
   div#checkout-container #continue-shopping {
     width: 100%;
@@ -281,6 +283,16 @@
     margin-top: 20px;
     margin-bottom: 20px;
   }
+  div.checkout-summary {
+    overflow: auto;
+    width: 100%;
+  }
+  div.checkout-summary div.summary {
+    float: left;
+  }
+  div.checkout-summary div.action {
+    float: right;
+  }
   div#new-customer {
     float: left;
     width: 292px;
@@ -318,25 +330,31 @@
     margin-top: 0.5em;
   }
 
+  /* single line button */
+  a.single-line-button {
+    
+  }
+
   /* multi line buttons */
-  a.multi-line-button {
+  a.multi-line-button, a.single-line-button {
       -moz-background-clip: padding;
       -moz-border-radius: 6px 6px 6px 6px;
-      -moz-box-shadow: 1px 1px 0 0 rgba(255, 255, 255, 0.5) inset;
-      background-color: #60A3D8;
-      background-image: -moz-linear-gradient(center top , #89BBE2 0%, #60A3D8 50%, #378BCE 100%);
-      border-color: #60A3D8 #2970A9 #2970A9 #60A3D8;
-      border-right: 1px solid #2970A9;
+      /* -moz-box-shadow: 1px 1px 0 0 rgba(255, 255, 255, 0.5) inset; */
+      background-color: #909090;
+      background-image: -moz-linear-gradient(center top , #b0b0b0 0%, #909090 50%, #767676 100%);
+      border-color: #767676;
       border-style: solid;
       border-width: 1px;
       color: white;
       display: inline-block;
       margin: 0.2em auto;
-      padding: 12px 15px;
+      padding: 0.4em;
       text-align: center;
       text-decoration: none;
-      text-shadow: 0 1px 2px #2E7EBD;
-      width: 268px;
+      /* text-shadow: 0 1px 2px #2E7EBD; */
+  }
+  a.multi-line-button {
+    width: 268px;
   }
   a.multi-line-button .title {
       display: block;
@@ -368,7 +386,7 @@
       border-color: #2970A9;
   }
   a.multi-line-button.green {
-      -moz-box-shadow: 1px 1px 0 0 rgba(233, 233, 233, 0.5) inset;
+      /* -moz-box-shadow: 1px 1px 0 0 rgba(233, 233, 233, 0.5) inset; */
       background-color: #63BB4A;
       background-image: -moz-linear-gradient(center top , #83C96F 0%, #63BB4A 50%, #4E9939 100%);
       border-color: #63BB4A #3B742B #3B742B #63BB4A;
@@ -383,36 +401,3 @@
       background-image: -moz-linear-gradient(center top , #5F9F4C 0%, #6AAF56 100%);
       border-color: #3B742B;
   }
-  a.multi-line-button.red {
-      -moz-box-shadow: 1px 1px 0 0 rgba(230, 230, 230, 0.5) inset;
-      background-color: #BF4040;
-      background-image: -moz-linear-gradient(center top , #CC6666 0%, #BF4040 50%, #993333 100%);
-      border-color: #BF4040 #732626 #732626 #BF4040;
-      color: white;
-      text-shadow: 0 1px 2px #862D2D;
-  }
-  a.multi-line-button.red:hover, a.multi-line-button.red:focus {
-      background-image: -moz-linear-gradient(center top , #D27979 0%, #C55353 50%, #993333 100%);
-  }
-  a.multi-line-button.red:active, a.multi-line-button.red.depressed {
-      -moz-box-shadow: none;
-      background-image: -moz-linear-gradient(center top , #A04545 0%, #B24D4D 100%);
-      border-color: #732626;
-  }
-  a.multi-line-button.orange {
-      -moz-box-shadow: 1px 1px 0 0 rgba(235, 230, 224, 0.5) inset;
-      background-color: #D98026;
-      background-image: -moz-linear-gradient(center top , #E19951 0%, #D98026 50%, #AE661E 100%);
-      border-color: #D98026 #824D17 #824D17 #D98026;
-      color: white;
-      text-shadow: 0 1px 2px #985A1B;
-  }
-  a.multi-line-button.orange:hover, a.multi-line-button.orange:focus {
-      background-image: -moz-linear-gradient(center top , #E4A667 0%, #DD8D3C 50%, #AE661E 100%);
-  }
-  a.multi-line-button.orange:active, a.multi-line-button.orange.depressed {
-      -moz-box-shadow: none;
-      background-image: -moz-linear-gradient(center top , #B8732E 0%, #CC8033 100%);
-      border-color: #824D17;
-  }  
-

@@ -11,7 +11,11 @@ module Breeze
       def product
         Product.find(product_id)
       end
-      memoize :product 
+      memoize :product
+
+      def amount
+        product.price * quantity
+      end 
     end
   end
 end

@@ -26,7 +26,7 @@
     <div id="new-customer">
       <span>I am a New Customer</span>
       <p>Proceed to checkout, and you will have a chance at the end to create an account if you wish to!</p>
-      <%= link_to '#', :class => "multi-line-button green", :id => "continue-1" do %>
+      <%= link_to '#', :class => "single-line-button green", :id => "continue-1" do %>
       <span class="title">Continue to Checkout</span>
     <% end %> 
     </div>
@@ -40,12 +40,17 @@
     </fieldset>
   </div>
   <div class="checkout-summary">
+    <div class="summary">
 
+    </div>
+    <div class="action">
+      <%= link_to '#', :class => "single-line-button green", :id => "edit-sign-in" do %>
+        <span class="title">Edit Sign In</span>
+      <% end %>
+    </div>
   </div>
 </div> 
-  <form>
-  </form>
-  <%= form_for :order, :html => {:id => "checkout-form"} do |order_form| %>
+<%= form_for :order, :url => { :action => "submit" }, :html => {:id => "checkout-form"} do |order_form| %>
     <div id="shipping-address">
       <div class="checkout-header">
         <span>Step</span>
@@ -139,6 +144,16 @@
       <span class="subtitle">Payment Information</span>
     <% end %>    
   </div>
+   <div class="checkout-summary">
+    <div class="summary">
+
+    </div>
+    <div class="action">
+      <%= link_to '#', :class => "single-line-button green", :id => "edit-shipping" do %>
+        <span class="title">Edit Shipping</span>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div id="payment-information">
   <div class="checkout-header">
@@ -195,6 +210,16 @@
       <span class="subtitle">Create Account</span>
     <% end %>        
   </div>
+   <div class="checkout-summary">
+    <div class="summary">
+
+    </div>
+    <div class="action">
+      <%= link_to '#', :class => "single-line-button", :id => "edit-payment" do %>
+        <span class="title">Edit Payment</span>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div id="create-account">
   <div class="checkout-header">
@@ -226,6 +251,16 @@
       <span class="subtitle">Finalise order & Checkout</span>
     <% end %>            
   </div>
+   <div class="checkout-summary">
+    <div class="summary">
+
+    </div>
+    <div class="action">
+      <%= link_to '#', :class => "single-line-button", :id => "changed-my-mind" do %>
+        <span class="title">Changed my mind</span>
+      <% end %>
+    </div>
+  </div>
 </div>
 <div id="finalise-order">
   <div class="checkout-header">
@@ -251,6 +286,7 @@
     <%= link_to '/products', :class => "multi-line-button green", :id => "checkout-now" do %>
       <span class="title">Checkout NOW!</span>
     <% end %>            
+    <%= order_form.submit %>
   </div>
 </div>
 <% end %>
@@ -286,7 +322,7 @@
           </div>
         </div>
       </div>
-      <%= link_to '/products', :class => "multi-line-button green", :id => "continue-shopping" do %>
+      <%= link_to '/products', :class => "multi-line-button", :id => "continue-shopping" do %>
         <span class="title">Continue Shopping</span>
         <span class="subtitle">Your information will be saved</span>
       <% end %>
