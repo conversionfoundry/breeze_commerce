@@ -135,6 +135,16 @@
   }
 
   /* checkout styling */
+  div#checkout-container h1 {
+    background-image: url(/breeze/images/padlock.png);
+    background-repeat: no-repeat;
+    background-position: 0px 6px;
+    padding-left: 26px;
+    font-size: xx-small;
+  }
+  div#checkout-container #continue-shopping {
+    width: 100%;
+  }
   div#checkout-container {
     width: 953px;
   }
@@ -292,7 +302,6 @@
     -moz-border-radius: 4px;
     margin-left: 50px;
     margin-top: 7px;
-    font-size: 0.8em;
     font-weight: bold;
   }
   fieldset div.notes {
@@ -302,11 +311,9 @@
   }
   fieldset div.notes span {
     color: #297fc3;
-    font-size: 0.8em;
     font-weight: bold;
   }
   fieldset div.notes p {
-    font-size: 0.8em;
     color: #bbb;
     margin-top: 0.5em;
   }

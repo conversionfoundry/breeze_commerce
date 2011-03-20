@@ -144,18 +144,52 @@
   <div class="checkout-header">
     <span>Step</span>
     <div class="heading">
-      <span>Payment Information</span>
+      <div class="number">
+        <span>3</span>
+      </div>
+      <div class="step">
+        <span>Payment Information</span>
+      </div>
     </div>
   </div>
   <div class="checkout-body">
+    <%= order_form.fields_for :billing_address do |bill_form| %>
     <fieldset>
       <legend>Enter Payment Address</legend>
       <ol class="form">
         <li>
-
-        </li> 
+          <%= bill_form.label :first_name %>
+          <%= bill_form.text_field :first_name, :class => :required %>
+          <abbr title="required">*</abbr>
+          </li>
+          <li>
+            <%= bill_form.label :last_name %>
+            <%= bill_form.text_field :last_name, :class => :required %>
+          <abbr title="required">*</abbr>
+            </li>
+          <li>
+            <%= bill_form.label :phone %>
+            <%= bill_form.text_field :phone %>
+            </li>
+            <li>
+              <%= bill_form.label :address %>
+              <%= bill_form.text_field :address, :class => :required %>
+          <abbr title="required">*</abbr>
+              
+            </li>
+          <li>
+          <%= bill_form.label :suburb %>
+          <%= bill_form.text_field :suburb, :class => :required %>
+          <abbr title="required">*</abbr>          
+            </li> 
+            <li>
+              <%= bill_form.label :city %>
+              <%= bill_form.text_field :city, :class => :required %>
+          <abbr title="required">*</abbr>
+            </li>
       </ol>
     </fieldset>
+  <% end %>
     <%= link_to '#', :class => "multi-line-button green", :id => "continue-3" do %>
       <span class="title">Continue to next step</span>
       <span class="subtitle">Create Account</span>
@@ -166,7 +200,12 @@
   <div class="checkout-header">
     <span>Step</span>
     <div class="heading">
+      <div class="number">
+        <span>4</span>
+      </div>
+      <div class="step">
       <span>Create Account (optional)</span>
+      </div>
     </div>
   </div>
   <div class="checkout-body">
@@ -192,7 +231,12 @@
   <div class="checkout-header">
     <span>Step</span>
     <div class="heading">
-      <span>Finalise Order & Checkout</span>
+      <div class="number">
+        <span>5</span>
+      </div>
+      <div class="step">
+        <span>Finalise Order & Checkout</span>
+      </div>
     </div>
   </div>
   <div class="checkout-body">
@@ -241,6 +285,17 @@
             <span class="price">$706.50 NZD</span>
           </div>
         </div>
-  </div>
+      </div>
+      <%= link_to '/products', :class => "multi-line-button green", :id => "continue-shopping" do %>
+        <span class="title">Continue Shopping</span>
+        <span class="subtitle">Your information will be saved</span>
+      <% end %>
+      <div class="order-summary">
+        <div class="header"><span>Need Help?</span></div>
+        <div class="body">
+          <%= image_tag "../breeze/images/phone.png" %>
+          <span>0800 123 456</span>
+        </div>
+      </div>
 </div>
 </div>
