@@ -1,7 +1,12 @@
 var panels = ['#sign-in', '#shipping-address', '#payment-information','#create-account','#finalise-order'];
 
 $(function() { 
-  $('img#postcode-help').tooltip();  
+  $('img#postcode-help').tooltip({
+    bodyHandler: function() {
+      return "<h3>Postcode</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nibh dui, tempor lacinia eros.</p>";
+    },
+    showURL: false
+  }); 
   $(panels.slice(1).join()).children('.checkout-body').hide();
   $(panels.join()).children('.checkout-summary').hide();
 

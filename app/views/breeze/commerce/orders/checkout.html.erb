@@ -4,6 +4,7 @@
   <%= javascript_include_tag "/breeze/javascript/jquery.validate.min.js" %>
   <%= javascript_include_tag "/breeze/javascript/jquery.callout-min.js" %>
   <%= javascript_include_tag "/breeze/javascript/checkout" %> 
+  <%= javascript_include_tag "/breeze/javascript/jquery.dimensions.min.js" %>
   <%= javascript_include_tag "/breeze/javascript/jquery.tooltip.min.js" %>
 <% end %>
 <div id="checkout-container">
@@ -122,7 +123,7 @@
             <%= ship_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
             <%= ship_form.label :postcode %>
             <%= ship_form.text_field :postcode %>
-            <%= image_tag "../breeze/images/phone.png", :id => "postcode-help", :title => "Postcode|blah blah blah blah" %>
+            <%= image_tag "../breeze/images/help.png", :id => "postcode-help", :title => "Postcode" %>
             <abbr title="required">*</abbr>
           </li>
           </ol>
