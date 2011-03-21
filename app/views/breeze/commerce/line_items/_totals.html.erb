@@ -1,0 +1,17 @@
+<tfoot>
+  <tr>
+    <td colspan="5"></td>
+    <td>Subtotal:</td>
+    <td class="total"><%= number_to_currency @order.item_total %> <span class="currency">NZD</span></td>
+  </tr>
+  <tr>
+    <td colspan="5"></td>
+    <td>Shiping:</td>
+    <td class="total"><%= number_to_currency @order.shipping_total %> <span class="currency">NZD</span></td>
+  </tr>
+  <tr>
+    <td colspan="5"></td>
+    <td>Total cost:</td>
+    <td><%= number_to_currency @order.total %> <span class="currency">NZD</span></td>
+  </tr>        
+</tfoot>

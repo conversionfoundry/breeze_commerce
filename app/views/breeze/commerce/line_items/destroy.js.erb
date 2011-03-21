@@ -1,0 +1,2 @@
+$('table#cart tr#<%= @line_item.id %>').fadeOut();
+$('table#cart tfoot').replaceWith('<%= escape_javascript render(:partial => "totals") %>');
