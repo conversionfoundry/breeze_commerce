@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   scope :module => "breeze/commerce" do
     resources :orders do
+      resources :line_items
       get :checkout, :on => :collection
       post :populate, :on => :collection
       post :remove_item, :on => :member

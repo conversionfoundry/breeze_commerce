@@ -16,6 +16,14 @@ module Breeze
       def item_total
         line_items.map(&:amount).sum
       end
+
+      def shipping_total
+        0  # TODO: calculate shipping
+      end
+
+      def total
+        item_total + shipping_total
+      end
     end
   end
 end

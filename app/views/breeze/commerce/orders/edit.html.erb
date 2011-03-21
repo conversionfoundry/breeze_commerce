@@ -46,14 +46,14 @@
 
         <% else %>
         <% @order.line_items.each do |line_item| %>
-          <%= form_for :line_item do |f| %>
+          <%= form_for line_item, :url => order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
             <tr>
           <td></td>
           <td>[Image here]</td>
           <td><%= line_item.product.name %></td>
           <td></td>
           <td></td>
-          <td><%= f.text_field :quantity %></td>    
+          <td><%= f.text_field :quantity %><%= f.submit "Apply" %></td>    
           <td>$250.00 NZD</td>
           <td>
             <%= link_to 'Remove', :controller => "orders", :action => "remove_item", :id => line_item.id, :class => "remove" %>
@@ -66,7 +66,19 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="9">Price</td>
+          <td colspan="5"></td>
+          <td>Subtotal:</td>
+          <td><%= number_to_currency @order.item_total %> NZD</td>
+        </tr>
+        <tr>
+          <td colspan="5"></td>
+          <td>Shiping:</td>
+          <td><%= number_to_currency @order.shipping_total %> NZD</td>
+        </tr>
+        <tr>
+          <td colspan="5"></td>
+          <td>Total cost:</td>
+          <td><%= number_to_currency @order.total %> NZD</td>
         </tr>        
       </tfoot>
     </table>

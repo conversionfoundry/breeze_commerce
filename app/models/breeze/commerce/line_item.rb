@@ -14,7 +14,8 @@ module Breeze
       memoize :product
 
       def amount
-        product.price * quantity
+        250 * quantity
+        # product.price * quantity
       end 
     end
   end
