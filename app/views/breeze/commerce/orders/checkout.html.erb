@@ -296,18 +296,14 @@
     <div class="header"><span>Order Summary<span></div>
         <div class="body">
           <div class="products">
+            <% @order.line_items.each do |line_item| %>
             <div class="product">
-              <span class="name">Mullet Wig</span>
-              <span class="price">$250.00 NZD</span>
+              <span class="name"><%= line_item.product.name %></span>
+              <span class="price"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></span>
               <br />
-              <span class="option">(1) Ginga</span>
+              <span class="option">(<%= line_item.quantity %>) Ginga</span>
             </div>
-            <div class="product">
-              <span class="name">Mr T Wig</span>
-              <span class="price">$435.00 NZD</span>
-              <br />
-              <span class"option">(1) Black</span>
-            </div>
+          <% end %>
           </div>
           <div class="costs">
             

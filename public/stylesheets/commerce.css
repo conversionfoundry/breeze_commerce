@@ -36,7 +36,6 @@
     margin-right: 12px;
   }
   div.order-summary div.products {
-    font-size: 0.9em;
     padding-top: 12px;
   }
   div.order-summary div.product {
@@ -262,7 +261,6 @@
     line-height: 1.8;
     width: 88px;
     font-weight: bold;
-    font-size: 0.8em;
     color: #777;
   }
   label:after {
