@@ -50,5 +50,14 @@
     <% end %>
   </tbody>
   <%= render :partial => "breeze/commerce/line_items/totals" %>
-    </table>
+</table>
+  <div class="buttons">
+    <%= link_to '/products', :class => "multi-line-button" do %>
+      <span class="title">Continue Shopping</span>
+      <span class="subtitle">your information will be saved</span>
+    <% end %>
+      <%= link_to checkout_path, :class => "multi-line-button green" do %>
+        <span class="title">Checkout NOW!</span>  
+      <% end %> 
+    </div>
 </div>

@@ -1,0 +1,2 @@
+$('table#cart tr#<%= @line_item.id %>').children('td.total').html('<%= number_to_currency @line_item.amount%> <span class="currency">NZD</span>');
+$('table#cart tfoot').replaceWith('<%= escape_javascript render(:partial => "totals") %>');
