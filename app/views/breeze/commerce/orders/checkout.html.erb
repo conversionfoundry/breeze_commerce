@@ -146,7 +146,11 @@
         <li>
           <%= order_form.check_box :gift %>
           <%= order_form.label :gift, "Is this order being sent as a gift?", :class => :long %>
-        </li>
+          </li>
+          <li id="personal_message">
+          <%= order_form.label "Personal Message: (optional)", :class => :long %>
+          <%= order_form.text_area :personal_message %>
+          </li>
       </ol>
     </fieldset>
     <%= link_to '/products', :class => "multi-line-button green", :id => "continue-2" do %>

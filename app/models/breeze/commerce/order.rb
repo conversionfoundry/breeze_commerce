@@ -7,6 +7,7 @@ module Breeze
       field :email
       field :subscribe, :type => Boolean
       field :gift, :type => Boolean
+      field :personal_message
 
       # TODO: belongs_to :user
       embeds_many :line_items, :class_name => "Breeze::Commerce::LineItem"

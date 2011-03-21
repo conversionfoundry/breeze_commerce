@@ -286,6 +286,9 @@
     padding: 3px;
     width: 204px;
   }
+  ol.form textarea {
+    height: 100px;
+  }
   ol.form input[type=text].long {
     width: 260px;
   }

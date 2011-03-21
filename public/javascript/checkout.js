@@ -6,7 +6,10 @@ $(function() {
       return "<h3>Postcode</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nibh dui, tempor lacinia eros.</p>";
     },
     showURL: false
-  }); 
+  });
+  $('#order_gift').change(function() {
+    $('li#personal_message').slideToggle(this.checked);
+  }).change();
   $(panels.slice(1).join()).children('.checkout-body').hide();
   $(panels.join()).children('.checkout-summary').hide();
 
