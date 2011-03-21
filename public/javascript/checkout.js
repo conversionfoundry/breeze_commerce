@@ -1,6 +1,7 @@
 var panels = ['#sign-in', '#shipping-address', '#payment-information','#create-account','#finalise-order'];
 
 $(function() { 
+  $('img#postcode-help').tooltip();  
   $(panels.slice(1).join()).children('.checkout-body').hide();
   $(panels.join()).children('.checkout-summary').hide();
 

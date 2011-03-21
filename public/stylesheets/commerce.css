@@ -263,6 +263,12 @@
     font-weight: bold;
     color: #777;
   }
+  li.state-postcode label {
+    width: 60px;
+  }
+  li.state-postcode input[type=text] {
+    width: 40px !important;
+  }
   label:after {
     content: ":";
   }

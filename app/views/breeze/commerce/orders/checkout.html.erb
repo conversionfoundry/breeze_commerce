@@ -4,6 +4,7 @@
   <%= javascript_include_tag "/breeze/javascript/jquery.validate.min.js" %>
   <%= javascript_include_tag "/breeze/javascript/jquery.callout-min.js" %>
   <%= javascript_include_tag "/breeze/javascript/checkout" %> 
+  <%= javascript_include_tag "/breeze/javascript/jquery.tooltip.min.js" %>
 <% end %>
 <div id="checkout-container">
 <div id="checkout-header">
@@ -115,7 +116,15 @@
               <%= ship_form.label :city %>
               <%= ship_form.text_field :city, :class => :required %>
           <abbr title="required">*</abbr>
-            </li>
+          </li>
+          <li class="state-postcode">
+            <%= ship_form.label :state %>
+            <%= ship_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
+            <%= ship_form.label :postcode %>
+            <%= ship_form.text_field :postcode %>
+            <%= image_tag "../breeze/images/phone.png", :id => "postcode-help", :title => "Postcode|blah blah blah blah" %>
+            <abbr title="required">*</abbr>
+          </li>
           </ol>
         <div class="notes">
           <span>Can I Ship to a different address?</span>
@@ -172,6 +181,10 @@
     <fieldset>
       <legend>Enter Payment Address</legend>
       <ol class="form">
+        <li>
+          <%= radio_button_tag :same, :same %>
+          <%= bill_form.label "Same as Shipping Details", :class => :long %>
+        </li>
         <li>
           <%= bill_form.label :first_name %>
           <%= bill_form.text_field :first_name, :class => :required %>
