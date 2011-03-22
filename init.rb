@@ -21,6 +21,6 @@ Breeze.hook :get_content_by_permalink do |permalink_or_content|
   end
 end
 
-#Rails.application.config.to_prepare do
-#  Breeze::Controller.helper Breeze::Blog::BlogHelper
-#end
+Rails.application.config.to_prepare do
+  Breeze::Controller.helper Breeze::Commerce::ContentsHelper
+end
