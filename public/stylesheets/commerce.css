@@ -394,6 +394,7 @@
     border-color: #acacac;
     background-image: url(/breeze/images/light-grey-fade.png);
     font-weight: bold;
+    margin: 2px;
   }
   a.single-line-button.green {
     background-image: url(/breeze/images/small-green-fade.png);

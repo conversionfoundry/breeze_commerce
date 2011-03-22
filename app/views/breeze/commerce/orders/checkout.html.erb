@@ -136,8 +136,12 @@
     <fieldset>
       <legend>Shipping Method</legend>
       <ol class="form">
-        <li>    
-        </li>
+        <% Breeze::Commerce::ShippingMethod.all.each do |method| %>
+          <li> 
+          <%= order_form.radio_button :shipping_method, method.id %>
+          <%= order_form.label :shipping_method, method.description, :class => :long %>
+          </li>
+        <% end %>
       </ol>
     </fieldset>
     <fieldset>
@@ -163,7 +167,7 @@
 
     </div>
     <div class="action">
-      <%= link_to '#', :class => "single-line-button green", :id => "edit-shipping" do %>
+      <%= link_to '#', :class => "single-line-button", :id => "edit-shipping" do %>
         <span class="title">Edit Shipping</span>
       <% end %>
     </div>
