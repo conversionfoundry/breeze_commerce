@@ -389,7 +389,15 @@
     
   /* single line button */
   a.single-line-button {
-    padding: 12px 20px;
+    padding: 8px 20px 10px 20px;
+    height: 12px;
+    border-color: #acacac;
+    background-image: url(/breeze/images/light-grey-fade.png);
+    font-weight: bold;
+  }
+  a.single-line-button.green {
+    background-image: url(/breeze/images/small-green-fade.png);
+    border-color: #39b54a;
   }
 
   /* multi line buttons */
@@ -399,13 +407,10 @@
       -webkit-border-radius: 6px;
       /* -moz-box-shadow: 1px 1px 0 0 rgba(255, 255, 255, 0.5) inset; */
       background-color: #909090;
-      background-image: url(/breeze/images/grey-fade.png);
-      border-color: #767676;
       border-style: solid;
       border-width: 1px;
       color: white;
       display: inline-block;
-      margin: 0.2em auto;
       text-align: center;
       text-decoration: none;
       /* text-shadow: 0 1px 2px #2E7EBD; */
@@ -413,6 +418,8 @@
   a.multi-line-button {
     width: 268px;
     padding: 0.4em;
+    background-image: url(/breeze/images/grey-fade.png);
+    border-color: #767676;
   }
   a.multi-line-button .title {
       display: block;
