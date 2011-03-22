@@ -10,6 +10,7 @@
     <span>$250.00 <span class="currency">NZD</span></span>
   </div>
   <div class="actions">
+    <%= link_to "More", product.permalink %>
     <%= button_to "Add to Cart", { :controller => "breeze/commerce/orders", :action => :populate, :product_id => product.id}, :method => :post %>
   </div>
  <% end %>
