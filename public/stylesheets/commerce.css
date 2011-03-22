@@ -399,7 +399,7 @@
       -webkit-border-radius: 6px;
       /* -moz-box-shadow: 1px 1px 0 0 rgba(255, 255, 255, 0.5) inset; */
       background-color: #909090;
-      background-image: -moz-linear-gradient(center top , #b0b0b0 0%, #909090 50%, #767676 100%);
+      background-image: url(/breeze/images/grey-fade.png);
       border-color: #767676;
       border-style: solid;
       border-width: 1px;

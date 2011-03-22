@@ -17,7 +17,7 @@ module Breeze
       def populate
         @order = current_order
         
-        @order.line_items << LineItem.new(:product_id => params[:product_id], :quantity => params[:quantity])
+        @order.line_items << LineItem.new(:product_id => params[:product_id], :quantity => params[:quantity] || 1)
         @order.save
 
         redirect_to cart_path

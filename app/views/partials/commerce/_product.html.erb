@@ -1,3 +1,15 @@
-<%= content_tag :div, :class => "product hentry", :id => "product_#{product.id}" do %>
-  <h2><%= link_to product.name, product.permalink, :class => "product-name" %></h2>
-<% end %>
+<%= content_tag :div, :class => "product", :id => "product_#{product.id}" do %>
+  <div class="image"></div>
+  <div class="title">
+    <h2><%= link_to product.name, product.permalink, :class => "product-name" %></h2>
+  </div>
+  <div class="description">
+    <p>Quisque nibh erat, feugiat nec pretium quis, dignissim nec turpis. Morbi fringilla porttitor feugiat.</p>
+  </div>
+  <div class="price">
+    <span>$250.00 <span class="currency">NZD</span></span>
+  </div>
+  <div class="actions">
+    <%= button_to "Add to Cart", { :controller => "breeze/commerce/orders", :action => :populate, :product_id => product.id}, :method => :post %>
+  </div>
+ <% end %>

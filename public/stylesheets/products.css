@@ -1,0 +1,13 @@
+div.product {
+  float: left;
+  width: 218px;
+  border: 1px solid #e7f5fe;
+  background-color: #f6fcff;
+  margin: 5px;
+  height: 376px; 
+  -webkit-border-top-radius: 6px;
+  -moz-border-radius: 6px;
+}
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
