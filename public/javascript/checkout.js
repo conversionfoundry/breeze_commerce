@@ -10,6 +10,23 @@ $(function() {
   $('#order_gift').change(function() {
     $('li#personal_message').slideToggle(this.checked);
   }).change();
+
+  $('#same_same').change(function() {
+    if ($(this).attr('checked')) {
+      $('#order_billing_address_first_name').val($('#order_shipping_address_first_name').val());
+      $('#order_billing_address_last_name').val($('#order_shipping_address_last_name').val());
+      $('#order_billing_address_phone').val($('#order_shipping_address_phone').val());
+      $('#order_billing_address_address').val($('#order_shipping_address_address').val());
+      $('#order_billing_address_suburb').val($('#order_shipping_address_suburb').val());
+      $('#order_billing_address_city').val($('#order_shipping_address_city').val());
+      $('#order_billing_address_postcode').val($('#order_shipping_address_postcode').val());
+
+      /* postcode */
+      var selected = $('#order_shipping_address_state option:selected').val();
+      $('#order_billing_address_state option[value=' + selected + ']').attr('selected', 'selected');
+    }
+  });
+
   $(panels.slice(1).join()).children('.checkout-body').hide();
   $(panels.join()).children('.checkout-summary').hide();
 

@@ -219,7 +219,15 @@
               <%= bill_form.label :city %>
               <%= bill_form.text_field :city, :class => :required %>
           <abbr title="required">*</abbr>
-            </li>
+          </li>
+          <li class="state-postcode">
+            <%= bill_form.label :state %>
+            <%= bill_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
+            <%= bill_form.label :postcode %>
+            <%= bill_form.text_field :postcode %>
+            <%= image_tag "../breeze/images/help.png", :id => "postcode-help", :title => "Postcode" %>
+            <abbr title="required">*</abbr>
+          </li>
       </ol>
     </fieldset>
   <% end %>
