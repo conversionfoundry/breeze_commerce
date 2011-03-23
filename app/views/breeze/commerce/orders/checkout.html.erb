@@ -313,6 +313,41 @@
         </li> 
       </ol>
     </fieldset>
+      <table id="cart" class="rounded order summary">
+        <thead>
+          <tr>
+            <th colspan="3">Item</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>TOTAL</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @order.line_items.empty? %>
+            <tr>
+              <td colspan="8">You have no items in your cart.</td>
+            </tr>
+          <% else %>
+          <% @order.line_items.each do |line_item| %>
+            <%= form_for line_item, :url => order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
+              <tr id="<%= line_item.id %>">
+            <td></td>
+            <td>[Image here]</td>
+            <td><%= line_item.product.name %></td>
+            <td></td>
+            <td class="price">$250.00 <span class="currency">NZD</span></td>
+            <td class="quantity"><%= line_item.quantity %></td>    
+            <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
+            <td></td>  
+          </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+    <%= render :partial => "breeze/commerce/line_items/totals" %>
+  </table>    
     <%= link_to '/products', :class => "multi-line-button green", :id => "checkout-now" do %>
       <span class="title">Checkout NOW!</span>
     <% end %>            

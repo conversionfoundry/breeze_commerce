@@ -92,15 +92,53 @@ $(function() {
     return change(currentStepIndex(), 0);
   });
 
-  function change(from, to) {
+  $('#edit-shipping').click(function(event) {
+    return change(currentStepIndex(), 1);
+  });
+
+  $('#edit-payment').click(function(event) {
+    return change(currentStepIndex(), 2);
+  });
+
+  $('#changed-my-mind').click(function(event) {
+    return change(currentStepIndex(), 3);
+  });
+
+  function change(from, to, summaryHtml) {
     $(panels[from]).children('.checkout-body').slideUp();
     $(panels[from]).children('.checkout-header').removeClass('active');
-    $(panels[from]).children('.checkout-summary').slideDown().children('div.summary').html('<p>Signed in as Guest.</p>');
+    $(panels[from]).children('.checkout-header').addClass('visited');
+    $(panels[from]).children('.checkout-summary').slideDown().children('div.summary').empty().append(getSummaryHtml(from));
 
     $(panels[to]).children('.checkout-body').slideDown();
     $(panels[to]).children('.checkout-header').addClass('active');
     $(panels[to]).children('.checkout-summary').slideUp();
     return false;
+  }
+
+  function getSummaryHtml(index) {
+    var div = '<div class=\'summary-item\'></div>';
+    if (index == 0) {
+      return "<p>Signed in as Guest.</p>";
+    } else if (index == 1) {
+      var firstName = $('#order_shipping_address_first_name').val();
+      var lastName = $('#order_shipping_address_last_name').val();
+      var phone = $('#order_shipping_address_phone').val();
+      var nameDiv = $(div).append( $('<span>' + firstName + ' ' + lastName + '</span><span>' + phone + '</span>'));
+
+      var address = $('#order_shipping_address_address').val();
+      var suburb = $('#order_shipping_address_suburb').val();
+      var city = $('#order_shipping_address_city').val();
+      var postcode = $('#order_shipping_address_postcode').val();
+      var addressDiv = $(div).append($('<span>' + address + '</span><span>' + suburb + '</span><span>' + city + ' ' + postcode + '</span>'));
+
+      var shippingMethod = "Shipping Method";
+      var shippingDiv = $(div).append($('<span>' + shippingMethod + '</span>'));
+
+      return $('<div></div>').append(nameDiv).append(addressDiv).append(shippingDiv);
+    }
+
+    return ""; 
   }
 
   function currentStepIndex() {

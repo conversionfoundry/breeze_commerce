@@ -83,6 +83,10 @@
     width: 900px;
     margin-left: 24px;
   }
+  table#cart.summary {
+    width: 100%;
+    margin-left: 0px;
+  }
   table#checkout, table#help {
     width: 268px;
   }
@@ -182,12 +186,15 @@
     line-height: 40px;
   }
   div.checkout-header div.heading div.number {
-    background-image: url(/breeze/images/disabled.png);
+    background-image: url(/breeze/images/dark.png);
     background-repeat: no-repeat;
     z-index: 2;
     position: absolute;
     line-height: 40px;
     padding-top: 2px;
+  }
+  div.checkout-header.visited div.heading div.number {
+    background-image: url(/breeze/images/disabled.png);
   }
   div.checkout-header.active div.heading div.number {
     background-image: url(/breeze/images/active.png);
@@ -317,12 +324,24 @@
   div.checkout-summary {
     overflow: auto;
     width: 100%;
+    color: #9f9f9f;
+    font-weight: bold;
   }
   div.checkout-summary div.summary {
     float: left;
+    margin-left: 70px;
   }
   div.checkout-summary div.action {
     float: right;
+  }
+  div.checkout-summary div.summary-item {
+    float:left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  div.checkout-summary div.summary-item span {
+    display: block;
+    width: 140px;
   }
   div#new-customer {
     float: left;
@@ -394,7 +413,6 @@
     border-color: #acacac;
     background-image: url(/breeze/images/light-grey-fade.png);
     font-weight: bold;
-    margin: 2px;
   }
   a.single-line-button.green {
     background-image: url(/breeze/images/small-green-fade.png);
@@ -414,6 +432,7 @@
       display: inline-block;
       text-align: center;
       text-decoration: none;
+      margin: 2px;
       /* text-shadow: 0 1px 2px #2E7EBD; */
   }
   a.multi-line-button {
@@ -441,7 +460,6 @@
       opacity: 0.8;
   }
   a.multi-line-button:active {
-      padding: 13px 15px 11px;
   }
   a.multi-line-button:hover, a.multi-line-button:focus {
       background-image: -moz-linear-gradient(center top , #9DC7E7 0%, #74AFDD 50%, #378BCE 100%);
@@ -452,12 +470,11 @@
       border-color: #2970A9;
   }
   a.multi-line-button.green {
-      /* -moz-box-shadow: 1px 1px 0 0 rgba(233, 233, 233, 0.5) inset; */
-      background-color: #63BB4A;
-      background-image: -moz-linear-gradient(center top , #83C96F 0%, #63BB4A 50%, #4E9939 100%);
-      border-color: #63BB4A #3B742B #3B742B #63BB4A;
+      background-color: #8dc741;
+      background-image: url(/breeze/images/green-fade.png);
+      border-color: #39b54a;
       color: white;
-      text-shadow: 0 1px 2px #458632;
+      /* text-shadow: 0 1px 2px #458632; */
   }
   a.multi-line-button.green:hover, a.multi-line-button.green:focus {
       background-image: -moz-linear-gradient(center top , #93D082 0%, #73C25D 50%, #4E9939 100%);
