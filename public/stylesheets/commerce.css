@@ -2,7 +2,7 @@
     font-family: Helvetica, Arial, sans-serif;
     font-size: small;
   }
-  #cart-container h1, #checkout-container h1 {
+  #cart-container h1, #checkout-container h1, div#thankyou h1 {
     font-size: 2.5em;
     color: #767676;
     font-weight: normal;
@@ -61,13 +61,22 @@
     line-height: 30px;
     border-bottom: 1px solid #d7d7d7;
   }
-  table.rounded {
-    border-collapse: separate; 
-    border-spacing: 0px;   
+  div#thankyou {
+    width: 610px;
+    font-size: 90%;
   }
+  div#thankyou-summary {
+    width: 100%;
+  }
+
+
+
+  /* order styling */
   table.order {
     background-color:#f6fbff;
-    border: 1px #e6f5fe solid;
+    border: 1px #e6f5fe solid; 
+    border-collapse: separate; 
+    border-spacing: 0px;   
   }
   table.rounded thead th:first-child {
     background-position: 0px 0px;
@@ -199,7 +208,7 @@
   div.checkout-header.active div.heading div.number {
     background-image: url(/breeze/images/active.png);
   }
-  div.heading div.step {
+  div.heading div.step, div.detail div.step {
     border: 1px solid #d7d7d7;
     background-color: #f2f2f2;
     -webkit-border-radius: 8px;
@@ -208,6 +217,8 @@
     line-height: 28px;
     overflow: auto;
     margin-top: 5px;
+  }
+  div.heading div.step {
     margin-left: 20px;
   }
   div.heading div.step span {
@@ -220,6 +231,10 @@
     margin-top: 5px;
     padding-left:16px;
     padding-right: 15px;
+  }
+  div.detail div.step span {
+    font-size: 120%;
+    margin-left: 20px;
   }
   div.checkout-header>span {
     float: left;
@@ -420,7 +435,7 @@
   }
 
   /* multi line buttons */
-  a.multi-line-button, a.single-line-button {
+  a.multi-line-button, a.single-line-button, input[type=submit].multi-line-button {
       -moz-background-clip: padding;
       -moz-border-radius: 6px 6px 6px 6px;
       -webkit-border-radius: 6px;
@@ -435,7 +450,7 @@
       margin: 2px;
       /* text-shadow: 0 1px 2px #2E7EBD; */
   }
-  a.multi-line-button {
+  a.multi-line-button, input[type=submit].multi-line-button {
     width: 268px;
     padding: 0.4em;
     background-image: url(/breeze/images/grey-fade.png);

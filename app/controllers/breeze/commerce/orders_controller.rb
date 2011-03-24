@@ -35,7 +35,7 @@ module Breeze
         @order = current_order 
       end
 
-      def submit
+      def update
         @order = current_order
 
         if @order.save
