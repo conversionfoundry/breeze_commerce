@@ -349,12 +349,12 @@
   div.checkout-summary div.action {
     float: right;
   }
-  div.checkout-summary div.summary-item {
+  div.summary-item {
     float:left;
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  div.checkout-summary div.summary-item span {
+  div.summary-item span {
     display: block;
     width: 140px;
   }
