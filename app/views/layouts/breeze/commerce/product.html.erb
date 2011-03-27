@@ -2,6 +2,13 @@
 <html>
   <head>
     <title><%= page.title %></title>
+    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
+    <%= javascript_include_tag "../breeze_commerce/javascript/galleria/galleria-1.2.2.js" %>
+    <%= javascript_include_tag "../breeze_commerce/javascript/galleria/themes/classic/galleria.classic.min.js" %>
+    <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.easing-1.3.pack.js" %>
+    <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js" %>
+    <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.pack.js" %>
+    <%= stylesheet_link_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.css" %>
   </head>
   <body>
     <div id="container">
@@ -9,6 +16,25 @@
         <%= form_for :order, :url => populate_orders_url do |f| %>
           <h1><%= product.name %></h1>
           <h2><%= product.description %></h2>
+
+          <div style="display:none;">
+          <div id="gallery">
+            <%= image_tag "../assets/products/wig1.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig2.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig4.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig5.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig6.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig7.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig8.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig9.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig10.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig11.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wig12.jpg", :alt => "Description", :title => "Title" %>
+          </div>
+        </div>
+
+          <a id="inline" href="#gallery">Gallery</a>
+
           <label>Quantity:</label>
           <%= select_tag :quantity, options_for_select((1..10).to_a) %>
           <%= hidden_field_tag :product_id, product.id %> 
@@ -19,6 +45,17 @@
     <% else %>
       <p>The product you are looking for was not found.<p>
     <% end %>
-    </div>
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('#inline').fancybox();
+       $('#gallery').galleria({
+          width: 500,
+          height: 500,
+          transitionInitial: 'fade'  
+          });
+    });
+    </script>
   </body>
 </html>
