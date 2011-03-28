@@ -9,6 +9,16 @@
     <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js" %>
     <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.pack.js" %>
     <%= stylesheet_link_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.css" %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          $('#inline').fancybox();
+         $('#gallery').galleria({
+            width: 500,
+            height: 500,
+            transitionInitial: 'fade'  
+            });
+      });
+      </script>
   </head>
   <body>
     <div id="container">
@@ -19,17 +29,8 @@
 
           <div style="display:none;">
           <div id="gallery">
-            <%= image_tag "../assets/products/wig1.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig2.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig4.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig5.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig6.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig7.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig8.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig9.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig10.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig11.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wig12.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs1.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs2.jpg", :alt => "Description", :title => "Title" %>
           </div>
         </div>
 
@@ -47,15 +48,5 @@
     <% end %>
   </div>
   
-  <script type="text/javascript">
-    $(document).ready(function() {
-        $('#inline').fancybox();
-       $('#gallery').galleria({
-          width: 500,
-          height: 500,
-          transitionInitial: 'fade'  
-          });
-    });
-    </script>
   </body>
 </html>

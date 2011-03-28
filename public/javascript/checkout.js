@@ -40,6 +40,18 @@ $(function() {
     });
     return ok;
   }
+
+  /* $('button#sign-in').live('click', function(event) {
+    $.ajax({
+      type: 'POST',
+      url: '/customers/sign_in.js',
+      data: { "remote": true, "commit" : "Sign in", "utf8" : "✓", "user": { "email": "blair@leftclick.com", "password": "password", "remember_me": "0" }},
+      success: function(json) {
+        alert(json.success);
+      }
+    });
+    event.preventDefault();
+  }); */
   
   $('#continue-1').click(function(event) {
     return change(0, 1);
