@@ -9,7 +9,7 @@
       <span class="title">Continue Shopping</span>
       <span class="subtitle">your information will be saved</span>
     <% end %>
-      <%= link_to checkout_path, :class => "multi-line-button green" do %>
+      <%= link_to checkout_path, :class => "single-line-button green large" do %>
         <span class="title">Checkout NOW!</span>  
       <% end %> 
     </div>
@@ -34,7 +34,7 @@
           <%= form_for line_item, :url => order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
             <tr id="<%= line_item.id %>">
           <td></td>
-          <td>[Image here]</td>
+          <td class="icon"><%= image_tag line_item.product.icon_image %></td>
           <td><%= line_item.product.name %></td>
           <td></td>
           <td class="price">$250.00 <span class="currency">NZD</span></td>
@@ -56,7 +56,7 @@
       <span class="title">Continue Shopping</span>
       <span class="subtitle">your information will be saved</span>
     <% end %>
-      <%= link_to checkout_path, :class => "multi-line-button green" do %>
+      <%= link_to checkout_path, :class => "single-line-button green large" do %>
         <span class="title">Checkout NOW!</span>  
       <% end %> 
     </div>

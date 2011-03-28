@@ -68,6 +68,13 @@
   div#thankyou-summary {
     width: 100%;
   }
+  div#thankyou-summary div.detail {
+    width: 100%;
+    overflow: auto;
+  }
+  div#thankyou-summary div.step {
+    width: 580px;
+  }
 
 
 
@@ -91,6 +98,12 @@
   table#cart {
     width: 900px;
     margin-left: 24px;
+  }
+  table#cart img {
+    border: 1px solid #297fc3;
+  }
+  table#cart td.icon {
+    padding-top: 20px;
   }
   table#cart.summary {
     width: 100%;
@@ -223,7 +236,7 @@
   }
   div.heading div.step span {
     margin-left: 70px;
-    font-size: 1.2em;
+    font-size: 130%;
     color: #686868;
   }
   div.heading div.number span {
@@ -231,16 +244,17 @@
     margin-top: 5px;
     padding-left:16px;
     padding-right: 15px;
+    font-size: 120%;
   }
   div.detail div.step span {
-    font-size: 120%;
+    font-size: 130%;
     margin-left: 20px;
   }
   div.checkout-header>span {
     float: left;
     width: 50px;
     color: #d7d7d7;
-    font-size: 1.2em;
+    font-size: 150%;
   }
   div.checkout-header.active > span {
     color: #8cc63f;
@@ -257,7 +271,7 @@
     width: 605px;
   }
   
-  legend {
+  legend, div.checkout-body h4 {
     color: #297fc3;
     font-weight: bold;
   }
@@ -301,7 +315,7 @@
   label.long:after {
     content: "";
   }
-  ol.form input[type=text] {
+  ol.form input[type=text], ol.form input[type=password] {
     background-image: url(/breeze/images/form_bg.jpg);
     background-repeat: repeat-x;
     border: 1px solid #d7d7d7;
@@ -331,7 +345,7 @@
   ol.form li.state-postcode abbr {
     margin-left: -80px;
   }
-  div.checkout-body a.multi-line-button {
+  div.checkout-body a.multi-line-button, div.checkout-body a.single-line-button {
     float: right;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -358,10 +372,12 @@
     display: block;
     width: 140px;
   }
-  div#new-customer {
+  div#new-customer, div#returning-customer {
     float: left;
-    width: 292px;
+    width: 202px;
     padding: 16px;
+  }
+  div#new-customer {
     background-color:#f6fbff;
     border: 1px #e6f5fe solid;
     margin-top: 20px;
@@ -420,22 +436,30 @@
     font-size: 90%;
     color: #bbb;
   }
+
+  div#finalise-order h4 {
+    float: left;
+  }
     
   /* single line button */
-  a.single-line-button {
+  a.single-line-button, button.single-line-button {
     padding: 8px 20px 10px 20px;
     height: 12px;
     border-color: #acacac;
     background-image: url(/breeze/images/light-grey-fade.png);
     font-weight: bold;
   }
-  a.single-line-button.green {
+  a.single-line-button.green, button.single-line-button.green {
     background-image: url(/breeze/images/small-green-fade.png);
     border-color: #39b54a;
   }
+  a.single-line-button.large {
+  }
+  a.single-line-button.large .title {
+  }
 
   /* multi line buttons */
-  a.multi-line-button, a.single-line-button, input[type=submit].multi-line-button {
+  a.multi-line-button, a.single-line-button, input[type=submit].multi-line-button, button.single-line-button {
       -moz-background-clip: padding;
       -moz-border-radius: 6px 6px 6px 6px;
       -webkit-border-radius: 6px;
@@ -451,12 +475,14 @@
       /* text-shadow: 0 1px 2px #2E7EBD; */
   }
   a.multi-line-button, input[type=submit].multi-line-button {
-    width: 268px;
     padding: 0.4em;
+  }
+  a.multi-line-button, input[type=submit].multi-line-button, a.single-line-button.large {
+    width: 268px;
     background-image: url(/breeze/images/grey-fade.png);
     border-color: #767676;
   }
-  a.multi-line-button .title {
+  a.multi-line-button .title, a.single-line-button.large .title {
       display: block;
       font-size: 18px;
       font-weight: bold;
@@ -468,34 +494,10 @@
       margin-top: 4px;
       opacity: 0.7;
   }
-  a.multi-line-button:hover .title {
-      opacity: 1;
-  }
-  a.multi-line-button:hover .subtitle {
-      opacity: 0.8;
-  }
-  a.multi-line-button:active {
-  }
-  a.multi-line-button:hover, a.multi-line-button:focus {
-      background-image: -moz-linear-gradient(center top , #9DC7E7 0%, #74AFDD 50%, #378BCE 100%);
-  }
-  a.multi-line-button:active, a.multi-line-button.depressed {
-      -moz-box-shadow: none;
-      background-image: -moz-linear-gradient(center top , #5796C8 0%, #6AA2CE 100%);
-      border-color: #2970A9;
-  }
-  a.multi-line-button.green {
+  a.multi-line-button.green, a.single-line-button.green.large {
       background-color: #8dc741;
       background-image: url(/breeze/images/green-fade.png);
       border-color: #39b54a;
       color: white;
       /* text-shadow: 0 1px 2px #458632; */
-  }
-  a.multi-line-button.green:hover, a.multi-line-button.green:focus {
-      background-image: -moz-linear-gradient(center top , #93D082 0%, #73C25D 50%, #4E9939 100%);
-  }
-  a.multi-line-button.green:active, a.multi-line-button.green.depressed {
-      -moz-box-shadow: none;
-      background-image: -moz-linear-gradient(center top , #5F9F4C 0%, #6AAF56 100%);
-      border-color: #3B742B;
   }

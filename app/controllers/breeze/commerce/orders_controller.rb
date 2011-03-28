@@ -37,6 +37,10 @@ module Breeze
 
       def update
         @order = current_order
+        if params[:order].has_key? :shipping_method
+          params[:order].delete(:shipping_method)
+        end
+        @order.update_attributes params[:order]
 
         if @order.save
           redirect_to :action => "thankyou"
@@ -47,6 +51,7 @@ module Breeze
 
       def thankyou 
         @order = current_order
+        # @order = current_order
       end
 
     end

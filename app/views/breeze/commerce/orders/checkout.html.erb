@@ -31,21 +31,25 @@
       <%= link_to '#', :class => "single-line-button green", :id => "continue-1" do %>
       <span class="title">Continue to Checkout</span>
     <% end %> 
-    </div>
+  </div>
+  <div id="returning-customer">
     <fieldset>
       <legend>Returning Customer</legend>
       <ol class="form">
         <li>
+        <%= label_tag "Email" %>
         <%= text_field_tag :email %> 
         </li> 
         <li>
+        <%= label_tag "Password" %>
         <%= password_field_tag %>
         </li>
         <li>
-        <button type="button" id="sign-in">Sign In</button>
+        <%= link_to "Sign In", "#", :class => "single-line-button green" %>
         </li>
       </ol>
     </fieldset>
+  </div>
   </div>
   <div class="checkout-summary">
     <div class="summary">
@@ -270,14 +274,7 @@
     </div>
   </div>
   <div class="checkout-body">
-    <fieldset>
-      <legend>Would you like to create an account?</legend>
-      <ol class="form">
-        <li>
-          
-        </li> 
-      </ol>
-    </fieldset>
+    <h4>Would you like to create an account?</h4>
     <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4b" do %>
       <span class="title">No Thanks, Checkout as Guest</span>
       <span class="subtitle">Finalise order & Checkout</span>
@@ -311,14 +308,12 @@
     </div>
   </div>
   <div class="checkout-body">
-    <fieldset>
-      <legend>Your Cart Items</legend>
-      <ol class="form">
-        <li>
-
-        </li> 
-      </ol>
-    </fieldset>
+    <h4>Your Cart Items</h4>
+    <div class="action">
+      <%= link_to cart_path, :class => "single-line-button", :id => "edit-items" do %>
+        <span class="title">Edit Items</span>
+      <% end %>
+    </div>
       <table id="cart" class="rounded order summary">
         <thead>
           <tr>
@@ -340,7 +335,7 @@
             <%= form_for line_item, :url => order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
               <tr id="<%= line_item.id %>">
             <td></td>
-            <td>[Image here]</td>
+            <td class="icon"><%= image_tag line_item.product.icon_image %></td>
             <td><%= line_item.product.name %></td>
             <td></td>
             <td class="price">$250.00 <span class="currency">NZD</span></td>

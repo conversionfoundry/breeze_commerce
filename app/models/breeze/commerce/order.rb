@@ -13,10 +13,14 @@ module Breeze
       embeds_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
-      references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
+      references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :local_foreign_key => true
 
       def item_total
         line_items.map(&:amount).sum
+      end
+
+      def item_count
+        line_items.map(&:quantity).sum
       end
 
       def shipping_total

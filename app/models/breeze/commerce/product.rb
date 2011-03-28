@@ -19,6 +19,10 @@ module Breeze
       referenced_in :line_item
 
       validates_presence_of :name, :slug
+
+      def icon_image
+        "thumbnails/icon/products/wigs1.jpg" 
+      end
     end
   end
 end

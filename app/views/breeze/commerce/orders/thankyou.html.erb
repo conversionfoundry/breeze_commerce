@@ -50,7 +50,7 @@
               <% @order.line_items.each do |line_item| %>
                   <tr id="<%= line_item.id %>">
                     <td></td>
-                    <td>[Image here]</td>
+                    <td class="icon"><%= image_tag line_item.product.icon_image %></td>
                     <td><%= line_item.product.name %></td>
                     <td></td>
                     <td class="price">$250.00 <span class="currency">NZD</span></td>
