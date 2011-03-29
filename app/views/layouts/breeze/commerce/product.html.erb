@@ -17,31 +17,178 @@
             height: 500,
             transitionInitial: 'fade'  
             });
+         $('a.thumb').live('click', function(event) {
+           event.preventDefault();
+           $('img.main').attr('src', $(this).attr('href')); 
+           $('a.thumb img').removeClass('active');
+           $(this).children('img').addClass('active');
+          });
       });
-      </script>
+    </script>
+    <style>
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: small;
+      }
+      h1 {
+        color: #3181c1;
+        font-weight: normal; 
+        font-size: 300%; 
+      }
+      div#container {
+        width: 670px;
+      }
+      img {
+        border: 3px solid #eee;
+      }
+      img.active {
+        border-color: #285a81;
+      }
+      div.top {
+        position: relative;
+      }
+      div.images {
+        width: 240px;
+      }
+      div.main-image {
+        width: 240px;
+        height: 240px;
+        text-align: center;
+        line-height: 240px;
+      }
+      div.main-image img {
+        vertical-align: bottom;
+      }
+      div.thumbs {
+        margin-top: 10px;
+      }
+      div.action {
+        text-align: right;
+      }
+      div.summary-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 400px;
+      }
+      div.selection {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 360px;
+      }
+      div.selection-box {
+        float: right;
+        background-color: #f6fcff;
+        border: 1px solid #e7f5fe;
+        padding: 16px 24px 16px 28px;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        box-shadow: 2px 2px 4px #999;
+        -moz-box-shadow: 2px 2px 4px #999;
+        -webkit-box-shadow: 2px 2px 4px #999;
+      }
+      a {
+        outline: none;
+        color: #3ac0fb;
+      }
+      label {
+        font-weight: bold;
+        color: #777;
+        display:block;
+        margin-bottom: 2px;
+      }
+      div.quantity {
+        float: left;
+        margin-right: 10px;
+      }
+      select {
+        vertical-align: bottom;
+      }
+      input[type=submit].fade.green {
+        -moz-background-clip: padding;
+        -moz-border-radius: 6px 6px 6px 6px;
+        -webkit-border-radius: 6px;
+        background-color: #909090;
+        background-image: url(/breeze/images/small-green-fade.png);
+        border-color: #39b54a;
+        border-style: solid;
+        border-width: 1px;
+        color: white;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+        margin: 2px;
+        padding: 5px 20px 7px 20px;
+        font-size: 100%;
+      }
+    </style>
   </head>
   <body>
     <div id="container">
       <% if product %>
         <%= form_for :order, :url => populate_orders_url do |f| %>
           <h1><%= product.name %></h1>
-          <h2><%= product.description %></h2>
-
+          <div class="top">
+          <div class="images">
+            <div class="main-image">
+              <%= image_tag "thumbnails/preview/products/wigs1.jpg", :class => "main" %>
+            </div>
+            <div class="thumbs">
+            <%= link_to "/images/thumbnails/preview/products/wigs1.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs1.jpg", :class => "active" %>
+            <% end %>
+            <%= link_to "/images/thumbnails/preview/products/wigs2.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs2.jpg" %>
+            <% end %>
+            <%= link_to "/images/thumbnails/preview/products/wigs3.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs3.jpg" %>
+            <% end %>
+            <%= link_to "/images/thumbnails/preview/products/wigs4.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs4.jpg" %>
+            <% end %>
+            <%= link_to "/images/thumbnails/preview/products/wigs5.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs5.jpg" %>
+            <% end %>
+            <%= link_to "/images/thumbnails/preview/products/wigs6.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs6.jpg" %>
+            <% end %>
+            <%= link_to "/images/thumbnails/preview/products/wigs7.jpg", :class => :thumb do %>
+              <%= image_tag "thumbnails/icon/products/wigs7.jpg" %>
+            <% end %>
+          </div>
+          <div class="action">
+            <a id="inline" href="#gallery">+ Full size photos</a>
+          </div>
           <div style="display:none;">
           <div id="gallery">
             <%= image_tag "../assets/products/wigs1.jpg", :alt => "Description", :title => "Title" %>
             <%= image_tag "../assets/products/wigs2.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs3.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs4.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs5.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs6.jpg", :alt => "Description", :title => "Title" %>
+            <%= image_tag "../assets/products/wigs7.jpg", :alt => "Description", :title => "Title" %>
           </div>
         </div>
-
-          <a id="inline" href="#gallery">Gallery</a>
-
-          <label>Quantity:</label>
+      </div>
+        <div class="summary-content">
+          <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Consectetur adipiscing elit</li>
+          </ul>
+        </div>
+        <div class="selection">
+          <div class="selection-box">
+            <div class="quantity">
+            <label>Quantity:</label>
           <%= select_tag :quantity, options_for_select((1..10).to_a) %>
           <%= hidden_field_tag :product_id, product.id %> 
-          <button type='submit'>
-            Add to cart
-          </button>
+        </div>
+          <%= submit_tag "Add to cart", :class => "fade green" %>
+        </div>
+        </div>
+    </div>
       <% end %>
     <% else %>
       <p>The product you are looking for was not found.<p>
