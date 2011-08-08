@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  scope "admin/commerce", :module => "breeze/commerce", :name_prefix => "admin_commerce" do
-    root :to => "commerce#index"
+  scope "admin/store", :module => "breeze/commerce", :name_prefix => "admin_store" do
+    root :to => "store#index"
     controller :commerce do
       get :settings
       put :settings     

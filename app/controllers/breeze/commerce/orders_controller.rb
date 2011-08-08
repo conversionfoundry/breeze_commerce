@@ -18,7 +18,7 @@ module Breeze
         @order = current_order
         
         product_id = params[:product_id]
-        new_line_item =  LineItem.new(:product_id => product_id, :quantity => params[:quantity] || 1)
+        new_line_item =  Breeze::Commerce::LineItem.new(:product_id => product_id, :quantity => params[:quantity] || 1)
         existing_line_item = @order.line_items.where(:product_id => product_id).first 
         if existing_line_item
           existing_line_item.quantity += new_line_item.quantity

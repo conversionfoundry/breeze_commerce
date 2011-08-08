@@ -5,20 +5,6 @@ module Breeze
         @products = Product.all
       end
       
-      def scheduled
-        render :partial => "posts", :locals => { :posts => blog.posts.pending.paginate(:page => params[:page], :per_page => 10), :view => :pending }, :layout => false
-      end
-      
-      def published
-        render :partial => "posts", :locals => { :posts => blog.posts.published.paginate(:page => params[:page], :per_page => 10), :view => :published }, :layout => false
-      end
-      
-      def show
-        if (@post = blog.posts.find params[:id])
-          redirect_to @post.permalink
-        end
-      end
-      
       def new
         @product = Product.new
       end
@@ -26,12 +12,25 @@ module Breeze
       def create
         @product = Product.new params[:product]
         if @product.save
-          redirect_to admin_commerce_products_path
+          redirect_to admin_store_products_path
         else
           render :action => "new"
         end
       end
-      
+
+      def edit
+        @product = Product.find params[:id]
+      end
+
+      def update
+        @product = Product.find params[:id]
+        if @product.update_attributes(params[:product])
+          flash[:notice] = "The product was saved. <a href=\"#{@product.permalink}\">View your changes</a>, <a href=\"#{admin_store_products_path}\">return to the list of products</a>, or close this message to continue editing."
+          redirect_to edit_admin_store_product_path(@product)
+        else
+          render :action => "edit"
+        end
+      end
     end
   end
 end

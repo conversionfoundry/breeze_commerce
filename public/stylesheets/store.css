@@ -1,0 +1,7 @@
+table.products .product-actions {
+  visibility: hidden;
+}
+
+table.products tbody tr:hover .product-actions {
+  visibility: visible;
+}

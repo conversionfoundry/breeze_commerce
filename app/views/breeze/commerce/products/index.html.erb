@@ -1,8 +1,13 @@
 <% content_for :title, "Products" %>
-
-<%= tabbed_layout do |tabs| %>
-  <% tabs.header do %>
-    <%= link_to "New product", new_admin_commerce_product_path, :class => "large new blog_post button" %>
+<% pane_layout do |panes| %>
+  <% panes.header do %>
+    <%= link_to "New product", new_admin_store_product_path, :class => "large new product button" %>
+  <% end -%>
+  <% panes.inner do %>
+    <%= scrollable_layout do %>
+      <h2>All Products</h2>
+      <%= render :partial => "products", :locals => { :products => @products.paginate(:page => params[:page], :per_page => 10) } %>
+    <% end %>
   <% end %>
 <% end %>
 

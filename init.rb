@@ -9,7 +9,7 @@ Breeze.hook :define_abilities do |user, abilities|
 end
 
 Breeze.hook :admin_menu do |menu, user|
-  menu << { :name => "Shop", :path => "/admin/commerce" } if user.can? :manage, Breeze::Content::Item
+  menu << { :name => "Store", :path => "/admin/store" } if user.can? :manage, Breeze::Content::Item
 end
 
 Breeze.hook :get_content_by_permalink do |permalink_or_content|

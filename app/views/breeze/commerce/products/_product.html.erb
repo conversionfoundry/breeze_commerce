@@ -1,0 +1,28 @@
+<%= content_tag :tr, :class => "product", :id => "product_#{product.id}" do %>
+  <td><%= check_box_tag "product_ids[]", product.id %></td>
+  <td class="image">
+
+  </td>
+  <td class="name">
+    <%= link_to product.name, edit_admin_store_product_path(product), :class => "name-link" %>
+  </td>
+  <td class="price">
+    <% has_discount = !product.blank? %>
+    <p class="base-price">
+      <%= product.sell_price %>
+    </p>
+    <% if has_discount %>
+      <p class="discounted-price">
+        <%= product.discounted_sell_price %>
+      </p>
+    <% end %>
+  </td>
+  <td class="last-edited"><%= product.updated_at %></td>
+  <td class="actions">
+    <p class="product-actions">
+      <%= link_to "View", product.permalink, :target => :_blank, :class => "small black button" %>
+      <%= link_to "Edit", edit_admin_store_product_path(product), :class => "small black button" %>
+      <%= link_to "Delete", admin_store_product_path(product), :remote => true, :method => :delete, :class => "small red delete button" %>
+    </p>
+  </td>
+<% end %>
