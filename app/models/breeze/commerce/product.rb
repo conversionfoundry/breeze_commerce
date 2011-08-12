@@ -19,6 +19,7 @@ module Breeze
       field :sell_price_cents, :type => Integer
       field :discounted_sell_price_cents, :type => Integer
       field :content, :markdown => true
+      field :available, :type => Boolean
 
       field :weight
       field :height
@@ -34,27 +35,27 @@ module Breeze
       end
 
       def cost_price
-        (cost_price_cents || 0) / 100.0
+        (self.cost_price_cents || 0) / 100.0
       end
 
       def cost_price=(price)
-        cost_price_cents = price * 100
+        self.cost_price_cents = price.to_i * 100
       end
 
       def sell_price
-        (sell_price_cents || 0) / 100.0
+        (self.sell_price_cents || 0) / 100.0
       end
 
       def sell_price=(price)
-        sell_price_cents = price * 100
+        self.sell_price_cents = price.to_i * 100
       end
 
       def discounted_sell_price
-        (discounted_sell_price_cents || 0) / 100.0
+        (self.discounted_sell_price_cents || 0) / 100.0
       end
 
       def discounted_sell_price=(price)
-        discounted_sell_price_cents = price * 100
+        self.discounted_sell_price_cents = price.to_i * 100
       end
     end
   end

@@ -5,3 +5,30 @@ table.products .product-actions {
 table.products tbody tr:hover .product-actions {
   visibility: visible;
 }
+
+#product_available {
+  margin: 0px;
+  padding: 0px;
+}
+
+#product-available .available-toggle {
+  width: 104px;
+  height: 28px;
+  margin: 0px 0px 8px;
+  background-image: url(/breeze/images/publish-toggle.png);
+  background-repeat: no-repeat;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  float: right;
+}
+
+#product-available label {
+  padding-top: 6px;
+  float: left;
+  width: 70px;
+  font-weight: bold;
+}
+
+#product-available li.check_box {
+  padding-left: 0;
+}
