@@ -1,33 +1,36 @@
 module Breeze
   module Commerce
     class CategoriesController < Breeze::Commerce::Controller
-
       def index
-        @categories = Category.all
+        @categories = Category.ordered
+      end
+
+      def new
+        @category = Category.new
       end
 
       def create
-        @category = Category.create params[:category]
+        @category = Category.create params[:category].merge({ :position => Category.max(:position) + 1 })
       end
       
       def edit
-        @category = blog.categories.find params[:id]
+        @category = Category.find params[:id]
       end
       
       def update
-        @category = blog.categories.find params[:id]
+        @category = Category.find params[:id]
         @category.update_attributes params[:category]
       end
       
       def reorder
-        params[:category].each_with_index do |category_id, i|
-          blog.categories.find(category_id).update_attributes :position => i
+        params[:category].each_with_index do |id, index|
+          Category.find(id).update_attributes :position => index
         end
         render :nothing => true
       end
       
       def destroy
-        @category = blog.categories.find params[:id]
+        @category = Category.find params[:id]
         @category.try :destroy
       end
     end

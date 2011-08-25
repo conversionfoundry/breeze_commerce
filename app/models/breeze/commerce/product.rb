@@ -9,6 +9,8 @@ module Breeze
       identity :type => String
 
       has_many_related :categories, :class_name => "Breeze::Commerce::Category", :stored_as => :array
+      embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
+      embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
 
       field :name
       field :teaser

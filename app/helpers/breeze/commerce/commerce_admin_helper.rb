@@ -3,13 +3,13 @@ module Breeze
     module CommerceAdminHelper
       def commerce_menu
         content_tag :ul, [
+          commerce_menu_item("Orders", admin_store_orders_path),
+          commerce_menu_item("Customers", ""),
           commerce_menu_item("Products", admin_store_products_path),
           commerce_menu_item("Categories", admin_store_categories_path),
-          commerce_menu_item("Option Types", ""),
-          commerce_menu_item("Custom Fields", ""),
-          commerce_menu_item("Gift Certificates / Coupons", ""),
-          commerce_menu_item("Settings", admin_store_settings_path),
-          commerce_menu_item("Orders", admin_store_orders_path)
+          commerce_menu_item("Coupons", ""),
+          commerce_menu_item("Shipping Costs", ""),
+          commerce_menu_item("Settings", admin_store_settings_path)
         ].join.html_safe, :class => :actions
       end
 

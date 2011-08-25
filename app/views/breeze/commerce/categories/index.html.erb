@@ -1,9 +1,13 @@
 <% content_for :title, "Product Categories"%>
-
 <% pane_layout do |panes| %>
+  <% panes.header do %>
+    <%= link_to "New category", new_admin_store_category_path, :class => "large new category button" %>
+  <% end %>
   <% panes.inner do %>
-    <h1>Product Categories</h1>
-    <%= render :partial => "categories", :locals => { :categories => @categories } %> 
+    <%= scrollable_layout do %>
+      <h1>Product Categories</h1>
+      <%= render :partial => "categories", :locals => { :categories => @categories } %>
+    <% end %>
   <% end %>
 <% end %>
 

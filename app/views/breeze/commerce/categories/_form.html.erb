@@ -1,0 +1,9 @@
+<%= breeze_form_for @category, :as => :category, :url => url, :remote => true do |form| %>
+  <%= render "/breeze/admin/shared/error_messages", :target => @category, :object_name => :category %>
+  <%= form.fieldset do %>
+    <%= form.text_field :name %>
+    <%= form.text_field :slug %>
+    <%= form.select :sort, [ :name, :price ],  %>
+    <%= form.number_field :products_per_page %>
+  <% end %>
+<% end %>

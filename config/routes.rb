@@ -6,7 +6,10 @@ Rails.application.routes.draw do
       put :settings     
     end
   
-    resources :products
+    resources :products do
+      resources :variants
+      resources :product_images
+    end
     resources :orders
 
     resources :categories do

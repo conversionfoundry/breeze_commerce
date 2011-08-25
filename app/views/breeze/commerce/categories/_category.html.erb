@@ -1,0 +1,18 @@
+<%= content_tag :tr, :class => :category, :id => "category_#{category.id}", :"data-id" => category.id do %>
+  <td class="name">
+    <%= category.name %>
+  </td>
+  <td class="slug">
+    <%= category.slug %>
+  </td>
+  <td class="available">
+    <%= category.available %>
+  </td>
+  <td class="actions">
+    <p class="category-actions">
+      <%= link_to "View", category.permalink, :target => :_blank, :class => "small black view button" %>
+      <%= link_to "Edit", edit_admin_store_category_path(category), :class => "small black edit button" %>
+      <%= link_to "Delete", admin_store_category_path(category), :remote => true, :method => :delete, :class => "small red delete button" %>
+    </p>
+  </td>
+<% end %>

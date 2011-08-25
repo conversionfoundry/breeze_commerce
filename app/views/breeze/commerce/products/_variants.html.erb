@@ -1,0 +1,24 @@
+<div class="variants-container container">
+  <table class="fancy variants">
+    <thead>
+      <tr>
+        <th class="first" style="">Name</th>
+        <th style="width:15%;">SKU Code</th>
+        <th style="width:10%;">Price</th>
+        <th style="width:20%;">Available?</th>
+        <th class="last" style="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @product.variants.any? %>
+        <%= render :partial => "variant", :collection => @product.variants %>
+      <% else %>
+        <tr><td class="empty" colspan="5">There are no variants for this product.</td></tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+      </tr>
+    </tfoot>
+  </table>
+</div>

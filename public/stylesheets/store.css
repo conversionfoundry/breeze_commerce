@@ -1,3 +1,12 @@
+#product_edit #main-tabs-tabs {
+  background: none;
+  position: relative;
+}
+
+#product_edit #main-tabs-content {
+  position: relative;
+}
+
 table.products .product-actions {
   visibility: hidden;
 }
@@ -12,10 +21,10 @@ table.products tbody tr:hover .product-actions {
 }
 
 #product-available .available-toggle {
-  width: 104px;
+  width: 114px;
   height: 28px;
   margin: 0px 0px 8px;
-  background-image: url(/breeze/images/publish-toggle.png);
+  background-image: url(/breeze/images/yes-no-toggle.png);
   background-repeat: no-repeat;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -25,10 +34,68 @@ table.products tbody tr:hover .product-actions {
 #product-available label {
   padding-top: 6px;
   float: left;
-  width: 70px;
+  width: 60px;
   font-weight: bold;
 }
 
 #product-available li.check_box {
   padding-left: 0;
+}
+
+.fake-right-sidebar .product-categories label {
+  float: none;
+  width: auto;
+  display: inline;
+}
+
+fieldset.product-categories {
+  margin: 8px 0px;
+  padding: 8px 0px 0px;
+}
+
+fieldset.product-categories legend {
+  position: relative;
+  top: 4px;
+}
+
+fieldset.product-categories ol.form {
+  margin: 0px;
+  width: 184px;
+  /* max-height: 9em; */
+  overflow-y: auto;
+}
+
+fieldset.product-categories ol.form li {
+  margin: 0px 0px 1px;
+  background: #ccc;
+  padding: 4px;
+  -webkit-border-radius: 4px;
+}
+
+table.categories tr.category td {
+  padding: 4px 8px;
+}
+
+table.categories tr.category td.name {
+  font-size: 125%;
+  font-weight: bold;
+}
+
+table.categories .category-actions {
+  visibility: hidden;
+}
+
+table.categories tbody tr:hover .category-actions {
+  visibility: visible;
+}
+
+table.categories tr.category .category-actions {
+  opacity: 0;
+  /* -moz-transition: opacity 0.25s ease-in; */
+  -webkit-transition: opacity 0.25s ease-in;
+  /* transition: opacity 0.25s ease-in; */
+}
+
+table.categories tr.category:hover .category-actions {
+  opacity: 1.0;
 }
