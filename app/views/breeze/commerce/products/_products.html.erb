@@ -14,6 +14,8 @@
           <th style="">Name</th>
           <th style="width:20%;">Price</th>
           <th style="width:10%;">Last Edited</th>
+          <th>Sales over past month</th>
+          <th>Active?</th>
           <th class="last" style="width:20%;">Actions</th>
         </tr>
       </thead>
@@ -21,12 +23,12 @@
         <% if products.any? -%>
 	        <%= render :partial => "product", :collection => products %>
         <% else -%>
-	        <tr><td class="empty" colspan="7">There are no products to show here.</td></tr>
+	        <tr><td class="empty" colspan="8">There are no products to show here.</td></tr>
         <% end -%>
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="6"><%#= will_paginate products, :params => { :controller => "breeze/commerce/products", :action => view } %>&nbsp;</td>
+          <td colspan="8"><%#= will_paginate products, :params => { :controller => "breeze/commerce/products", :action => view } %>&nbsp;</td>
         </tr>
       </tfoot>
     </table>

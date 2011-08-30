@@ -1,10 +1,15 @@
 <%= content_tag :tr, :class => "product", :id => "product_#{product.id}" do %>
   <td><%= check_box_tag "product_ids[]", product.id %></td>
   <td class="image">
-
+    <% unless product.images.empty? %>
+      <%= image_tag product.images.ordered.first.file.url(:breeze_thumb) %>
+    <% end %>
   </td>
   <td class="name">
     <%= link_to product.name, edit_admin_store_product_path(product), :class => "name-link" %>
+    <div class="categories">
+      <%= product.categories.collect(&:name).join(', ') %>
+    </div>
   </td>
   <td class="price">
     <% has_discount = !product.blank? %>

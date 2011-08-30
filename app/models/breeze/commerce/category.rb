@@ -13,6 +13,8 @@ module Breeze
 
       scope :ordered, order_by([:position, :asc])
 
+      validates_presence_of :name
+
       def to_s
         name
       end

@@ -8,6 +8,9 @@
           <% tabs.details :title => "Product Details" do %>
               <div id="product-details">
                 <%= form.fieldset do %>
+                  <% unless @product.images.empty? %>
+                    <%= image_tag @product.images.first.file.url(:breeze_thumb), :class => "feature" %>
+                  <% end %>
                   <%= form.text_field :name, :required => true, :label => "Product Name" %>
                   <%= form.text_field :teaser, :required => true %>
                   <%= form.text_field :slug, :required => true %>
@@ -71,7 +74,6 @@
             <%= content_tag :div, :id => "uploader", "data-session-key" => Rails::Application.config.session_options[:key], "data-session-id" => cookies[Rails::Application.config.session_options[:key]] do %>
               <%= link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>
             <% end %>
-            <%= link_to "New variant", new_admin_store_product_variant_path(@product), :class => "large new variant button" %>
           <% end %>
         <% end %> 
       <% end %>

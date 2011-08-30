@@ -1,5 +1,6 @@
 <div class="variants-container container">
-  <table class="fancy variants">
+  <%= link_to "New variant", new_admin_store_product_variant_path(@product), :class => "large new variant button" %>
+  <table class="fancy contextual variants">
     <thead>
       <tr>
         <th class="first" style="">Name</th>

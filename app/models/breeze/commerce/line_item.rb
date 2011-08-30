@@ -6,6 +6,7 @@ module Breeze
 
       embedded_in :order, :inverse_of => :line_items
       field :quantity, :type => Integer
+      field :price_cents, :type => Integer
       references_one :product
 
       def product

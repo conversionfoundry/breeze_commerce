@@ -1,7 +1,15 @@
 module Breeze
   module Commerce
-    class OrdersController < ApplicationController
+    class OrdersController < Breeze::Commerce::Controller  #ApplicationController
       include Breeze::Commerce::CurrentOrder
+
+      def index
+        @orders = Order.all
+      end
+
+      def print
+        @order = Order.find params[:id]
+      end
 
       # Displays the current cart
       def edit

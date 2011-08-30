@@ -7,7 +7,7 @@ module Breeze
           commerce_menu_item("Customers", ""),
           commerce_menu_item("Products", admin_store_products_path),
           commerce_menu_item("Categories", admin_store_categories_path),
-          commerce_menu_item("Coupons", ""),
+          commerce_menu_item("Coupons", admin_store_coupons_path),
           commerce_menu_item("Shipping Costs", ""),
           commerce_menu_item("Settings", admin_store_settings_path)
         ].join.html_safe, :class => :actions

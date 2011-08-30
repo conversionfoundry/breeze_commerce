@@ -1,6 +1,7 @@
 <% if @category.errors.empty? %>
+  closeContextualEdit();
   $('#<%= "category_#{@category.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/breeze/commerce/categories/category", :object => @category) %>');
-  $('#category-details').dialog('close');
+  $('#<%= "category_#{@category.id}" %>').effect("highlight", { color: "#ffffc0" }, 3000);
 <% else %>
-  $('#category-details').html('<%= escape_javascript render("edit") %>');
+  $('.edit-context').html('<%= escape_javascript render(:file => "/breeze/commerce/categories/edit") %>');
 <% end %>

@@ -81,21 +81,119 @@ table.categories tr.category td.name {
   font-weight: bold;
 }
 
-table.categories .category-actions {
+table.fancy tbody tr .actions .button {
   visibility: hidden;
-}
-
-table.categories tbody tr:hover .category-actions {
-  visibility: visible;
-}
-
-table.categories tr.category .category-actions {
-  opacity: 0;
+   opacity: 0;
   /* -moz-transition: opacity 0.25s ease-in; */
   -webkit-transition: opacity 0.25s ease-in;
-  /* transition: opacity 0.25s ease-in; */
 }
 
-table.categories tr.category:hover .category-actions {
+table.fancy tbody tr:hover .actions .button {
+  visibility: visible;
   opacity: 1.0;
+}
+
+table.fancy tbody tr.disabled:hover .actions .button {
+  visibility: hidden;
+  opacity: 0;
+}
+
+table.fancy tbody tr.active td {
+  border-bottom: 0px;
+}
+
+table.fancy tbody tr.active td, table.fancy tbody tr.active:hover td, table.fancy tbody tr.edit td {
+  background-color: #ffffc0;
+}
+
+table.fancy tbody tr .actions {
+  text-align: right;
+}
+
+table.fancy tbody tr.active .actions .button {
+  visibility: visible;
+  opacity: 1.0;
+}
+
+.product-edit .tab-pane {
+  top: 0px !important;
+}
+
+#product-edit img.feature {
+  float: left;
+}
+
+/** CONTEXTUAL **********************************/
+
+.edit-context, .new-context {
+  position: relative;
+  margin-top: -12px;
+}
+
+.edit-context img {
+  display: block;
+  margin: 10px auto;
+}
+
+.edit-context label, .new-context label {
+  float: none !important;
+}
+
+.edit-context input {
+  width: 240px !important;
+}
+
+.buttons {
+  position: relative;
+}
+
+.buttons img {
+  position: absolute;
+  margin: 0;
+  bottom: -12px;
+  left: -40px;
+}
+
+.new-context {
+  background-color: #ffffc0;
+}
+
+.new-context img {
+  display: block;
+  margin: 0px auto;
+  padding-top: 10px;
+}
+
+.new-context .buttons {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+}
+
+table.contextual tbody tr.edit .buttons {
+  position: absolute;
+  right: 0px;
+  bottom: 8px;
+}
+
+table.fancy tbody tr.edit .table-actions button, .new-category button {
+  margin-left: 8px;
+}
+
+#coupon-details #coupon_type li.radio_button {
+  width: 140px;
+  display: inline-block;
+}
+
+#coupon-details #coupon_type li.radio_button label {
+  float: none;
+  display: inline;
+}
+
+h1 .new {
+  float: right;
+}
+
+.new.contextual.disabled {
+  background-color: #6A952F;
 }

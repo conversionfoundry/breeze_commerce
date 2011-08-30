@@ -10,13 +10,20 @@ Rails.application.routes.draw do
       resources :variants
       resources :product_images
     end
-    resources :orders
+
+    resources :orders do
+      member do
+        get :print
+      end
+    end
 
     resources :categories do
       collection do
         put :reorder
       end
     end    
+
+    resources :coupons
   end
 
   scope :module => "breeze/commerce" do

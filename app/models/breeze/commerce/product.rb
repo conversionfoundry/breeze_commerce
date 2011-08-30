@@ -27,6 +27,8 @@ module Breeze
       field :height
       field :width
       field :depth
+
+      scope :published, where(:available => true)
         
       # referenced_in :line_item
 

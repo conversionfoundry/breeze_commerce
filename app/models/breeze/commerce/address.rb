@@ -8,6 +8,7 @@ module Breeze
       field :first_name
       field :last_name
       field :phone
+      field :country
     end
   end
 end
