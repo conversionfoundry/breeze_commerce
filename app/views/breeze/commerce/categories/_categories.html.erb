@@ -22,3 +22,25 @@
     </tfoot>
   </table>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    $('.available-toggle').live('mousedown', function() {
+      $checkbox =  $(this).siblings('.category-available');
+      $checkbox.click().change();
+      checked = $(this).siblings('.category-available:checked').length > 0;
+      $(this).animate({
+        'background-position': (checked ? 0 : 100) + '% 0%'
+        }, 'slow', 'easeInOutQuad');
+      $(this).parents('.available').find('.text').html(checked ? 'Yes' : 'No');
+      id = $(this).closest('tr.category').attr('data-id');
+      $.ajax({
+        url: '/admin/store/categories/' + id + '.js',
+          type: 'post',
+          dataType: 'script',
+          data: '_method=put&category[available]=' + checked
+        });
+
+    });
+   });
+ </script>

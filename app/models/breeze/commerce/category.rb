@@ -11,6 +11,7 @@ module Breeze
       field :position, :type => Integer
       field :available, :type => Boolean
 
+
       scope :ordered, order_by([:position, :asc])
 
       validates_presence_of :name

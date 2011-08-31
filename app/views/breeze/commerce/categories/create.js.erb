@@ -1,6 +1,6 @@
 <% if @category.errors.empty? %>
-  closeNew();
-$('<%= escape_javascript render(:partial => "/breeze/commerce/categories/category", :object => @category) %>').appendTo('.categories tbody').effect("highlight", { color: "#ffffc0" }, 3000);
+  closeContextualNew();
+  $('<%= escape_javascript render(:partial => "/breeze/commerce/categories/category", :object => @category) %>').appendTo('.categories tbody').effect("highlight", { color: "#ffffc0" }, 3000);
 <% else %>
-  $('.new-category').html('<%= escape_javascript render(:file => "/breeze/commerce/categories/new") %>');
+  $('.new-context').html('<%= escape_javascript render(:file => "/breeze/commerce/categories/new") %>');
 <% end %>

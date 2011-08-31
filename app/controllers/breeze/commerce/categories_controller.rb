@@ -3,6 +3,10 @@ module Breeze
     class CategoriesController < Breeze::Commerce::Controller
       def index
         @categories = Category.ordered
+        respond_to do |format|
+          format.html
+          format.json { render :json => @categories.map{|c| [:id => c.id, :name => c.name] } }
+        end
       end
 
       def new

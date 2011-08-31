@@ -14,14 +14,17 @@
                   <%= form.text_field :name, :required => true, :label => "Product Name" %>
                   <%= form.text_field :teaser, :required => true %>
                   <%= form.text_field :slug, :required => true %>
-                  <%= form.text_area :short_description, :required => true, :rows => 8, :class => "markup" %> 
 
-                  <%= form.text_area :full_description, :required => true, :rows => 8, :class => "markup" %>
+                  <%= form.text_area :short_description, :required => true, :rows => 4, :class => "markup" %> 
+                  <%= form.text_area :full_description, :required => true, :rows => 4, :class => "markup" %>
+
+                  <%= form.text_field :category_tokens, :required => true, :label => "Categories", "data-pre" => @product.categories.map(&:attributes).to_json %>
+
                   <%= form.number_field :cost_price, :required => true, :label => "Cost Price" %>
                   <%= form.number_field :sell_price, :required => true, :label => "Base Sell Price" %>
                   <%= form.number_field :discounted_sell_price, :label => "Discounted Sell Price" %>
                 <% end %>
-                <%= form.fieldset :legend => "Dimensions" do %>
+                <%= form.fieldset :legend => "Dimensions", :id => "product_dimensions_fieldset", :class => "collapsible #{"collapsed" unless @product.has_dimensions?}" do %>
                   <%= form.text_field :weight %>
                   <%= form.text_field :height %>
                   <%= form.text_field :width %>
@@ -29,22 +32,24 @@
                 <% end %> 
               </div>
             <% end %>
-            <% tabs.gallery :title => "Gallery" do %>
-              <div id="product-gallery">
-                <div id="assets">
-                  <%= render :partial => "/breeze/commerce/products/image", :collection => @product.images %>
+            <% unless @product.new_record? %>
+              <% tabs.gallery :title => "Gallery" do %>
+                <div id="product-gallery">
+                  <div id="assets">
+                    <%= render :partial => "/breeze/commerce/products/image", :collection => @product.images %>
+                  </div>
                 </div>
-              </div>
-            <% end %>
-            <% tabs.variants :title => "Variants" do %>
-              <div id="product-variants">
-                <%= render :partial => "/breeze/commerce/products/variants", :object => @product.variants %>
-              </div>
-            <% end %>
-            <% tabs.associated_with :title => "Associated With" do %>
-              <div id="product-associated-with">
-                <p>Not yet implemented.</p>
-              </div>
+              <% end %>
+              <% tabs.variants :title => "Variants" do %>
+                <div id="product-variants">
+                  <%= render :partial => "/breeze/commerce/products/variants", :object => @product.variants %>
+                </div>
+              <% end %>
+              <% tabs.associated_with :title => "Associated With" do %>
+                <div id="product-associated-with">
+                  <p>Not yet implemented.</p>
+                </div>
+              <% end %>
             <% end %>
         <% end %>
       <% end %>
@@ -56,7 +61,7 @@
           <% end %>
           <%= link_to "View", @product.permalink, :class => "large view button", :target => :_blank unless @product.new_record? %>
           <%= submit_tag "Save", :class => "large green save button" %>
-          <%= link_to "Delete", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" %>
+          <%= link_to "Delete", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record? %>
           
           <%= hidden_field_tag "product[category_ids][]", "" %>
   			  <%= form.fieldset :legend => "Categories", :class => "product-categories" do %>
@@ -68,11 +73,10 @@
   			    <% end %>
   			  <% end %>
           <% unless @product.new_record? %>
-            
-          <% end %>
-          <%= form.fieldset :legend => "Actions" do %>
-            <%= content_tag :div, :id => "uploader", "data-session-key" => Rails::Application.config.session_options[:key], "data-session-id" => cookies[Rails::Application.config.session_options[:key]] do %>
-              <%= link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>
+            <%= form.fieldset :legend => "Actions" do %>
+              <%= content_tag :div, :id => "uploader", "data-session-key" => Rails::Application.config.session_options[:key], "data-session-id" => cookies[Rails::Application.config.session_options[:key]] do %>
+                <%= link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %> 
@@ -97,8 +101,8 @@
   <%= stylesheet_link_tag "/breeze/javascripts/marquess/marquess.css" %>
   <%= javascript_include_tag "/breeze/javascripts/marquess/marquess.js", "/breeze/javascripts/blog.js" %>
 
-  <%= stylesheet_link_tag "/breeze/javascripts/uploadify/uploadify.css" %>
-  <%= javascript_include_tag "/breeze/javascripts/uploadify/swfobject.js", "/breeze/javascripts/uploadify/uploadify.js" %>
+  <%= stylesheet_link_tag "/breeze/javascripts/uploadify/uploadify.css", "/breeze/javascript/styles/token-input-facebook.css" %>
+  <%= javascript_include_tag "/breeze/javascripts/uploadify/swfobject.js", "/breeze/javascripts/uploadify/uploadify.js", "/breeze/javascript/jquery.tokeninput.js" %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
@@ -107,7 +111,12 @@
       }).change().hide();
 
     $('textarea.markup').marquess();
-    
+
+    $("#product_category_tokens").tokenInput("<%= admin_store_categories_path(:json) %>", {
+      crossDomain: false,
+      prePopulate: $('#product_category_tokens').attr("data-pre"),
+      theme: "facebook"
+      });
 
     $('<div class="available-toggle"></div>').insertAfter('#product_available').css({
       'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
@@ -116,6 +125,12 @@
       $(this).animate({
         'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
       }, 'slow', 'easeInOutQuad')
+    });
+
+    $('#product_dimensions_fieldset.collapsed').find('ol.form').hide();
+    $('#product_dimensions_fieldset legend').click(function() {
+      var fieldset = $(this).parent()
+      fieldset.toggleClass('collapsed').find('ol.form').toggle(!fieldset.hasClass('collapsed'));
     });
   });
 </script>

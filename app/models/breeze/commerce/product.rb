@@ -29,6 +29,7 @@ module Breeze
       field :depth
 
       scope :published, where(:available => true)
+      scope :in_category, lambda { |category| where(:category_ids => category.id) }
         
       # referenced_in :line_item
 
@@ -36,6 +37,10 @@ module Breeze
 
       def icon_image
         "thumbnails/icon/products/wigs1.jpg" 
+      end
+
+      def category_tokens
+
       end
 
       def cost_price
@@ -60,6 +65,10 @@ module Breeze
 
       def discounted_sell_price=(price)
         self.discounted_sell_price_cents = price.to_i * 100
+      end
+
+      def has_dimensions?
+        !weight.blank? || !height.blank? || !width.blank? || !depth.blank?
       end
     end
   end

@@ -1,9 +1,9 @@
-#product_edit #main-tabs-tabs {
+#product_edit #main-tabs-tabs, #product_new #main-tabs-tabs {
   background: none;
   position: relative;
 }
 
-#product_edit #main-tabs-content {
+#product_edit #main-tabs-content, #product_new #main-tabs-content {
   position: relative;
 }
 
@@ -20,15 +20,26 @@ table.products tbody tr:hover .product-actions {
   padding: 0px;
 }
 
-#product-available .available-toggle {
-  width: 114px;
-  height: 28px;
-  margin: 0px 0px 8px;
+.available-toggle {
   background-image: url(/breeze/images/yes-no-toggle.png);
   background-repeat: no-repeat;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
+  width: 114px;
+  height: 28px;
+  margin: 0px 0px 8px;
+}
+
+#product-available .available-toggle {
   float: right;
+}
+
+table.categories .available-toggle {
+  display: inline-block;
+}
+
+table.categories input.category-available {
+  display: none;
 }
 
 #product-available label {
@@ -81,14 +92,23 @@ table.categories tr.category td.name {
   font-weight: bold;
 }
 
-table.fancy tbody tr .actions .button {
+table.fancy tbody tr .actions .button, 
+table.fancy tbody tr td.available .field,
+table.fancy tbody tr:hover td.available .text {
   visibility: hidden;
    opacity: 0;
   /* -moz-transition: opacity 0.25s ease-in; */
   -webkit-transition: opacity 0.25s ease-in;
 }
 
-table.fancy tbody tr:hover .actions .button {
+table.fancy tbody tr:hover td.available .text,
+table.fancy tbody tr td.available .field {
+  height: 0;
+}
+
+table.fancy tbody tr:hover .actions .button, 
+table.fancy tbody tr:hover td.available .field,
+table.fancy tbody tr td.available .text {
   visibility: visible;
   opacity: 1.0;
 }
@@ -115,7 +135,7 @@ table.fancy tbody tr.active .actions .button {
   opacity: 1.0;
 }
 
-.product-edit .tab-pane {
+.product-edit .tab-pane, .product-new .tab-pane {
   top: 0px !important;
 }
 
@@ -130,6 +150,13 @@ table.fancy tbody tr.active .actions .button {
   margin-top: -12px;
 }
 
+.new-context h3 {
+  margin: 0;
+  padding-left: 8px;
+  padding-top: 8px;
+  font-size: 125%;
+}
+
 .edit-context img {
   display: block;
   margin: 10px auto;
@@ -139,7 +166,7 @@ table.fancy tbody tr.active .actions .button {
   float: none !important;
 }
 
-.edit-context input {
+.edit-context input, .new-context input {
   width: 240px !important;
 }
 
