@@ -2,7 +2,7 @@ module Breeze
   module Commerce
     class CategoriesController < Breeze::Commerce::Controller
       def index
-        @categories = Category.ordered
+        @categories = store.categories.ordered
         respond_to do |format|
           format.html
           format.json { render :json => @categories.map{|c| [:id => c.id, :name => c.name] } }
@@ -10,31 +10,34 @@ module Breeze
       end
 
       def new
-        @category = Category.new
+        @category = store.categories.new
       end
 
       def create
-        @category = Category.create params[:category].merge({ :position => Category.max(:position) + 1 })
+        Rails.logger.debug "store: " + params[:category].to_s
+        Rails.logger.debug "categories: " + store.categories.max(:position).to_s
+        @category = store.categories.build params[:category].merge({ :position => (store.categories.max(:position) || 0) + 1 })
+        @category.save
       end
       
       def edit
-        @category = Category.find params[:id]
+        @category = store.categories.find params[:id]
       end
       
       def update
-        @category = Category.find params[:id]
+        @category = store.categories.find params[:id]
         @category.update_attributes params[:category]
       end
       
       def reorder
         params[:category].each_with_index do |id, index|
-          Category.find(id).update_attributes :position => index
+          store.categories.find(id).update_attributes :position => index
         end
         render :nothing => true
       end
       
       def destroy
-        @category = Category.find params[:id]
+        @category = store.categories.find params[:id]
         @category.try :destroy
       end
     end

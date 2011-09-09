@@ -1,7 +1,7 @@
 module Breeze
   module Commerce
     class View < Breeze::Content::PageView
-      def commerce
+      def store
         content
       end
 

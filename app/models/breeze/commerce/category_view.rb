@@ -1,10 +1,14 @@
 module Breeze
   module Commerce
-    class ProductView < View
+    class CategoryView < View
       attr_accessor :slug
 
-      def product
-        store.products.where(:slug => slug).first
+      def category
+        @category ||= store.categories.where(:slug => slug).first
+      end
+
+      def products
+        Product.where(:category_ids => category.try(:id))
       end
 
       def set_url_params(match)
@@ -14,9 +18,10 @@ module Breeze
 
       def variables_for_render
         returning super do |vars|
-          vars[:product] = product
+          vars[:category] = category
         end
       end
     end
   end
 end
+

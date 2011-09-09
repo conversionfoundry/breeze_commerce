@@ -8,6 +8,7 @@ module Breeze
 
       identity :type => String
 
+      belongs_to_related :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_many_related :categories, :class_name => "Breeze::Commerce::Category", :stored_as => :array
       embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
       embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
@@ -34,6 +35,8 @@ module Breeze
       # referenced_in :line_item
 
       validates_presence_of :name, :slug
+
+      before_save :regenerate_permalink!
 
       def icon_image
         "thumbnails/icon/products/wigs1.jpg" 
@@ -69,6 +72,12 @@ module Breeze
 
       def has_dimensions?
         !weight.blank? || !height.blank? || !width.blank? || !depth.blank?
+      end
+
+      protected
+
+      def regenerate_permalink!
+        self.permalink = "#{store.permalink}/#{slug}" unless store.nil? || slug.blank?
       end
     end
   end
