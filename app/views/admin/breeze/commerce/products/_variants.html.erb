@@ -1,0 +1,25 @@
+<div class="variants-container container">
+  <%= link_to "New variant", new_admin_store_product_variant_path(@product), :class => "large new contextual variant button" %>
+  <table class="fancy contextual variants">
+    <thead>
+      <tr>
+        <th class="first" style="">Name</th>
+        <th style="width:15%;">SKU Code</th>
+        <th style="width:10%;">Price</th>
+        <th style="width:20%;">Available?</th>
+        <th class="last" style="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @product.variants.any? %>
+        <%= render :partial => "variant", :collection => @product.variants %>
+      <% else %>
+        <tr><td class="empty" colspan="5">There are no variants for this product.</td></tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+      </tr>
+    </tfoot>
+  </table>
+</div>

@@ -1,11 +1,8 @@
 module Breeze
   module Commerce
-    class OrdersController < Breeze::Commerce::Controller  #ApplicationController
+    class OrdersController < Controller  #ApplicationController
+      layout "breeze/commerce/order"
       include Breeze::Commerce::CurrentOrder
-
-      def index
-        @orders = Order.all
-      end
 
       def print
         @order = Order.find params[:id]

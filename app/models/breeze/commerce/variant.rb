@@ -3,7 +3,8 @@ module Breeze
     class Variant
       include Mongoid::Document
 
-      embedded_in :product, :class_name => "Breeze::Commerce::Variant", :inverse_of => :variants
+      belongs_to_related :product, :class_name => "Breeze::Commerce::Product"
+      #embedded_in :product, :class_name => "Breeze::Commerce::Variant", :inverse_of => :variants
 
       field :name
       field :description

@@ -1,0 +1,21 @@
+<%= breeze_form_for @coupon, :as => :coupon, :url => url, :remote => true do |form| %>
+  <%= render "/breeze/admin/shared/error_messages", :target => @coupon, :object_name => :coupon %>
+  <%= form.fieldset do %>
+    <%= form.text_field :name, :label => "Coupon Name", :required => true %>
+    <p>For your reference only e.g. 20% off orders of $50</p>
+    <%= form.text_field :code, :required => true, :disabled => true %>
+    <%= form.fieldset :id => "coupon_type" do %>
+      <% Breeze::Commerce::Coupon::TYPES.each do |type| %>
+        <%= form.radio_button :type, type[0], :label => type[1] %>
+      <% end %>
+      <%= form.text_field :fixed_amount_cents %>
+    <% end %>
+    <%= form.text_field :minimum_order_value_cents %>
+    <%= form.fieldset :id => "coupon_start_date" do %>
+      <li><%= text_field_tag :start, (@coupon.start || Time.now).strftime("%a %e %b, %Y") %></li>
+      <%= form.time_select :start, :twelve_hour => true, :minute_step => 5, :label => false %>
+    <% end %>
+  <% end %>
+  <%= render "/breeze/shared/buttons" %>
+<% end %>
+

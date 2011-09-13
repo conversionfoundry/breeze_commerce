@@ -10,8 +10,11 @@ module Breeze
 
       belongs_to_related :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_many_related :categories, :class_name => "Breeze::Commerce::Category", :stored_as => :array
-      embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
-      embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
+
+      has_many_related :variants, :class_name => "Breeze::Commerce::Variant"
+      has_many_related :images, :class_name => "Breeze::Commerce::ProductImage"
+      #embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
+      #embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
 
       field :name
       field :teaser

@@ -1,30 +1,30 @@
 Rails.application.routes.draw do
-  scope "admin/store", :module => "breeze/commerce", :name_prefix => "admin_store" do
-    root :to => "store#index"
-    controller :commerce do
-      get :settings
-      put :settings     
-    end
-  
-    resources :products do
-      resources :variants
-      resources :product_images
-    end
-
-    resources :orders do
-      member do
-        get :print
+  scope "admin/store", :module => "admin/breeze/commerce", :name_prefix => "admin_store" do
+      root :to => "store#index"
+      controller :commerce do
+        get :settings
+        put :settings     
       end
-    end
-
-    resources :categories do
-      collection do
-        put :reorder
+    
+      resources :products do
+        resources :variants
+        resources :product_images
       end
-    end    
 
-    resources :coupons
-  end
+      resources :orders do
+        member do
+          get :print
+        end
+      end
+
+      resources :categories do
+        collection do
+          put :reorder
+        end
+      end    
+
+      resources :coupons
+    end
 
   scope :module => "breeze/commerce" do
     resources :orders do

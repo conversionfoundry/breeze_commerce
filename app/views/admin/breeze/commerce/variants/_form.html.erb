@@ -1,0 +1,8 @@
+<%= breeze_form_for @variant, :as => :variant, :url => url, :remote => true do |form| %>
+  <%= render "/breeze/admin/shared/error_messages", :target => @variant, :object_name => :variant %>
+  <%= form.fieldset do %>
+    <%= form.text_field :name %>
+    <%= form.text_area :description, :rows => 4 %>
+  <% end %>
+  <%= render "/admin/breeze/commerce/shared/buttons" %>
+<% end %>

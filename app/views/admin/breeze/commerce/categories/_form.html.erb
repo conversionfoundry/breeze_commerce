@@ -1,0 +1,25 @@
+<%= breeze_form_for @category, :as => :category, :url => url, :remote => true do |form| %>
+  <%= render "/breeze/admin/shared/error_messages", :target => @category, :object_name => :category %>
+  <%= form.fieldset do %>
+    <%= form.text_field :name %>
+    <%= form.text_field :slug %>
+    <%= form.select :sort, [ :name, :price ],  %>
+    <%= form.number_field :products_per_page %>
+  <% end %>
+  <%= render "/admin/breeze/commerce/shared/buttons" %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $('#category_new #category_name').live('input', function() {
+      $('#category_slug').each(function() {
+        if (!this.updated) {
+          $(this).val($('#category_name').val().toLowerCase().replace(/[^a-z0-9\-]+/g, '-'));
+        }
+      });
+    });
+    $('#category_slug').live('input', function() {
+      this.updated = true;
+    });
+  });
+</script>

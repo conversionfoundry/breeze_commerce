@@ -1,0 +1,128 @@
+<%= pane_layout do |main| %>
+  <% main.inner do %>
+    <%= breeze_form_for @product, :as => :product, :url => url do |form| %>
+      <%= scrollable_layout do %>
+        <h1><%= @product.new_record? ? 'New product' : "Editing Product \"#{@product.name}\"" %></h1>
+        <%= render "/breeze/admin/shared/error_messages", :target => @product, :object_name => :product %>
+        <%= tabbed_layout do |tabs| %>
+          <% tabs.details :title => "Product Details" do %>
+            <div id="product-details">
+              <%= form.fieldset do %>
+                  <% unless @product.images.empty? %>
+                    <%= image_tag @product.images.first.file.url(:breeze_thumb), :class => "feature" %>
+                  <% end %>
+                  <%= form.text_field :name, :required => true, :label => "Product Name" %>
+                  <%= form.text_field :teaser, :required => true %>
+                  <%= form.text_field :slug, :required => true %>
+
+                  <%= form.text_area :short_description, :required => true, :rows => 4, :class => "markup" %> 
+                  <%= form.text_area :full_description, :required => true, :rows => 4, :class => "markup" %>
+                  <%= form.text_field :category_tokens, :required => true, :label => "Categories", "data-pre" => @product.categories.map(&:attributes).to_json %>
+                  <%= form.number_field :cost_price, :required => true, :label => "Cost Price" %>
+                  <%= form.number_field :sell_price, :required => true, :label => "Base Sell Price" %>
+                  <%= form.number_field :discounted_sell_price, :label => "Discounted Sell Price" %>
+                <% end %>
+                <%= form.fieldset :legend => "Dimensions", :id => "product_dimensions_fieldset", :class => "collapsible #{"collapsed" unless @product.has_dimensions?}" do %>
+                  <%= form.text_field :weight %>
+                  <%= form.text_field :height %>
+                  <%= form.text_field :width %>
+                  <%= form.text_field :depth %>
+                <% end %> 
+              </div>
+            <% end %>
+            <% unless @product.new_record? %>
+              <% tabs.gallery :title => "Gallery" do %>
+                <div id="product-gallery">
+                  <div id="assets">
+                    <%= render :partial => "/admin/breeze/commerce/products/image", :collection => @product.images %>
+                  </div>
+                </div>
+              <% end %>
+              <% tabs.variants :title => "Variants" do %>
+                <div id="product-variants">
+                  <%= render :partial => "/admin/breeze/commerce/products/variants", :object => @product.variants %>
+                </div>
+              <% end %>
+              <% tabs.associated_with :title => "Associated With" do %>
+                <div id="product-associated-with">
+                  <p>Not yet implemented.</p>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+      <%= fake_right_sidebar do %>
+        <%= scrollable_layout do %>
+          <%= form.fieldset :id => "product-available" do %>
+            <%= form.check_box :available, :label => "Available?" %>
+          <% end %>
+          <%= link_to "View", @product.permalink, :class => "large view button", :target => :_blank unless @product.new_record? %>
+          <%= submit_tag "Save", :class => "large green save button" %>
+          <%= link_to "Delete", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record? %>
+          <% unless @product.new_record? %>
+            <%= form.fieldset :legend => "Actions" do %>
+              <%= content_tag :div, :id => "uploader", "data-session-key" => Rails::Application.config.session_options[:key], "data-session-id" => cookies[Rails::Application.config.session_options[:key]] do %>
+                <%= link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %> 
+      <% end %>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= render :partial => "/admin/breeze/commerce/commerce/left" %>
+<% end %>
+
+<% content_for :right do %>
+  <%= pane_layout do |right| %>
+    <% right.header do %>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<% content_for :head do %>
+  <%= stylesheet_link_tag "/breeze/javascripts/marquess/marquess.css" %>
+  <%= javascript_include_tag "/breeze/javascripts/marquess/marquess.js", "/breeze/javascripts/blog.js" %>
+
+  <%= stylesheet_link_tag "/breeze/javascripts/uploadify/uploadify.css", "/breeze_commerce/javascript/styles/token-input-facebook.css" %>
+  <%= javascript_include_tag "/breeze/javascripts/uploadify/swfobject.js", "/breeze/javascripts/uploadify/uploadify.js", "/breeze_commerce/javascript/jquery.tokeninput.js" %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $('#product_available').change(function() {
+      }).change().hide();
+
+    $('textarea.markup').marquess();
+
+    //$("#product_category_tokens").tokenInput("<%= admin_store_categories_path(:json) %>", {
+    //  crossDomain: false,
+    //  prePopulate: $('#product_category_tokens').attr("data-pre"),
+    //  theme: "facebook"
+    //  });
+
+    $('<div class="available-toggle"></div>').insertAfter('#product_available').css({
+      'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
+    }).mousedown(function() {
+      $('#product_available').click().change();
+      $(this).animate({
+        'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
+      }, 'slow', 'easeInOutQuad')
+    });
+
+    $('#product_dimensions_fieldset.collapsed').find('ol.form').hide();
+    $('#product_dimensions_fieldset legend').click(function() {
+      var fieldset = $(this).parent()
+      fieldset.toggleClass('collapsed').find('ol.form').toggle(!fieldset.hasClass('collapsed'));
+    });
+  });
+</script>
+
+

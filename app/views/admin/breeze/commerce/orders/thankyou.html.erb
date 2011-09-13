@@ -1,0 +1,72 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
+<% end %>
+<div id="thankyou">
+  <h1>Thank You</h1>
+  <p>You have successfully made a payment of XXX. This Credit Card transaction will will appear as <strong>"EXAMPLE"</strong> on your statement. You will also receive an email receipt for this transaction shortly.</p>
+  <div class="order-summary" id="thankyou-summary">
+    <div class="header"><span>Your Order<span></div>
+    <div class="body">
+      <div id="order-details">
+        <div id="order-number">
+          <span>Order Number:</span>
+          <span>XXXXXXX</span>
+        </div>
+        <div class="detail">
+          <div class="step">
+            <span>Shipping Information</span>
+          </div>
+          <div class="summary-item">
+            <span><%= "Blair Neate" %></span>
+            <span><%= "021 125 6178" %></span>
+          </div>
+          <div class="summary-item">
+            <span>123 Main Street</span>
+          </div>
+        </div>
+        <div class="detail">
+          <div class="step">
+            <span>Payment Information</span>
+          </div>
+        </div>
+      </div>
+        <table id="cart" class="order summary">
+          <thead>
+            <tr>
+              <th colspan="3">Item</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>TOTAL</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @order.line_items.empty? %>
+              <tr>
+                <td colspan="8">You have no items in your cart.</td>
+              </tr>
+            <% else %>
+              <% @order.line_items.each do |line_item| %>
+                  <tr id="<%= line_item.id %>">
+                    <td></td>
+                    <td class="icon"><%= image_tag line_item.product.icon_image %></td>
+                    <td><%= line_item.product.name %></td>
+                    <td></td>
+                    <td class="price">$250.00 <span class="currency">NZD</span></td>
+                    <td class="quantity"><%= line_item.quantity %></td>    
+                    <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
+                    <td></td>  
+                  </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+          <%= render :partial => "breeze/commerce/line_items/totals" %>
+        </table>    
+      </div>
+    </div>
+
+    <%= link_to '/products', :class => "multi-line-button green" do %>
+      <span class="title">Continue Shopping</span>
+    <% end %>   
+  </div>    
