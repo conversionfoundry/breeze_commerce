@@ -69,6 +69,34 @@ $(function() {
     e.preventDefault();
   });
 
+  $('.new.association.button').live('click', function(e) {
+    $('table.fancy.associations')
+      .before('<div class="new-association" style="display: none; height: 180px;"><img src="/breeze/images/big-roller.gif" /></div>')
+      .parent()
+      .find('.new-association')
+      .slideDown("normal");
+
+    $.get(this.href, function(data) {
+      $('.new-association').html(data).height('auto');
+    });
+
+
+    e.preventDefault();
+  });
+
+  $('.add.association.button').live('click', function(e) {
+    $.ajax({
+      url: this.href,
+      type: 'post',
+      data: 'association_id=' + $(this).closest('tr').attr('data-id')
+    });
+    $(this).closest('tr').fadeOut(function() { $(this).remove(); });
+
+    e.preventDefault();
+  });
+
+
+
   // $('table.sortable tbody').sortable({
   //   update: function(e, ui) {
   //       $.ajax({
@@ -83,6 +111,31 @@ $(function() {
     $.get(this.href);
     e.preventDefault();
   });
+
+  $('.new.variant.button, .variants .variant-actions .edit.button').live('click', function(e) {
+      $.get(this.href, function(data) {
+        $('<div id="variant-details"></div>').html(data).dialog({
+          title: 'New Variant',
+          modal: true,
+          width: 512,
+          resizable: false,
+          open: function() {
+            $('input', this)[0].focus();
+            $('.uploadable', this).make_uploadable();
+          },
+          close: function() {
+            $(this).remove();
+          },
+          buttons: {
+            Cancel: function() { $(this).dialog('close'); },
+            OK: function() {
+              $('form', this).submit();
+            }
+          }
+        });
+      });
+      e.preventDefault();
+    });
 
   $('.fake-right-sidebar #uploader').each(function() {
     product_id = $(this).parents('.product-edit').attr('id').slice(8);
@@ -136,3 +189,35 @@ $(function() {
       $('.new.contextual.button').removeClass('disabled');
     });
   }
+
+$.fn.make_uploadable = function() {
+  $(this).load(function() {
+    var image = this, dialog = $(this).closest('.ui-dialog-content');
+    
+    script_data = { _method:'put' };
+    script_data[$('meta[name=csrf-param]').attr('content')] = $('meta[name=csrf-token]').attr('content');
+    script_data[$(this).attr('data-session-key')] = $(this).attr('data-session-id');
+
+    $(this).uploadify({
+      uploader     : '/breeze/javascripts/uploadify/uploadify.swf',
+      script       : $(this).attr('data-url'),
+      cancelImg    : '/breeze/images/icons/delete.png',
+      auto         : true,
+      fileDataName : $(this).attr('data-name'),
+      wmode        : 'transparent',
+      scriptData   : script_data,
+      width        : $(this).width() + 1,
+      height       : $(this).height() + 1,
+      buttonImg    : $(this).attr('src'),
+      folder       : '/',
+      
+      onComplete: function(event, queue_id, file_obj, response, data) {
+        image_id = $(image).attr('id');
+        $(image).siblings('object, div').remove();
+        $(image).replaceWith(response);
+        $('#' + image_id, dialog).make_uploadable();
+        return true;
+      }
+    });
+  });
+};

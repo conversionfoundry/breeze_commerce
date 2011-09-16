@@ -17,6 +17,7 @@ module Admin
         def update
           @variant = product.variants.find params[:id]
           @variant.update_attributes params[:variant]
+          render :layout => false unless params[:Filename].blank?
         end
 
         private

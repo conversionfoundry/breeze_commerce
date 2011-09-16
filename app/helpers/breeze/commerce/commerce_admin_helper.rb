@@ -16,6 +16,26 @@ module Breeze
       def commerce_menu_item(name, path, options = {})
         content_tag :li, link_to(name.html_safe, path.is_a?(Regexp) ? path.source : path.to_s, options), :class => "#{:active if path === request.path}"
       end
+
+      def uploadable_image(object, name, options)
+        src = if object.send(:"#{name}?") && (image = object.send(name))
+          image.respond_to?(:url) ? image.url(:thumbnail) : image
+        else
+          "http://placehold.it/#{options[:width] || 100}x#{options[:height] || 100}"
+        end
+        object_name = options[:object_name] || object.class.name.demodulize.underscore
+    
+        image_options = {
+          :class => "uploadable",
+          :id => options[:id] || "#{object_name}_#{name}",
+          :"data-name" => options[:name] || "#{object_name}[#{name}]",
+          :"data-session-key" => Rails.application.config.session_options[:key],
+          :"data-session-id" => cookies[Rails.application.config.session_options[:key]]
+        }
+
+        image_options[:"data-url"] = options[:url] if options[:url].present?
+        image_tag src, image_options
+      end
     end
   end
 end

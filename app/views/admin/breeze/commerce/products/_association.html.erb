@@ -1,0 +1,18 @@
+<%= content_tag :tr, :class => :association, :id => "association_#{association.id}", :"data-id" => association.id do %>
+  <td class="image">
+  </td>
+  <td class="name">
+    <%= association.name %>
+    <%= pluralize(association.variants.count, 'Variant') %>
+  </td>
+  <td>
+  </td>
+  <td>
+  </td>
+  <td class="actions">
+    <p class="association-actions">
+      <%= link_to "Delete", admin_store_product_association_path(@product, association, :format => :js), :method => :delete, :remote => true, :class => "small red delete button" %>
+    </p>
+  </td>
+<% end %>
+

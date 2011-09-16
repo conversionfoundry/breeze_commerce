@@ -34,11 +34,11 @@ table.products tbody tr:hover .product-actions {
   float: right;
 }
 
-table.categories .available-toggle {
+table.categories .available-toggle, table.variants .available-toggle {
   display: inline-block;
 }
 
-table.categories input.category-available {
+table.categories input.category-available, table.variants input.variant-available {
   display: none;
 }
 
@@ -141,6 +141,15 @@ table.fancy tbody tr.active .actions .button {
 
 #product-edit img.feature {
   float: left;
+}
+
+#product-variants .new.variant.button {
+  float: right;
+  margin: 12px;
+}
+
+.fancy.variants {
+  clear: left;
 }
 
 /** CONTEXTUAL **********************************/

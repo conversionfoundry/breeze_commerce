@@ -1,3 +1,4 @@
+<% if false %>
 <%= breeze_form_for @variant, :as => :variant, :url => url, :remote => true do |form| %>
   <%= render "/breeze/admin/shared/error_messages", :target => @variant, :object_name => :variant %>
   <%= form.fieldset do %>
@@ -11,3 +12,24 @@
     <%= form.text_field :sku_code, :required => true %>
   <% end %>
 <% end %>
+<% end %>
+
+<table class="fancy">
+  <% @products.each do |product| %>
+    <tr data-id="<%= product.id %>">
+      <td>
+        image goes here
+      </td>
+      <td>
+        <%= product.name %>
+      </td>
+      <td>
+        <%= product.sell_price %>
+        <%= link_to 'Add', admin_store_product_associations_path(@product), :class => "add association green button" %>
+      </td>
+    </tr>
+  <% end %>
+<table>
+
+
+

@@ -13,6 +13,7 @@ module Breeze
 
       has_many_related :variants, :class_name => "Breeze::Commerce::Variant"
       has_many_related :images, :class_name => "Breeze::Commerce::ProductImage"
+      has_many_related :related_products, :class_name => "Breeze::Commerce::Product", :stored_as => :array
       #embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
       #embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
 

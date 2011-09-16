@@ -1,14 +1,25 @@
-<%= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id do %>
+<%= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id, :"data-product-id" => variant.product.id do %>
+  <td class="image">
+    <%= image_tag variant.image.url(:thumbnail) if variant.image %>
+  </td>
   <td class="name">
     <%= variant.name %>
   </td>
   <td class="sku-code">
+    <%= variant.sku_code %>
   </td>
   <td class="price">
-
+    <%= variant.price %>
   </td>
   <td class="available">
-    <%= variant.available %>
+    <div class="text">
+      <%= variant.available ? "Yes" : "No" %>
+    </div>
+    <div class="field">
+      <%= check_box_tag "variant_#{variant.id}_available", "1", variant.available, :class => "variant-available" %>
+      <div class="available-toggle" style='background-position: <%= variant.available ? 0 : 100 %>% 0%'></div>
+    </div>
+
   </td>
   <td class="actions">
     <p class="variant-actions">

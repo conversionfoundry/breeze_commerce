@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :products do
         resources :variants
         resources :product_images
+        resources :associations
       end
 
       resources :orders do

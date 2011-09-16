@@ -1,19 +1,18 @@
 module Breeze
   module Commerce
-    class ProductUploader < CarrierWave::Uploader::Base
+    class VariantUploader < CarrierWave::Uploader::Base
       include CarrierWave::ConditionalVersions
       include CarrierWave::RMagick
 
-      FULL_SIZE  = [ 544, 292 ].freeze unless defined?(FULL_SIZE)
-      FEATURE_SIZE = [ 240, 204 ].freeze unless defined?(FEATURE_SIZE)
-      LISTING_SIZE = [ 192, 162 ].freeze unless defined?(LISTING_SIZE)
-      THUMB_SIZE = [ 50, 50 ].freeze unless defined?(THUMB_SIZE)
-      BREEZE_THUMB_SIZE = [ 128, 128 ].freeze unless defined?(BREEZE_THUMB_SIZE)
+      FULL_SIZE  = [ 168, 142 ].freeze unless defined?(FULL_SIZE)
+      THUMB_SIZE = [ 34, 34 ].freeze unless defined?(THUMB_SIZE)
+      BREEZE_THUMB_SIZE = [ 16, 16 ].freeze unless defined?(BREEZE_THUMB_SIZE)
     
       storage :file
     
       def store_path(for_file = filename)
-        File.join *[version_name ? "#{model.folder}#{version_name}" : "#{model.folder}", full_filename(for_file)].compact
+        folder = "images/variants/#{model.id}/"
+        File.join *[version_name ? "#{folder}#{version_name}" : folder, full_filename(for_file)].compact
         # File.join *[version_name ? "images/galleries/#{model.gallery.title}/#{version_name}" : "images/galleries/#{model.gallery.title}", full_filename(for_file)].compact
       end
       
@@ -27,14 +26,6 @@ module Breeze
 
       version :full do
         process :resize_to_limit => FULL_SIZE
-      end
-
-      version :feature do
-        process :resize_to_fill => FEATURE_SIZE
-      end
-
-      version :listing do
-        process :resize_to_fill => LISTING_SIZE
       end
 
       version :thumbnail do
@@ -63,4 +54,5 @@ module Breeze
     end
   end
 end
+
 

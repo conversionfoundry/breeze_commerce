@@ -1,9 +1,9 @@
 <div class="variants-container container">
-  <%= link_to "New variant", new_admin_store_product_variant_path(@product), :class => "large new contextual variant button" %>
-  <table class="fancy contextual variants">
+  <%= link_to "New variant...", new_admin_store_product_variant_path(@product), :class => "large new variant button" %>
+  <table class="fancy variants">
     <thead>
       <tr>
-        <th class="first" style="">Name</th>
+        <th class="first" style="" colspan="2">Name</th>
         <th style="width:15%;">SKU Code</th>
         <th style="width:10%;">Price</th>
         <th style="width:20%;">Available?</th>
@@ -23,3 +23,25 @@
     </tfoot>
   </table>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    $('.available-toggle').live('mousedown', function() {
+      $checkbox =  $(this).siblings('.variant-available');
+      $checkbox.click().change();
+      checked = $(this).siblings('.variant-available:checked').length > 0;
+      $(this).animate({
+        'background-position': (checked ? 0 : 100) + '% 0%'
+        }, 'slow', 'easeInOutQuad');
+      $(this).parents('.available').find('.text').html(checked ? 'Yes' : 'No');
+      id = $(this).closest('tr.variant').attr('data-id');
+      product_id = $(this).closest('tr.variant').attr('data-product-id');
+      $.ajax({
+        url: '/admin/store/products/' + product_id + '/variants/' + id + '.js',
+          type: 'post',
+          dataType: 'script',
+          data: '_method=put&variant[available]=' + checked
+      });
+    });
+  });
+ </script>

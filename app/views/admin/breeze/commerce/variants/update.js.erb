@@ -1,6 +1,6 @@
 <% if @variant.errors.empty? %>
-  $('#<%= "variant_#{@variant.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/breeze/commerce/products/variant", :object => @variant) %>');
+  $('#<%= "variant_#{@variant.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/admin/breeze/commerce/products/variant", :object => @variant) %>');
   $('#variant-details').dialog('close');
 <% else %>
-  $('#variant-details').html('<%= escape_javascript render(:file => "/breeze/commerce/variants/edit") %>');
+  $('#variant-details').html('<%= escape_javascript render(:file => "/admin/breeze/commerce/variants/edit") %>');
 <% end %>
