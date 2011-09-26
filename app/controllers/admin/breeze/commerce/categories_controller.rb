@@ -4,9 +4,10 @@ module Admin
       class CategoriesController < Breeze::Commerce::Controller
         def index
           @categories = store.categories.ordered
+          #@categories = @categories.where(:name => /#{params[:q]}/) if params[:q]
           respond_to do |format|
             format.html
-            format.json { render :json => @categories.map{|c| [:id => c.id, :name => c.name] } }
+            format.json { render :json => @categories.map{|c| { :id => c.id, :name => c.name } } }
           end
         end
 

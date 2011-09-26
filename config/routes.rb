@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       end    
 
       resources :coupons
+
+      resources :customers
     end
 
   scope :module => "breeze/commerce" do
