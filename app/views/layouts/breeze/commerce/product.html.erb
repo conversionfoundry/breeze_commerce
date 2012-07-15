@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= page.title %></title>
+    <title>foo<%# page.title %></title>
     <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
     <%= javascript_include_tag "../breeze_commerce/javascript/galleria/galleria-1.2.2.js" %>
     <%= javascript_include_tag "../breeze_commerce/javascript/galleria/themes/classic/galleria.classic.min.js" %>
@@ -152,35 +152,35 @@ msg: "<div><img src='" + href + "' width='168' height='144' /></div><div>Yellow<
   </head>
   <body>
     <div id="container">
-      <% if product %>
-        <%= form_for :order, :url => populate_orders_url do |f| %>
-          <h1><%= product.name %></h1>
+      <% if @product %>
+        <%= form_for :order, :url => 'breeze/commerce/orders#populate' do |f| %>
+          <h1><%= @product.title %></h1>
           <div class="top">
           <div class="images">
             <div class="main-image">
-              <%= image_tag "thumbnails/preview/products/wigs1.jpg", :class => "main" %>
+              <%= image_tag "http://placehold.it/350x150", :class => "main" %>
             </div>
             <div class="thumbs">
-            <%= link_to "/images/thumbnails/preview/products/wigs1.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs1.jpg", :class => "active" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30", :class => "active" %>
             <% end %>
-            <%= link_to "/images/thumbnails/preview/products/wigs2.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs2.jpg" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30" %>
             <% end %>
-            <%= link_to "/images/thumbnails/preview/products/wigs3.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs3.jpg" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30" %>
             <% end %>
-            <%= link_to "/images/thumbnails/preview/products/wigs4.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs4.jpg" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30" %>
             <% end %>
-            <%= link_to "/images/thumbnails/preview/products/wigs5.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs5.jpg" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30" %>
             <% end %>
-            <%= link_to "/images/thumbnails/preview/products/wigs6.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs6.jpg" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30" %>
             <% end %>
-            <%= link_to "/images/thumbnails/preview/products/wigs7.jpg", :class => :thumb do %>
-              <%= image_tag "thumbnails/icon/products/wigs7.jpg" %>
+            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
+              <%= image_tag "http://placehold.it/70x30" %>
             <% end %>
           </div>
           <div class="action">
@@ -199,10 +199,7 @@ msg: "<div><img src='" + href + "' width='168' height='144' /></div><div>Yellow<
         </div>
       </div>
         <div class="summary-content">
-          <ul>
-            <li>Lorem ipsum dolor sit amet</li>
-            <li>Consectetur adipiscing elit</li>
-          </ul>
+          <<p><%= product.full_description %></p>
         </div>
         <div class="selection">
           <div class="selection-box">
@@ -221,9 +218,9 @@ msg: "<div><img src='" + href + "' width='168' height='144' /></div><div>Yellow<
             <div class="quantity">
             <label>Quantity:</label>
           <%= select_tag :quantity, options_for_select((1..10).to_a) %>
-          <%= hidden_field_tag :product_id, product.id %> 
+          <%= hidden_field_tag :product_id, @product.id %> 
         </div>
-          <%= submit_tag "Add to cart", :class => "fade green" %>
+          <%= button_to "Add to Cart", breeze.populate_orders_path, :method => :post %>
         </div>
         </div>
     </div>

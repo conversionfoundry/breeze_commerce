@@ -1,0 +1,22 @@
+<%= content_tag :tr, :class => "customer", :id => "customer_#{customer.id}" do %>
+  <td><%= check_box_tag "customer_ids[]", customer.id %></td>
+  <td class="first-name">
+    <%= customer.first_name %>
+  </td>
+  <td class="last-name">
+    <%= customer.last_name %>
+  </td>
+  <td class="email">
+    <%= customer.email %>
+  </td>
+  <td class="last-order">
+    <%= customer.last_order %>
+  </td>
+  <td class="actions">
+    <p class="customer-actions">
+      <%= link_to "Edit", edit_admin_store_customer_path(customer), :class => "small black button" %>
+      <%= link_to "Delete", admin_store_customer_path(customer), :remote => true, :method => :delete, :class => "small red delete button" %>
+    </p>
+  </td>
+<% end %>
+

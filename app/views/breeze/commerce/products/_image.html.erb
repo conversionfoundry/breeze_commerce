@@ -1,3 +1,4 @@
+foo
 <%= content_tag :div, :class => "image", :id => "image_#{image.id}", :"data-filename" => image.basename, :"data-width" => image.image_width, :"data-height" => image.image_height, :"data-id" => image.id do %>
   <%= content_tag :div, :class => "icon #{image.extension}" do %>
     <%= image_tag image.file.url(:breeze_thumb) %>

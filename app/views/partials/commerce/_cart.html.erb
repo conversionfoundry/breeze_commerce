@@ -1,0 +1,18 @@
+<div id="cart">
+  <h3>
+    <%= link_to("My Cart", breeze.cart_path) %>
+  </h3>
+  <ul>
+    <% order.line_items.each do |item| %>
+      <li>
+        <%= item.quantity %>
+        &times;
+        <%= item.variant.name %>
+      </li>
+    <% end %>
+  </ul>
+  Total:
+  <%= number_to_currency(order.total) %>
+  
+  <%= link_to("Show Cart", breeze.cart_path) %>
+</div>

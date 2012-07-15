@@ -1,1 +1,1 @@
-# BreezeCommerce
+require "breeze/commerce"

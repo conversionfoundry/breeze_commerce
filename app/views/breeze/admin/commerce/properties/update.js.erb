@@ -1,0 +1,7 @@
+<% if @property.errors.empty? %>
+  $('#<%= "property_#{@property.id}" %>').replaceWith('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/property", :object => @property) %>');
+  $('#property-details').dialog('close');
+  $('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/variants", :object => @product.variants) %>');
+<% else %>
+  $('#property-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/properties/edit") %>');
+<% end %>

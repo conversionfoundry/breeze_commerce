@@ -5,7 +5,7 @@
   <td class="products">
     <% order.line_items.each do |item| %>
       <%= item.quantity %>
-      <%= item.product.name %>
+      <%= item.product.title %>
     <% end %>
   </td>
   <td class="customer">

@@ -1,21 +1,26 @@
-Rails.application.routes.draw do
-  scope "admin/store", :module => "admin/breeze/commerce", :name_prefix => "admin_store" do
+Breeze::Engine.routes.draw do  
+
+  namespace "admin" do
+    # namespace "store" do
+  
+    namespace "store", :module => "commerce", :name_prefix => "admin_store" do
       root :to => "store#index"
       controller :commerce do
         get :settings
         put :settings     
       end
-    
+  
       resources :products do
         resources :variants
+        resources :properties
         resources :product_images
         resources :associations
       end
 
       resources :orders do
-        member do
-          get :print
-        end
+        # member do
+        #   get :print
+        # end
       end
 
       resources :categories do
@@ -27,9 +32,14 @@ Rails.application.routes.draw do
       resources :coupons
 
       resources :customers
+  
     end
+  end
 
-  scope :module => "breeze/commerce" do
+  scope :module => "commerce" do
+  # namespace "store", :module => "commerce", :name_prefix => "store" do
+ 
+    
     resources :orders do
       resources :line_items
       get :checkout, :on => :collection
@@ -37,9 +47,14 @@ Rails.application.routes.draw do
       post :remove_item, :on => :member
       get :thankyou, :on => :collection
     end
+    
+    # TODO: Not sure why this wasn't here. It needs to work with the normal Breeze hierarchy.
+    # resources :products
+     
     match 'cart', :to => 'orders#edit', :via => :get, :as => :cart
     match 'checkout', :to => 'orders#checkout', :via => :get, :as => :checkout
+
+
   end
 
 end
-

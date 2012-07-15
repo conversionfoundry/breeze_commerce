@@ -1,0 +1,14 @@
+<%= form.fieldset do %>
+  <%= form.text_field :title, :required => false %>
+
+  <%# TODO: Select from properties %>
+  <%= form.select :category_ids, Breeze::Commerce::Store.first.categories.map {|c|[ c.name, c.id ] }, { :required => false, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
+  <p>Select product categories to list (leave empty to list all products)</p>
+  
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    $('.multiselect').multiSelect();
+  });
+</script>

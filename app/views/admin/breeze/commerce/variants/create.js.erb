@@ -1,7 +1,0 @@
-<% if @variant.errors.empty? %>
-  $('.variants tbody').append('<%= escape_javascript render(:partial => "/admin/breeze/commerce/products/variant", :object => @variant) %>');
-  $('#variant-details').dialog('close');
-<% else %>
-  $('#variant-details').html('<%= escape_javascript render(:file => "/admin/breeze/commerce/variants/new") %>');
-<% end %>
-

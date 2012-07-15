@@ -1,0 +1,6 @@
+<% content_for :title, "Editing Product" %>
+
+<div id='<%= "product_#{@product.id}" %>' class="product-edit">
+  <%= render "breeze/admin/commerce/products/form", :url => admin_store_product_path(@product) %>
+</div>
+

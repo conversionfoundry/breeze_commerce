@@ -1,0 +1,45 @@
+<div class="properties-container container">
+  <%= link_to "New property...", new_admin_store_product_property_path(@product.id), :class => "large new property button" %>
+  <table class="fancy properties">
+    <thead>
+      <tr>
+        <th class="first" style="">Name</th>
+        <th style="width:20%;">Options</th>
+        <th class="last" style="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @product.properties.any? %>
+        <%= render :partial => "breeze/admin/commerce/products/property", :collection => @product.properties %>
+      <% else %>
+        <tr class="empty"><td class="empty" colspan="5">There are no properties for this product.</td></tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    // $('.available-toggle').live('mousedown', function() {
+    //   $checkbox =  $(this).siblings('.property-available');
+    //   $checkbox.click().change();
+    //   checked = $(this).siblings('.property-available:checked').length > 0;
+    //   $(this).animate({
+    //     'background-position': (checked ? 0 : 100) + '% 0%'
+    //     }, 'slow', 'easeInOutQuad');
+    //   $(this).parents('.available').find('.text').html(checked ? 'Yes' : 'No');
+    //   id = $(this).closest('tr.property').attr('data-id');
+    //   product_id = $(this).closest('tr.property').attr('data-product-id');
+    //   $.ajax({
+    //     url: '/admin/store/products/' + product_id + '/properties/' + id + '.js',
+    //       type: 'post',
+    //       dataType: 'script',
+    //       data: '_method=put&property[available]=' + checked
+    //   });
+    // });
+  });
+ </script>

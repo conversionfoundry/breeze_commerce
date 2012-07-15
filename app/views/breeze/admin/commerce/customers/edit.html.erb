@@ -1,0 +1,5 @@
+<% content_for :title, "Editing Customer" %>
+<div id='<%= "customer_#{@customer.id}" %>' class="customer-edit">
+  <%= render "breeze/admin/commerce/customers/form", :url => admin_store_customer_path(@customer) %>
+</div>
+

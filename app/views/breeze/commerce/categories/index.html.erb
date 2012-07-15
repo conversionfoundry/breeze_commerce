@@ -1,15 +1,16 @@
 <% content_for :title, "Product Categories"%>
-<% pane_layout do |panes| %>
-  <% panes.inner do %>
-    <%= scrollable_layout do %>
-      <h1>Product Categories 
-        <%= link_to "New category", new_admin_store_category_path, :class => "large new green contextual category button" %>
-      </h1>
-      <%= render :partial => "categories", :locals => { :categories => @categories } %>
-    <% end %>
-  <% end %>
+
+<%= tabbed_layout do |tabs| %>
 <% end %>
 
 <% content_for :left do %>
   <%= render :partial => "breeze/commerce/commerce/left" %>
 <% end %>
+
+<% content_for :right do -%>
+  <%= pane_layout do |right| %>
+    <% right.header do %>
+      <%= link_to "New category", new_admin_store_category_path, :class => "large new green contextual category button" %>
+    <% end %>
+  <% end %>
+<% end -%>

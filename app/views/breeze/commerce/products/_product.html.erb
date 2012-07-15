@@ -6,7 +6,7 @@
     <% end %>
   </td>
   <td class="name">
-    <%= link_to product.name, edit_admin_store_product_path(product), :class => "name-link" %>
+    <%= link_to product.title, breeze.edit_admin_store_product_path(product), :class => "name-link" %>
     <div class="categories">
       <%= product.categories.collect(&:name).join(', ') %>
     </div>
@@ -26,8 +26,8 @@
   <td class="actions">
     <p class="product-actions">
       <%= link_to "View", product.permalink, :target => :_blank, :class => "small black button" %>
-      <%= link_to "Edit", edit_admin_store_product_path(product), :class => "small black button" %>
-      <%= link_to "Delete", admin_store_product_path(product), :remote => true, :method => :delete, :class => "small red delete button" %>
+      <%= link_to "Edit", breeze.edit_admin_store_product_path(product), :class => "small black button" %>
+      <%= link_to "Delete", breeze.admin_store_product_path(product), :remote => true, :method => :delete, :class => "small red delete button" %>
     </p>
   </td>
 <% end %>

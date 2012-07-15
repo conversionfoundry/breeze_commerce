@@ -9,11 +9,15 @@ module Breeze
       field :gift, :type => Boolean
       field :personal_message
 
-      # TODO: belongs_to :user
+      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
+      belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       embeds_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
-      references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :local_foreign_key => true
+      
+      # TODO: I'm not sure why local_foreign_key was used here. It seems not to work.
+      # references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :local_foreign_key => true
+      references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
 
       def item_total
         line_items.map(&:amount).sum

@@ -3,13 +3,14 @@ module Breeze
     module CommerceAdminHelper
       def commerce_menu
         content_tag :ul, [
-          commerce_menu_item("Orders", admin_store_orders_path),
-          commerce_menu_item("Customers", admin_store_customers_path),
-          commerce_menu_item("Products", admin_store_products_path),
-          commerce_menu_item("Categories", admin_store_categories_path),
-          commerce_menu_item("Coupons", admin_store_coupons_path),
-          commerce_menu_item("Shipping Costs", ""),
-          commerce_menu_item("Settings", admin_store_settings_path)
+          commerce_menu_item("Store overview", admin_store_root_path),
+          commerce_menu_item("Orders", breeze.admin_store_orders_path),
+          commerce_menu_item("Customers", breeze.admin_store_customers_path),
+          commerce_menu_item("Products", breeze.admin_store_products_path),
+          commerce_menu_item("Categories", breeze.admin_store_categories_path),
+          # commerce_menu_item("Coupons", breeze.admin_store_coupons_path),
+          # commerce_menu_item("Shipping Costs", ""),
+          # commerce_menu_item("Settings", breeze.admin_store_settings_path)
         ].join.html_safe, :class => :actions
       end
 
@@ -17,6 +18,17 @@ module Breeze
         content_tag :li, link_to(name.html_safe, path.is_a?(Regexp) ? path.source : path.to_s, options), :class => "#{:active if path === request.path}"
       end
 
+      def at_a_glance(count, label, link = nil, options = {})
+        "".tap do |html|
+          html << "<tr>"
+          html << "<td class=\"count\">#{count}</td>"
+          html << "<td class=\"label\">"
+          html << link_to_unless(link.blank?, label.gsub(/(\w+)\(s\)/) { count == 1 ? $1 : $1.pluralize }, link, options)
+          html << "</td>"
+          html << "</tr>"
+        end.html_safe
+      end
+      
       def uploadable_image(object, name, options)
         src = if object.send(:"#{name}?") && (image = object.send(name))
           image.respond_to?(:url) ? image.url(:thumbnail) : image

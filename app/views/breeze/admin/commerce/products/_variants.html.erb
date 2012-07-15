@@ -1,0 +1,52 @@
+<div class="variants-container container">
+  <%= link_to "New variant...", new_admin_store_product_variant_path(@product.id), :class => "large new variant button" %>
+  <table class="fancy variants">
+    <thead>
+      <tr>
+        <th class="first" style="" colspan="2">Name</th>
+        <th style="width:15%;">SKU Code</th>
+        <th style="width:10%;">Price</th>
+        <% @product.properties.each do |property| %>
+          <th>
+            <%= property.name %>
+          </th>
+        <% end %>
+        <th style="width:20%;">Available?</th>
+        <th class="last" style="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @product.variants.any? %>
+        <%= render :partial => "breeze/admin/commerce/products/variant", :collection => @product.variants %>
+      <% else %>
+        <tr><td class="empty" colspan="5">There are no variants for this product.</td></tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    // $('.available-toggle').live('mousedown', function() {
+    //   $checkbox =  $(this).siblings('.variant-available');
+    //   $checkbox.click().change();
+    //   checked = $(this).siblings('.variant-available:checked').length > 0;
+    //   $(this).animate({
+    //     'background-position': (checked ? 0 : 100) + '% 0%'
+    //     }, 'slow', 'easeInOutQuad');
+    //   $(this).parents('.available').find('.text').html(checked ? 'Yes' : 'No');
+    //   id = $(this).closest('tr.variant').attr('data-id');
+    //   product_id = $(this).closest('tr.variant').attr('data-product-id');
+    //   $.ajax({
+    //     url: '/admin/store/products/' + product_id + '/variants/' + id + '.js',
+    //       type: 'post',
+    //       dataType: 'script',
+    //       data: '_method=put&variant[available]=' + checked
+    //   });
+    // });
+  });
+ </script>

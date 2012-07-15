@@ -1,0 +1,27 @@
+<div class="coupons-container container">
+  <table class="fancy contextual coupons">
+    <thead>
+      <tr>
+        <th class="first" style="width: 10%;">Code</th>
+        <th>Name</th>
+        <th style="width:20%;">Start on</th>
+        <th style="width:20%;">Expire on</th>
+        <th style="width:10%;">Days Remaining</th>
+        <th style="width:10%">Active</th>
+        <th class="last" style="">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if coupons.any? %>
+        <%= render :partial => "breeze/admin/commerce/coupons/coupon", :collection => coupons %>
+      <% else %>
+        <tr><td class="empty" colspan="6">There are no coupons to show here.</td></tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+

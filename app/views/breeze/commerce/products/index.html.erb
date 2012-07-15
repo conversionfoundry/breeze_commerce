@@ -1,19 +1,21 @@
 <% content_for :title, "Products" %>
-<% pane_layout do |panes| %>
-  <% panes.inner do %>
+
+<%= pane_layout do |panes| %>
+  <%= panes.inner do %>
     <%= scrollable_layout do %>
-      <h1>All Products <%= link_to "New product", new_admin_store_product_path, :class => "large new green product button" %></h1>
+      <h1>All Products <%= link_to "New product", breeze.new_admin_store_product_path, :class => "large new green product button" %></h1>
       <div class="filters">
         <div class="states">
-          <%= link_to "All (#{Breeze::Commerce::Product.count})", admin_store_products_path %> |
-          <%= link_to "Published (#{Breeze::Commerce::Product.published.count})", admin_store_products_path %>
+          <%= link_to "All (#{Breeze::Commerce::Product.count})", breeze.admin_store_products_path %> |
+          <%= link_to "Published (#{Breeze::Commerce::Product.published.count})", breeze.admin_store_products_path %>
         </div>
       </div>
-      <%= render :partial => "products", :locals => { :products => @products.paginate(:page => params[:page], :per_page => 10) } %>
+      <%= render :partial => "breeze/commerce/products/products", :locals => { :products => @products.paginate(:page => params[:page], :per_page => 10) } %>
     <% end %>
   <% end %>
 <% end %>
 
+
 <%= content_for :left do %>
-  <% render :partial => "/breeze/commerce/commerce/left" %>
+  <% render :partial => "breeze/commerce/commerce/left" %>
 <% end %>

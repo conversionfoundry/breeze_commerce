@@ -1,17 +1,18 @@
-<%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
-<%= stylesheet_link_tag "/breeze/stylesheets/commerce" %>
+<%= stylesheet_link_tag "breeze/commerce" %>
+<%# navigation :page => Breeze::Content::Page.first %>
 <div id="cart-container">
   <div id="cart-header">
 <h1>Shopping Cart</h1>
 
   <div class="buttons">
-    <%= link_to '/products', :class => "multi-line-button" do %>
+    <%= link_to :back, :class => "multi-line-button" do %>
       <span class="title">Continue Shopping</span>
       <span class="subtitle">your information will be saved</span>
     <% end %>
-      <%= link_to checkout_path, :class => "single-line-button green large" do %>
-        <span class="title">Checkout NOW!</span>  
-      <% end %> 
+    <%# TODO: Don't show checkout button if there's nothing in the cart %>
+    <%= link_to breeze.checkout_path, :class => "single-line-button green large" do %>
+      <span class="title">Checkout NOW!</span>  
+    <% end %> 
     </div>
   </div>
       <table id="cart" class="rounded order">
@@ -31,17 +32,17 @@
 
         <% else %>
         <% @order.line_items.each do |line_item| %>
-          <%= form_for line_item, :url => order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
+          <%= form_for line_item, :url => breeze.order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
             <tr id="<%= line_item.id %>">
           <td></td>
-          <td class="icon"><%= image_tag line_item.product.icon_image %></td>
-          <td><%= line_item.product.name %></td>
+          <td class="icon"><% image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
+          <td><%= line_item.variant.name %></td>
           <td></td>
-          <td class="price">$250.00 <span class="currency">NZD</span></td>
+          <td class="price">$<%= line_item.variant.display_price %> <span class="currency">NZD</span></td>
           <td><%= f.text_field :quantity %> &nbsp; <%= f.submit "Apply" %></td>    
           <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
           <td>
-            <%= link_to 'Remove', order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "remove" %>
+            <%= link_to 'Remove', breeze.order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "remove" %>
           </td>
           <td></td>  
         </tr>
@@ -52,11 +53,11 @@
   <%= render :partial => "breeze/commerce/line_items/totals" %>
 </table>
   <div class="buttons">
-    <%= link_to '/products', :class => "multi-line-button" do %>
+    <%= link_to :back, :class => "multi-line-button" do %>
       <span class="title">Continue Shopping</span>
       <span class="subtitle">your information will be saved</span>
     <% end %>
-      <%= link_to checkout_path, :class => "single-line-button green large" do %>
+      <%= link_to breeze.checkout_path, :class => "single-line-button green large" do %>
         <span class="title">Checkout NOW!</span>  
       <% end %> 
     </div>

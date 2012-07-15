@@ -1,0 +1,10 @@
+<% if @property.errors.empty? %>
+  $('.properties tbody tr.empty').remove();
+  $('.properties tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/property", :object => @property) %>');
+  $('#property-details').dialog('close');
+  $('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/variants", :object => @product.variants) %>');
+<% else %>
+  $('#property-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/properties/new") %>');
+  
+<% end %>
+

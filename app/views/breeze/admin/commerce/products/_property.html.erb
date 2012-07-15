@@ -1,0 +1,16 @@
+<%= content_tag :tr, :class => :property, :id => "property_#{property.id}", :"data-id" => property.id, :"data-product-id" => @product.id do %>
+  <td class="name">
+    <%= property.name %>
+  </td>
+  <td class="options">
+    <% property.options.each do |option| %>
+      <%= option.name %>
+    <% end %>
+  </td>
+  <td class="actions">
+    <p class="property-actions">
+      <%= link_to "Delete", admin_store_product_property_path(@product, property, :format => :js), :method => :delete, :remote => true, :class => "small red delete button" %>
+      <%= link_to "Edit", edit_admin_store_product_property_path(property.product, property), :class => "small black edit button" %>
+    </p>
+  </td>
+<% end %>

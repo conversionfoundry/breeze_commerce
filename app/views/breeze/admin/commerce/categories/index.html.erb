@@ -1,0 +1,18 @@
+<% content_for :title, "Product Categories"%>
+
+<%= pane_layout do |pane| %>
+  <%= pane.inner do %>
+    <%= scrollable_layout do %>
+      <h1>Product Categories 
+      <%= link_to "New category", new_admin_store_category_path, :class => "large new green category button" %></h1>
+      <%= render :partial => "breeze/admin/commerce/categories/categories", :locals => { :categories => @categories } %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
+
+<% content_for :left do %>
+  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
+<% end %>

@@ -1,14 +1,18 @@
-Breeze.configure do
-  Breeze::Content.register_class Breeze::Commerce::Store
-end
 
-Breeze.hook :define_abilities do |user, abilities|
- # abilities.instance_eval do
- #   can :manage, Breeze::Commerce::Shop if user.editor?
- # end
-end
+## TODO: Not sure why this isn't working
+# Breeze.hook :define_abilities do |user, abilities|
+#   # Rails.logger.debug '********** user: ' + user.inspect
+#   # Rails.logger.debug '********** abilities: ' + abilities.inspect
+#   
+#   abilities.instance_eval do
+#     can :manage, Breeze::Commerce::Shop if user.editor?
+#   end
+# end
 
 Breeze.hook :admin_menu do |menu, user|
+  # Remove the menu item provided by Breeze Account, as we'll manage customers in the Store section
+  menu.delete_if{|item| item[:name] == "Customers"}
+  
   menu << { :name => "Store", :path => "/admin/store" } if user.can? :manage, Breeze::Content::Item
 end
 
@@ -20,6 +24,9 @@ Breeze.hook :get_content_by_permalink do |permalink_or_content|
   end
 end
 
-Rails.application.config.to_prepare do
-  Breeze::Controller.helper Breeze::Commerce::ContentsHelper
-end
+# Rails.application.config.to_prepare do
+#   Breeze::Controller.helper Breeze::Commerce::ContentsHelper
+# end
+
+
+

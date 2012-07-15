@@ -1,7 +1,7 @@
 module Breeze
   module Commerce
     class ProductUploader < CarrierWave::Uploader::Base
-      include CarrierWave::ConditionalVersions
+      # include CarrierWave::ConditionalVersions # This doesn't seem to be needed anymore?
       include CarrierWave::RMagick
 
       FULL_SIZE  = [ 544, 292 ].freeze unless defined?(FULL_SIZE)

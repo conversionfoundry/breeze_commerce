@@ -1,0 +1,132 @@
+<%= pane_layout do |main| %>
+  <%= main.inner do %>
+    <%= breeze_form_for @product, :as => :product, :url => url do |form| %>
+      <%= scrollable_layout do %>
+        <h1><%= @product.new_record? ? 'New product' : "Editing Product \"#{@product.title}\"" %></h1>
+        <%= render "/breeze/admin/shared/error_messages", :target => @product, :object_name => :product %>
+        <%= tabbed_layout do |tabs| %>
+          <% tabs.details :title => "Product Details" do %>
+            <div id="product-details">
+              <%= form.fieldset do %>
+                  <% unless @product.images.empty? %>
+                    <%= image_tag @product.images.first.file.url(:breeze_thumb), :class => "feature" %>
+                  <% end %>
+                  <%= form.text_field :title, :required => true, :label => "Product Name" %>
+                  <%= form.text_field :teaser, :required => true %>
+                  <%= form.text_field :slug, :required => true %>
+
+                  <%= form.text_area :short_description, :required => true, :rows => 4, :class => "markup" %> 
+                  <%= form.text_area :full_description, :required => true, :rows => 4, :class => "markup" %>
+
+                  <%= form.select :category_ids, store.categories.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
+                  <%= form.number_field :cost_price, :required => true, :label => "Cost Price" %>
+                  <%= form.number_field :sell_price, :required => true, :label => "Base Sell Price" %>
+                  <%= form.number_field :discounted_sell_price, :label => "Discounted Sell Price" %>
+                <% end %>
+              </div>
+              
+              <div id="product-properties">
+                <%= render :partial => "breeze/admin/commerce/products/properties", :object => @product.properties %>
+              </div>              
+              
+              <div id="product-variants">
+                <%= render :partial => "breeze/admin/commerce/products/variants", :object => @product.variants %>
+              </div>
+            <% end %>
+            
+            <% unless @product.new_record? %>
+              <% tabs.gallery :title => "Gallery" do %>
+                <div id="product-gallery">
+                  <div id="assets">
+                    <% unless @product.images.empty? %>
+                      <%= render :partial => "breeze/admin/commerce/products/image", :collection => @product.images %>
+                    <% else %>
+                      No images yet.
+                    <% end %>
+                    
+                  </div>
+                </div>
+              <% end %>
+              <% tabs.associated_with :title => "Related Products" do %>
+                <div id="product-associated-with">
+                  <%= render :partial => "breeze/admin/commerce/products/associations", :object => @product.associations %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+      <%= fake_right_sidebar do %>
+        <%= scrollable_layout do %>
+        
+          <%= form.fieldset :id => "product-available" do %>
+            <%= form.check_box :available, :label => "Available?" %>
+          <% end %>
+        
+          <%= link_to "View", @product.permalink, :class => "large view button", :target => :_blank unless @product.new_record? %>
+          <%= submit_tag "Save", :class => "large green save button" %>
+          <%= link_to "Delete", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record? %>
+          <% unless @product.new_record? %>
+            <%= form.fieldset :legend => "Actions" do %>
+              <!-- TODO: Fix this -->
+              <%# content_tag :div, :id => "uploader", "data-session-key" => Rails::Application.config.session_options[:key], "data-session-id" => cookies[Rails::Application.config.session_options[:key]] do %>
+                <%# link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>
+              <%# end %>
+              
+              <%= content_tag :div, :id => "uploader", "data-session-key" => Rails.configuration.session_options[:key], "data-session-id" => cookies[Rails.configuration.session_options[:key]] do %>
+                <%= link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>
+              <% end %>
+              
+            <% end %>
+          <% end %>
+        <% end %> 
+      <% end %>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
+<% end %>
+
+<% content_for :right do %>
+  <%= pane_layout do |right| %>
+    <% right.header do %>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<% content_for :head do %>
+  <%= stylesheet_link_tag "breeze/marquess/marquess.css" %>
+  <%= javascript_include_tag "breeze/marquess/marquess.js" %>
+
+  <%= stylesheet_link_tag "breeze/uploadify/uploadify.css" %>
+  <%= javascript_include_tag "breeze/uploadify/swfobject.js", "breeze/uploadify/uploadify.js" %>
+<% end %>
+
+<%# TODO: Tidy up language: available/published %>
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    
+    // TODO: Abstract out this code into a sliderfy jQuery plugin
+    // Insert the toggle switch for product availability
+    $('#product_available').hide();  
+    $('<div class="available-toggle"></div>').insertAfter('#product_available').css({
+       'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
+     })
+   .mousedown(function(event) {
+      $('#product_available').click().change();
+      $(this).animate({'background-position':($('#product_available:checked').length > 0 ? 0 : 100) + '%'}, 'slow', 'easeInOutQuad');
+    });
+  
+    $('textarea.markup').marquess();
+  
+    $('.multiselect').multiSelect();
+  
+  });
+</script>
+
+

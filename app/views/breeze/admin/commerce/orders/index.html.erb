@@ -1,0 +1,15 @@
+<% content_for :title, "Orders" %>
+
+<%= pane_layout do |panes| %>
+  <%= panes.inner do %>
+    <%= scrollable_layout do %>
+      <h1>Orders <%= link_to "New order", new_admin_store_order_path, :class => "large green button new order blue_monday" %></h1>
+      <%= render :partial => "breeze/admin/commerce/orders/orders", :object => @orders %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
+<% end %>
+

@@ -9,8 +9,14 @@ module Breeze
         Breeze::Commerce::Product.all
       end
 
+      # def with_url_params(match)
+      #   returning dup do |view|
+      #     view.set_url_params(match)
+      #   end
+      # end
+      # 
       def with_url_params(match)
-        returning dup do |view|
+        dup.tap do |view|
           view.set_url_params(match)
         end
       end
@@ -26,11 +32,20 @@ module Breeze
         end
       end
 
+      # def variables_for_render
+      #   returning super do |vars|
+      #     vars[:products] = products
+      #   end
+      # end
+      
       def variables_for_render
-        returning super do |vars|
+        super.tap do |vars|
           vars[:products] = products
         end
       end
+      
+      
+      
     end
   end
 end

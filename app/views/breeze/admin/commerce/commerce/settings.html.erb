@@ -1,0 +1,15 @@
+<% content_for :title, "Blog settings" %>
+
+<%= tabbed_layout do |tabs| %>
+  <% tabs.general :title => "General settings" do %>
+    Settings to go here
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
+<% end %>
+
+<% content_for :head do %>
+  <%= stylesheet_link_tag asset_path "breeze/store.css" %>
+<% end %>

@@ -12,9 +12,17 @@ module Breeze
         self.slug = match[2].gsub('/', '')
       end
 
+      def template
+        if content.template.blank?
+          "breeze/commerce/product"
+        else
+          content.template
+        end
+      end
+
       def variables_for_render
-        returning super do |vars|
-          vars[:product] = product
+        super.tap do |vars|
+          vars[:products] = products
         end
       end
     end

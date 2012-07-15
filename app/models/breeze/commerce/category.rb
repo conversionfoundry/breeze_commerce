@@ -7,11 +7,13 @@ module Breeze
 
       field :name
       field :sort
-      field :products_per_page, :type => Integer
+      # field :products_per_page, :type => Integer
       field :position, :type => Integer
-      field :available, :type => Boolean
+      # field :available, :type => Boolean
 
       belongs_to_related :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :categories
+      has_and_belongs_to_many :products, :class_name => "Breeze::Commerce::Product"
+      has_and_belongs_to_many :product_lists, :class_name => "Breeze::Commerce::ProductList"
 
       scope :ordered, order_by([:position, :asc])
 
@@ -27,7 +29,7 @@ module Breeze
       protected
 
       def regenerate_permalink!
-        self.permalink = "#{store.permalink}/#{slug}" unless store.nil? || slug.blank?
+        self.permalink = "/#{slug}" unless slug.blank?
       end
     end
   end

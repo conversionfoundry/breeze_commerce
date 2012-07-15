@@ -1,0 +1,27 @@
+<% content_for :title, "Store" %>
+
+<%= pane_layout do |main| %>
+  <% main.header do %>
+    <h2></h2>
+  <% end %>
+  <% main.inner do %>
+    <h1>You have no stores set up.</h1>
+  <% end %>
+<% end %>
+
+<% content_for :left do %>
+  <%= pane_layout do |left| %>
+    <% left.header do %>
+      <h2></h2>
+    <% end %>
+    <% left.inner do %>
+ 
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :right do -%>
+  <%= pane_layout do |right| %>
+    
+  <% end %>
+<% end -%>
