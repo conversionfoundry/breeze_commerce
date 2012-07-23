@@ -1,3 +1,4 @@
+# TODO: Why doesn't this inherit from Breeze::Content::Image?
 module Breeze
   module Commerce
     class ProductImage < Breeze::Content::Asset

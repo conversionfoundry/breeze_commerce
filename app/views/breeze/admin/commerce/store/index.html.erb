@@ -1,9 +1,6 @@
-<% content_for :title, "Store" %>
+<% content_for :title, "Store Overview" %>
 
 <%= pane_layout do |panes| %>
-  <%= panes.header do %>
-    <%= link_to "New Product", new_admin_store_product_path, :class => "large new blog_post button" %>
-  <% end %>
   <%= panes.inner do %>
     <%= scrollable_layout do %>
       <div id="store_dashboard">
@@ -33,7 +30,7 @@
 <% end %>
 
 <% content_for :left do %>
-  <%= render :partial => "breeze/admin/commerce/store/left" %>
+  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
 <% end %>
 
 

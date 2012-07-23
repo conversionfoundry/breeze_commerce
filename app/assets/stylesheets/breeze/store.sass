@@ -1,0 +1,306 @@
+/* Blog overview {{{
+
+#store_dashboard
+  margin: 0px 4px 16px
+  .box
+    float: left
+    margin: 8px
+    padding: 8px
+    background: #eee
+    -webkit-border-radius: 8px
+    -webkit-box-shadow: inset rgba(0, 0, 0, 0.25) 0px 1px 4px
+  .col1
+    width: 96px
+  .col2
+    width: 224px
+  .col3
+    width: 352px
+  .col4
+    width: 480px
+  .col5
+    width: 608px
+  .col6
+    width: 736px
+  .box
+    h2
+      margin: 0px
+      padding: 0px 0px 4px
+      border-bottom: 1px solid #999
+      font-weight: normal
+    .at-a-glance
+      width: 100%
+      margin: 0px
+      padding: 0px
+      border-spacing: 0px
+      border-collapse: collapse
+      td
+        border-bottom: 1px solid #ccc
+        padding: 0px
+        vertical-align: middle
+        &.count
+          font-size: 200%
+          width: 1.5em
+          text-align: right
+          padding-right: 0.25em
+    p
+      margin: 1ex 0px 0px
+
+/*}}}
+/* Left Panel {{{
+
+#left
+  #store-switcher
+    padding: 8px
+    text-shadow: rgba(255, 255, 255, 0.5) 0px 1px
+    label
+      float: left
+      font-weight: bold
+      text-transform: uppercase
+      font-size: 130%
+      vertical-align: middle
+  .actions
+    margin: 0px
+    padding: 0px
+    li
+      display: inline
+      list-style: none
+      a
+        position: relative
+        display: block
+        background: #ccc
+        margin: 0px 0px 8px
+        padding: 8px
+        color: #222
+        text-decoration: none
+        -webkit-border-radius: 4px
+        -moz-border-radius: 4px
+        strong
+          display: block
+          font-size: 125%
+        &:hover
+          background: #bbb
+      &.active a
+        background: #999
+        margin-right: -8px
+        -webkit-border-top-right-radius: 0px
+        -webkit-border-bottom-right-radius: 0px
+        -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px
+      small
+        position: absolute
+        right: 0.5em
+        top: 50%
+        min-width: 1.5em
+        height: 1.5em
+        line-height: 1.5em
+        margin: -0.75em 0em 0em
+        text-align: center
+        vertical-align: middle
+        background: #ec008c
+        color: white
+        font-size: 1.0em
+        -webkit-border-radius: 0.75em
+        -moz-border-radius: 0.75em
+        -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px -1px 1px, rgba(255, 255, 255, 0.5) 0px 1px 1px
+      &.active small
+        margin-right: 8px
+
+/* }}}
+
+#edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
+  background: none
+  position: relative
+
+#edit_product #main-tabs-content, #product_new #main-tabs-content
+  position: relative
+
+table.products
+  .product-actions
+    visibility: hidden
+  tbody tr:hover .product-actions
+    visibility: visible
+
+#product_available
+  margin: 0px
+  padding: 0px
+
+.available-toggle
+  background-image: url(image-path("breeze/yes-no-toggle.png"))
+  background-repeat: no-repeat
+  -webkit-border-radius: 4px
+  -moz-border-radius: 4px
+  width: 114px
+  height: 28px
+  margin: 0px 0px 8px
+
+#product-available .available-toggle
+  float: right
+
+table
+  &.categories .available-toggle, &.variants .available-toggle
+    display: inline-block
+  &.categories input.category-available, &.variants input.variant-available
+    display: none
+
+#product-available
+  label
+    padding-top: 6px
+    float: left
+    width: 60px
+    font-weight: bold
+  li.check_box
+    padding-left: 0
+
+.fake-right-sidebar .product-categories label
+  float: none
+  width: auto
+  display: inline
+
+fieldset.product-categories
+  margin: 8px 0px
+  padding: 8px 0px 0px
+  legend
+    position: relative
+    top: 4px
+  ol.form
+    margin: 0px
+    width: 184px
+    /* max-height: 9em;
+    overflow-y: auto
+    li
+      margin: 0px 0px 1px
+      background: #ccc
+      padding: 4px
+      -webkit-border-radius: 4px
+
+table
+  &.categories tr.category td
+    padding: 4px 8px
+    &.name
+      font-size: 125%
+      font-weight: bold
+  &.fancy tbody tr
+    .actions .button, td.available .field
+      visibility: hidden
+      opacity: 0
+      /* -moz-transition: opacity 0.25s ease-in;
+      -webkit-transition: opacity 0.25s ease-in
+    &:hover td.available .text
+      visibility: hidden
+      opacity: 0
+      /* -moz-transition: opacity 0.25s ease-in;
+      -webkit-transition: opacity 0.25s ease-in
+      height: 0
+    td.available .field
+      height: 0
+    &:hover
+      .actions .button, td.available .field
+        visibility: visible
+        opacity: 1.0
+    td.available .text
+      visibility: visible
+      opacity: 1.0
+    &.disabled:hover .actions .button
+      visibility: hidden
+      opacity: 0
+    &.active
+      td
+        border-bottom: 0px
+        background-color: #ffffc0
+      &:hover td
+        background-color: #ffffc0
+    &.edit td
+      background-color: #ffffc0
+    .actions
+      text-align: right
+    &.active .actions .button
+      visibility: visible
+      opacity: 1.0
+
+.product-edit .tab-pane, .product-new .tab-pane
+  /*  top: 0px !important;
+
+#product-edit img.feature
+  float: left
+
+#product-variants
+  .new.variant.button
+    float: right
+    margin: 12px
+  td.missing_value
+    background: yellow
+
+/* Variants
+
+.fancy.variants
+  clear: left
+
+/** CONTEXTUAL *********************************
+
+.edit-context
+  position: relative
+  margin-top: -12px
+
+.new-context
+  position: relative
+  margin-top: -12px
+  h3
+    margin: 0
+    padding-left: 8px
+    padding-top: 8px
+    font-size: 125%
+
+.edit-context
+  img
+    display: block
+    margin: 10px auto
+  label
+    float: none !important
+
+.new-context label
+  float: none !important
+
+.edit-context input, .new-context input
+  width: 240px !important
+
+.buttons
+  position: relative
+  img
+    position: absolute
+    margin: 0
+    bottom: -12px
+    left: -40px
+
+.new-context
+  background-color: #ffffc0
+  img
+    display: block
+    margin: 0px auto
+    padding-top: 10px
+  .buttons
+    position: absolute
+    right: 8px
+    bottom: 8px
+
+table
+  &.contextual tbody tr.edit .buttons
+    position: absolute
+    right: 0px
+    bottom: 8px
+  &.fancy tbody tr.edit .table-actions button
+    margin-left: 8px
+
+.new-category button
+  margin-left: 8px
+
+#coupon-details #coupon_type li.radio_button
+  width: 140px
+  display: inline-block
+  label
+    float: none
+    display: inline
+
+h1 .new
+  float: right
+
+.new.contextual.disabled
+  background-color: #6A952F

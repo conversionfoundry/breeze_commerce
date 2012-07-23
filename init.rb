@@ -24,6 +24,10 @@ Breeze.hook :get_content_by_permalink do |permalink_or_content|
   end
 end
 
+Breeze.hook :component_info do |component_info|
+	component_info << {:name => 'Breeze Commerce', :version => Breeze::Commerce::VERSION }
+end
+
 # Rails.application.config.to_prepare do
 #   Breeze::Controller.helper Breeze::Commerce::ContentsHelper
 # end
