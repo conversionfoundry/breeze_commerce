@@ -21,6 +21,8 @@
   <td class="actions">
     <p class="order-actions">
       <%= link_to "View", admin_store_order_path(order), :class => "small black view edit button"  %>
+      <%= link_to "Edit", edit_admin_store_order_path(order), :class => "small black button" %>
+      <%= link_to "Delete", edit_admin_store_order_path(order), :remote => true, :method => :delete, :class => "small red delete button" %>
     </p>
   </td>
 <% end %>

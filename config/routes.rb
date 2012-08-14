@@ -32,6 +32,8 @@ Breeze::Engine.routes.draw do
       resources :coupons
 
       resources :customers
+
+      resources :shipping_methods
   
     end
   end

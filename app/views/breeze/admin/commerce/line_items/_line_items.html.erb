@@ -1,0 +1,23 @@
+<table id="cart" class="rounded order">
+	<thead>
+	  <tr>
+	    <th colspan="3">Item</th>
+	    <th>Description</th>
+	    <th>Price</th>
+	    <th>Quantity</th>
+	    <th>TOTAL</th>
+	    <th></th>
+	    <th></th>
+	  </tr>
+	</thead>
+	<tbody>
+
+    <% if line_items.any? -%>
+      <%= render :partial => "breeze/admin/commerce/line_items/line_item", :collection => line_items %>
+    <% else -%>
+      <tr><td class="empty" colspan="9">No line items yet.</td></tr>
+    <% end -%>
+    
+	</tbody>
+	<%= render :partial => "breeze/commerce/line_items/totals" %>
+</table>

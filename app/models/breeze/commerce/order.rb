@@ -17,7 +17,10 @@ module Breeze
       
       # TODO: I'm not sure why local_foreign_key was used here. It seems not to work.
       # references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :local_foreign_key => true
-      references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
+      # references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
+      belongs_to_related :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :inverse_of => :orders
+
+      validates_presence_of :customer
 
       def item_total
         line_items.map(&:amount).sum

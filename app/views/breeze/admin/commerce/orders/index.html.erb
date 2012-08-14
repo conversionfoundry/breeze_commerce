@@ -3,7 +3,7 @@
 <%= pane_layout do |panes| %>
   <%= panes.inner do %>
     <%= scrollable_layout do %>
-      <h1>Orders <%= link_to "New order", new_admin_store_order_path, :class => "large green button new order blue_monday" %></h1>
+      <h1>Orders <%= link_to "New order", new_admin_store_order_path, :class => "large green button new order blue_monday how_does_it_feel" %></h1>
       <%= render :partial => "breeze/admin/commerce/orders/orders", :object => @orders %>
     <% end %>
   <% end %>

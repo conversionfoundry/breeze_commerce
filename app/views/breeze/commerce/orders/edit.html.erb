@@ -29,7 +29,7 @@
       </thead>
       <tbody>
         <% if @order.line_items.empty? %>
-
+          There's nothing in your cart yet.
         <% else %>
         <% @order.line_items.each do |line_item| %>
           <%= form_for line_item, :url => breeze.order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>

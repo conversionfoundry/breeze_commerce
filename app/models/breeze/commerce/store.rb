@@ -9,6 +9,7 @@ module Breeze
       has_many_related :coupons, :class_name => "Breeze::Commerce::Coupon"
       has_many :customers, :class_name => "Breeze::Commerce::Customer"
       has_many :orders, :class_name => "Breeze::Commerce::Order"
+      has_many_related :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
       
       def available_products
         products.select{|product| product.available}

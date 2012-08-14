@@ -8,6 +8,7 @@ module Breeze
           commerce_menu_item("Customers", breeze.admin_store_customers_path),
           commerce_menu_item("Products", breeze.admin_store_products_path),
           commerce_menu_item("Categories", breeze.admin_store_categories_path),
+          commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path),
           # commerce_menu_item("Coupons", breeze.admin_store_coupons_path),
           # commerce_menu_item("Shipping Costs", ""),
           # commerce_menu_item("Settings", breeze.admin_store_settings_path)

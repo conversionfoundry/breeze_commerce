@@ -1,21 +1,60 @@
 <%= pane_layout do |main| %>
   <%= main.inner do %>
     <%= breeze_form_for @order, :as => :order, :url => url do |form| %>
+
       <%= scrollable_layout do %>
-        <h1><%= @order.new_record? ? 'New Order' : "Editing Order \"#{@order.title}\"" %></h1>
+        <h1><%= @order.new_record? ? 'New Order' : "Editing Order " %></h1>
         <%= render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order %>
         <%= tabbed_layout do |tabs| %>
           <% tabs.details :title => "Order Details" do %>
             <div id="order-details">
               <%= form.fieldset do %>
-                TODO: Store admins will be able to manually create an order here.
-                <%# form.text_field :title, :required => false, :label => "Customer Name" %>
-                <%# form.text_field :first_name, :required => true %>
-                <%# form.text_field :last_name, :required => true %>
-                <%# form.text_field :phone, :required => false %>
-                <%# form.text_field :email, :required => true %>
-                <%# form.password_field :password %>
-                <%# form.password_field :password_confirmation %>
+
+                <div id="product-customer">
+                  <h3>Customer</h3>
+                  <% if @order.customer %>
+                    <%= render :partial => "breeze/admin/commerce/customers/customer", :object => @order.customer %>
+                  <% else %>
+                    Select a customer
+                  <% end %>
+                  <%= form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Select customer"} %>
+                  TODO: Add new customer
+                </div>
+                  
+                <div id="product-shipping_address">
+                  <h3>Shipping Address</h3>
+                  <% if @order.shipping_address %>
+                    <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address %>
+                  <% else %>
+                    Enter a shipping address
+                  <% end %>
+
+                </div>
+
+                <div id="product-billing_address">
+                  <h3>Billing Address</h3>
+                  <% if @order.billing_address %>
+                    <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address %>
+                  <% else %>
+                    Enter a billing address
+                  <% end %>
+                </div>
+
+                <div id="product-line_items">
+                  <h3>Line Items</h3>
+                  <%= render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items %>
+                </div>              
+
+                <div id="product-shipping_method">
+                  <h3>Shipping Method</h3>
+                  <% if @order.shipping_method %>
+                    <%= render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :object => @order.shipping_method %>
+                  <% else %>
+                    Select a shipping method
+                  <% end %>
+                  <%= form.select :shipping_method_id, Breeze::Commerce::Store.first.shipping_methods.map {|s|[ s.name, s.id ] }, { :required => true, :label => "Select shipping method"} %>
+
+                </div>
               <% end %>
             </div>
           <% end %>
