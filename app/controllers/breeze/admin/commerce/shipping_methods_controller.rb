@@ -26,8 +26,8 @@ module Breeze
         def update
           @shipping_method = store.shipping_methods.find params[:id]
           if @shipping_method.update_attributes(params[:shipping_method])
-            flash[:notice] = "The shipping_method was saved. <a href=\"#{@shipping_method.permalink}\">View your changes</a>, <a href=\"#{admin_store_shipping_methods_path}\">return to the list of shipping_methods</a>, or close this message to continue editing."
-            redirect_to edit_admin_store_shipping_method_path(@shipping_method)
+            flash[:notice] = "The shipping_method was saved."
+            redirect_to admin_store_shipping_methods_path
           else
             render :action => "edit"
           end
