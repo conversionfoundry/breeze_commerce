@@ -8,7 +8,6 @@ module Breeze
       include Breeze::Commerce::CurrentOrder
             
       def to_erb(view)
-        
         # # content
         # store = Breeze::Commerce::Store.first # Assuming one store per site at this stage
         # property_name = ""

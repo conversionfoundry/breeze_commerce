@@ -20,7 +20,8 @@ module Breeze
       # references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
       belongs_to_related :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :inverse_of => :orders
 
-      validates_presence_of :customer
+      # Don't validate customer - this might be a new order created for a browsing customer
+      # validates_presence_of :customer
 
       def item_total
         line_items.map(&:amount).sum
