@@ -25,31 +25,38 @@
         </div>
       </div>
       <div class="checkout-body">
-        <div id="new-customer">
-          <span>I am a New Customer</span>
-          <p>Proceed to checkout, and you will have a chance at the end to create an account if you wish to!</p>
-          <%= link_to '#', :class => "single-line-button green", :id => "continue-1" do %>
+        
+        <% if customer_signed_in? %>
+
+          signed in as
+          <%= current_customer.name %>
+          <%= link_to 'Sign Out', breeze.destroy_customer_session_path %>
+
+        <% else %>
+
+          <div id="new-customer">
+            <h3>I'm a New Customer</h3>
+            <p>Proceed to checkout, and you will have a chance at the end to create an account if you wish to!</p>
+          </div>
+
+          <div id="returning-customer">
+            <h3>I'm a Returning Customer</h3>
+            <%= form_for @customer, :url => breeze.customer_session_path do |form| %>
+              <fieldset>
+                <%= form.hidden_field :remember_me, :value => 1 %>
+                <ol class="form">
+                  <li><%= form.label :email %> <%= form.text_field :email %></li>
+                  <li><%= form.label :password %> <%= form.password_field :password %></li>
+                </ol>
+                <%= form.submit "Sign in", :class => "single-line-button green" %>
+              </fieldset>
+            </div>
+          <% end %>
+        <% end %>
+
+      <%= link_to '#', :class => "single-line-button green", :id => "continue-1" do %>
           <span class="title">Continue to Checkout</span>
         <% end %> 
-      </div>
-      <div id="returning-customer">
-        <fieldset>
-          <legend>Returning Customer</legend>
-          <ol class="form">
-            <li>
-            <%= label_tag "Email" %>
-            <%= text_field_tag :email %> 
-            </li> 
-            <li>
-            <%= label_tag "Password" %>
-            <%= password_field_tag %>
-            </li>
-            <li>
-            <%= link_to "Sign In", "#", :class => "single-line-button green" %>
-            </li>
-          </ol>
-        </fieldset>
-      </div>
       </div>
       <div class="checkout-summary">
         <div class="summary">
@@ -83,7 +90,7 @@
             <legend>Enter an Email Address </legend>
             <ol class="form">
               <li>
-              <%= order_form.text_field :email, :class => :long %>
+                <%= order_form.text_field :email, :class => :long, :value => @customer.email %>
               </li>
               <li>  
               <%= order_form.check_box :subscribe %>
@@ -101,17 +108,17 @@
         <ol class="form">
           <li>
             <%= ship_form.label :first_name %>
-            <%= ship_form.text_field :first_name, :class => :required %>
+            <%= ship_form.text_field :first_name, :class => :required, :value => @customer.first_name  %>
             <abbr title="required">*</abbr>
             </li>
             <li>
               <%= ship_form.label :last_name %>
-              <%= ship_form.text_field :last_name, :class => :required %>
+              <%= ship_form.text_field :last_name, :class => :required, :value => @customer.last_name  %>
             <abbr title="required">*</abbr>
               </li>
             <li>
               <%= ship_form.label :phone %>
-              <%= ship_form.text_field :phone %>
+              <%= ship_form.text_field :phone, :value => @customer.phone  %>
               </li>
               <li>
                 <%= ship_form.label :address %>
@@ -150,7 +157,7 @@
           <% Breeze::Commerce::ShippingMethod.all.each do |method| %>
             <li> 
             <%= order_form.radio_button :shipping_method, method.id %>
-            <%= order_form.label :shipping_method, method.description, :class => :long %>
+            <%= order_form.label :shipping_method, method.name, :class => :long %>
             </li>
           <% end %>
         </ol>

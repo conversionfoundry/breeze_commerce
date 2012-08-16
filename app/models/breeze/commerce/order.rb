@@ -38,6 +38,10 @@ module Breeze
       def total
         item_total + shipping_total
       end
+
+      def to_s
+        '$' + total.to_s + ' ' + created_at.to_s
+      end
     end
   end
 end

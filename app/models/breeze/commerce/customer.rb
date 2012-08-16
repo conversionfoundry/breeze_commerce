@@ -9,7 +9,7 @@ module Breeze
       # validates_presence_of :name
       
       def last_order
-        'TODO'
+        orders.last
       end
       
     end

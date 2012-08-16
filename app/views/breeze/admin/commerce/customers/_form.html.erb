@@ -8,7 +8,7 @@
           <% tabs.details :title => "Customer Details" do %>
             <div id="customer-details">
               <%= form.fieldset do %>
-                <%= form.text_field :title, :required => false, :label => "Customer Name" %>
+                <%= form.text_field :title, :required => false %>
                 <%= form.text_field :first_name, :required => true %>
                 <%= form.text_field :last_name, :required => true %>
                 <%= form.text_field :phone, :required => false %>

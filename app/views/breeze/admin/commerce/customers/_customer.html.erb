@@ -1,16 +1,22 @@
 <%= content_tag :tr, :class => "customer", :id => "customer_#{customer.id}" do %>
   <td><%= check_box_tag "customer_ids[]", customer.id %></td>
+  <td class="title">
+    <%= customer.title %>
+  </td>
   <td class="first-name">
     <%= customer.first_name %>
   </td>
   <td class="last-name">
     <%= customer.last_name %>
   </td>
-  <td class="email">
+  <td class="phone">
+    <%= customer.phone %>
+  </td>
+<td class="email">
     <%= customer.email %>
   </td>
   <td class="last-order">
-    <%= customer.last_order %>
+    <%= link_to customer.last_order.to_s, admin_store_order_path(customer.last_order) %>
   </td>
   <td class="actions">
     <p class="customer-actions">

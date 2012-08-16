@@ -47,6 +47,7 @@ module Breeze
       end
 
       def checkout
+        @customer = current_customer || Breeze::Commerce::Customer.new
         @order = current_order(session)
       end
 
