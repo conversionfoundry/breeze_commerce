@@ -10,7 +10,7 @@
             <div id="order-details">
               <%= form.fieldset do %>
 
-                <div id="product-customer">
+                <div id="order-customer">
                   <h3>Customer</h3>
                   <% if @order.customer %>
                     <%= render :partial => "breeze/admin/commerce/customers/customer", :object => @order.customer %>
@@ -18,10 +18,9 @@
                     Select a customer
                   <% end %>
                   <%= form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Select customer"} %>
-                  TODO: Add new customer
                 </div>
                   
-                <div id="product-shipping_address">
+                <div id="order-shipping_address">
                   <h3>Shipping Address</h3>
                   <% if @order.shipping_address %>
                     <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address %>
@@ -31,7 +30,7 @@
 
                 </div>
 
-                <div id="product-billing_address">
+                <div id="order-billing_address">
                   <h3>Billing Address</h3>
                   <% if @order.billing_address %>
                     <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address %>
@@ -40,21 +39,22 @@
                   <% end %>
                 </div>
 
-                <div id="product-line_items">
+                <div id="order-line_items">
                   <h3>Line Items</h3>
                   <%= render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items %>
                 </div>              
 
-                <div id="product-shipping_method">
+                <div id="order-shipping_method">
                   <h3>Shipping Method</h3>
-                  <% if @order.shipping_method %>
-                    <%= render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :object => @order.shipping_method %>
-                  <% else %>
-                    Select a shipping method
-                  <% end %>
                   <%= form.select :shipping_method_id, Breeze::Commerce::Store.first.shipping_methods.map {|s|[ s.name, s.id ] }, { :required => true, :label => "Select shipping method"} %>
 
                 </div>
+
+                <div id="order-status">
+                  <h3>Status</h3>
+                  <%= form.select :order_status_id, Breeze::Commerce::Store.first.order_statuses.map{|s| [ s.name, s.id]}, :wrap => { :class => :status } %>
+                </div>
+
               <% end %>
             </div>
           <% end %>

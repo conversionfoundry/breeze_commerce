@@ -55,6 +55,8 @@ Breeze::Engine.routes.draw do
      
     match 'cart', :to => 'orders#edit', :via => :get, :as => :cart
     match 'checkout', :to => 'orders#checkout', :via => :get, :as => :checkout
+    match 'submit_order', :to => 'orders#submit_order', :via => :put, :as => :submit_order
+    match 'thankyou', :to => 'orders#thankyou', :via => :get, :as => :thankyou
 
 
   end

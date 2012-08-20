@@ -1,29 +1,32 @@
 var panels = ['#sign-in', '#shipping-address', '#payment-information','#create-account','#finalise-order'];
 
 $(function() { 
+
   $('img#postcode-help').tooltip({
     bodyHandler: function() {
       return "<h3>Postcode</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nibh dui, tempor lacinia eros.</p>";
     },
     showURL: false
   });
-  $('#order_gift').change(function() {
-    $('li#personal_message').slideToggle(this.checked);
-  }).change();
 
-  $('#same_same').change(function() {
+  // $('#order_gift').change(function() {
+  //   $('li#personal_message').slideToggle(this.checked);
+  // }).change();
+
+  $('#same').change(function() {
     if ($(this).attr('checked')) {
-      $('#order_billing_address_first_name').val($('#order_shipping_address_first_name').val());
-      $('#order_billing_address_last_name').val($('#order_shipping_address_last_name').val());
-      $('#order_billing_address_phone').val($('#order_shipping_address_phone').val());
-      $('#order_billing_address_address').val($('#order_shipping_address_address').val());
-      $('#order_billing_address_suburb').val($('#order_shipping_address_suburb').val());
-      $('#order_billing_address_city').val($('#order_shipping_address_city').val());
-      $('#order_billing_address_postcode').val($('#order_shipping_address_postcode').val());
+      duplicateAddress();
+    }
+    else {
+      $('#order_billing_address_first_name').val('');
+      $('#order_billing_address_last_name').val('');
+      $('#order_billing_address_phone').val('');
+      $('#order_billing_address_address').val('');
+      $('#order_billing_address_suburb').val('');
+      $('#order_billing_address_city').val('');
+      $('#order_billing_address_postcode').val('');
+      $('#order_billing_address_state option[value=""]');
 
-      /* postcode */
-      var selected = $('#order_shipping_address_state option:selected').val();
-      $('#order_billing_address_state option[value=' + selected + ']').attr('selected', 'selected');
     }
   });
 
@@ -82,8 +85,10 @@ $(function() {
 
     var valid = validator.subset("#shipping-address");
     if (valid) {
+      duplicateAddress();
       return change(1, 2);
     }
+
 
     return false;
   });
@@ -93,10 +98,16 @@ $(function() {
   });
 
   $('#continue-4a').click(function(event) {
+    // User has asked to create a new account
+    $('#order_create_new_account').val(true);
+
     return change(3, 4);
   });
 
   $('#continue-4b').click(function(event) {
+    // User has asked not to create a new account
+    $('#order_create_new_account').val(false);
+
     return change(3, 4);
   });
 
@@ -115,6 +126,21 @@ $(function() {
   $('#changed-my-mind').click(function(event) {
     return change(currentStepIndex(), 3);
   });
+
+
+  // Copy the shipping address to the billing address
+  function duplicateAddress() {
+    $('#order_billing_address_first_name').val($('#order_shipping_address_first_name').val());
+    $('#order_billing_address_last_name').val($('#order_shipping_address_last_name').val());
+    $('#order_billing_address_phone').val($('#order_shipping_address_phone').val());
+    $('#order_billing_address_address').val($('#order_shipping_address_address').val());
+    $('#order_billing_address_suburb').val($('#order_shipping_address_suburb').val());
+    $('#order_billing_address_city').val($('#order_shipping_address_city').val());
+    $('#order_billing_address_postcode').val($('#order_shipping_address_postcode').val());
+    var selected = $('#order_shipping_address_state option:selected').val();
+    $('#order_billing_address_state option[value=' + selected + ']').attr('selected', 'selected');
+    return false;
+  }
 
   function change(from, to, summaryHtml) {
     $(panels[from]).children('.checkout-body').slideUp();

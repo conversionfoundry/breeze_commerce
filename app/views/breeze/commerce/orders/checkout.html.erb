@@ -70,7 +70,8 @@
       </div>
     </div> 
   
-    <%= form_for @order, :url => breeze.checkout_path, :html => {:id => "checkout-form"} do |order_form| %>
+    <%= form_for @order, :url => breeze.submit_order_path, :html => {:method => :put, :id => "checkout-form"} do |order_form| %>
+
       <div id="shipping-address">
         <div class="checkout-header">
           <span>Step</span>
@@ -98,8 +99,7 @@
               </li>
             </ol>
             <div class="notes">
-              <span>Cras blandit, nulla sit amet?</span>
-              <p>Nam rutrum dolor ut dolor lacinia varius. Donec hendrerit bibendum metus quis blandit. Phasellus iaculis justo et velit egestas vulputate. Fusce pretium blandit vestibulum.</p>
+            <!-- TODO: Notes region here -->
             </div>
           </fieldset>
         <%= order_form.fields_for :shipping_address do |ship_form| %>
@@ -146,8 +146,7 @@
             </li>
             </ol>
           <div class="notes">
-            <span>Can I Ship to a different address?</span>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat diam et erat pellentesque ac condimentum augue viverra. Integer eu quam eu erat sagittis porttitor id nec leo. Sed ultrices eros eget justo semper eleifend ac nec nunc.</p>
+            <!-- TODO: Notes region here -->
           </div>
       </fieldset>
     <% end %>
@@ -156,13 +155,13 @@
         <ol class="form">
           <% Breeze::Commerce::ShippingMethod.all.each do |method| %>
             <li> 
-            <%= order_form.radio_button :shipping_method, method.id %>
-            <%= order_form.label :shipping_method, method.name, :class => :long %>
+            <%= order_form.radio_button :shipping_method_id, method.id %>
+            <%= order_form.label :shipping_method_id, method.name, :class => :long %>
             </li>
           <% end %>
         </ol>
       </fieldset>
-      <fieldset>
+      <!-- <fieldset>
         <legend>Gift Options</legend>
         <ol class="form">
           <li>
@@ -174,7 +173,7 @@
             <%= order_form.text_area :personal_message %>
             </li>
         </ol>
-      </fieldset>
+      </fieldset> -->
       <%= link_to '/products', :class => "multi-line-button green", :id => "continue-2" do %>
         <span class="title">Continue to next step</span>
         <span class="subtitle">Payment Information</span>
@@ -209,7 +208,7 @@
         <legend>Enter Payment Address</legend>
         <ol class="form">
           <li>
-            <%= radio_button_tag :same, :same %>
+            <%= check_box_tag :same, :same, true %>
             <%= bill_form.label "Same as Shipping Details", :class => :long %>
           </li>
           <li>
@@ -283,14 +282,20 @@
     </div>
     <div class="checkout-body">
       <h4>Would you like to create an account?</h4>
-      <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4b" do %>
-        <span class="title">No Thanks, Checkout as Guest</span>
-        <span class="subtitle">Finalise order & Checkout</span>
-      <% end %>        
-      <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4a" do %>
-        <span class="title">Yes, Create me an Account</span>
-        <span class="subtitle">Finalise order & Checkout</span>
-      <% end %>            
+      <div class="no_new_account">
+        <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4b" do %>
+          <span class="title">No Thanks, Checkout as Guest</span>
+          <span class="subtitle">Finalise order & Checkout</span>
+        <% end %>        
+      </div>
+      <div class="create_new_account">        
+        <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4a" do %>
+          <span class="title">Yes, Create me an Account</span>
+          <span class="subtitle">Finalise order & Checkout</span>
+        <% end %>          
+      </div>
+      <%= order_form.hidden_field :create_new_account, :value => false %>
+
     </div>
      <div class="checkout-summary">
       <div class="summary">
@@ -389,17 +394,11 @@
             </div>
           </div>
         </div>
-        <%= link_to '/products', :class => "multi-line-button", :id => "continue-shopping" do %>
+        <%= link_to '/', :class => "multi-line-button", :id => "continue-shopping" do %>
           <span class="title">Continue Shopping</span>
           <span class="subtitle">Your information will be saved</span>
         <% end %>
-        <div class="order-summary">
-          <div class="header"><span>Need Help?</span></div>
-          <div class="body">
-            <%= image_tag "breeze/phone.png" %>
-            <span>0800 123 456</span>
-          </div>
-        </div>
+
   </div>
 </div>
 

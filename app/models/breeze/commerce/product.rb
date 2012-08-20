@@ -32,7 +32,7 @@ module Breeze
 
       field :teaser
       field :short_description
-      field :full_description
+      # field :full_description
       field :available_stock, :type => Integer
       field :cost_price_cents, :type => Integer
       field :sell_price_cents, :type => Integer

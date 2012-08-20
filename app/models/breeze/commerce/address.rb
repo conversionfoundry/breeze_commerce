@@ -9,6 +9,14 @@ module Breeze
       field :last_name
       field :phone
       field :country
+
+      def name
+        first_name.to_s + ' ' + last_name.to_s
+      end
+
+      def to_html
+        name + '<br />' + country.to_s
+      end
     end
   end
 end

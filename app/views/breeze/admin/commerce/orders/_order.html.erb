@@ -9,12 +9,21 @@
     <% end %>
   </td>
   <td class="customer">
-    <%= order.billing_address %>
+    <% if order.customer %>
+      Returning Customer: 
+      <%= order.customer.name %>
+    <% else %>
+      New Customer    
+    <% end %>
+    <%= order.billing_address.to_html if order.billing_address  %>
   </td>
-  <td class="end">
+  <td class="contact">
+    <%= order.customer.phone if order.customer %>
+    <%= order.customer.email if order.customer %>
   </td>
-  <td class="days">
-  </div>
+  <td class="shipping_address">
+     <%= order.shipping_address.to_html if order.shipping_address %>
+ </div>
   <td class="amount">
     <%= order.total %>
   </td>
