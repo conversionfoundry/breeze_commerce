@@ -1,0 +1,225 @@
+$(document).ready(function(){
+  $('#order_shipping_method_id').change(function() {
+    // this.form.submit();
+  });
+});
+
+
+
+
+var panels = ['#sign-in', '#shipping', '#billing','#create-account'];
+$(function() { 
+
+  // Tooltips
+  // $('img#postcode-help').tooltip({
+  //   bodyHandler: function() {
+  //     return "<h3>Postcode</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nibh dui, tempor lacinia eros.</p>";
+  //   },
+  //   showURL: false
+  // });
+
+
+  // Starting status
+  // ... depends on whether we have a customer already signed in
+  if ( $('#sign-in').attr('data-customer_signed_in') === 'true') {
+    // Hide first panel, show second
+    $(panels.join()).children('.checkout-body').hide();
+    $(panels[1]).children('.checkout-body').show();
+    $(panels.slice(1).join()).children('.checkout-summary').hide();
+  }
+  else {
+    // Hide all but first panel
+    $(panels.slice(1).join()).children('.checkout-body').hide();
+    $(panels.join()).children('.checkout-summary').hide();
+  }
+
+
+
+  /* Step 1 - Sign In */
+
+  // Show/hide password field for returning customers
+  $('#returning_customer').change(function() {
+    $('li#returning_customer_password').slideToggle(this.checked);
+  });
+
+  $('#continue-1a').click(function(event) {
+    return change(0, 1);
+  });
+
+  $('#continue-1b').click(function(event) {
+    if ( $('#customer_email').valid() ) {
+      $('#order_email').val( $('#customer_email').val() );
+      $('#guest_email').html( $('#customer_email').val() );
+      return change(0, 1);
+    }
+    return false;
+  });
+
+
+
+  /* Step 2 - Shipping */
+
+  $('#continue-2').click(function(event) {
+    if ( validateStep('#shipping') ) {
+      duplicateAddress();
+      $('#shipping .checkout-summary .summary').html( formatAddress('shipping') );
+      return change(1, 2);
+    }
+    return false;
+  });
+
+
+
+
+  /* Step 3 */
+
+  // Update billing address fields depending on whether it's the same as shipping address
+  $('#same').change(function() {
+    if ($(this).attr('checked')) {
+      duplicateAddress();
+      $('#order_billing_address').slideUp();
+    }
+    else {
+      $('#order_billing_address_first_name').val('');
+      $('#order_billing_address_last_name').val('');
+      $('#order_billing_address_phone').val('');
+      $('#order_billing_address_address').val('');
+      $('#order_billing_address_suburb').val('');
+      $('#order_billing_address_city').val('');
+      $('#order_billing_address_postcode').val('');
+      $('#order_billing_address_state option[value=""]');
+      $('#order_billing_address').slideDown();
+    }
+  });
+
+  $('#continue-3').click(function(event) {
+    if ( validateStep('#billing') ) {
+      $('#billing .checkout-summary .summary').html( formatAddress('billing') );
+      return change(2, 3);
+    }
+    return false;
+  });
+
+
+
+
+
+  /* Step 4 */
+
+  // Show/hide password field for new accounts
+  $('#create_new_account').change(function() {
+    $('li#new_account_password').slideToggle(this.checked);
+  });
+
+  $('#continue-4').click(function(event) {
+    if ( validateStep('#create-account') ) {
+      this.form.submit();
+    }
+    return false;
+  });
+
+
+
+
+  /* Going back */
+
+  $('#edit-sign-in').click(function(event) {
+    return change(currentStepIndex(), 0);
+  });
+
+  $('#edit-shipping').click(function(event) {
+    return change(currentStepIndex(), 1);
+  });
+
+  $('#edit-payment').click(function(event) {
+    return change(currentStepIndex(), 2);
+  });
+
+  $('#changed-my-mind').click(function(event) {
+    return change(currentStepIndex(), 3);
+  });
+
+
+
+
+
+  // Validate the fields for one step (i.e. not the whole form)
+  function validateStep(stepName) {
+    valid = true;
+    $(stepName + ' input').each(function(index) {
+      if ( $(this).valid() != true ) { valid = false; }
+    });
+    return valid;
+  }
+
+  // Return a nicely-formatted address
+  // addressType is 'shipping' or 'billing'
+  function formatAddress(addressType) {
+    address = "";
+    address += $('#order_' + addressType + '_address_first_name').val() + ' ';
+    address += $('#order_' + addressType + '_address_last_name').val() + '<br />';
+    address += $('#order_' + addressType + '_address_phone').val() + '<br />';
+    address += $('#order_' + addressType + '_address_address').val() + '<br />';
+    address += $('#order_' + addressType + '_address_suburb').val() + '<br />';
+    address += $('#order_' + addressType + '_address_city').val() + ' ';
+    address += $('#order_' + addressType + '_address_postcode').val() + '<br />';
+    address += $('#order_' + addressType + '_address_state').val();
+    return address;
+  }
+
+  // Copy the shipping address to the billing address
+  function duplicateAddress() {
+    $('#order_billing_address_first_name').val($('#order_shipping_address_first_name').val());
+    $('#order_billing_address_last_name').val($('#order_shipping_address_last_name').val());
+    $('#order_billing_address_phone').val($('#order_shipping_address_phone').val());
+    $('#order_billing_address_address').val($('#order_shipping_address_address').val());
+    $('#order_billing_address_suburb').val($('#order_shipping_address_suburb').val());
+    $('#order_billing_address_city').val($('#order_shipping_address_city').val());
+    $('#order_billing_address_postcode').val($('#order_shipping_address_postcode').val());
+    var selected = $('#order_shipping_address_state option:selected').val();
+    $('#order_billing_address_state option[value=' + selected + ']').attr('selected', 'selected');
+    return false;
+  }
+
+  function change(from, to, summaryHtml) {
+    $(panels[from]).children('.checkout-body').slideUp();
+    $(panels[from]).children('.checkout-header').removeClass('active');
+    $(panels[from]).children('.checkout-header').addClass('visited');
+    $(panels[from]).children('.checkout-summary').slideDown();
+
+    $(panels[to]).children('.checkout-body').slideDown();
+    $(panels[to]).children('.checkout-header').addClass('active');
+    $(panels[to]).children('.checkout-summary').slideUp();
+    return false;
+  }
+
+  function getSummaryHtml(index) {
+    var div = '<div class=\'summary-item\'></div>';
+    if (index == 0) {
+      return "<p>Signed in as Guest.</p>";
+    } else if (index == 1) {
+      var firstName = $('#order_shipping_address_first_name').val();
+      var lastName = $('#order_shipping_address_last_name').val();
+      var phone = $('#order_shipping_address_phone').val();
+      var nameDiv = $(div).append( $('<span>' + firstName + ' ' + lastName + '</span><span>' + phone + '</span>'));
+
+      var address = $('#order_shipping_address_address').val();
+      var suburb = $('#order_shipping_address_suburb').val();
+      var city = $('#order_shipping_address_city').val();
+      var postcode = $('#order_shipping_address_postcode').val();
+      var addressDiv = $(div).append($('<span>' + address + '</span><span>' + suburb + '</span><span>' + city + ' ' + postcode + '</span>'));
+
+      var shippingMethod = "Shipping Method";
+      var shippingDiv = $(div).append($('<span>' + shippingMethod + '</span>'));
+
+      return $('<div></div>').append(nameDiv).append(addressDiv).append(shippingDiv);
+    }
+
+    return ""; 
+  }
+
+  function currentStepIndex() {
+    var element = $(panels.join()).children('.checkout-body').filter(':visible').first().parent().attr('id');
+    return panels.indexOf('#' + element);
+  }
+});

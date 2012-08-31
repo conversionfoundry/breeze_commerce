@@ -10,7 +10,6 @@ module Breeze
       end
 
       def destroy
-        binding.pry
         @order = Order.find(params[:order_id])
         #TODO: check that order is in "checkout" state
         @line_item = @order.line_items.find(params[:id])

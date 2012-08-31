@@ -4,7 +4,13 @@
     <td class="icon"><% image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
     <td><%= line_item.variant.name %></td>
     <td></td>
-    <td class="price">$<%= line_item.variant.display_price %> <span class="currency">NZD</span></td>
+    <td class="price">
+        <% if variant.discounted_sell_price > 0 %>
+          <span class="old_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span> <span class="discounted_price current_price"><%= number_to_currency(variant.discounted_sell_price, :locale => :nz) %></span>
+        <% else %>
+          <span class="current_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span>
+        <% end %>
+    </td>
     <td><%= f.text_field :quantity %> &nbsp; <%= f.submit "Apply" %></td>    
     <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
     <td>

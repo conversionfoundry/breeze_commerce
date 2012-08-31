@@ -15,8 +15,6 @@
                   <%= form.text_field :teaser, :required => true %>
                   <%= form.text_field :slug, :required => true %>
 
-                  <%= form.text_area :short_description, :required => true %> 
-
                   <%= form.text_field :category_tokens, :required => true, :label => "Categories", "data-pre" => @product.categories.map(&:attributes).to_json %>
 
                   <%= form.number_field :cost_price, :required => true, :label => "Cost Price" %>

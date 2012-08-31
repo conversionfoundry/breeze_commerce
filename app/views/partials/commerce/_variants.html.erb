@@ -1,22 +1,20 @@
-<div class="variants-container container">
-  <table class="fancy contextual variants">
-    <thead>
-      <tr>
-        <th class="first" style="">Name</th>
-        <th>Price</th>
-        <th class="last" style="">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if product.variants.any? %>
-        <%= render :partial => "/partials/commerce/variant", :collection => product.variants %>
-      <% else %>
-        <tr><td class="empty" colspan="5">There are no variants for this product.</td></tr>
-      <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+<table class="fancy contextual variants">
+  <thead>
+    <tr>
+      <th class="first" style="">Name</th>
+      <th>Price</th>
+      <th class="last" style=""></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if product.variants.any? %>
+      <%= render :partial => "/partials/commerce/variant", :collection => product.variants %>
+    <% else %>
+      <tr><td class="empty" colspan="5">There are no variants for this product.</td></tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+    </tr>
+  </tfoot>
+</table>

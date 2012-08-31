@@ -71,34 +71,6 @@ $(function() {
     e.preventDefault();
   });
 
-  $('.new.association.button').live('click', function(e) {
-    $('table.fancy.associations')
-      .before('<div class="new-association" style="display: none; height: 180px;"><img src="<%= asset_path 'breeze/big-roller.gif' %>" /></div>')
-      .parent()
-      .find('.new-association')
-      .slideDown("normal");
-
-    $.get(this.href, function(data) {
-      $('.new-association').html(data).height('auto');
-    });
-
-
-    e.preventDefault();
-  });
-
-  $('.add.association.button').live('click', function(e) {
-    $.ajax({
-      url: this.href,
-      type: 'post',
-      data: 'association_id=' + $(this).closest('tr').attr('data-id')
-    });
-    $(this).closest('tr').fadeOut(function() { $(this).remove(); });
-
-    e.preventDefault();
-  });
-
-
-
   // $('table.sortable tbody').sortable({
   //   update: function(e, ui) {
   //       $.ajax({
@@ -140,34 +112,58 @@ $(function() {
   });
 
   $('.new.property.button, .properties .property-actions .edit.button').live('click', function(e) {
-      $.get(this.href, function(data) {
-        $('<div id="property-details"></div>').html(data).dialog({
-          title: 'New Property',
-          modal: true,
-          width: 512,
-          resizable: false,
-          open: function() {
-            $('input', this)[0].focus();
-            new $.TextboxList('#property_option_names');
-          },
-          close: function() {
-            $(this).remove();
-          },
-          buttons: {
-            Cancel: function() { $(this).dialog('close'); },
-            OK: function() {
-              $('form', this).submit();
-            }
+    $.get(this.href, function(data) {
+      $('<div id="property-details"></div>').html(data).dialog({
+        title: 'Property',
+        modal: true,
+        width: 512,
+        resizable: false,
+        open: function() {
+          $('input', this)[0].focus();
+          new $.TextboxList('#property_option_names');
+        },
+        close: function() {
+          $(this).remove();
+        },
+        buttons: {
+          Cancel: function() { $(this).dialog('close'); },
+          OK: function() {
+            $('form', this).submit();
           }
-        });
+        }
       });
-      e.preventDefault();
     });
+    e.preventDefault();
+  });
 
-    $('.new.category.button, .categories .category-actions .edit.button').live('click', function(e) {
+  $('.new.relationship.button, .relationships .relationship-actions .edit.button').live('click', function(e) {
+    $.get(this.href, function(data) {
+      $('<div id="relationship-details"></div>').html(data).dialog({
+        title: 'Relationship',
+        modal: true,
+        width: 512,
+        resizable: false,
+        open: function() {
+          $('input', this)[0].focus();
+        },
+        close: function() {
+          $(this).remove();
+        },
+        buttons: {
+          Cancel: function() { $(this).dialog('close'); },
+          OK: function() {
+            $('form', this).submit();
+          }
+        }
+      });
+    });
+    e.preventDefault();
+  });
+
+  $('.new.category.button, .categories .category-actions .edit.button').live('click', function(e) {
         $.get(this.href, function(data) {
           $('<div id="category-details"></div>').html(data).dialog({
-            title: 'New Category',
+            title: 'Category',
             modal: true,
             width: 512,
             resizable: false,
@@ -197,7 +193,7 @@ $(function() {
       uploader:     '<%= asset_path "breeze/uploadify/uploadify.swf" %>',
       cancelImg:    '<%= image_path "icons/delete.png" %>',
       buttonImg:    '<%= image_path "buttons/upload.png" %>',
-      width:        180,
+      width:        200,
       height:       40,
       multi:        true,
       auto:         true,

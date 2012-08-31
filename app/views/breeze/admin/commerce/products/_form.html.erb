@@ -8,19 +8,30 @@
           <% tabs.details :title => "Product Details" do %>
             <div id="product-details">
               <%= form.fieldset do %>
-                  <% unless @product.images.empty? %>
-                    <%= image_tag @product.images.first.file.url(:breeze_thumb), :class => "feature" %>
+                  <%# unless @product.images.empty? %>
+                    <%#= image_tag @product.images.first.file.url(:breeze_thumb), :class => "feature" %>
+                  <%# end %>
+
+                  <% unless @product.new_record? %>
+                    <div id="product-gallery" class="well">
+                      <h2>Images</h2>
+                      <div id="assets">
+                        <% unless @product.images.empty? %>
+                          <%= render :partial => "breeze/admin/commerce/products/image", :collection => @product.images %>
+                        <% else %>
+                          No images yet.
+                        <% end %>
+                      </div>
+                    </div>
                   <% end %>
+
+
                   <%= form.text_field :title, :required => true, :label => "Product Name" %>
                   <%= form.text_field :teaser, :required => true %>
                   <%= form.text_field :slug, :required => true %>
 
-                  <%= form.text_field :short_description, :required => true  %> 
-
                   <%= form.select :category_ids, store.categories.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
-                  <%= form.number_field :cost_price, :required => true, :label => "Cost Price" %>
-                  <%= form.number_field :sell_price, :required => true, :label => "Base Sell Price" %>
-                  <%= form.number_field :discounted_sell_price, :label => "Discounted Sell Price" %>
+
                 <% end %>
               </div>
               
@@ -34,21 +45,10 @@
             <% end %>
             
             <% unless @product.new_record? %>
-              <% tabs.gallery :title => "Gallery" do %>
-                <div id="product-gallery">
-                  <div id="assets">
-                    <% unless @product.images.empty? %>
-                      <%= render :partial => "breeze/admin/commerce/products/image", :collection => @product.images %>
-                    <% else %>
-                      No images yet.
-                    <% end %>
-                    
-                  </div>
-                </div>
-              <% end %>
+
               <% tabs.associated_with :title => "Related Products" do %>
                 <div id="product-associated-with">
-                  <%= render :partial => "breeze/admin/commerce/products/associations", :object => @product.associations %>
+                  <%= render :partial => "breeze/admin/commerce/products/relationships", :object => @product.product_relationship_children %>
                 </div>
               <% end %>
             <% end %>
@@ -66,7 +66,7 @@
           <%= submit_tag "Save", :class => "large green save button" %>
           <%= link_to "Delete", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record? %>
           <% unless @product.new_record? %>
-            <%= form.fieldset :legend => "Actions" do %>
+            <%= form.fieldset :class => "upload" do %>
               <!-- TODO: Fix this -->
               <%# content_tag :div, :id => "uploader", "data-session-key" => Rails::Application.config.session_options[:key], "data-session-id" => cookies[Rails::Application.config.session_options[:key]] do %>
                 <%# link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button" %>

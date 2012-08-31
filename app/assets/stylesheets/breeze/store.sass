@@ -1,4 +1,13 @@
-/* Blog overview 
+/* CSS for Breeze Commerce Admin
+/* TODO: Rename to commerce_back.sass
+
+/* Typography
+.old_price
+  text-decoration: line-through
+.discounted_price
+  color: red
+
+/* Store overview 
   
   
   
@@ -113,7 +122,7 @@
       &.active small
         margin-right: 8px
 
-/* 
+/* Products
 
 #edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
   background: none
@@ -121,6 +130,16 @@
 
 #edit_product #main-tabs-content, #product_new #main-tabs-content
   position: relative
+
+#edit_product .well
+  background: #dddddd
+  border: solid 1px #cccccc
+  float: left
+  margin-bottom: 1em
+  width: 100%
+  -webkit-border-radius: 8px
+  -moz-border-radius: 8px
+  -khtml-border-radius: 8px
 
 table.products
   .product-actions
@@ -131,6 +150,15 @@ table.products
 #product_available
   margin: 0px
   padding: 0px
+
+/* Product Relationships
+.product_relationship_fields li
+  display: inline
+
+
+
+
+
 
 .available-toggle
   background-image: url(image-path("breeze/yes-no-toggle.png"))

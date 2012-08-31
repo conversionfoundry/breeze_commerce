@@ -9,6 +9,5 @@ module Breeze
 end
 
 require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce.rb"
-# require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/product_list.rb"
 require "#{Breeze::Commerce::Engine.root}/init.rb"
 

@@ -1,4 +1,5 @@
-<div id="cart">
+<% order = current_order(view.controller.session) unless order %>
+<div class="breeze-minicart well">
   <h3>
     <%= link_to("My Cart", breeze.cart_path) %>
   </h3>
@@ -14,5 +15,10 @@
   Total:
   <%= number_to_currency(order.total) %>
   
-  <%= link_to("Show Cart", breeze.cart_path) %>
+  <div class="actions">
+    <%= link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary' %>
+    <% if order.line_items.count > 0 %>
+      <%= link_to "Checkout", breeze.checkout_path, :class=> 'btn' %>
+    <% end %>
+  </div>
 </div>

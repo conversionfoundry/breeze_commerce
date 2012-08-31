@@ -3,7 +3,7 @@
     <%= variant.name %>
   </td>
   <td class="price">
-    <%= variant.display_price %>
+    <%= number_to_currency(variant.display_price, :locale => :nz) %>
   </td>
   <td class="actions">
     <p class="variant-actions">

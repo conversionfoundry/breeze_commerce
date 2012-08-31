@@ -1,18 +1,81 @@
 <% content_for :head do %>
-  <%= stylesheet_link_tag "breeze/commerce.css" %>
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
   <%= javascript_include_tag "breeze/jquery.validate.min.js" %>
-  <%= javascript_include_tag "breeze/jquery.callout-min.js" %>
+  <%# javascript_include_tag "breeze/jquery.callout-min.js" %>
   <%= javascript_include_tag "breeze/checkout" %> 
   <%= javascript_include_tag "breeze/jquery.dimensions.min.js" %>
   <%= javascript_include_tag "breeze/jquery.tooltip.min.js" %>
+  <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
+  <script>
+  $(document).ready(function(){
+    $("#new_customer").validate();
+    $("#checkout-form").validate();
+  });
+  </script>
 <% end %>
-<div id="checkout-container">
-  <div id="checkout-header">
+
+<div class="row">
+  <div id="checkout-header" class="span12">
     <h1>Secure Checkout</h1>
   </div>
-  <div id="left">
-    <div id="sign-in">
+</div>
+
+<div class=" row cart-container">
+  <div class="span12">
+    <table id="cart" class="order summary table-striped">
+      <thead>
+        <tr>
+          <th class="item" colspan="2">Item</th>
+          <th class="price">Price</th>
+          <th class="quantity">Quantity</th>
+          <th></th>
+          <th class="total">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @order.line_items.empty? %>
+          <tr>
+            <td colspan="6" class="empty">You have no items in your cart.</td>
+          </tr>
+        <% else %>
+          <% @order.line_items.each do |line_item| %>
+            <%= form_for line_item, :url => breeze.order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
+              <tr id="<%= line_item.id %>">
+                <td class="icon"><%= image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
+                <td>
+                  <%= line_item.variant.name %><br />
+                  <%= line_item.product.teaser %>
+                </td>                <td class="price">$<%= line_item.product.display_price %> <span class="currency">NZD</span></td>
+                <td class="quantity"><%= line_item.quantity %></td>    
+                <td></td>
+                <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
+              </tr>
+            <% end %>
+          <% end %>
+        <% end %>
+      </tbody>
+      <tfoot id="footer_totals">
+        <%= render :partial => "breeze/commerce/line_items/totals" %>
+      </tfoot>
+    </table>   
+
+    <div class="form-actions">
+      <div class="btn-group">
+        <%= link_to breeze.root_path, :class => "btn", :id => "continue-shopping" do %>
+          <span class="title">Continue Shopping</span>
+        <% end %>
+        <%= link_to breeze.cart_path, :class => "btn", :id => "edit-items" do %>
+          <span class="title">Edit Cart</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="checkout-container" class="row">
+  <div class="span12">
+    
+    <div id="sign-in" data-foo="bar" data-customer_signed_in="<%= customer_signed_in? ? 'true' : 'false' %>">
         <div class="checkout-header active">
           <span>Step</span>
           <div class="heading">
@@ -28,51 +91,65 @@
         
         <% if customer_signed_in? %>
 
-          signed in as
-          <%= current_customer.name %>
-          <%= link_to 'Sign Out', breeze.destroy_customer_session_path %>
+          Signed in as <%= current_customer.name %>
+          <%= link_to 'Sign Out', breeze.destroy_customer_session_path, :class => 'btn' %>
 
         <% else %>
+          <%= form_for @customer, :url => breeze.customer_session_path do |form| %>
+            <fieldset>
+              <legend>Enter an Email Address </legend>
 
-          <div id="new-customer">
-            <h3>I'm a New Customer</h3>
-            <p>Proceed to checkout, and you will have a chance at the end to create an account if you wish to!</p>
-          </div>
+              <ol class="form">
+                <li>
+                  <%= form.label :email %> 
+                  <%= form.text_field :email, :class=>"required email", :placeholder => 'name@example.com' %>
+                  <span class="help-block">We'll send a confirmation email to this address</span>
+                  <abbr title="required">*</abbr>
+                </li>
+                <li>
+                  <%= form.label :returning_customer do |label| %>
+                    <%= check_box_tag :returning_customer, :returning_customer, false %>
+                    I'm a returning customer
+                  <% end %>
+                </li>
+                <li id="returning_customer_password" style="display: none;">
+                  <%= form.label :password %>
+                  <%= form.password_field :password %>
+                  <%= form.submit "Sign in", :class => "btn" %>
+                </li>
+              </ol>
+            </fieldset>
+          <% end %> 
 
-          <div id="returning-customer">
-            <h3>I'm a Returning Customer</h3>
-            <%= form_for @customer, :url => breeze.customer_session_path do |form| %>
-              <fieldset>
-                <%= form.hidden_field :remember_me, :value => 1 %>
-                <ol class="form">
-                  <li><%= form.label :email %> <%= form.text_field :email %></li>
-                  <li><%= form.label :password %> <%= form.password_field :password %></li>
-                </ol>
-                <%= form.submit "Sign in", :class => "single-line-button green" %>
-              </fieldset>
-            </div>
-          <% end %>
         <% end %>
-
-      <%= link_to '#', :class => "single-line-button green", :id => "continue-1" do %>
-          <span class="title">Continue to Checkout</span>
-        <% end %> 
+        <div class="form-actions">
+          <%= link_to '/products', :class => "btn", :id => "continue-1b" do %>
+            <span class="title">Continue to next step</span>
+          <% end %>    
+        </div>
       </div>
       <div class="checkout-summary">
-        <div class="summary">
+        <div class="form-actions">
+          <div class="summary">
+            <% if customer_signed_in? %>
+              <p>Signed in as <%= current_customer.name %></p>
+              <p>Email: <%= current_customer.email %></p>
+            <% else %>
+              <p>Signed in as Guest</p>
+              <p>Email: <span id="guest_email"></span></p>
+            <% end %>
+          </div>
 
-        </div>
-        <div class="action">
-          <%= link_to '#', :class => "single-line-button", :id => "edit-sign-in" do %>
+          <%= link_to '#', :class => "btn", :id => "edit-sign-in" do %>
             <span class="title">Edit Sign In</span>
           <% end %>
         </div>
       </div>
     </div> 
-  
+
     <%= form_for @order, :url => breeze.submit_order_path, :html => {:method => :put, :id => "checkout-form"} do |order_form| %>
 
-      <div id="shipping-address">
+      <div id="shipping">
         <div class="checkout-header">
           <span>Step</span>
           <div class="heading">
@@ -87,318 +164,223 @@
           </div>
         </div>
         <div class="checkout-body">
-          <fieldset>
-            <legend>Enter an Email Address </legend>
-            <ol class="form">
-              <li>
-                <%= order_form.text_field :email, :class => :long, :value => @customer.email %>
-              </li>
-              <li>  
-              <%= order_form.check_box :subscribe %>
-              <%= order_form.label :subscribe, "Subscribe to our newsletter", :class => :long %>
-              </li>
-            </ol>
-            <div class="notes">
-            <!-- TODO: Notes region here -->
-            </div>
-          </fieldset>
-        <%= order_form.fields_for :shipping_address do |ship_form| %>
-      <fieldset>
-        <legend>Enter Shipping Address</legend>
-        <ol class="form">
-          <li>
-            <%= ship_form.label :first_name %>
-            <%= ship_form.text_field :first_name, :class => :required, :value => @customer.first_name  %>
-            <abbr title="required">*</abbr>
-            </li>
-            <li>
-              <%= ship_form.label :last_name %>
-              <%= ship_form.text_field :last_name, :class => :required, :value => @customer.last_name  %>
-            <abbr title="required">*</abbr>
-              </li>
-            <li>
-              <%= ship_form.label :phone %>
-              <%= ship_form.text_field :phone, :value => @customer.phone  %>
-              </li>
-              <li>
-                <%= ship_form.label :address %>
-                <%= ship_form.text_field :address, :class => :required %>
-            <abbr title="required">*</abbr>
-              
-              </li>
-            <li>
-            <%= ship_form.label :suburb %>
-            <%= ship_form.text_field :suburb, :class => :required %>
-            <abbr title="required">*</abbr>          
-              </li> 
-              <li>
-                <%= ship_form.label :city %>
-                <%= ship_form.text_field :city, :class => :required %>
-            <abbr title="required">*</abbr>
-            </li>
-            <li class="state-postcode">
-              <%= ship_form.label :state %>
-              <%= ship_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
-              <%= ship_form.label :postcode %>
-              <%= ship_form.text_field :postcode %>
-              <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
-              <abbr title="required">*</abbr>
-            </li>
-            </ol>
-          <div class="notes">
-            <!-- TODO: Notes region here -->
-          </div>
-      </fieldset>
-    <% end %>
-      <fieldset>
-        <legend>Shipping Method</legend>
-        <ol class="form">
-          <% Breeze::Commerce::ShippingMethod.all.each do |method| %>
-            <li> 
-            <%= order_form.radio_button :shipping_method_id, method.id %>
-            <%= order_form.label :shipping_method_id, method.name, :class => :long %>
-            </li>
+          <%= order_form.hidden_field :email, :class => :required, :value => @customer.email %>
+
+          <%= order_form.fields_for :shipping_address do |ship_form| %>
+            <fieldset>
+              <legend>Enter Shipping Address</legend>
+              <ol class="form">
+                <li class="first_name">
+                  <%= ship_form.label :first_name %>
+                  <%= ship_form.text_field :first_name, :class => :required, :value => @customer.first_name  %>
+                  <abbr title="required">*</abbr>
+                </li>
+                <li class="last_name">
+                  <%= ship_form.label :last_name %>
+                  <%= ship_form.text_field :last_name, :class => :required, :value => @customer.last_name  %>
+                  <abbr title="required">*</abbr>
+                </li>
+                  <li>
+                    <%= ship_form.label :phone %>
+                    <%= ship_form.text_field :phone, :value => @customer.phone  %>
+                    </li>
+                    <li>
+                      <%= ship_form.label :address %>
+                      <%= ship_form.text_field :address, :class => :required %>
+                  <abbr title="required">*</abbr>
+                    
+                    </li>
+                  <li>
+                  <%= ship_form.label :suburb %>
+                  <%= ship_form.text_field :suburb, :class => :required %>
+                  <abbr title="required">*</abbr>          
+                    </li> 
+                    <li>
+                      <%= ship_form.label :city %>
+                      <%= ship_form.text_field :city, :class => :required %>
+                  <abbr title="required">*</abbr>
+                  </li>
+                  <li class="state-postcode">
+                    <%= ship_form.label :state %>
+                    <%= ship_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
+                    <%= ship_form.label :postcode %>
+                    <%= ship_form.text_field :postcode %>
+                    <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
+                  </li>
+                  </ol>
+            </fieldset>
           <% end %>
-        </ol>
-      </fieldset>
-      <!-- <fieldset>
-        <legend>Gift Options</legend>
-        <ol class="form">
-          <li>
-            <%= order_form.check_box :gift %>
-            <%= order_form.label :gift, "Is this order being sent as a gift?", :class => :long %>
-            </li>
-            <li id="personal_message">
-            <%= order_form.label "Personal Message: (optional)", :class => :long %>
-            <%= order_form.text_area :personal_message %>
-            </li>
-        </ol>
-      </fieldset> -->
-      <%= link_to '/products', :class => "multi-line-button green", :id => "continue-2" do %>
-        <span class="title">Continue to next step</span>
-        <span class="subtitle">Payment Information</span>
-      <% end %>    
+
+      <div class="form-actions">
+        <%= link_to '/products', :class => "btn", :id => "continue-2" do %>
+          <span class="title">Continue to next step</span>
+        <% end %>    
+      </div>
     </div>
      <div class="checkout-summary">
-      <div class="summary">
-
-      </div>
-      <div class="action">
-        <%= link_to '#', :class => "single-line-button", :id => "edit-shipping" do %>
+      <div class="form-actions">
+        <div class="summary"></div>
+        <%= link_to '#', :class => "btn", :id => "edit-shipping" do %>
           <span class="title">Edit Shipping</span>
         <% end %>
       </div>
     </div>
   </div>
-  <div id="payment-information">
-    <div class="checkout-header">
-      <span>Step</span>
-      <div class="heading">
-        <div class="number">
-          <span>3</span>
-        </div>
-        <div class="step">
-          <span>Payment Information</span>
+    
+    <div id="billing">
+      <div class="checkout-header">
+        <span>Step</span>
+        <div class="heading">
+          <div class="number">
+            <span>3</span>
+          </div>
+          <div class="step">
+            <span>Payment Information</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="checkout-body">
-      <%= order_form.fields_for :billing_address do |bill_form| %>
-      <fieldset>
-        <legend>Enter Payment Address</legend>
-        <ol class="form">
-          <li>
+      <div class="checkout-body">
+        <div class="well">
+          TODO: Payment options to go here (e.g. Paypal / Payment Express)
+        </div>
+
+        <%= order_form.fields_for :billing_address do |bill_form| %>
+        <fieldset>
+          <legend>Enter Payment Address</legend>
+          <%= bill_form.label :same do |label| %>
             <%= check_box_tag :same, :same, true %>
-            <%= bill_form.label "Same as Shipping Details", :class => :long %>
-          </li>
-          <li>
-            <%= bill_form.label :first_name %>
-            <%= bill_form.text_field :first_name, :class => :required %>
-            <abbr title="required">*</abbr>
-            </li>
-            <li>
-              <%= bill_form.label :last_name %>
-              <%= bill_form.text_field :last_name, :class => :required %>
-            <abbr title="required">*</abbr>
-              </li>
-            <li>
-              <%= bill_form.label :phone %>
-              <%= bill_form.text_field :phone %>
-              </li>
-              <li>
-                <%= bill_form.label :address %>
-                <%= bill_form.text_field :address, :class => :required %>
-            <abbr title="required">*</abbr>
-              
-              </li>
-            <li>
-            <%= bill_form.label :suburb %>
-            <%= bill_form.text_field :suburb, :class => :required %>
-            <abbr title="required">*</abbr>          
-              </li> 
-              <li>
-                <%= bill_form.label :city %>
-                <%= bill_form.text_field :city, :class => :required %>
-            <abbr title="required">*</abbr>
-            </li>
-            <li class="state-postcode">
-              <%= bill_form.label :state %>
-              <%= bill_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
-              <%= bill_form.label :postcode %>
-              <%= bill_form.text_field :postcode %>
-              <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
+            Same as Shipping Details
+          <% end %>        
+          <ol id="order_billing_address" class="form" style="display: none;">
+            <li class="first_name">
+              <%= bill_form.label :first_name %>
+              <%= bill_form.text_field :first_name, :class => :required %>
               <abbr title="required">*</abbr>
             </li>
-        </ol>
-      </fieldset>
-    <% end %>
-      <%= link_to '#', :class => "multi-line-button green", :id => "continue-3" do %>
-        <span class="title">Continue to next step</span>
-        <span class="subtitle">Create Account</span>
-      <% end %>        
-    </div>
-     <div class="checkout-summary">
-      <div class="summary">
-
-      </div>
-      <div class="action">
-        <%= link_to '#', :class => "single-line-button", :id => "edit-payment" do %>
-          <span class="title">Edit Payment</span>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div id="create-account">
-    <div class="checkout-header">
-      <span>Step</span>
-      <div class="heading">
-        <div class="number">
-          <span>4</span>
-        </div>
-        <div class="step">
-        <span>Create Account (optional)</span>
-        </div>
-      </div>
-    </div>
-    <div class="checkout-body">
-      <h4>Would you like to create an account?</h4>
-      <div class="no_new_account">
-        <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4b" do %>
-          <span class="title">No Thanks, Checkout as Guest</span>
-          <span class="subtitle">Finalise order & Checkout</span>
+            <li class="last_name">
+                <%= bill_form.label :last_name %>
+                <%= bill_form.text_field :last_name, :class => :required %>
+              <abbr title="required">*</abbr>
+                </li>
+              <li>
+                <%= bill_form.label :phone %>
+                <%= bill_form.text_field :phone %>
+                </li>
+                <li>
+                  <%= bill_form.label :address %>
+                  <%= bill_form.text_field :address, :class => :required %>
+              <abbr title="required">*</abbr>
+                
+                </li>
+              <li>
+              <%= bill_form.label :suburb %>
+              <%= bill_form.text_field :suburb, :class => :required %>
+              <abbr title="required">*</abbr>          
+                </li> 
+                <li>
+                  <%= bill_form.label :city %>
+                  <%= bill_form.text_field :city, :class => :required %>
+              <abbr title="required">*</abbr>
+              </li>
+              <li class="state-postcode">
+                <%= bill_form.label :state %>
+                <%= bill_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
+                <%= bill_form.label :postcode %>
+                <%= bill_form.text_field :postcode %>
+                <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
+                <abbr title="required">*</abbr>
+              </li>
+          </ol>
+        </fieldset>
+      <% end %>
+      <div class="form-actions">
+        <%= link_to '#', :class => "btn", :id => "continue-3" do %>
+          <span class="title">Continue to next step</span>
         <% end %>        
       </div>
-      <div class="create_new_account">        
-        <%= link_to '/products', :class => "multi-line-button green", :id => "continue-4a" do %>
-          <span class="title">Yes, Create me an Account</span>
-          <span class="subtitle">Finalise order & Checkout</span>
-        <% end %>          
       </div>
-      <%= order_form.hidden_field :create_new_account, :value => false %>
-
-    </div>
-     <div class="checkout-summary">
-      <div class="summary">
-
-      </div>
-      <div class="action">
-        <%= link_to '#', :class => "single-line-button", :id => "changed-my-mind" do %>
-          <span class="title">Changed my mind</span>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div id="finalise-order">
-    <div class="checkout-header">
-      <span>Step</span>
-      <div class="heading">
-        <div class="number">
-          <span>5</span>
-        </div>
-        <div class="step">
-          <span>Finalise Order & Checkout</span>
-        </div>
-      </div>
-    </div>
-    <div class="checkout-body">
-      <h4>Your Cart Items</h4>
-      <div class="action">
-        <%= link_to breeze.cart_path, :class => "single-line-button", :id => "edit-items" do %>
-          <span class="title">Edit Items</span>
-        <% end %>
-      </div>
-        <table id="cart" class="rounded order summary">
-          <thead>
-            <tr>
-              <th colspan="3">Item</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>TOTAL</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if @order.line_items.empty? %>
-              <tr>
-                <td colspan="8">You have no items in your cart.</td>
-              </tr>
-            <% else %>
-            <% @order.line_items.each do |line_item| %>
-              <%= form_for line_item, :url => breeze.order_line_item_path(@order, line_item), :method => :put, :remote => true do |f| %>
-                <tr id="<%= line_item.id %>">
-              <td></td>
-              <td class="icon"><%= image_tag line_item.product.icon_image %></td>
-              <td><%= line_item.product.title %></td>
-              <td></td>
-              <td class="price">$<%= line_item.product.display_price %> <span class="currency">NZD</span></td>
-              <td class="quantity"><%= line_item.quantity %></td>    
-              <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
-              <td></td>  
-            </tr>
-            <% end %>
+       <div class="checkout-summary">
+        <div class="form-actions">
+          <div class="summary"></div>
+          <%= link_to '#', :class => "btn", :id => "edit-payment" do %>
+            <span class="title">Edit Payment</span>
           <% end %>
-        <% end %>
-      </tbody>
-      <%= render :partial => "breeze/commerce/line_items/totals" %>
-    </table>    
-      <%= order_form.submit :class => "multi-line-button green" %>
+        </div>
+      </div>
     </div>
-  </div>
-  <% end %>
-  </div>
-  <div id="right">
-    <div class="order-summary">
-      <div class="header"><span>Order Summary<span></div>
-          <div class="body">
-            <div class="products">
-              <% @order.line_items.each do |line_item| %>
-              <div class="product">
-                <span class="name"><%= line_item.product.title %></span>
-                <span class="price"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></span>
-                <br />
-                <span class="option">(<%= line_item.quantity %>)</span>
-              </div>
-            <% end %>
+      
+      <div id="create-account">
+        <div class="checkout-header">
+          <span>Step</span>
+          <div class="heading">
+            <div class="number">
+              <span>4</span>
             </div>
-            <div class="costs">
-            
-            </div>
-            <div class="subtotal">
-              <span class="name">Subtotal:</span>
-              <span class="price"><%= number_to_currency @order.item_total %></span>
-            </div>
-            <div class="total">
-              <span class="name">Total cost:</span>
-              <span class="price"><%= number_to_currency @order.total %></span>
+            <div class="step">
+            <span>Confirm & Pay</span>
             </div>
           </div>
         </div>
-        <%= link_to '/', :class => "multi-line-button", :id => "continue-shopping" do %>
-          <span class="title">Continue Shopping</span>
-          <span class="subtitle">Your information will be saved</span>
-        <% end %>
+        <div class="checkout-body">
+
+          <fieldset>
+            <legend>Create an account</legend>
+            <ol class="form">
+              <li>
+                <%= order_form.label :create_new_account do |label| %>
+                  <%= check_box_tag :create_new_account, :create_new_account, false %>
+                  I'd like an account
+                <% end %>
+              </li>
+              <li id="new_account_password" style="display: none;">
+                <%= order_form.label :new_account_password %>
+                <%= password_field_tag :new_account_password %>
+              </li>
+            </ol>
+          </fieldset>
+
+          <fieldset>
+            <legend>Terms and Conditions</legend>
+            <ol class="form">
+              <li>
+                <%= order_form.label :read_terms do |label| %>
+                  <%= check_box_tag :read_terms, :read_terms, false, :class => :required %>
+                  I accept the <a href="/terms_and_conditions" target="_blank">terms and conditions</a>
+                <% end %>
+              </li>
+            </ol>
+          </fieldset>
+
+          <fieldset>
+            <legend>Add an Optional Comment</legend>
+            <ol class="form">
+              <li>
+                <%= order_form.label :comment %>
+                <%= order_form.text_area :comment %>
+              </li>
+            </ol>
+          </fieldset>
+
+
+
+          <div class="form-actions">
+            <%= order_form.submit :id => "continue-4", :class => "btn", :value => "Pay Now" %>
+          </div>
+
+        </div>
+         <div class="checkout-summary">
+          <div class="form-actions">
+            <div class="summary"></div>
+            <%= link_to '#', :class => "btn", :id => "changed-my-mind" do %>
+              <span class="title">Edit Confirmation</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
 
   </div>
 </div>
+
 

@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class OrdersController < Breeze::Admin::Commerce::Controller
         def index
-          @orders = store.orders.all
+          @orders = store.orders.all.reverse
         end
         
         def show
@@ -37,6 +37,10 @@ module Breeze
           end
         end
         
+       def destroy
+        @order = store.orders.find(params[:id])
+        @order.try :destroy
+       end        
         
       end
     end

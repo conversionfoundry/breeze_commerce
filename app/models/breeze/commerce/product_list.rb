@@ -15,8 +15,8 @@ module Breeze
         property_name = ""
         products = store.available_products
         
-        women = store.categories.where(:name => 'Women').first
-        men = store.categories.where(:name => 'Men').first
+        # women = store.categories.where(:name => 'Women').first
+        # men = store.categories.where(:name => 'Men').first
         categories = self.categories
         
         categories.each do |category|

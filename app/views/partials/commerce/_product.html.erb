@@ -1,4 +1,4 @@
-<%= content_tag :div, :class => "product", :id => "product_#{product.id}" do %>
+<%= content_tag :li, :class => "product", :id => "product_#{product.id}" do %>
   <div class="image">
     <% unless product.images.empty? %>
       <%= image_tag product.images.last.file.url(:breeze_thumb) %>
@@ -8,20 +8,22 @@
   </div>
   <div class="title">
     
-    
     <h2><%= link_to product.title, product.permalink, :class => "product-name" %></h2>
   </div>
   <div class="description">
-    <p><%= product.short_description %></p>
+    <p><%= product.teaser %></p>
   </div>
   <div class="price">
-    <span>$<%= product.discounted_sell_price > 0 ? product.discounted_sell_price : product.sell_price %> <span class="currency">NZD</span></span>
+    <% if product.variants.count > 1 %>
+      From
+    <% end %>
+    <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency">NZD</span>
   </div>
   <div class="actions">
-    <%= link_to "More", product.permalink %>
+    <%= link_to "Read More", product.permalink, :class => 'action' %>
     <%= form_for :order, :url => breeze.populate_orders_path do |f| %>
-      <%= hidden_field_tag :product_id, product.id %> 
-      <%= button_to "Add to Cart", breeze.populate_orders_path, :method => :post %>
+      <%# hidden_field_tag :product_id, product.id %> 
+      <%# button_to "Add to Cart", breeze.populate_orders_path, :method => :post, :class => 'action' %>
     <% end %>
     
   </div>

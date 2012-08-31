@@ -8,8 +8,9 @@ module Breeze
       
       field :email
       field :subscribe, :type => Boolean
-      field :gift, :type => Boolean
+      # field :gift, :type => Boolean
       field :personal_message
+      field :comment
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
@@ -34,8 +35,16 @@ module Breeze
         line_items.map(&:quantity).sum
       end
 
+      # def shipping_method
+      #   shipping_method || Breeze::Commerce::Store.first.shipping_methods.first
+      # end
+
       def shipping_total
-        0  # TODO: calculate shipping
+        if shipping_method
+          shipping_method.price  # TODO: calculate shipping
+        else
+          0
+        end
       end
 
       def total

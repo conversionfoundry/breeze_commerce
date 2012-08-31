@@ -12,15 +12,10 @@
     </div>
   </td>
   <td class="price">
-    <% has_discount = !product.blank? %>
-    <p class="base-price">
-      <%= product.sell_price %>
-    </p>
-    <% if has_discount %>
-      <p class="discounted-price">
-        <%= product.discounted_sell_price %>
-      </p>
+    <% if product.variants.count > 0 %>
+      From
     <% end %>
+    <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency">NZD</span>
   </td>
   <td class="last-edited"><%= product.updated_at %></td>
   <td class="actions">

@@ -1,63 +1,74 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "breeze/checkout" %> 
+<% end %>
+
 <div class="row">
   <div class="span12">
     <h1>Shopping Cart</h1>
   </div>
 </div>
 
-<div class="row">
+<div class="row cart-container">
   <div class="span12">
-    <table id="cart" class="rounded order">
+    <table id="cart" class="order summary table-striped">
       <thead>
         <tr>
-          <th colspan="3">Item</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>TOTAL</th>
+          <th class="item" colspan="2">Item</th>
+          <th class="price">Price</th>
+          <th class="quantity">Quantity</th>
           <th></th>
-          <th></th>
+          <th class="total">Total</th>
         </tr>
       </thead>
       <tbody>
         <% if @order.line_items.empty? %>
-          <tr><td colspan="9">There's nothing in your cart yet.</td></tr>
+          <tr><td colspan="6" class="empty">There's nothing in your cart yet.</td></tr>
         <% else %>
           <% @order.line_items.each do |line_item| %>
             <tr id="<%= line_item.id %>">
-              <td></td>
-              <td class="icon"><% image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
-              <td><%= line_item.variant.name %></td>
-              <td></td>
-              <td class="price">$<%= line_item.variant.display_price %> <span class="currency">NZD</span></td>
+              <td class="icon"><%= image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
+              <td>
+                <%= line_item.variant.name %><br />
+                <%= line_item.product.teaser %>
+              </td>
+              <td class="price">
+                <% if line_item.variant.discounted_sell_price > 0 %>
+                  <span class="old_price"><%= number_to_currency(line_item.variant.sell_price, :locale => :nz) %></span> <span class="discounted_price current_price"><%= number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz) %></span>
+                <% else %>
+                  <span class="current_price"><%= number_to_currency(line_item.variant.sell_price, :locale => :nz) %></span>
+                <% end %>
+              </td>
               <td>
                 <%= form_for line_item, :url => breeze.order_line_item_path(@order, line_item), :html => {:method => :put}, :remote => true do |f| %>
                   <%= f.text_field :quantity %> &nbsp; <%= f.submit "Apply" %>
                 <% end %>
               </td>    
-              <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
               <td>
                 <%= button_to "Remove", breeze.order_line_item_path(@order, line_item), :method=>:delete, :class=>:remove %>
-              </td>
-              <td></td>  
+              </td>              
+              <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
+
             </tr>
           <% end %>
         <% end %>
       </tbody>
-      <%= render :partial => "breeze/commerce/line_items/totals" %>
+      <tfoot id="footer_totals">
+        <%= render :partial => "breeze/commerce/line_items/totals" %>
+      </tfoot>
     </table>
+
+    <div class="form-actions">
+      <div class="btn-group">
+        <%= link_to breeze.root_path, :class => "btn", :id => "continue-shopping" do %>
+          <span class="title">Continue Shopping</span>
+        <% end %>
+        <% if @order.line_items.count > 0 %>
+          <%= link_to breeze.checkout_path, :class => "btn btn-primary" do %>
+            <span class="title">Go to Checkout</span>  
+          <% end %> 
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="span6">
-    <%= link_to breeze.root_path, :class => "multi-line-button" do %>
-      <span class="title">Continue Shopping</span>
-      <span class="subtitle">your information will be saved</span>
-    <% end %>
-  </div>
-  <div class="span6">
-    <%= link_to breeze.checkout_path, :class => "single-line-button green large" do %>
-      <span class="title">Checkout NOW!</span>  
-    <% end %> 
-  </div>
-</div>

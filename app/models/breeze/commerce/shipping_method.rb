@@ -9,6 +9,7 @@ module Breeze
       identity :type => String
 
       field :name
+      field :description
       field :price, :type => Integer
 
       validates_presence_of :name, :price

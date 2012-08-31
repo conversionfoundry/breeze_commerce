@@ -1,5 +1,5 @@
 <% if products.any? %>
-  <%= content_tag :div, :class => "products hfeed" do %>
+  <%= content_tag :ul, :class => "products hfeed" do %>
     <%= render :partial => "/partials/commerce/product", :collection => products %>
   <% end %>
 <% else %>

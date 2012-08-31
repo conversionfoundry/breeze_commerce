@@ -9,18 +9,22 @@
     <%= variant.sku_code %>
   </td>
   <td class="price">
-    <%= variant.display_price %>
+    <% if variant.discounted_sell_price > 0 %>
+      <span class="old_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span> <span class="discounted_price current_price"><%= number_to_currency(variant.discounted_sell_price, :locale => :nz) %></span>
+    <% else %>
+      <span class="current_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span>
+    <% end %>
   </td>
   <% variant.product.properties.each do |property| %>
-      <% if variant.option_for_property(property) %>
-        <td>
-          <%= variant.option_for_property(property).name  %>
-        </td>
-      <% else %>
-        <td class="missing_value">
-          Missing value
-        </td>
-      <% end %>
+    <% if variant.option_for_property(property) %>
+      <td>
+        <%= variant.option_for_property(property).name  %>
+      </td>
+    <% else %>
+      <td class="missing_value">
+        Missing value
+      </td>
+    <% end %>
   <% end %>
   <td class="available">
     <div class="text">
@@ -34,6 +38,7 @@
   </td>
   <td class="actions">
     <p class="variant-actions">
+      <%= link_to "Delete", admin_store_product_variant_path(variant.product, variant), :remote => true, :method => :delete, :class => "small red delete button" %>
       <%= link_to "Edit", edit_admin_store_product_variant_path(variant.product, variant), :class => "small black edit button" %>
     </p>
   </td>

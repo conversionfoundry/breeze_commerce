@@ -1,231 +1,138 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>foo<%# page.title %></title>
-    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" %>
-    <%= javascript_include_tag "../breeze_commerce/javascript/galleria/galleria-1.2.2.js" %>
-    <%= javascript_include_tag "../breeze_commerce/javascript/galleria/themes/classic/galleria.classic.min.js" %>
-    <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.easing-1.3.pack.js" %>
-    <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js" %>
-    <%= javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.pack.js" %>
-    <%= stylesheet_link_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.css" %>
-    <%= javascript_include_tag "../breeze_commerce/javascript/jquery.callout-min.js" %>
-    <script type="text/javascript">
+    <title><%= page.title if page %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "breeze/commerce.css" %>
+    <%= stylesheet_link_tag 'responsive.css' %>
+    <%= javascript_include_tag :application %>
+    <%= javascript_include_tag "jquery.min" %>
+    <%= javascript_include_tag "jquery-ui.min" %>
+    <%= javascript_include_tag "bootstrap.min" %>
+    <%= javascript_include_tag "modernizr.min" %>
+    <%= javascript_include_tag "galleria-1.2.7.min" %>
+    <%= javascript_include_tag "galleria.classic.min" %>
+    <%= stylesheet_link_tag 'galleria.classic.css' %>
+    <%# javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.easing-1.3.pack.js" %>
+    <%# javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js" %>
+    <%# javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.pack.js" %>
+    <%# stylesheet_link_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.css" %>
+    <%# javascript_include_tag "../breeze_commerce/javascript/jquery.callout-min.js" %>
+  </head>
+  <script type="text/javascript">
       $(document).ready(function() {
+
+        // Image gallery, if product has more than one image
+        // TODO: Replace with jQuery Cycle Plugin
+        if ( $('#gallery').length > 0 ) {
+          Galleria.loadTheme("<%= asset_path 'galleria.classic.min' %>");
           $('#gallery').galleria({
             width: 500,
             height: 500,
             transitionInitial: 'fade'  
-            });
+          });
+        };
+          
+        // Animate variants flying to the shopping cart
+        $('input.button-add_to_cart').live('click', function(event) {
+          variant = $(this).closest('.variant');
+          cart = $('.breeze-minicart').first(); // Note that there could in principle be more than one minicart on the page
+          startOffset = variant.offset();
+          endOffset = cart.offset(); // Note that there could in principle be more than one minicart on the page
+          endOffset.top += cart.height() / 2 - variant.height() / 2;
+          endOffset.left += cart.width() / 2 - variant.width() / 2;
+          variant.clone()
+            .prependTo($('.variant .name').first())
+            .css({'position' : 'absolute', 'top' : startOffset.top, 'left' : startOffset.left})
+            // .animate({opacity: 0.4}, 100.0 )
+            .animate({opacity: 0.1, left: endOffset.left, top: endOffset.top}, 1000, "easeInOutCirc", function() {
+              // When animation is finished...
+              $(this).remove();
+              })
 
-          $('#inline').fancybox();
-         $('a.thumb').live('click', function(event) {
-           event.preventDefault();
-           $('img.main').attr('src', $(this).attr('href')); 
-           $('a.thumb img').removeClass('active');
-           $(this).children('img').addClass('active');
-           });
-         $('a.option').live('click', function(event) {
-           event.preventDefault();
-           $('a.option img').removeClass('active');
-            $(this).children('img').addClass('active'); 
-            }).hover(
-              function() {
-                href = $(this).attr('href');
-                $(this).callout({
-msg: "<div><img src='" + href + "' width='168' height='144' /></div><div>Yellow</div>"
-                  });
-              },
-              function() {
-                $(this).callout('hide');
-              });
+        });
       });
     </script>
-    <style>
-      body {
-        font-family: Helvetica, Arial, sans-serif;
-        font-size: small;
-      }
-      h1 {
-        color: #3181c1;
-        font-weight: normal; 
-        font-size: 300%; 
-      }
-      div#container {
-        width: 670px;
-      }
-      img {
-        border: 3px solid #eee;
-      }
-      img.active {
-        border-color: #285a81;
-      }
-      div.top {
-        position: relative;
-      }
-      div.images {
-        width: 240px;
-      }
-      div.main-image {
-        width: 240px;
-        height: 240px;
-        text-align: center;
-        line-height: 240px;
-      }
-      div.main-image img {
-        vertical-align: bottom;
-      }
-      div.thumbs {
-        margin-top: 10px;
-      }
-      div.action {
-        text-align: right;
-      }
-      div.summary-content {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 400px;
-      }
-      div.selection {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 360px;
-      }
-      div.selection-box {
-        float: right;
-        background-color: #f6fcff;
-        border: 1px solid #e7f5fe;
-        padding: 16px 24px 16px 28px;
-        -moz-border-radius: 6px;
-        -webkit-border-radius: 6px;
-        box-shadow: 2px 2px 4px #999;
-        -moz-box-shadow: 2px 2px 4px #999;
-        -webkit-box-shadow: 2px 2px 4px #999;
-      }
-      a {
-        outline: none;
-        color: #3ac0fb;
-      }
-      label {
-        font-weight: bold;
-        color: #777;
-        display:block;
-        margin-bottom: 2px;
-      }
-      div.quantity, div.option {
-        float: left;
-        margin-right: 10px;
-      }
-      select {
-        vertical-align: bottom;
-      }
-      input[type=submit].fade.green {
-        -moz-background-clip: padding;
-        -moz-border-radius: 6px 6px 6px 6px;
-        -webkit-border-radius: 6px;
-        background-color: #909090;
-        background-image: url(/breeze/images/small-green-fade.png);
-        border-color: #39b54a;
-        border-style: solid;
-        border-width: 1px;
-        color: white;
-        display: inline-block;
-        text-align: center;
-        text-decoration: none;
-        margin: 2px;
-        padding: 5px 20px 7px 20px;
-        font-size: 100%;
-      }
-      .callout {
-        padding: 5px;
-        border: 2px solid #285a81;
-        color: #8cc63f;
-        background-color: #fff;
-        border-radius: 4px;
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="container">
-      <% if @product %>
-        <%= form_for :order, :url => 'breeze/commerce/orders#populate' do |f| %>
-          <h1><%= @product.title %></h1>
-          <div class="top">
-          <div class="images">
-            <div class="main-image">
-              <%= image_tag "http://placehold.it/350x150", :class => "main" %>
-            </div>
-            <div class="thumbs">
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30", :class => "active" %>
-            <% end %>
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30" %>
-            <% end %>
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30" %>
-            <% end %>
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30" %>
-            <% end %>
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30" %>
-            <% end %>
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30" %>
-            <% end %>
-            <%= link_to "http://placehold.it/350x150", :class => :thumb do %>
-              <%= image_tag "http://placehold.it/70x30" %>
-            <% end %>
+  <body>    
+  
+    <div class="container product">
+
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Project name</a>
+            <div class="nav-collapse">
+              <%= bootstrap_nav(:recurse => true) %>
+            </div><!-- /.nav-collapse -->
           </div>
-          <div class="action">
-            <a id="inline" href="#gallery">+ Full size photos</a>
-          </div>
-          <div style="display:none;">
-          <div id="gallery">
-            <%= image_tag "../assets/products/wigs1.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wigs2.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wigs3.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wigs4.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wigs5.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wigs6.jpg", :alt => "Description", :title => "Title" %>
-            <%= image_tag "../assets/products/wigs7.jpg", :alt => "Description", :title => "Title" %>
-          </div>
+        </div><!-- /navbar-inner -->
+      </div>    
+      <%= navigation(:level => 2) %>
+      <%= navigation(:level => 3) %>
+
+      <%= breadcrumb %>
+
+
+      <div class="row product-header">
+        <div class="span12">
+          <%= render :partial => "/partials/commerce/cart" %>
+          <h1><%= page.title %></h1>
+          <%= region :header %>
         </div>
       </div>
-        <div class="selection">
-          <div class="selection-box">
-            <div class="options">
-              <%= link_to  "/assets/options/option1.png", :class => :option do %>
-                <%= image_tag "../assets/options/option1.png", :class => :active %>
-              <% end %>
-              <%= link_to "/assets/options/option2.png", :class => :option do %>
-                <%= image_tag "../assets/options/option2.png" %>
-              <% end %>
-            </div>
-            <div class="option">
-              <%= label_tag "Colour:" %>
-              <%= select_tag :colour, options_for_select(['Red', 'Yellow']) %>
-            </div>
-            <div class="quantity">
-            <label>Quantity:</label>
-          <%= select_tag :quantity, options_for_select((1..10).to_a) %>
-          <%= hidden_field_tag :product_id, @product.id %> 
-        </div>
-          <%= button_to "Add to Cart", breeze.populate_orders_path, :method => :post %>
-        </div>
-        </div>
-    </div>
-      <% end %>
+      
+      <% if page %>
+          <%# hidden_field_tag 'product_id', page.id %>
+            
+          <!-- Single image, or slideshow if there are multiple images -->
+          <div class="images">
+            <% if page.images.count == 1 %>
+              <%= image_tag page.images.last.file.url(:full) %>
+            <% elsif page.images.count > 1 %>
+              <div id="gallery">                
+                  <% page.images.each do |image| %>
+                    <a href="<%= image.file %>">
+                      <img data-title="title goes here"
+                           data-description="description goes here"
+                           src="<%= image.file.url(:breeze_thumb) %>">
+                    </a>
+                  <% end %>
+              </div>
+         
+            <% else %>
+              No images yet.
+            <% end %>
+          </div>
+          
+          
+        <%# This region is intended for placeable elements that describe the product. Note that the short product description is not used on this page, only on lists and checkout. %>
+        <%= region :product_info %>
+            
+            
+       
+        <%= content_tag :ul, :class => "variants" do %>
+          <%= render :partial => "/partials/commerce/variants", :locals=>{:product => page} %>
+        <% end %>
+        
+        
     <% else %>
       <p>The product you are looking for was not found.<p>
     <% end %>
+
+    <div class="row related_products">
+      <div class="span12">
+        <h2>Related Products</h2>
+        <%= render :partial => "partials/commerce/products", :layout => false, :locals => {:products => page.related_products} %>
+      </div>
+    </div>
+
   </div>
-  
+    
   </body>
 </html>
+

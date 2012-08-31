@@ -5,10 +5,6 @@ module Breeze
     class AllVariantsValidValidator < ActiveModel::Validator
       def validate(product)
         product.variants.each do |variant|
-          # binding.pry
-          # Rails.logger.debug '*************'
-          # Rails.logger.debug variant.errors
-          # Rails.logger.debug variant.option_for_property(property).class.to_s
           unless variant.valid?
             product.errors[:base] << "Variant " + variant.name + " is missing a value."
           end
@@ -26,17 +22,15 @@ module Breeze
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
       has_many :variants, :class_name => "Breeze::Commerce::Variant"
       has_many_related :images, :class_name => "Breeze::Commerce::ProductImage"
-      has_many_related :related_products, :class_name => "Breeze::Commerce::Product" #, :stored_as => :array
+      # has_many_related :related_products, :class_name => "Breeze::Commerce::Product" #, :stored_as => :array
       #embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
       #embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
 
+      has_many :product_relationship_children, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :parent_product
+      has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
+
       field :teaser
-      field :short_description
-      # field :full_description
       field :available_stock, :type => Integer
-      field :cost_price_cents, :type => Integer
-      field :sell_price_cents, :type => Integer
-      field :discounted_sell_price_cents, :type => Integer
       field :content, :markdown => true
       field :available, :type => Boolean
 
@@ -52,10 +46,19 @@ module Breeze
 
       # before_validation :load_variants
       # validates_associated :variants
-      validates_with AllVariantsValidValidator
+      validates_with AllVariantsValidValidator # See above.
       
 
       before_save :regenerate_permalink!
+
+      # e.g. Breeze::Commerce::Product is a NavigationItem, but it's managed under the Store admin area
+      def has_special_admin?
+        true
+      end
+
+      def related_products
+        product_relationship_children.collect{|relationship| relationship.child_product}
+      end
 
       def icon_image
         if self.images.first
@@ -66,35 +69,22 @@ module Breeze
       end
 
       def category_tokens
-
       end
 
       def cost_price
         (self.cost_price_cents || 0) / 100.0
       end
 
-      def cost_price=(price)
-        self.cost_price_cents = price.to_i * 100
-      end
-
       def sell_price
         (self.sell_price_cents || 0) / 100.0
-      end
-
-      def sell_price=(price)
-        self.sell_price_cents = price.to_i * 100
       end
 
       def discounted_sell_price
         (self.discounted_sell_price_cents || 0) / 100.0
       end
-
-      def discounted_sell_price=(price)
-        self.discounted_sell_price_cents = price.to_i * 100
-      end
       
       def display_price
-        self.discounted_sell_price > 0 ? self.discounted_sell_price : self.sell_price
+        variants.map{|v| v.display_price}.min
       end
       
       # Override the normal page hierarchy, so that products always appear as children of the root page.
@@ -120,5 +110,9 @@ module Breeze
         self.permalink = "/#{category}/#{slug}" unless store.nil? || slug.blank?
       end
     end
+
+
+
+
   end
 end

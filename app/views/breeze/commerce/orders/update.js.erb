@@ -1,0 +1,2 @@
+// Update all shopping carts (there may be more than one per page)
+$('#footer_totals').html('<%= escape_javascript render(:partial => "breeze/commerce/line_items/totals", :layout => false, :locals => {:order => @order}) %>');

@@ -5,6 +5,5 @@
   $('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/variants", :object => @product.variants) %>');
 <% else %>
   $('#property-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/properties/new") %>');
-  
 <% end %>
 

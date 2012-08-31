@@ -14,7 +14,7 @@ Breeze::Engine.routes.draw do
         resources :variants
         resources :properties
         resources :product_images
-        resources :associations
+        resources :product_relationships
       end
 
       resources :orders do
@@ -34,6 +34,7 @@ Breeze::Engine.routes.draw do
       resources :customers
 
       resources :shipping_methods
+
   
     end
   end

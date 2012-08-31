@@ -3,16 +3,18 @@
     <%= variant.name %>
   </td>
   <td class="price">
-    <%= variant.display_price %>
+    <% if variant.discounted_sell_price > 0 %>
+      <span class="old_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span> <span class="discounted_price current_price"><%= number_to_currency(variant.discounted_sell_price, :locale => :nz) %></span>
+    <% else %>
+      <span class="current_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span>
+    <% end %>
   </td>
   <td class="available">
     <%= variant.available %>
   </td>
   <td class="actions">
     <p class="variant-actions">
-      <%# submit_tag "Add to cart", :class => "" %>
-      <%= button_to "Add to cart", breeze.populate_orders_path(:variant_id => variant.id) %>
-      
+      <%= button_to "Add to cart", breeze.populate_orders_path(:variant_id => variant.id), :class => "button-add_to_cart", :remote => true %>
     </p>
   </td>
 <% end %>
