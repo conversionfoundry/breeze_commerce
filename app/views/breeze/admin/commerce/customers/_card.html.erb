@@ -1,0 +1,15 @@
+<%= link_to edit_admin_store_customer_path(customer), :class => "customer-card" do %>
+  <p class="customer-name">
+    <span class="name">
+      <%= customer.name %>
+    </span>
+  </p>
+  <ul class="customer-contact">
+    <li class="phone">
+      <%= customer.phone %>
+    </li>
+    <li class="email">
+      <%= customer.email %>
+    </li>
+  </ul>
+<% end %>

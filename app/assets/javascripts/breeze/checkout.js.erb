@@ -80,14 +80,13 @@ $(function() {
       $('#order_billing_address').slideUp();
     }
     else {
-      $('#order_billing_address_first_name').val('');
-      $('#order_billing_address_last_name').val('');
-      $('#order_billing_address_phone').val('');
+      $('#order_billing_address_name').val('');
       $('#order_billing_address_address').val('');
-      $('#order_billing_address_suburb').val('');
       $('#order_billing_address_city').val('');
+      $('#order_billing_address_state').val('');
       $('#order_billing_address_postcode').val('');
-      $('#order_billing_address_state option[value=""]');
+      $('#order_billing_address_country option[value=""]');
+      $('#order_billing_address_phone').val('');
       $('#order_billing_address').slideDown();
     }
   });
@@ -156,28 +155,26 @@ $(function() {
   // addressType is 'shipping' or 'billing'
   function formatAddress(addressType) {
     address = "";
-    address += $('#order_' + addressType + '_address_first_name').val() + ' ';
-    address += $('#order_' + addressType + '_address_last_name').val() + '<br />';
-    address += $('#order_' + addressType + '_address_phone').val() + '<br />';
+    address += $('#order_' + addressType + '_address_name').val() + '<br />';
     address += $('#order_' + addressType + '_address_address').val() + '<br />';
-    address += $('#order_' + addressType + '_address_suburb').val() + '<br />';
     address += $('#order_' + addressType + '_address_city').val() + ' ';
+    address += $('#order_' + addressType + '_address_state').val() + '<br />';
     address += $('#order_' + addressType + '_address_postcode').val() + '<br />';
-    address += $('#order_' + addressType + '_address_state').val();
+    address += $('#order_' + addressType + '_address_country').val() + '<br />';
+    address += 'Contact Phone ' + $('#order_' + addressType + '_address_phone').val();
     return address;
   }
 
   // Copy the shipping address to the billing address
   function duplicateAddress() {
-    $('#order_billing_address_first_name').val($('#order_shipping_address_first_name').val());
-    $('#order_billing_address_last_name').val($('#order_shipping_address_last_name').val());
-    $('#order_billing_address_phone').val($('#order_shipping_address_phone').val());
+    $('#order_billing_address_name').val($('#order_shipping_address_name').val());
     $('#order_billing_address_address').val($('#order_shipping_address_address').val());
-    $('#order_billing_address_suburb').val($('#order_shipping_address_suburb').val());
     $('#order_billing_address_city').val($('#order_shipping_address_city').val());
+    $('#order_billing_address_state').val($('#order_shipping_address_state').val());
     $('#order_billing_address_postcode').val($('#order_shipping_address_postcode').val());
-    var selected = $('#order_shipping_address_state option:selected').val();
-    $('#order_billing_address_state option[value=' + selected + ']').attr('selected', 'selected');
+    var selected = $('#order_shipping_address_country option:selected').val();
+    $('#order_billing_address_country option[value=' + selected + ']').attr('selected', 'selected');
+    $('#order_billing_address_phone').val($('#order_shipping_address_phone').val());
     return false;
   }
 
@@ -193,30 +190,29 @@ $(function() {
     return false;
   }
 
-  function getSummaryHtml(index) {
-    var div = '<div class=\'summary-item\'></div>';
-    if (index == 0) {
-      return "<p>Signed in as Guest.</p>";
-    } else if (index == 1) {
-      var firstName = $('#order_shipping_address_first_name').val();
-      var lastName = $('#order_shipping_address_last_name').val();
-      var phone = $('#order_shipping_address_phone').val();
-      var nameDiv = $(div).append( $('<span>' + firstName + ' ' + lastName + '</span><span>' + phone + '</span>'));
+  // function getSummaryHtml(index) {
+  //   var div = '<div class=\'summary-item\'></div>';
+  //   if (index == 0) {
+  //     return "<p>Signed in as Guest.</p>";
+  //   } else if (index == 1) {
+  //     var firstName = $('#order_shipping_address_name').val();
+  //     var phone = $('#order_shipping_address_phone').val();
+  //     var nameDiv = $(div).append( $('<span>' + firstName + ' ' + lastName + '</span><span>' + phone + '</span>'));
 
-      var address = $('#order_shipping_address_address').val();
-      var suburb = $('#order_shipping_address_suburb').val();
-      var city = $('#order_shipping_address_city').val();
-      var postcode = $('#order_shipping_address_postcode').val();
-      var addressDiv = $(div).append($('<span>' + address + '</span><span>' + suburb + '</span><span>' + city + ' ' + postcode + '</span>'));
+  //     var address = $('#order_shipping_address_address').val();
+  //     var suburb = $('#order_shipping_address_suburb').val();
+  //     var city = $('#order_shipping_address_city').val();
+  //     var postcode = $('#order_shipping_address_postcode').val();
+  //     var addressDiv = $(div).append($('<span>' + address + '</span><span>' + suburb + '</span><span>' + city + ' ' + postcode + '</span>'));
 
-      var shippingMethod = "Shipping Method";
-      var shippingDiv = $(div).append($('<span>' + shippingMethod + '</span>'));
+  //     var shippingMethod = "Shipping Method";
+  //     var shippingDiv = $(div).append($('<span>' + shippingMethod + '</span>'));
 
-      return $('<div></div>').append(nameDiv).append(addressDiv).append(shippingDiv);
-    }
+  //     return $('<div></div>').append(nameDiv).append(addressDiv).append(shippingDiv);
+  //   }
 
-    return ""; 
-  }
+  //   return ""; 
+  // }
 
   function currentStepIndex() {
     var element = $(panels.join()).children('.checkout-body').filter(':visible').first().parent().attr('id');

@@ -7,55 +7,92 @@
         <%= render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order %>
         <%= tabbed_layout do |tabs| %>
           <% tabs.details :title => "Order Details" do %>
+
+
+            <div id="order-customer" class="section">
+              <% if @order.customer %>
+                <%= render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer} %>
+              <% else %>
+                <div class="customer-card">
+                  <p class="customer-name">
+                    <span class="name">
+                      Guest
+                    </span>
+                  </p>
+                  <ul class="customer-contact">
+                    <li class="phone">
+                      <%= @order.billing_address.phone %>
+                    </li>
+                    <li class="email">
+                      <%= @order.email %>
+                    </li>
+                  </ul>
+                </div>
+              <% end %>
+              <%= form.label :customer_id, "Change customer for this order" %>
+
+              <%= form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :include_blank => true, :label => false} %>
+            </div>
+
             <div id="order-details">
+
+              <div id="order-number">
+                Order number:
+                <%= @order.id %>
+              </div>
+
+              <div id="order-customer_comment">
+                <%= @order.comment %>
+              </div>
+
               <%= form.fieldset do %>
 
-                <div id="order-customer">
-                  <h3>Customer</h3>
-                  <% if @order.customer %>
-                    <%= render :partial => "breeze/admin/commerce/customers/customer", :object => @order.customer %>
-                  <% else %>
-                    Select a customer
-                  <% end %>
-                  <%= form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Select customer"} %>
-                </div>
-                  
-                <div id="order-shipping_address">
-                  <h3>Shipping Address</h3>
-                  <% if @order.shipping_address %>
-                    <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address %>
-                  <% else %>
-                    Enter a shipping address
-                  <% end %>
-
-                </div>
-
-                <div id="order-billing_address">
-                  <h3>Billing Address</h3>
-                  <% if @order.billing_address %>
-                    <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address %>
-                  <% else %>
-                    Enter a billing address
-                  <% end %>
-                </div>
-
-                <div id="order-line_items">
+                <div id="order-line_items" class="section">
                   <h3>Line Items</h3>
                   <%= render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items %>
                 </div>              
-
-                <div id="order-shipping_method">
-                  <h3>Shipping Method</h3>
-                  <%= form.select :shipping_method_id, Breeze::Commerce::Store.first.shipping_methods.map {|s|[ s.name, s.id ] }, { :required => true, :label => "Select shipping method"} %>
-
-                </div>
-
-                <div id="order-status">
-                  <h3>Status</h3>
-                  <%= form.select :order_status_id, Breeze::Commerce::Store.first.order_statuses.map{|s| [ s.name, s.id]}, :wrap => { :class => :status } %>
-                </div>
-
               <% end %>
+
+              <div id="order-billing">
+                <%= form.fieldset do %>
+                  <div id="order-billing_address" class="section address">
+                    <h3>Billing Address</h3>
+                    <% if @order.billing_address %>
+                      <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address %>
+                    <% else %>
+                      Enter a billing address
+                    <% end %>
+                  </div>
+                <% end %>
+                <%= form.fieldset do %>
+                  <div class="status">
+                    <p class="description"><%= @order.billing_status ? @order.billing_status.description : '' %></p>
+                    <h3>Billing Status</h3>
+                    <%= form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, :label => false %>
+                  </div>
+                <% end %>
+              </div>
+
+              <div id="order-shipping">
+                <%= form.fieldset do %>
+                  <div id="order-shipping_address" class="section address">
+                    <h3>Shipping Address</h3>
+                    <% if @order.shipping_address %>
+                      <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address %>
+                    <% else %>
+                      Enter a shipping address
+                    <% end %>
+                  </div>
+                <% end %>
+                <%= form.fieldset do %>
+                  <div class="status">
+                    <p class="description"><%= @order.shipping_status ? @order.shipping_status.description : '' %></p>
+                    <h3>Shipping Status</h3>
+                    <%= form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, :label => false %>
+                  </div>
+                <% end %>              </div>
+
+              <div class="clearer"></div>
             </div>
           <% end %>
         <% end %>
@@ -63,7 +100,6 @@
 
       <%= fake_right_sidebar do %>
         <%= scrollable_layout do %>
-           <%= link_to "View", admin_store_customer_path(@order), :class => "large view button", :target => :_blank unless @order.new_record? %>
           <%= submit_tag "Save", :class => "large green save button" %>
           <%= link_to "Delete", admin_store_customer_path(@order, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @order.new_record? %>
         <% end %> 

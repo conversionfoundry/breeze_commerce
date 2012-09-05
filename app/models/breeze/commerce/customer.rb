@@ -11,6 +11,10 @@ module Breeze
       def last_order
         orders.last
       end
+
+      def order_total
+        orders.map{|o| o.total}.sum
+      end
       
     end
   end

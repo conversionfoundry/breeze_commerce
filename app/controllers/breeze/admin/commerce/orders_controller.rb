@@ -25,6 +25,8 @@ module Breeze
 
         def edit
           @order = store.orders.find params[:id]
+          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
+          @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
         end
 
         def update

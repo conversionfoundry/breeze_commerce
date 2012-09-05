@@ -18,15 +18,15 @@ Breeze::Engine.routes.draw do
       end
 
       resources :orders do
-        # member do
-        #   get :print
-        # end
+        resources :line_items
+        post :remove_item, :on => :member
       end
 
       resources :categories do
         collection do
           put :reorder
         end
+
       end    
 
       resources :coupons

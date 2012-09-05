@@ -5,17 +5,20 @@ module Breeze
 
       embedded_in :order, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_address
       
-      field :first_name
-      field :last_name
-      field :phone
+      field :name
+      field :address # May be multi-line
+      field :city
+      field :state
+      field :postcode
       field :country
-
-      def name
-        first_name.to_s + ' ' + last_name.to_s
-      end
+      field :phone
 
       def to_html
-        name + '<br />' + country.to_s
+        if name and country
+          name + '<br />' + country.to_s
+        else
+          'missing data'
+        end
       end
     end
   end

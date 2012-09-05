@@ -7,11 +7,35 @@
 .discounted_price
   color: red
 
-/* Store overview 
-  
-  
-  
+/* Customer Card
+.customer-card
+  background: white
+  border: solid 1px #eeeeee
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  color: #444444
+  display: block
+  float: left
+  margin: 0
+  padding: 2em
+  width: 20em
+  text-decoration: none
+  .customer-name
+    font-size: 200%
+  .customer-contact
+    li
+      list-style: none
+      text-align: right
+a.customer-card:hover
+  background: #cccccc
 
+/* Addresses
+.address
+  float: left
+  margin-right: 8em
+
+/* Store overview 
 #store_dashboard
   margin: 0px 4px 16px
   .box
@@ -57,12 +81,62 @@
     p
       margin: 1ex 0px 0px
 
-/*
-/* Left Panel 
-  
-  
-  
+/* Orders
 
+#order-customer
+  float: right
+  margin: 1em 1em 2em 2em
+  width: 24em
+  li
+    list-style: none
+
+#order-details
+  background: white
+  border: solid 1px #eeeeee
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  margin: 2em
+  .section
+    float: left
+    margin: 0 2em 2em 0
+  ol.form
+    li
+      list-style: none
+  #order-number
+    margin: 2em
+  #order-customer_comment
+    color: #383787
+    font: 400 40px/1.0 'Just Another Hand', Helvetica, sans-serif
+    margin: 1.5em 2em 2em 1em
+    transform: rotate(-15deg)
+    -ms-transform: rotate(-15deg) /* IE 9 */
+    -webkit-transform: rotate(-15deg) /* Safari and Chrome */
+    -o-transform: rotate(-15deg) /* Opera */
+    -moz-transform: rotate(-15deg) /* Firefox */
+    width: 10em
+  #order-shipping,
+  #order-billing
+    width: 50%
+    float: left
+    .status
+      border: dashed 4px #cccccc
+      -webkit-border-radius: 1em
+      -moz-border-radius: 1em
+      border-radius: 1em
+      padding: 1em 2em 2em 2em
+      .description
+        color: #cccccc
+        float: right
+        margin: 2em 0 0 2em
+        width: 40%
+
+.clearer
+  clear: both
+
+
+
+/* Left Panel 
 #left
   #store-switcher
     padding: 8px

@@ -4,6 +4,7 @@ module Breeze
       class StoreController < Breeze::Admin::Commerce::Controller
         def index
           # @recent_comments = blog.comments.not_spam.most_recent(5)
+          @top_customers = store.customers.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
         end
         
         # TODO: Test this code

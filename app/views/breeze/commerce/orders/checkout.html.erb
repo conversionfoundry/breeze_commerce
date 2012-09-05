@@ -169,45 +169,41 @@
           <%= order_form.fields_for :shipping_address do |ship_form| %>
             <fieldset>
               <legend>Enter Shipping Address</legend>
-              <ol class="form">
-                <li class="first_name">
-                  <%= ship_form.label :first_name %>
-                  <%= ship_form.text_field :first_name, :class => :required, :value => @customer.first_name  %>
+              <ol id="order_shipping_address" class="form">
+                <li class="name">
+                  <%= ship_form.label :name %>
+                  <%= ship_form.text_field :name, :class => :required, :value => @customer.name  %>
                   <abbr title="required">*</abbr>
                 </li>
-                <li class="last_name">
-                  <%= ship_form.label :last_name %>
-                  <%= ship_form.text_field :last_name, :class => :required, :value => @customer.last_name  %>
+                <li class="address">
+                  <%= ship_form.label :address %>
+                  <%= ship_form.text_area :address, :class => :required %>
                   <abbr title="required">*</abbr>
                 </li>
-                  <li>
-                    <%= ship_form.label :phone %>
-                    <%= ship_form.text_field :phone, :value => @customer.phone  %>
-                    </li>
-                    <li>
-                      <%= ship_form.label :address %>
-                      <%= ship_form.text_field :address, :class => :required %>
-                  <abbr title="required">*</abbr>
-                    
-                    </li>
-                  <li>
-                  <%= ship_form.label :suburb %>
-                  <%= ship_form.text_field :suburb, :class => :required %>
+                <li>
+                  <%= ship_form.label :city %>
+                  <%= ship_form.text_field :city, :class => :required %>
+                 <abbr title="required">*</abbr>
+                </li>
+                <li class="state">
+                  <%= ship_form.label :state, "State, Province or Region" %>
+                  <%= ship_form.text_field :state, :class => :required %>
+                </li>
+                  <%= ship_form.label :postcode %>
+                  <%= ship_form.text_field :postcode %>
+                </li>
+                  <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
+                </li>
+                <li>
+                  <%= ship_form.label :country %>
+                  <%= ship_form.select :country, Breeze::Commerce::COUNTRIES, :class => :required %>
                   <abbr title="required">*</abbr>          
-                    </li> 
-                    <li>
-                      <%= ship_form.label :city %>
-                      <%= ship_form.text_field :city, :class => :required %>
-                  <abbr title="required">*</abbr>
-                  </li>
-                  <li class="state-postcode">
-                    <%= ship_form.label :state %>
-                    <%= ship_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
-                    <%= ship_form.label :postcode %>
-                    <%= ship_form.text_field :postcode %>
-                    <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
-                  </li>
-                  </ol>
+                </li> 
+                <li>
+                  <%= ship_form.label :phone, "Contact Phone Number" %>
+                  <%= ship_form.text_field :phone, :value => @customer.phone  %>
+                </li>
+              </ol>
             </fieldset>
           <% end %>
 
@@ -252,45 +248,41 @@
             Same as Shipping Details
           <% end %>        
           <ol id="order_billing_address" class="form" style="display: none;">
-            <li class="first_name">
-              <%= bill_form.label :first_name %>
-              <%= bill_form.text_field :first_name, :class => :required %>
+            <li class="name">
+              <%= bill_form.label :name %>
+              <%= bill_form.text_field :name, :class => :required, :value => @customer.name  %>
               <abbr title="required">*</abbr>
             </li>
-            <li class="last_name">
-                <%= bill_form.label :last_name %>
-                <%= bill_form.text_field :last_name, :class => :required %>
+            <li class="address">
+              <%= bill_form.label :address %>
+              <%= bill_form.text_area :address, :class => :required %>
               <abbr title="required">*</abbr>
-                </li>
-              <li>
-                <%= bill_form.label :phone %>
-                <%= bill_form.text_field :phone %>
-                </li>
-                <li>
-                  <%= bill_form.label :address %>
-                  <%= bill_form.text_field :address, :class => :required %>
-              <abbr title="required">*</abbr>
-                
-                </li>
-              <li>
-              <%= bill_form.label :suburb %>
-              <%= bill_form.text_field :suburb, :class => :required %>
+            </li>
+            <li>
+              <%= bill_form.label :city %>
+              <%= bill_form.text_field :city, :class => :required %>
+             <abbr title="required">*</abbr>
+            </li>
+            <li class="state">
+              <%= bill_form.label :state, "State, Province or Region" %>
+              <%= bill_form.text_field :state, :class => :required %>
+            </li>
+              <%= bill_form.label :postcode %>
+              <%= bill_form.text_field :postcode %>
+            </li>
+              <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
+            </li>
+            <li>
+              <%= bill_form.label :country %>
+              <%= bill_form.select :country, Breeze::Commerce::COUNTRIES, :class => :required %>
               <abbr title="required">*</abbr>          
-                </li> 
-                <li>
-                  <%= bill_form.label :city %>
-                  <%= bill_form.text_field :city, :class => :required %>
-              <abbr title="required">*</abbr>
-              </li>
-              <li class="state-postcode">
-                <%= bill_form.label :state %>
-                <%= bill_form.collection_select :state, Breeze::Commerce::State.all, :id, :name %>
-                <%= bill_form.label :postcode %>
-                <%= bill_form.text_field :postcode %>
-                <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode" %>
-                <abbr title="required">*</abbr>
-              </li>
+            </li> 
+            <li>
+              <%= bill_form.label :phone, "Contact Phone Number" %>
+              <%= bill_form.text_field :phone, :value => @customer.phone  %>
+            </li>
           </ol>
+
         </fieldset>
       <% end %>
       <div class="form-actions">

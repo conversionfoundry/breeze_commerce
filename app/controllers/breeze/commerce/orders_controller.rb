@@ -85,20 +85,19 @@ module Breeze
         end
 
         if @order.save
-          # TODO: Empty cart
 
+          # Empty the cart
+          session[:cart_id] = nil
+          
           # Do payment with PxPay
           # TODO: Not sure what reference should be yet
-          @payment = Breeze::PayOnline::Payment.new(:name => @order.customer.name, :email=> @order.customer.email, :amount => @order.total, :reference => @order.id)
+          @payment = Breeze::PayOnline::Payment.new(:name => @order.name, :email=> @order.email, :amount => @order.total, :reference => @order.id)
           if @payment.save and redirectable?
             redirect_to @payment.redirect_url and return
           else
             Rails.logger.debug @payment.errors.to_s.blue
             @payment.errors.each { |attrib, err| Rails.logger.debug attrib.to_s + ': ' + err.to_s }
           end
-          # Trying direct use of Pxpay
-          # request = Pxpay::Request.new( 1, 12.00, {:url_success => breeze.thankyou_path, :url_failure => breeze.checkout_path})
-          # redirect_to request.url
         else
           @customer = current_customer || Breeze::Commerce::Customer.new
           render :action => "checkout"
@@ -119,7 +118,7 @@ module Breeze
       end 
 
       def thankyou 
-        @order = current_order(session)
+        # @order = current_order(session)
       end
 
     private

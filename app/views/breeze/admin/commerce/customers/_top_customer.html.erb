@@ -1,0 +1,10 @@
+<%= content_tag :tr, :class => "customer", :id => "customer_#{top_customer.id}" do %>
+
+  <td class="name">
+    <%= top_customer.name %>
+  </td>
+  <td class="last-order">
+    <%= number_to_currency top_customer.order_total %> <span class="currency">NZD</span>
+  </td>
+
+<% end %>

@@ -19,12 +19,11 @@
     
         <div id="top_products" class="box col3">
           <h2>Top Selling Products</h2>
-          <%# tag_cloud blog %>
         </div>
         
         <div id="top_customers" class="box col3">
           <h2>Top Customers</h2>
-          <%# tag_cloud blog %>
+          <%= render :partial => "breeze/admin/commerce/customers/top_customers", :locals => { :customers => @top_customers.paginate(:page => params[:page], :per_page => 10) } %>
         </div>
 
       </div>

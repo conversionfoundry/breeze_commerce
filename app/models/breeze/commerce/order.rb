@@ -3,8 +3,6 @@ module Breeze
     class Order
       include Mongoid::Document
       include Mongoid::Timestamps
-
-      STATUSES = [ :new, :payment_in_process, :payment_received, :partial_payment_received, :payment_declined, :cancelled_by_customer, :cancelled_by_merchant, :disputed ]
       
       field :email
       field :subscribe, :type => Boolean
@@ -14,7 +12,8 @@ module Breeze
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
-      belongs_to :order_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
+      belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
+      belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       embeds_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
@@ -26,6 +25,10 @@ module Breeze
 
       # Don't validate customer - this might be a new order created for a browsing customer
       # validates_presence_of :customer
+
+      def name
+        billing_address.name || "unknown"
+      end
 
       def item_total
         line_items.map(&:amount).sum

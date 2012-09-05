@@ -1,0 +1,20 @@
+<tr class="subtotal">
+  <td colspan="4"></td>
+  <td>Subtotal:</td>
+  <td class="total"><%= number_to_currency @order.item_total %> <span class="currency">NZD</span></td>
+</tr>
+<tr class="shipping">
+  <td colspan="4"></td>
+  <td>Shipping:
+      <%= form_for @order, :as => :order, :url => breeze.admin_store_order_path(@order), :method => :put, :remote => true do |form| %>
+        <%= form.select :shipping_method_id, Breeze::Commerce::Store.first.shipping_methods.map {|s|[ s.name, s.id ] }, { :required => true, :label => "Select shipping method"} %>
+        <%= form.submit "Submit", :class => "btn" %>
+      <% end %>
+  </td>
+  <td class="total"><%= number_to_currency @order.shipping_total %> <span class="currency">NZD</span></td>
+</tr>
+<tr class="total">
+  <td colspan="4"></td>
+  <td>Total cost:</td>
+  <td class="total"><%= number_to_currency @order.total %> <span class="currency">NZD</span></td>
+</tr>        
