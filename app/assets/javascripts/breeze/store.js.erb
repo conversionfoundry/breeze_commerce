@@ -1,5 +1,11 @@
 $(function() {
   
+  // Update order status (billing or shipping) on the orders index page
+  $('table.orders select.status').change(function() {
+    // this.form.submit();
+    $(this.form).trigger('submit.rails');
+  });
+
   $('.new.contextual.button').live('click', function(e) {
     e.preventDefault();
 
@@ -23,7 +29,6 @@ $(function() {
   });
 
   $('.new-context button.ok').live('click', function(e) {
-    alert('foo');
     $('form.breeze-form').submit();
     e.preventDefault();
   });

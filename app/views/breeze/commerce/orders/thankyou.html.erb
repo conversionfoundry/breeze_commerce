@@ -1,5 +1,6 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag "breeze/commerce" %>
+  <link href='http://fonts.googleapis.com/css?family=Just+Another+Hand' rel='stylesheet' type='text/css'>
 <% end %>
 
 <div class="row">
@@ -10,72 +11,75 @@
   </div>
 </div>
 
-<div id="order-details" class="row">
-  <div class="span12">
+<div id="order-customer" class="section">
+  <% if @order.customer %>
+    <%= render :partial => "breeze/commerce/customers/card", :locals => {:customer => @order.customer} %>
+  <% else %>
+    <div class="customer-card">
+      <p class="customer-name">
+        <span class="name">
+          Guest
+        </span>
+      </p>
+      <ul class="customer-contact">
+        <li class="phone">
+          <%= @order.billing_address.phone %>
+        </li>
+        <li class="email">
+          <%= @order.email %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+</div>
+
+<div id="order-details">
+
     <div id="order-number">
       <span>Order Number:</span>
       <span><%= @order.id %></span>
     </div>
-    <div class="detail">
-      <div class="step">
-        <span>Shipping Information</span>
-      </div>
-      <div class="summary-item">
-        <span><%= "Blair Neate" %></span>
-        <span><%= "021 125 6178" %></span>
-      </div>
-      <div class="summary-item">
-        <span>123 Main Street</span>
-      </div>
+
+    <div id="order-customer_comment">
+      <%= @order.comment %>
     </div>
-    <div class="detail">
-      <div class="step">
-        <span>Payment Information</span>
+
+    <div id="order-line_items" class="section">
+      <h3>Line Items</h3>
+      <%= render :partial => "breeze/commerce/line_items/line_items", :object => @order.line_items %>
+    </div>  
+
+    <div id="order-billing">
+      <div id="order-billing_address" class="section address">
+        <h3>Billing Address</h3>
+        <% if @order.billing_address %>
+          <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address %>
+        <% else %>
+          Enter a billing address
+        <% end %>
       </div>
+
     </div>
-  </div>
+
+    <div id="order-shipping">
+      <div id="order-shipping_address" class="section address">
+        <h3>Shipping Address</h3>
+        <% if @order.shipping_address %>
+          <%= render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address %>
+        <% else %>
+          Enter a shipping address
+        <% end %>
+      </div>
+
+    </div>
+
+
+    <div class="clearer"></div>
+
 </div>
 
-<div class="row cart-container">
+<div class="row">
   <div class="span12">
-    <table id="cart" class="order summary table-striped">
-      <thead>
-        <tr>
-          <th class="item" colspan="2">Item</th>
-          <th class="price">Price</th>
-          <th class="quantity">Quantity</th>
-          <th></th>
-          <th class="total">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @order.line_items.empty? %>
-          <tr><td colspan="6" class="empty">There's nothing in your cart yet.</td></tr>
-        <% else %>
-          <% @order.line_items.each do |line_item| %>
-            <tr id="<%= line_item.id %>">
-              <td class="icon"><%= image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
-              <td>
-                <%= line_item.variant.name %><br />
-                <%= line_item.product.teaser %>
-              </td>
-              <td class="price">$<%= line_item.variant.display_price %> <span class="currency">NZD</span></td>
-              <td>
-
-                <%= line_item.quantity %>
-              </td>    
-              <td>
-              </td>              
-              <td class="total"><%= number_to_currency line_item.amount %> <span class="currency">NZD</span></td>
-
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-      <tfoot id="footer_totals">
-        <%= render :partial => "breeze/commerce/line_items/totals" %>
-      </tfoot>
-    </table>
 
     <div class="form-actions">
       <div class="btn-group">

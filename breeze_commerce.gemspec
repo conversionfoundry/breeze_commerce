@@ -26,6 +26,8 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
   s.add_dependency "rails", "~> 3.2.3"
+  s.add_dependency 'csv_shaper'
+  s.add_dependency 'jquery-rails'
   # s.add_dependency "jquery-rails"
 
   #s.add_development_dependency "sqlite3"

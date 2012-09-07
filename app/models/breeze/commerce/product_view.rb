@@ -25,6 +25,7 @@ module Breeze
           vars[:products] = products
         end
       end
+
     end
   end
 end

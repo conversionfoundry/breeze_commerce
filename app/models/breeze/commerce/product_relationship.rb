@@ -13,7 +13,6 @@ module Breeze
 
       validates_inclusion_of :kind, :in => RELATIONSHIPS
 
-
     end
   end
 end

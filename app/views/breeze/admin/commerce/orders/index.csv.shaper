@@ -1,0 +1,12 @@
+  # csv.headers :name, :age, :gender, :pet_names
+  # csv.header Breeze::Commerce::Order
+  csv.headers :date, :customer, :billing_address, :shipping_address, :amount, :email, :comment
+
+  csv.rows @orders do |csv, order|
+    csv.cell :date, order.created_at.to_s
+    csv.cell :customer, order.customer ? order.customer.name : 'Guest'
+    csv.cell :billing_address.to_s
+    csv.cell :shipping_address.to_s
+    csv.cell :amount, number_to_currency(order.total, :locale => :nz)
+    csv.cells :email, :comment
+  end

@@ -34,9 +34,9 @@ Breeze::Engine.routes.draw do
       resources :customers
 
       resources :shipping_methods
-
   
     end
+
   end
 
   scope :module => "commerce" do
@@ -48,7 +48,7 @@ Breeze::Engine.routes.draw do
       get :checkout, :on => :collection
       post :populate, :on => :collection
       post :remove_item, :on => :member
-      get :thankyou, :on => :collection
+      get :thankyou, :on => :member
     end
     
     # TODO: Not sure why this wasn't here. It needs to work with the normal Breeze hierarchy.
@@ -57,7 +57,7 @@ Breeze::Engine.routes.draw do
     match 'cart', :to => 'orders#edit', :via => :get, :as => :cart
     match 'checkout', :to => 'orders#checkout', :via => :get, :as => :checkout
     match 'submit_order', :to => 'orders#submit_order', :via => :put, :as => :submit_order
-    match 'thankyou', :to => 'orders#thankyou', :via => :get, :as => :thankyou
+    # match 'thankyou', :to => 'orders#thankyou', :via => :get, :as => :thankyou
 
 
   end

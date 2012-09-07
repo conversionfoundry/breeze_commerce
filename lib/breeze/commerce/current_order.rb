@@ -20,7 +20,6 @@ module Breeze
       
       def create_order(session)
         # @current_order = Order.create! 
-        binding.pry
         @current_order = Breeze::Commerce::Store.first.orders.create!
         # @current_order.shipping_method = ShippingMethod.first
         @current_order.save

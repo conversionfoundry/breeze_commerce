@@ -44,8 +44,6 @@ module Breeze
         end
       end
       
-      
-      
     end
   end
 end

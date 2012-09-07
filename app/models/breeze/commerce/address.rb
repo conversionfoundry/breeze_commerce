@@ -14,11 +14,27 @@ module Breeze
       field :phone
 
       def to_html
-        if name and country
-          name + '<br />' + country.to_s
-        else
-          'missing data'
-        end
+        result = '<p class="address">'
+        result += '<span class="name">' + (name || 'Unknown Name') + '</span><br />'
+        result += '<span class="name">' + (address || '') + '</span><br />'
+        result += '<span class="name">' + (city || '') + '</span><br />'
+        result += '<span class="name">' + (state || '') + '</span><br />'
+        result += '<span class="name">' + (postcode || '') + '</span><br />'
+        result += '<span class="name">' + (country || '') + '</span><br />'
+        (result += '<span class="name">' + 'Contact Phone:' + phone + '</span>') if phone
+        result += '</p>'
+        result.html_safe
+      end
+
+      def to_s
+        result = ''
+        result += (name || 'Unknown Name') + "\n"
+        result += (address || '') + "\n"
+        result += (city || '') + "\n"
+        result += (state || '') + "\n"
+        result += (postcode || '') + "\n"
+        result += (country || '') + "\n"
+        (result += 'Contact Phone:' + phone) if phone
       end
     end
   end

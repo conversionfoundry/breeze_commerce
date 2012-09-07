@@ -85,6 +85,11 @@ module Breeze
         end
 
         if @order.save
+          # TODO: Need a better way to reference order statuses
+          # TODO: Store should not allow checkout if the appropriate order statuses don't exist yet
+          status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first
+          @order.billing_status = status
+          @order.save
 
           # Empty the cart
           session[:cart_id] = nil
@@ -118,17 +123,18 @@ module Breeze
       end 
 
       def thankyou 
-        # @order = current_order(session)
+        @order = Order.find params[:id]
+        binding.pry
+        @order.payment_completed = true
+        status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
+        @order.billing_status = status
+        @order.save
       end
 
     private
 
       # TODO: Move these private methods to a model – probably "order"
       # TODO: Replace hard-coded 'checkout' in url
-
-      # def pxpay_url
-      #   request.protocol + request.host_with_port + '/payment' + '/' + @payment.id.to_s
-      # end
 
       def pxpay_success
         @payment.update_pxpay_attributes request.params
@@ -149,9 +155,7 @@ module Breeze
 
       def pxpay_urls
         {
-          # :url_success => pxpay_url + '/pxpay_success',
-          # :url_failure => pxpay_url + '/pxpay_failure',
-          :url_success => request.protocol + request.host_with_port + url_for(breeze.thankyou_orders_path),
+          :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( current_order(session) ) ),
           :url_failure => request.protocol + request.host_with_port + url_for(breeze.checkout_path),
         }
       end

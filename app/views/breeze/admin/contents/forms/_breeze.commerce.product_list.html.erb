@@ -1,14 +1,35 @@
 <%= form.fieldset do %>
   <%= form.text_field :title, :required => false %>
 
-  <%# TODO: Select from properties %>
-  <%= form.select :category_ids, Breeze::Commerce::Store.first.categories.map {|c|[ c.name, c.id ] }, { :required => false, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
-  <p>Select product categories to list (leave empty to list all products)</p>
-  
+  <ul class="radio">
+		<li><%= radio_button_tag 'content[list_type]', "category", @content.list_type=='category', :class => 'list_type' %> By Category</li>
+		<li><%= radio_button_tag 'content[list_type]', "related", @content.list_type=='related', :class => 'list_type' %> Related</li>
+	</ul>
+
+	<div id="list_type_category" class="list_type_option" style="display: none;">
+	  <%= form.select :category_ids, Breeze::Commerce::Store.first.categories.map {|c|[ c.name, c.id ] }, { :required => false, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
+	  <p>Select product categories to list (leave empty to list all products)</p>
+	</div>
+
+	<div id="list_type_related" class="list_type_option" style="display: none;">
+	 	<%= form.select :product_id, Breeze::Commerce::Store.first.products.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"} %>
+	  <p>Select product categories to list (leave empty to list all products)</p>
+	</div>
+
 <% end %>
+
+
+
 
 <script type="text/javascript" charset="utf-8">
   $(function() {
     $('.multiselect').multiSelect();
+
+    $('#list_type_<%= @content.list_type %>').show();
+
+    $('input.list_type').change(function(e) {
+    	$('.list_type_option').hide();
+			$( '#list_type_' + $(this).val() ).show();
+		});
   });
 </script>

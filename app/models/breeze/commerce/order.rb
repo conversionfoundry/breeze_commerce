@@ -9,6 +9,7 @@ module Breeze
       # field :gift, :type => Boolean
       field :personal_message
       field :comment
+      field :payment_completed
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
@@ -26,6 +27,10 @@ module Breeze
       # Don't validate customer - this might be a new order created for a browsing customer
       # validates_presence_of :customer
 
+      def payment_completed?
+        payment_completed
+      end
+      
       def name
         billing_address.name || "unknown"
       end

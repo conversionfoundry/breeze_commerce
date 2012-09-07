@@ -1,46 +1,31 @@
-<%= pane_layout do |main| %>
-  <%= main.inner do %>
-    <%= breeze_form_for @customer, :as => :customer, :url => url do |form| %>
-      <%= scrollable_layout do %>
-        <h1><%= @customer.new_record? ? 'New Customer' : "Editing Customer \"#{@customer.title}\"" %></h1>
-        <%= render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer %>
-        <%= tabbed_layout do |tabs| %>
-          <% tabs.details :title => "Customer Details" do %>
-            <div id="customer-details">
-              <%= form.fieldset do %>
-                <%= form.text_field :title, :required => false %>
-                <%= form.text_field :first_name, :required => true %>
-                <%= form.text_field :last_name, :required => true %>
-                <%= form.text_field :phone, :required => false %>
-                <%= form.text_field :email, :required => true %>
-                <%= form.password_field :password %>
-                <%= form.password_field :password_confirmation %>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>
-
-      <%= fake_right_sidebar do %>
-        <%= scrollable_layout do %>
-           <%= link_to "View", admin_store_customer_path(@customer), :class => "large view button", :target => :_blank unless @customer.new_record? %>
-          <%= submit_tag "Save", :class => "large green save button" %>
-          <%= link_to "Delete", admin_store_customer_path(@customer, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @customer.new_record? %>
-        <% end %> 
-      <% end %>
-
+<%= breeze_form_for @customer, :as => :customer, :url => url do |form| %>
+  <h1>
+      Edit Customer
+      <%= submit_tag "Save", :class => "large green save button" %>
+      <%= link_to "Delete", admin_store_customer_path(@customer, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @customer.new_record? %>
+  </h1>
+  <%= render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer %>
+  <div id="customer-details">
+    <%= form.fieldset do %>
+      <%= form.text_field :title, :required => false %>
+      <%= form.text_field :first_name, :required => true %>
+      <%= form.text_field :last_name, :required => true %>
+      <%= form.text_field :phone, :required => false %>
+      <%= form.text_field :email, :required => true %>
+      <%= form.password_field :password %>
+      <%= form.password_field :password_confirmation %>
     <% end %>
-  <% end %>
+  </div>
+
+
+  <%#= fake_right_sidebar do %>
+    <%#= scrollable_layout do %>
+      
+    <%# end %> 
+  <%# end %>
+
 <% end %>
 
-<% content_for :left do %>
-  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
-<% end %>
 
-<% content_for :right do %>
-  <%= pane_layout do |right| %>
-    <% right.header do %>
 
-    <% end %>
-  <% end %>
-<% end %>
+

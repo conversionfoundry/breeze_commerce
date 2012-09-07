@@ -6,10 +6,14 @@
 <tr class="shipping">
   <td colspan="4"></td>
   <td>Shipping:
+    <% if @order.payment_completed? %>
+      <%= @order.shipping_method.name %>
+    <% else %>
       <%= form_for @order, :as => :order, :url => breeze.order_path(@order), :method => :put, :remote => true do |form| %>
         <%= form.select :shipping_method_id, Breeze::Commerce::Store.first.shipping_methods.map {|s|[ s.name, s.id ] }, { :required => true, :label => "Select shipping method"} %>
         <%= form.submit "Submit", :class => "btn" %>
       <% end %>
+    <% end %>
   </td>
   <td class="total"><%= number_to_currency @order.shipping_total %> <span class="currency">NZD</span></td>
 </tr>
