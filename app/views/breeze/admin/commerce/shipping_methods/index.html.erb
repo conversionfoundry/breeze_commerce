@@ -4,6 +4,7 @@
   <%= panes.inner do %>
     <%= scrollable_layout do %>
       <h1>Shipping Methods <%= link_to "New shipping method", new_admin_store_shipping_method_path, :class => "large green button new shipping_method" %></h1>
+      <%= will_paginate @shipping_methods %>      
       <%= render :partial => "breeze/admin/commerce/shipping_methods/shipping_methods", :object => @shipping_methods %>
     <% end %>
   <% end %>

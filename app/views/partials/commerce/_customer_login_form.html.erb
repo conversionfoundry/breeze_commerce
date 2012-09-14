@@ -1,0 +1,39 @@
+<div id="sign-in" data-customer_signed_in="<%= customer_signed_in? ? 'true' : 'false' %>">
+  <div class="breeze-customer_login well">
+    
+    <% if customer_signed_in? %>
+
+      Signed in as <%= current_customer.name %>
+
+      <div class="form-actions">
+        <div class='btn-group'>
+          <%= link_to "Edit Profile", breeze.edit_customer_path(current_customer), :class => "btn" %>
+          <%= link_to 'Sign Out', breeze.destroy_customer_session_path, :class => 'btn' %>
+        </div>
+      </div>
+
+    <% else %>
+      <%= form_for "customer", :url => breeze.customer_session_path do |form| %>
+        <fieldset>
+          <legend>Returning Customer</legend>
+
+              <%= form.label :email do |label| %> 
+                Email: 
+              <% end %>
+              <%= form.text_field :email, :class=>"required email", :placeholder => 'name@example.com' %>
+
+              <%= form.label :password do |label| %>
+                Password
+              <% end %>
+              <%= form.password_field :password %>
+
+
+        </fieldset>
+        <div class="form-actions">
+          <%= form.submit "Sign in", :class => "btn" %>
+        </div>
+      <% end %> 
+
+    <% end %>
+  </div>
+</div> 

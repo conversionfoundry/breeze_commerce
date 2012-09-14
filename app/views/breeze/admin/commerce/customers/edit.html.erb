@@ -1,9 +1,10 @@
 <% content_for :title, "Editing Customer" %>
-	<%= pane_layout do |main| %>
-	  <%= main.inner do %>
-	    <%= scrollable_layout do %>
-		    <%= tabbed_layout do |tabs| %>
-		      <% tabs.details :title => @customer.name do %>
+
+<%= pane_layout do |main| %>
+  <%= main.inner do %>
+    <%= scrollable_layout do %>
+	    <%= tabbed_layout do |tabs| %>
+	      <% tabs.details :title => @customer.name do %>
 
 					<div id='<%= "customer_#{@customer.id}" %>' class="customer-edit">
 					  <%= render "breeze/admin/commerce/customers/form", :url => admin_store_customer_path(@customer) %>
@@ -11,6 +12,7 @@
 
 					<h2>Orders</h2>
 				  <%= render :partial => "breeze/admin/commerce/orders/orders", :object => @customer.orders %>
+				  
 				<% end %>
 			 <% end %>
 	  <% end %>

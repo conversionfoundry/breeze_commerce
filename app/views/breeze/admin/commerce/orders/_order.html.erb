@@ -1,7 +1,8 @@
 <%= content_tag :tr, :class => :order, :id => "order_#{order.id}", :"data-id" => order.id do %>
   <%= form_for order, :as => :order, :url => admin_store_order_path(order), :remote => true do |form| %>
-    <td class="date">
-      <%= order.created_at %>
+    <td class="order_number">
+      <p class="number"><%= order.order_number %></p>
+      <p class="time"><%= order.created_at.strftime('%I:%M %P') %></p>
     </td>
     <td class="customer">
       <% if order.customer %>

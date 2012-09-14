@@ -1,6 +1,6 @@
 <tr id="<%= line_item.id %>">
   <td></td>
-  <td class="icon"><% image_tag line_item.product.icon_image if line_item.product.icon_image %></td>
+  <td class="icon"><%= image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image %></td>
   <td><%= line_item.variant.name %></td>
   <td></td>
   <td class="price">

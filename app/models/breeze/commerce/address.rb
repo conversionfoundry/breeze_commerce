@@ -4,7 +4,10 @@ module Breeze
       include Mongoid::Document
 
       embedded_in :order, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_address
-      
+      embedded_in :order, :class_name => "Breeze::Commerce::Order", :inverse_of => :billing_address
+      embedded_in :order, :class_name => "Breeze::Commerce::Customer", :inverse_of => :shipping_address
+      embedded_in :order, :class_name => "Breeze::Commerce::Customer", :inverse_of => :billing_address
+
       field :name
       field :address # May be multi-line
       field :city
@@ -13,6 +16,11 @@ module Breeze
       field :country
       field :phone
 
+      field :archived, type: Boolean, default: false
+
+      scope :archived, where(:archived => true)
+      scope :unarchived, where(:archived.in => [ false, nil ])
+      
       def to_html
         result = '<p class="address">'
         result += '<span class="name">' + (name || 'Unknown Name') + '</span><br />'

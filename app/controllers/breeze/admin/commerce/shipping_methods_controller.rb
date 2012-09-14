@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class ShippingMethodsController < Breeze::Admin::Commerce::Controller
         def index
-          @shipping_methods = store.shipping_methods
+          @shipping_methods = Breeze::Commerce::ShippingMethod.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
         end
         
         def new
@@ -36,7 +36,7 @@ module Breeze
         
         def destroy
           @shipping_method = store.shipping_methods.find params[:id]
-          @shipping_method.try :destroy
+          @shipping_method.update_attributes(:archived => true)
         end
 
       end

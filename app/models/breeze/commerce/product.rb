@@ -2,18 +2,17 @@ module Breeze
   module Commerce
 
     #TODO: validates_associated doesn't seem to work here, so I've stuck in this ugly custom validator
-    class AllVariantsValidValidator < ActiveModel::Validator
-      def validate(product)
-        product.variants.each do |variant|
-          unless variant.valid?
-            product.errors[:base] << "Variant " + variant.name + " is missing a value."
-          end
-        end
-      end
-    end
+    # class AllVariantsValidValidator < ActiveModel::Validator
+    #   def validate(product)
+    #     product.variants.each do |variant|
+    #       unless variant.valid?
+    #         product.errors[:base] << "Variant " + variant.name + " is missing a value."
+    #       end
+    #     end
+    #   end
+    # end
 
     class Product < Breeze::Content::Page
-      
       identity :type => String
 
       belongs_to_related :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
@@ -22,9 +21,7 @@ module Breeze
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
       has_many :variants, :class_name => "Breeze::Commerce::Variant"
       has_many_related :images, :class_name => "Breeze::Commerce::ProductImage"
-      # has_many_related :related_products, :class_name => "Breeze::Commerce::Product" #, :stored_as => :array
-      #embeds_many :variants, :class_name => "Breeze::Commerce::Variant"
-      #embeds_many :images, :class_name => "Breeze::Commerce::ProductImage"
+
 
       has_many :product_relationship_children, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :parent_product
       has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
@@ -33,23 +30,29 @@ module Breeze
       field :available_stock, :type => Integer
       field :content, :markdown => true
       field :available, :type => Boolean
+      field :archived, type: Boolean, default: false
 
-      # field :weight
-      # field :height
-      # field :width
-      # field :depth
-
+      scope :available, where(:available => true)
+      scope :unavailable, where(:available.in => [ false, nil ])
+      scope :archived, where(:archived => true)
+      scope :unarchived, where(:archived.in => [ false, nil ])
       scope :published, where(:available => true)
       scope :in_category, lambda { |category| where(:category_ids => category.id) }
-        
-      # referenced_in :line_item
-
-      # before_validation :load_variants
-      # validates_associated :variants
-      validates_with AllVariantsValidValidator # See above.
       
 
+      validates_associated :variants
+      # validate :all_variants_must_be_valid
+
+
       before_save :regenerate_permalink!
+
+      # def all_variants_must_be_valid
+      #   variants.each do |variant|
+      #     unless variant.valid?
+      #       errors[:variants] << "Variant " + variant.name + " is missing a value."
+      #     end
+      #   end
+      # end
 
       # e.g. Breeze::Commerce::Product is a NavigationItem, but it's managed under the Store admin area
       def has_special_admin?
@@ -86,7 +89,13 @@ module Breeze
       def display_price
         variants.map{|v| v.display_price}.min
       end
-      
+
+      def has_line_items?
+        # variants.each do |v|
+          
+        # false
+      end
+
       # Override the normal page hierarchy, so that products always appear as children of the root page.
       # This is done so that product pages can display navigation controls, even though they don't appear in the page hierarchy.
       # TODO: Is there a better way to do this?
@@ -96,19 +105,19 @@ module Breeze
       def parent_id
         parent.id
       end
-      
-      protected
-
-      # def load_variants
-      #   variants.to_a
-      # end
 
       def regenerate_permalink!
-        # TODO: This needs to changed to use the canonical property
         # TODO: Also need to set the parent_id
-        category = self.categories.first.name.downcase.parameterize.gsub(/(^[\-]+|[-]+$)/, "")
-        self.permalink = "/#{category}/#{slug}" unless store.nil? || slug.blank?
+        category = self.categories.first # TODO: This needs to changed to use the canonical category
+        if category
+          category_slug = category.name.downcase.parameterize.gsub(/(^[\-]+|[-]+$)/, "")
+          self.permalink = "/#{category}/#{slug}" unless store.nil? || slug.blank?
+        else
+          self.permalink = "/#{slug}" unless store.nil? || slug.blank?
+        end
       end
+
+
     end
 
 

@@ -25,10 +25,12 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
+  # s.add_dependency "jquery-rails"
   s.add_dependency "rails", "~> 3.2.3"
   s.add_dependency 'csv_shaper'
   s.add_dependency 'jquery-rails'
-  # s.add_dependency "jquery-rails"
+  s.add_dependency 'will_paginate', "3.0.pre4"
+  s.add_development_dependency "rspec"
 
   #s.add_development_dependency "sqlite3"
   

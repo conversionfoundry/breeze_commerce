@@ -59,7 +59,7 @@
 
     <div class="form-actions">
       <div class="btn-group">
-        <%= link_to breeze.root_path, :class => "btn", :id => "continue-shopping" do %>
+        <%= link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do %>
           <span class="title">Continue Shopping</span>
         <% end %>
         <% if @order.line_items.count > 0 %>

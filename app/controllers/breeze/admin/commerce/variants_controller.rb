@@ -30,12 +30,12 @@ module Breeze
             end
           end
           @variant.update_attributes params[:variant]
-          render :layout => false unless params[:Filename].blank?
+          # render :layout => false unless params[:Filename].blank?
         end
 
         def destroy
           @variant = product.variants.find params[:id]
-          @variant.try :destroy
+          @variant.update_attributes(:archived => true)
         end
 
         private

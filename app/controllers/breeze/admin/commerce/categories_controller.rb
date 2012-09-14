@@ -3,8 +3,7 @@ module Breeze
     module Commerce
       class CategoriesController < Breeze::Admin::Commerce::Controller
         def index
-          @categories = store.categories #.ordered
-          #@categories = @categories.where(:name => /#{params[:q]}/) if params[:q]
+          @categories = Breeze::Commerce::Category.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
           respond_to do |format|
             format.html
             format.json { render :json => @categories.map{|c| { :id => c.id, :name => c.name } } }

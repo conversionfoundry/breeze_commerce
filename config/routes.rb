@@ -1,17 +1,18 @@
 Breeze::Engine.routes.draw do  
 
-  namespace "admin" do
-    # namespace "store" do
-  
+  namespace "admin" do  
     namespace "store", :module => "commerce", :name_prefix => "admin_store" do
       root :to => "store#index"
-      controller :commerce do
+      
+      controller :store do
         get :settings
         put :settings     
       end
   
       resources :products do
-        resources :variants
+        resources :variants do
+          resources :variant_images
+        end
         resources :properties
         resources :product_images
         resources :product_relationships
@@ -19,7 +20,8 @@ Breeze::Engine.routes.draw do
 
       resources :orders do
         resources :line_items
-        post :remove_item, :on => :member
+        resources :notes
+        # post :remove_item, :on => :member # TODO: SHouldn't need this
       end
 
       resources :categories do
@@ -39,26 +41,25 @@ Breeze::Engine.routes.draw do
 
   end
 
-  scope :module => "commerce" do
-  # namespace "store", :module => "commerce", :name_prefix => "store" do
- 
-    
+  scope :module => "commerce" do    
     resources :orders do
       resources :line_items
       get :checkout, :on => :collection
       post :populate, :on => :collection
       post :remove_item, :on => :member
       get :thankyou, :on => :member
+      get :payment_failed, :on => :member
     end
+
+    # TODO: There should be no index access here. Customers should only be allowed to manage their own accounts
+    resources :customers 
     
     # TODO: Not sure why this wasn't here. It needs to work with the normal Breeze hierarchy.
     # resources :products
      
-    match 'cart', :to => 'orders#edit', :via => :get, :as => :cart
-    match 'checkout', :to => 'orders#checkout', :via => :get, :as => :checkout
-    match 'submit_order', :to => 'orders#submit_order', :via => :put, :as => :submit_order
-    # match 'thankyou', :to => 'orders#thankyou', :via => :get, :as => :thankyou
-
+    get 'cart', :to => 'orders#edit', :as => :cart
+    get 'checkout', :to => 'orders#checkout', :as => :checkout
+    put 'submit_order', :to => 'orders#submit_order', :as => :submit_order
 
   end
 

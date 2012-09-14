@@ -1,6 +1,10 @@
 <%= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id do %>
+  <td class="image">
+    <%= image_tag variant.image.url(:thumbnail) if variant.image %>
+  </td>
   <td class="name">
-    <%= variant.name %>
+    <%= variant.name %><br />
+    <%= variant.blurb %>
   </td>
   <td class="price">
     <% if variant.discounted_sell_price > 0 %>

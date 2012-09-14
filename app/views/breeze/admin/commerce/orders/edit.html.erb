@@ -1,9 +1,0 @@
-<% content_for :title, "Editing Order" %>
-<% content_for :head do %>
-	<link href='http://fonts.googleapis.com/css?family=Just+Another+Hand' rel='stylesheet' type='text/css'>
-<% end %>
-
-<div id='<%= "order_#{@order.id}" %>' class="order-edit">
-  <%= render "breeze/admin/commerce/orders/form", :url => admin_store_order_path(@customer) %>
-</div>
-

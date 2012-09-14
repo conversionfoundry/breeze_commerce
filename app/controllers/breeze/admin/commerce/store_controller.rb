@@ -7,21 +7,11 @@ module Breeze
           @top_customers = store.customers.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
         end
         
-        # TODO: Test this code
-        def setup_default
-          @store = Store.new :title => "Store", :parent_id => Breeze::Content::NavigationItem.root.first.try(:id)
-          @store.save!
-          redirect_to admin_store_root_path
-        end
-        
-        def switch
-          session[:store_id] = params[:store]
-          redirect_to :action => "index"
-        end
-        
         def settings
           if request.put?
             if store.update_attributes params[:store]
+            # store.home_page_id = Breeze::Content::Page.find(params[:store][:home_page_id]).id
+            # if store.save
               redirect_to admin_store_settings_path
             else
               render :action => "settings"

@@ -2,8 +2,7 @@ module Breeze
   module Commerce
     class OrdersController < Breeze::Commerce::Controller
       helper Breeze::ContentsHelper
-
-      layout "breeze/commerce/order"
+      layout "breeze/commerce/checkout_funnel"
       include Breeze::Commerce::ContentsHelper
 
       def print
@@ -31,10 +30,8 @@ module Breeze
         
         # product_id = params[:product_id]
         variant_id = params[:variant_id]
-        
-        # new_line_item =  Breeze::Commerce::LineItem.new(:product_id => product_id, :quantity => params[:quantity] || 1)
+                
         new_line_item =  Breeze::Commerce::LineItem.new(:variant_id => variant_id, :quantity => params[:quantity] || 1)
-        # existing_line_item = @order.line_items.where(:product_id => product_id).first 
         existing_line_item = @order.line_items.where(:variant_id => variant_id).first 
         if existing_line_item
           existing_line_item.quantity += new_line_item.quantity
@@ -43,15 +40,13 @@ module Breeze
         end
 
         @order.save
-        #product = Breeze::Commerce::Product.find(params[:product_id])
-        #redirect_to product.permalink
-        # @cart_content = 'bort' + render_partial( :partial => "partials/commerce/cart", :layout => false, :locals => {:order => @order} )
-
       end
 
       def checkout
-        @customer = current_customer || Breeze::Commerce::Customer.new
         @order = current_order(session)
+        @customer = current_customer || Breeze::Commerce::Customer.new
+        @customer.shipping_address ||= Breeze::Commerce::Address.new
+        @customer.billing_address ||= Breeze::Commerce::Address.new
       end
 
       # Checkout completed, ready to process order
@@ -63,19 +58,21 @@ module Breeze
         # @order = store.orders.build params[:order]
         @order.update_attributes params[:order]
         
+
         if customer_signed_in?
           @order.customer = current_customer
         elsif params[:create_new_account]
           # create and save a new customer
           new_customer = Breeze::Commerce::Customer.new(
-            :first_name => params[:order][:billing_address][:first_name],
-            :last_name => params[:order][:billing_address][:last_name],
+            :first_name => params[:order][:billing_address][:name].split(' ').first,
+            :last_name => params[:order][:billing_address][:name].split(' ').last,
             :email => params[:order][:email],
             :password => params[:new_account_password],
             :password_confirmation => params[:new_account_password],
             :store => store
           )
-          # TODO: Create customer shipping and billing addresses
+          new_customer.shipping_address = Breeze::Commerce::Address.new params[:order][:shipping_address]
+          new_customer.billing_address = Breeze::Commerce::Address.new params[:order][:billing_address]
           # TODO: Boolean for whether addresses are the same
           # TODO: Move this code out of the controller somehow
           if new_customer.save
@@ -91,12 +88,10 @@ module Breeze
           @order.billing_status = status
           @order.save
 
-          # Empty the cart
-          session[:cart_id] = nil
           
           # Do payment with PxPay
           # TODO: Not sure what reference should be yet
-          @payment = Breeze::PayOnline::Payment.new(:name => @order.name, :email=> @order.email, :amount => @order.total, :reference => @order.id)
+          @payment = Breeze::Commerce::Payment.new(:name => @order.name, :email=> @order.email, :amount => @order.total, :reference => @order.id)
           if @payment.save and redirectable?
             redirect_to @payment.redirect_url and return
           else
@@ -124,11 +119,20 @@ module Breeze
 
       def thankyou 
         @order = Order.find params[:id]
-        binding.pry
-        @order.payment_completed = true
+        @order.payment_completed = true # TODO: This should be redundant when we have a relation between a orders and payments
         status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
         @order.billing_status = status
         @order.save
+
+        # Empty the cart
+        session[:cart_id] = nil
+      end
+
+      def payment_failed
+        @order = Order.find params[:id]
+        flash[:error] = '<h4>Payment failed</h4><p>Unfortunately, your order didn\'t go through.</p>'.html_safe
+        @customer = current_customer || Breeze::Commerce::Customer.new
+        render :action => "checkout"
       end
 
     private
@@ -156,7 +160,7 @@ module Breeze
       def pxpay_urls
         {
           :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( current_order(session) ) ),
-          :url_failure => request.protocol + request.host_with_port + url_for(breeze.checkout_path),
+          :url_failure => request.protocol + request.host_with_port + url_for( breeze.payment_failed_order_path( current_order(session) ) ),
         }
       end
     end

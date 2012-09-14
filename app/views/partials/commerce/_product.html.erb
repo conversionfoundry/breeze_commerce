@@ -1,4 +1,9 @@
-<%= content_tag :li, :class => "product", :id => "product_#{product.id}" do %>
+<% classes = 'product' %>
+<% classes += ' ' + product.categories.map{|c| c.slug}.join(' ') %>
+<% classes += ' first' if product_counter == 0 %>
+<% classes += ' last' if product_counter == product_count - 1 %>
+<%= content_tag :li, :class => classes, :id => "product_#{product.id}" do %>
+
   <div class="image">
     <% unless product.images.empty? %>
       <%= image_tag product.images.last.file.url(:breeze_thumb) %>
@@ -21,10 +26,6 @@
   </div>
   <div class="actions">
     <%= link_to "Read More", product.permalink, :class => 'action' %>
-    <%= form_for :order, :url => breeze.populate_orders_path do |f| %>
-      <%# hidden_field_tag :product_id, product.id %> 
-      <%# button_to "Add to Cart", breeze.populate_orders_path, :method => :post, :class => 'action' %>
-    <% end %>
     
   </div>
  <% end %>

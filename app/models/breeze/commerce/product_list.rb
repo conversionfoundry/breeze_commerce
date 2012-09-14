@@ -13,9 +13,9 @@ module Breeze
       
       def to_erb(view)
         store = Breeze::Commerce::Store.first # Assuming one store per site at this stage
-        products = store.available_products
+        products = store.products.available.unarchived
         content = "<h3>#{title}</h3>"
-        
+
         if list_type == 'category'
           categories = self.categories
           categories.each do |category|

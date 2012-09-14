@@ -16,12 +16,11 @@
     <%= customer.email %>
   </td>
   <td class="last-order">
-    <%= link_to customer.last_order.to_s, admin_store_order_path(customer.last_order) %>
+    <%= link_to customer.last_order.to_s, edit_admin_store_order_path(customer.last_order) if customer.last_order%>
   </td>
   <td class="actions">
     <p class="customer-actions">
       <%= link_to "Edit", edit_admin_store_customer_path(customer), :class => "small black button" %>
       <%= link_to "Delete", admin_store_customer_path(customer), :remote => true, :method => :delete, :class => "small red delete button" %>
-    </p>
   </td>
 <% end %>

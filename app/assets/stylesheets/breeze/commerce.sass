@@ -68,74 +68,26 @@ a.customer-card:hover
     background-position: 0px 6px
     padding-left: 26px
 
-div
-  &.checkout-header
-    line-height: 40px
-    div.heading
-      float: left
-      line-height: 40px
-      div.number
-        background-image: url(' image_path "breeze/dark.png" ')
-        background-repeat: no-repeat
-        z-index: 2
-        position: absolute
-        line-height: 40px
-        padding-top: 2px
-    &.visited div.number
-      background-image: url(' image_path "breeze/disabled.png" ')
-    &.active div.number
-      background-image: url(' image_path "breeze/active.png" ')
-    div.heading div.step
-      width: 585px
-      line-height: 28px
-      overflow: auto
-      margin-top: 5px
-  &.detail div.step
-    width: 585px
-    line-height: 28px
-    overflow: auto
-    margin-top: 5px
-  &.checkout-header
-    div.heading div
-      &.step
-        margin-left: 20px
-        span
-          margin-left: 70px
-          font-size: 130%
-          color: #686868
-      &.number span
-        color: #fff
-        margin-top: 5px
-        padding-left: 16px
-        padding-right: 15px
-        font-size: 120%
-    > span
-      float: left
-      width: 50px
-      color: #d7d7d7
-      font-size: 150%
-    &.active span
-      color: #8cc63f
-    overflow: auto
-    width: 100%
-  &.checkout-body
-    overflow: auto
-    width: 100%
-  &.checkout-summary
-    overflow: auto
-    width: 100%
-    color: #9f9f9f
-    font-weight: bold
-    div.summary
-      float: left
-      margin-left: 70px
-  &.summary-item
-    float: left
-    margin-top: 10px
-    margin-bottom: 10px
-    span
-      display: block
-      width: 140px
+.checkout-header
+  background: #f5f5f5
+  -webkit-border-radius: 1em
+  -moz-border-radius: 1em
+  border-radius: 1em
+  margin-bottom: 1em
+  padding: 1em
+
+.checkout-summary,
+.checkout-body
+  clear: both
+  margin-left: 5em
+  margin-right: 5em
+  padding: 1em
+  .form-actions
+    background: transparent
+    border: none
+    float: right
+    margin: 0
+    padding: 0
 
 .address textarea
   resize: vertical
@@ -221,24 +173,15 @@ li.state-postcode
     width: 30px !important
 
 ol.form
-  input
-    &[type=text], &[type=password]
-      background-image: url(' image_path "breeze/form_bg.jpg" ')
-      background-repeat: repeat-x
-      border: 1px solid #d7d7d7
-      padding: 3px
-    &[type=text].error
-      border: 1px solid #8cc63f
-      background-color: #f2fbe6
-      background-image: none
-  abbr
+  span.required
     font-size: 200%
     font-weight: bold
-    color: #8cc63f
-    margin-left: -234px
+    color: #e33100
     line-height: 0.2em
     vertical-align: bottom
     border: none
+  .optional
+    color: #cccccc
   li.state-postcode abbr
     margin-left: -80px
 

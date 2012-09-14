@@ -1,3 +1,6 @@
+# require 'app/uploaders/pic'
+require 'carrierwave/mongoid'
+
 module Breeze
   module Commerce
 
@@ -5,10 +8,6 @@ module Breeze
     class AllOptionsFilledValidator < ActiveModel::Validator
       def validate(variant)
         variant.product.properties.each do |property|
-          # binding.pry
-          # Rails.logger.debug '*************'
-          # Rails.logger.debug variant.errors
-          # Rails.logger.debug variant.option_for_property(property).class.to_s
           variant.errors[:base] << "Must have a value for " + property.name unless variant.option_for_property(property)
         end
       end
@@ -20,25 +19,30 @@ module Breeze
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
+      has_one_related :image, :class_name => "Breeze::Commerce::VariantImage"
+      has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       
-      #embedded_in :product, :class_name => "Breeze::Commerce::Variant", :inverse_of => :variants
-      #
-      referenced_in :line_item
-      
-      mount_uploader :image, Breeze::Commerce::VariantUploader, :mount_on => :file
+      field :image
+      mount_uploader :image, Breeze::Commerce::VariantImageUploader
 
       field :name
       field :sku_code
       # field :price_offset_cents, :type => Integer
       field :available, :type => Boolean
+      field :blurb
 
       field :cost_price_cents, :type => Integer
       field :sell_price_cents, :type => Integer
       field :discounted_sell_price_cents, :type => Integer
 
-      field :folder
-      field :image_width, :type => Integer
-      field :image_height, :type => Integer
+      # field :folder
+      # field :image_width, :type => Integer
+      # field :image_height, :type => Integer
+
+      field :archived, type: Boolean, default: false
+
+      scope :archived, where(:archived => true)
+      scope :unarchived, where(:archived.in => [ false, nil ])
 
       validates_presence_of :name, :sku_code, :cost_price, :sell_price
       validates_uniqueness_of :sku_code

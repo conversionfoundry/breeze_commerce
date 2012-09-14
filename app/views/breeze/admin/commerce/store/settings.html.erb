@@ -1,0 +1,37 @@
+<% content_for :title, "Store settings" %>
+
+<%= tabbed_layout do |tabs| %>
+  <% tabs.general :title => "General settings" do %>
+<%= breeze_form_for store, :url => admin_store_settings_path, :method => :put do |form| %>
+  <%= scrollable_layout do %>
+    <h1>General settings</h1>
+    <%= form.fieldset :legend => "Store Home Page" do %>
+      <p>When customers return from the cart or checkout by clicking the "Continue Shopping" button, where should they go?</p>
+      
+      <%= form.select :home_page_id, Breeze::Content::Page.all.sort.map {|p|[ p.title, p.id ] }, { :required => true, :label => "Store home page"} %>
+    
+    <% end %>
+  <% end %>
+  <%= fake_right_sidebar do %>
+    <%= form.submit "Save settings", :class => "large green save button" %>
+  <% end %>
+<% end %>
+  <% end %>
+<% end %>
+
+
+<% content_for :left do %>
+  <%= render :partial => "breeze/admin/commerce/commerce/left" %>
+<% end %>
+
+<% content_for :right do %>
+  <%= pane_layout do |right| %>
+    <% right.header do %>
+
+    <% end %>
+  <% end %>
+<% end %>
+
+<% content_for :head do %>
+  <%= stylesheet_link_tag asset_path "breeze/store.css" %>
+<% end %>

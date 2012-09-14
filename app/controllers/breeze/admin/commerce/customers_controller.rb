@@ -3,11 +3,13 @@ module Breeze
     module Commerce
       class CustomersController < Breeze::Admin::Commerce::Controller
         def index
-          @customers = store.customers.all
+          @customers = Breeze::Commerce::Customer.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
         end
 
         def new
           @customer = store.customers.new
+          @customer.shipping_address ||= Breeze::Commerce::Address.new
+          @customer.billing_address ||= Breeze::Commerce::Address.new
         end
         
         def create
@@ -21,6 +23,8 @@ module Breeze
 
         def edit
           @customer = store.customers.find params[:id]
+          @customer.shipping_address ||= Breeze::Commerce::Address.new
+          @customer.billing_address ||= Breeze::Commerce::Address.new
           @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
        end
@@ -33,6 +37,12 @@ module Breeze
           else
             render :action => "edit"
           end
+        end
+        
+        def destroy
+         @customer = store.customers.find(params[:id])
+         @customer.update_attributes(:archived => true)
+
         end
 
       end

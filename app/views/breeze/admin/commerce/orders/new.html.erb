@@ -1,2 +1,12 @@
 <% content_for :title, "New order" %>
-<%= render "breeze/admin/commerce/orders/form", :url => admin_store_orders_path %>
+
+<%= tabbed_layout do |tabs| %>
+  <% tabs.details :title => "Order Details" do %>
+		<%= scrollable_layout do %>
+			<div id='<%= "order_new" %>' class="order-new">
+			  <%= render "breeze/admin/commerce/orders/form", :url => admin_store_orders_path %>
+			</div>
+
+		<% end %>
+	<% end %>
+<% end %>

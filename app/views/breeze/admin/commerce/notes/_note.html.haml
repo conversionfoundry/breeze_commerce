@@ -1,0 +1,4 @@
+%li.note{:id => "note_#{note.id}"}
+	%p
+		= note.body_text
+	= button_to "Remove", breeze.admin_store_order_note_path(@order, note), :method=>:delete, :remote => true, :class=>:remove

@@ -1,0 +1,7 @@
+<% if @order.payments.any? %>
+	<ol class="payments">
+	  <%= render :partial => "breeze/admin/commerce/payments/payment", :collection => @order.payments %>
+	</ol>
+<% else %>
+  There are no payments for this order.
+<% end %>

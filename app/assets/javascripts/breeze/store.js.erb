@@ -212,17 +212,18 @@ $(function() {
           
         
       onComplete: function(event, queue_id, file_obj, response, data) {
-            var id = /id="([^"]+)"/.exec(response);
-            if (id && id[1]) {
-              $('#' + id[1]).remove();
-            }
-          
-            $('#assets .image-assets').append(response);
-            // show_or_hide_asset_section_headings();
-            return true;
-          }
-        });
-      });
+        var id = /id="([^"]+)"/.exec(response);
+        if (id && id[1]) {
+          $('#' + id[1]).remove();
+        }
+      
+        $('#assets .image-assets').append(response);
+        // show_or_hide_asset_section_headings();
+        return true;
+      }
+    });
+  });
+
 });
 
 

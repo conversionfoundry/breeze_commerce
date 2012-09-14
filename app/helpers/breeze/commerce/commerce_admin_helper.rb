@@ -11,7 +11,7 @@ module Breeze
           commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path),
           # commerce_menu_item("Coupons", breeze.admin_store_coupons_path),
           # commerce_menu_item("Shipping Costs", ""),
-          # commerce_menu_item("Settings", breeze.admin_store_settings_path)
+          commerce_menu_item("Settings", breeze.admin_store_settings_path)
         ].join.html_safe, :class => :actions
       end
 

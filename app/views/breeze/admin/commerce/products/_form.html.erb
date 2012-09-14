@@ -31,7 +31,6 @@
                   <%= form.text_field :slug, :required => true %>
 
                   <%= form.select :category_ids, store.categories.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
-
                 <% end %>
               </div>
               
@@ -121,9 +120,24 @@
       $(this).animate({'background-position':($('#product_available:checked').length > 0 ? 0 : 100) + '%'}, 'slow', 'easeInOutQuad');
     });
   
+    // Make .markup textareas rich text
     $('textarea.markup').marquess();
   
-    $('.multiselect').multiSelect();
+    // Multiselect widget by http://loudev.com
+    $('#product_category_ids').multiSelect({
+      selectableHeader:'<h4>Available</h4>',
+      selectedHeader:'<h4>Active</h4>'
+    });
+    $('#ms-product_category_ids').append("<div class='ms-actions btn-group'><button id='categories-select_all' class='btn'>select all</button><button id='categories-deselect_all' class='btn'>deselect all</button></div>");
+    $('#categories-select_all').click(function(){
+      $('#product_category_ids').multiSelect('select_all');
+      return false;
+    });
+    $('#categories-deselect_all').click(function(){
+      $('#product_category_ids').multiSelect('deselect_all');
+      return false;
+    });
+
   
   });
 </script>

@@ -7,10 +7,34 @@
   <%= javascript_include_tag "breeze/jquery.tooltip.min.js" %>
   <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
   <script>
-  $(document).ready(function(){
-    $("#new_customer").validate();
-    $("#checkout-form").validate();
-  });
+    $(document).ready(function(){
+      $("#new_customer").validate({
+        // onkeyup: false,
+        errorElement: 'span',
+        errorClass: 'help-inline',
+        highlight: function(label) {
+          $(label).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function(label) {
+          label
+            .append('<i class="icon-ok-sign"></i>')
+            .closest('.control-group').removeClass('error').addClass('success');
+        }
+      });
+      $("#checkout-form").validate({
+        // onkeyup: false,
+        errorElement: 'span',
+        errorClass: 'help-inline',
+        highlight: function(label) {
+          $(label).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function(label) {
+          label
+            .append('<i class="icon-ok-sign"></i>')
+            .closest('.control-group').removeClass('error').addClass('success');
+        }
+      });
+    });
   </script>
 <% end %>
 
@@ -19,6 +43,18 @@
     <h1>Secure Checkout</h1>
   </div>
 </div>
+
+
+<% flash.each do |key, msg| %>
+  <div class="alert-<%= key %> alert-block alert">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p><%= msg %></p>
+    <div class="clear"></div>
+  </div>
+<% end %>
+
+
+
 
 <div class=" row cart-container">
   <div class="span12">
@@ -61,11 +97,11 @@
 
     <div class="form-actions">
       <div class="btn-group">
-        <%= link_to breeze.root_path, :class => "btn", :id => "continue-shopping" do %>
-          <span class="title">Continue Shopping</span>
+        <%= link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do %>
+          <i class="icon-arrow-left"></i><span class="title">Continue Shopping</span>
         <% end %>
         <%= link_to breeze.cart_path, :class => "btn", :id => "edit-items" do %>
-          <span class="title">Edit Cart</span>
+          <i class="icon-shopping-cart"></i><span class="title">Edit Cart</span>
         <% end %>
       </div>
     </div>
@@ -76,16 +112,12 @@
   <div class="span12">
     
     <div id="sign-in" data-foo="bar" data-customer_signed_in="<%= customer_signed_in? ? 'true' : 'false' %>">
-        <div class="checkout-header active">
+      <div class="checkout-header active">
+        <h3 class="heading">
           <span>Step</span>
-          <div class="heading">
-            <div class="number">
-              <span>1</span>
-              </div>
-            <div class="step">
-              <span>Sign In or Proceed as a Guest</span>
-            </div>
-        </div>
+          <span class="number">1</span>
+          <span class="description">Sign In or Proceed as a Guest</span>
+        </h3>
       </div>
       <div class="checkout-body">
         
@@ -101,10 +133,16 @@
 
               <ol class="form">
                 <li>
-                  <%= form.label :email %> 
-                  <%= form.text_field :email, :class=>"required email", :placeholder => 'name@example.com' %>
+                  <div class="control-group">
+                      <%= form.label :email, :class => "control-label" do |label| %> 
+                        Email: 
+                        <span class="required">*</span>
+                      <% end %> 
+                      <div class="controls">
+                      <%= form.text_field :email, :class=>"required email", :placeholder => 'name@example.com' %>
+                    </div>
+                  </div>
                   <span class="help-block">We'll send a confirmation email to this address</span>
-                  <abbr title="required">*</abbr>
                 </li>
                 <li>
                   <%= form.label :returning_customer do |label| %>
@@ -113,7 +151,10 @@
                   <% end %>
                 </li>
                 <li id="returning_customer_password" style="display: none;">
-                  <%= form.label :password %>
+                  <%= form.label :password do |label| %>
+                    Password
+                    <span class="required">*</span>
+                  <% end %>
                   <%= form.password_field :password %>
                   <%= form.submit "Sign in", :class => "btn" %>
                 </li>
@@ -124,26 +165,25 @@
         <% end %>
         <div class="form-actions">
           <%= link_to '/products', :class => "btn btn-primary", :id => "continue-1b" do %>
-            <span class="title">Continue to next step</span>
+            <i class="icon-arrow-down icon-white"></i><span class="title">Continue to next step</span>
           <% end %>    
         </div>
       </div>
       <div class="checkout-summary">
         <div class="form-actions">
-          <div class="summary">
-            <% if customer_signed_in? %>
-              <p>Signed in as <%= current_customer.name %></p>
-              <p>Email: <%= current_customer.email %></p>
-            <% else %>
-              <p>Signed in as Guest</p>
-              <p>Email: <span id="guest_email"></span></p>
-            <% end %>
-          </div>
-
           <%= link_to '#', :class => "btn", :id => "edit-sign-in" do %>
             <span class="title">Edit Sign In</span>
           <% end %>
+        </div>        
+        <div class="summary">
+          <% if customer_signed_in? %>
+            <p>Signed in as <%= current_customer.name %></p>
+            <p>Email: <%= current_customer.email %></p>
+          <% else %>
+            <p>Email: <span id="guest_email"></span></p>
+          <% end %>
         </div>
+
       </div>
     </div> 
 
@@ -151,57 +191,96 @@
 
       <div id="shipping">
         <div class="checkout-header">
-          <span>Step</span>
-          <div class="heading">
-            <div class="number">
-              <span>
-                2
-              </span>
-            </div>
-              <div class="step">
-                  <span>Shipping Information</span>
-            </div>
-          </div>
+          <h3 class="heading">
+            <span>Step</span>
+            <span class="number">2</span>
+            <span class="description">Shipping</span>
+          </h3>
         </div>
         <div class="checkout-body">
           <%= order_form.hidden_field :email, :class => :required, :value => @customer.email %>
 
           <%= order_form.fields_for :shipping_address do |ship_form| %>
-            <fieldset>
+            <fieldset class="address-shipping address">
               <legend>Shipping Address</legend>
               <ol id="order_shipping_address" class="form">
                 <li class="name">
-                  <%= ship_form.label :name %>
-                  <%= ship_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'  %>
-                  <abbr title="required">*</abbr>
+                  <div class="control-group">
+                    <%= ship_form.label :name do |label| %>
+                      Name:
+                      <span class="required">*</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'  %>
+                    </div>
+                  </div>
                 </li>
                 <li class="address">
-                  <%= ship_form.label :address %>
-                  <%= ship_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2 %>
-                  <abbr title="required">*</abbr>
+                  <div class="control-group">
+                    <%= ship_form.label :address do |label| %>
+                      Address
+                      <span class="required">*</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.text_area :address, :class => :required, :value => @customer.shipping_address.address, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2 %>
+                    </div>
+                  </div>
                 </li>
                 <li>
-                  <%= ship_form.label :city %>
-                  <%= ship_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium' %>
-                 <abbr title="required">*</abbr>
+                  <div class="control-group">
+                    <%= ship_form.label :city do |label| %>
+                      City
+                      <span class="required">*</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.text_field :city, :value => @customer.shipping_address.city, :placeholder => 'Christchurch', :class => 'required input-medium' %>
+                    </div>
+                  </div>
                 </li>
                 <li class="state">
-                  <%= ship_form.label :state, "State, Province or Region" %>
-                  <%= ship_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium' %>
+                  <div class="control-group">
+                    <%= ship_form.label :state do |label| %>
+                      State, Province or Region
+                      <span class="optional">(optional)</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.text_field :state, :value => @customer.shipping_address.state, :placeholder => 'Canterbury', :class => 'input-medium' %>
+                    </div>
+                  </div>
                 </li>
-                  <%= ship_form.label :postcode %>
-                  <%= ship_form.text_field :postcode, :class => 'input-small' %>
+                <li class="state">
+                  <div class="control-group">
+                    <%= ship_form.label :postcode do |label| %>
+                      Postcode
+                      <span class="optional">(optional)</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.text_field :postcode, :value => @customer.shipping_address.postcode, :class => 'input-small' %>
+                    </div>
+                  </div>
                 </li>
-                  <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode", :placeholder => '8011' %>
                 </li>
-                <li>
-                  <%= ship_form.label :country %>
-                  <%= ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required %>
-                  <abbr title="required">*</abbr>          
+                <li class="country">
+                  <div class="control-group">
+                    <%= ship_form.label :country do |label| %>
+                      Country
+                      <span class="required">*</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => (@customer.shipping_address.country ||'New Zealand'), :class => :required %>
+                    </div>
+                  </div>
                 </li> 
-                <li>
-                  <%= ship_form.label :phone, "Contact Phone Number" %>
-                  <%= ship_form.text_field :phone, :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'  %>
+                <li class="phone">
+                  <div class="control-group">
+                    <%= ship_form.label :phone do |label| %>
+                      Contact Phone Number
+                      <span class="optional">(optional)</span>
+                    <% end %>
+                    <div class="controls">
+                      <%= ship_form.text_field :phone, :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'  %>
+                    </div>
+                  </div>
                 </li>
               </ol>
             </fieldset>
@@ -209,127 +288,165 @@
 
       <div class="form-actions">
         <%= link_to '/products', :class => "btn btn-primary", :id => "continue-2" do %>
-          <span class="title">Continue to next step</span>
+          <i class="icon-arrow-down icon-white"></i><span class="title">Continue to next step</span>
         <% end %>    
       </div>
     </div>
      <div class="checkout-summary">
       <div class="form-actions">
-        <div class="summary"></div>
         <%= link_to '#', :class => "btn", :id => "edit-shipping" do %>
           <span class="title">Edit Shipping</span>
         <% end %>
       </div>
+      <div class="summary"></div>
     </div>
   </div>
     
     <div id="billing">
       <div class="checkout-header">
-        <span>Step</span>
-        <div class="heading">
-          <div class="number">
-            <span>3</span>
-          </div>
-          <div class="step">
-            <span>Payment Information</span>
-          </div>
-        </div>
+        <h3 class="heading">
+          <span>Step</span>
+          <span class="number">3</span>
+          <span class="description">Payment</span>
+        </h3>
       </div>
       <div class="checkout-body">
-        <div class="well">
-          TODO: Payment options to go here (e.g. Paypal / Payment Express)
-        </div>
+        <!-- TODO: Payment options to go here (e.g. Paypal / Payment Express) -->
 
         <%= order_form.fields_for :billing_address do |bill_form| %>
-        <fieldset>
+        <fieldset class="address-billing same">
           <legend>Billing Address</legend>
           <%= bill_form.label :same do |label| %>
             <%= check_box_tag :same, :same, true %>
             Same as my Shipping Address
-          <% end %>        
+          <% end %>       
+        </fieldset>
+        <fieldset class="address-billing address">
           <ol id="order_billing_address" class="form" style="display: none;">
             <li class="name">
-              <%= bill_form.label :name %>
-              <%= bill_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'  %>
-              <abbr title="required">*</abbr>
+              <div class="control-group">
+                <%= bill_form.label :name do |label| %>Name:<span class="required">*</span><% end %>
+                <div class="controls">
+                  <%= bill_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'  %>
+                </div>
+              </div>
             </li>
             <li class="address">
-              <%= bill_form.label :address %>
-              <%= bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton' %>
-              <abbr title="required">*</abbr>
+              <div class="control-group">
+                <%= bill_form.label :address do |label| %>
+                  Address
+                  <span class="required">*</span>
+                <% end %>
+                <div class="controls">
+                  <%= bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2 %>
+                </div>
+              </div>
             </li>
             <li>
-              <%= bill_form.label :city %>
-              <%= bill_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium' %>
-             <abbr title="required">*</abbr>
+              <div class="control-group">
+                <%= bill_form.label :city do |label| %>
+                  City
+                  <span class="required">*</span>
+                <% end %>
+                <div class="controls">
+                  <%= bill_form.text_field :city, :placeholder => 'Christchurch', :class => 'required input-medium' %>
+                </div>
+              </div>
             </li>
             <li class="state">
-              <%= bill_form.label :state, "State, Province or Region" %>
-              <%= bill_form.text_field :state, :class => :required, :placeholder => 'Canterbury', :class => 'input-medium' %>
+              <div class="control-group">
+                <%= bill_form.label :state do |label| %>
+                  State, Province or Region
+                  <span class="optional">(optional)</span>
+                <% end %>
+                <div class="controls">
+                  <%= bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium' %>
+                </div>
+              </div>
             </li>
-              <%= bill_form.label :postcode %>
-              <%= bill_form.text_field :postcode, :class => 'input-small' %>
+            <li class="state">
+              <div class="control-group">
+                <%= bill_form.label :postcode do |label| %>
+                  Postcode
+                  <span class="optional">(optional)</span>
+                <% end %>
+                <div class="controls">
+                  <%= bill_form.text_field :postcode, :class => 'input-small' %>
+                </div>
+              </div>
             </li>
-              <%= image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode", :placeholder => '8011' %>
             </li>
-            <li>
-              <%= bill_form.label :country %>
-              <%= bill_form.select :country, Breeze::Commerce::COUNTRIES, :class => :required, :selected => 'New Zealand' %>
-              <abbr title="required">*</abbr>          
+            <li class="country">
+              <div class="control-group">
+                <%= bill_form.label :country do |label| %>
+                  Country
+                  <span class="required">*</span>
+                <% end %>
+                <div class="controls">
+                  <%= bill_form.select :country, Breeze::Commerce::COUNTRIES, :class => :required %>
+                </div>
+              </div>
             </li> 
-            <li>
-              <%= bill_form.label :phone, "Contact Phone Number" %>
-              <%= bill_form.text_field :phone, :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'  %>
+            <li class="phone">
+              <div class="control-group">
+                <%= bill_form.label :phone do |label| %>
+                  Contact Phone Number
+                  <span class="optional">(optional)</span>
+                <% end %>
+                <div class="controls">
+                  <%= bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'  %>
+                </div>
+              </div>
             </li>
           </ol>
-
         </fieldset>
       <% end %>
       <div class="form-actions">
         <%= link_to '#', :class => "btn btn-primary", :id => "continue-3" do %>
-          <span class="title">Continue to next step</span>
+          <i class="icon-arrow-down icon-white"></i><span class="title">Continue to next step</span>
         <% end %>        
       </div>
       </div>
        <div class="checkout-summary">
         <div class="form-actions">
-          <div class="summary"></div>
           <%= link_to '#', :class => "btn", :id => "edit-payment" do %>
             <span class="title">Edit Payment</span>
           <% end %>
         </div>
+        <div class="summary"></div>
       </div>
     </div>
       
       <div id="create-account">
         <div class="checkout-header">
-          <span>Step</span>
-          <div class="heading">
-            <div class="number">
-              <span>4</span>
-            </div>
-            <div class="step">
-            <span>Confirm & Pay</span>
-            </div>
-          </div>
+          <h3 class="heading">
+            <span>Step</span>
+            <span class="number">4</span>
+            <span class="description">Confirmation</span>
+          </h3>
         </div>
         <div class="checkout-body">
 
-          <fieldset>
-            <legend>Create an account</legend>
-            <ol class="form">
-              <li>
-                <%= order_form.label :create_new_account do |label| %>
-                  <%= check_box_tag :create_new_account, :create_new_account, false %>
-                  I'd like an account
-                <% end %>
-              </li>
-              <li id="new_account_password" style="display: none;">
-                <%= order_form.label :new_account_password %>
-                <%= password_field_tag :new_account_password %>
-              </li>
-            </ol>
-          </fieldset>
+          <% if @customer.new_record? %>
+            <fieldset>
+              <legend>Save my details</legend>
+              <ol class="form">
+                <li>
+                  <%= order_form.label :create_new_account do |label| %>
+                    <%= check_box_tag :create_new_account, :create_new_account, false %>
+                    I'd like my contact information saved for future visits
+                    <span class="optional">(optional)</span>
+                  <% end %>
+                </li>
+                <li id="new_account_password", style="display: none;">
+                  <%= order_form.label :new_account_password, 'Add a password for your account' %>
+                  <%= password_field_tag :new_account_password %>
+                  <%= order_form.label :new_account_password_confirmation %>
+                  <%= password_field_tag :new_account_password_confirmation %>
+                </li>
+              </ol>
+            </fieldset>
+          <% end %>
 
           <fieldset>
             <legend>Terms and Conditions</legend>
@@ -338,6 +455,7 @@
                 <%= order_form.label :read_terms do |label| %>
                   <%= check_box_tag :read_terms, :read_terms, false, :class => :required %>
                   I accept the <a href="/terms_and_conditions" target="_blank">terms and conditions</a>
+                  <span class="required">*</span>
                 <% end %>
               </li>
             </ol>
@@ -347,22 +465,27 @@
             <legend>Add an Optional Comment</legend>
             <ol class="form">
               <li>
-                <%= order_form.label :comment %>
-                <%= order_form.text_area :comment %>
+                <%= order_form.label :comment do |label| %>
+                  Comment
+                  <span class="optional">(optional)</span>
+                <% end %>
+                <%= order_form.text_area :comment, :class => 'input-xxlarge', :rows => 2 %>
               </li>
             </ol>
           </fieldset>
 
 
 
-          <div class="form-actions">
-            <%= order_form.submit :id => "continue-4", :class => "btn btn-primary btn-large", :value => "Pay Now" %>
+          <div class="form-actions">   
+            <%= content_tag :button, :type => :submit, :id => "continue-4", :class => "btn btn-primary btn-large" do %>
+               <i class="icon-ok-sign icon-white"></i>
+               Pay Now
+            <% end %>
           </div>
 
         </div>
          <div class="checkout-summary">
           <div class="form-actions">
-            <div class="summary"></div>
             <%= link_to '#', :class => "btn", :id => "changed-my-mind" do %>
               <span class="title">Edit Confirmation</span>
             <% end %>

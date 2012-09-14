@@ -1,7 +1,0 @@
-<% if @coupon.errors.empty? %>
-  closeContextualNew();
-  $('<%= escape_javascript render(:partial => "/breeze/commerce/coupons/coupon", :object => @coupon) %>').appendTo('.coupons tbody');
-<% else %>
-  $('.new-context').html('<%= escape_javascript render(:file => "/breeze/commerce/coupons/new") %>');
-<% end %>
-

@@ -1,0 +1,4 @@
+<% if @note.errors.empty? %>
+  $('ul.notes').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/notes/note", :object => @note) %>');
+<% end %>
+

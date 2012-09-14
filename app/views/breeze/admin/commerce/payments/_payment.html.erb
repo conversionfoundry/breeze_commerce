@@ -1,0 +1,8 @@
+<li class="payment">
+
+  Payment of 
+  <span class="amount"><%= number_to_currency payment.amount, :locale => :nz %></span>
+  made on
+  <span class="date"><%= payment.created_at %></span>
+  <div class="gateway">Payment Express</div>
+</li>

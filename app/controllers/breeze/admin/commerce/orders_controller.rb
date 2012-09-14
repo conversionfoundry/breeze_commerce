@@ -1,4 +1,3 @@
-
 module Breeze
   module Admin
     module Commerce
@@ -6,7 +5,7 @@ module Breeze
         respond_to :html, :js, :csv
 
         def index
-          @orders = store.orders.all.reverse
+          @orders = Breeze::Commerce::Order.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
           @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
         end
@@ -17,6 +16,10 @@ module Breeze
         
         def new
           @order = store.orders.new
+          @order.shipping_address ||= Breeze::Commerce::Address.new
+          @order.billing_address ||= Breeze::Commerce::Address.new
+          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
+          @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
         end
         
         def create
@@ -30,6 +33,8 @@ module Breeze
 
         def edit
           @order = store.orders.find params[:id]
+          @order.shipping_address ||= Breeze::Commerce::Address.new
+          @order.billing_address ||= Breeze::Commerce::Address.new
           @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
         end
@@ -51,7 +56,7 @@ module Breeze
         
         def destroy
          @order = store.orders.find(params[:id])
-         @order.try :destroy
+         @order.update_attributes(:archived => true)
         end
         
       end

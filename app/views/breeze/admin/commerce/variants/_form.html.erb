@@ -4,11 +4,17 @@
     <% unless form.object.new_record?%>
       <li class="image">
         <label>Image (124 &times; 192)</label>
-        <%= uploadable_image form.object, :image, :width => 124, :height => 192, :url => admin_store_product_variant_path(@variant.product, @variant) %>
-      </li>
+        <%= image_tag(@variant.image_url(:breeze_thumbnail)) if @variant.image? %>
+        <%= form.file_field :image %>
+        <%= form.hidden_field :image_cache %>
+      </li>      
     <% end %>
+
+
+
     <%= form.text_field :name, :required => true %>
     <%= form.text_field :sku_code, :required => true %>
+    <%= form.text_field :blurb, :required => false %>
 
     <%= form.number_field :cost_price, :required => true, :label => "Cost Price" %>
     <%= form.number_field :sell_price, :required => true, :label => "Base Sell Price" %>
@@ -25,4 +31,9 @@
     <% end %>
   <% end %>
 
+<% end %>
+
+<% content_for :head do %>
+  <%= stylesheet_link_tag "breeze/uploadify/uploadify.css" %>
+  <%= javascript_include_tag "breeze/uploadify/swfobject.js", "breeze/uploadify/uploadify.js" %>
 <% end %>

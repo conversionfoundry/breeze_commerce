@@ -10,7 +10,8 @@ module Breeze
         ApplicationController.helper Breeze::Commerce::CommerceAdminHelper
         Breeze::Content.register_class Breeze::Commerce::Store
         Breeze::Content.register_class Breeze::Commerce::ProductList
-        Breeze::Content.register_class Breeze::Commerce::Cart
+        Breeze::Content.register_class Breeze::Commerce::Cart # TODO: Rename to Minicart
+        Breeze::Content.register_class Breeze::Commerce::CustomerLoginForm
       end
       
 
