@@ -31,7 +31,7 @@
       = form.fieldset do
         #order-line_items.section
           %h3 Line Items
-          = render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items
+          = render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
     .order_addresses
       = form.fields_for :shipping_address, @order.shipping_address do |ship_form|
         %fieldset.address-shipping.address

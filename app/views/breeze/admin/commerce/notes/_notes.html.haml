@@ -1,8 +1,8 @@
 %ul.notes
   - if @order.notes.any?
     = render :partial => "breeze/admin/commerce/notes/note", :collection => @order.notes
-  %li.note#note-new
-    %h3 New Note
-    = form_for [:admin, :store, @order, Breeze::Commerce::Note.new], :remote => true do |form|
-      %p= form.text_area :body_text, :rows => 5
-      %p= form.submit 'Save Note'
+.note#note-new
+  %h3 New Note
+  = form_for [:admin, :store, @order, Breeze::Commerce::Note.new], :remote => true do |form|
+    %p= form.text_area :body_text, :rows => 5
+    %p= form.submit 'Save Note'

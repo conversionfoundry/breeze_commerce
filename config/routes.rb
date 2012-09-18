@@ -21,6 +21,7 @@ Breeze::Engine.routes.draw do
       resources :orders do
         resources :line_items
         resources :notes
+        resources :payments
         # post :remove_item, :on => :member # TODO: SHouldn't need this
       end
 
@@ -35,7 +36,9 @@ Breeze::Engine.routes.draw do
 
       resources :customers
 
-      resources :shipping_methods
+      resources :shipping_methods do
+        post :make_default, :on => :member
+      end
   
     end
 

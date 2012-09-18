@@ -12,12 +12,17 @@ module Breeze
       field :description
       field :price, :type => Integer
       field :archived, type: Boolean, default: false
+      field :is_default, type: Boolean, default: false
 
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       
       validates_presence_of :name, :price
       validates_numericality_of :price
+
+      def is_default?
+        is_default
+      end
 
 
     end

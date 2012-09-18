@@ -1,0 +1,21 @@
+%table#cart.table-striped.order
+  %thead
+    %tr
+      %th{:colspan => "3"} Item
+      %th Description
+      %th Price
+      %th Quantity
+      %th TOTAL
+      %th
+      %th
+  %tbody
+    - if line_items.unarchived.any?
+      = form.fields_for :line_items do |line_item_fields|
+        - if line_item_fields.object.archived?
+          = ''
+        - else
+          = render :partial => "breeze/admin/commerce/line_items/line_item", :locals => { :line_item_fields => line_item_fields, :line_item => line_item_fields.object }
+    - else
+      %tr
+        %td.empty{:colspan => "9"} No line items yet.
+  = render :partial => "breeze/admin/commerce/line_items/totals", :locals => { :form => form }

@@ -1,0 +1,7 @@
+%li.payment{:id => "payment_#{payment.id}"}
+  Payment of
+  %span.amount= number_to_currency payment.amount, :locale => :nz
+  made on
+  %span.date= payment.created_at
+  .gateway Payment Express
+  = button_to "Remove", breeze.admin_store_order_payment_path(@order, payment), :method=>:delete, :remote => true, :class=>:remove

@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <% if orders.any? %>
-        <%= render :partial => "order", :collection => orders %>
+        <%= render :partial => "breeze/commerce/orders/order", :collection => orders %>
       <% else %>
         <tr><td class="empty" colspan="6">There are no orders to show here.</td></tr>
       <% end %>

@@ -9,7 +9,6 @@ module Breeze
       field :personal_message
       field :comment
       field :payment_completed
-
       field :archived, type: Boolean, default: false
 
       scope :archived, where(:archived => true)
@@ -19,15 +18,13 @@ module Breeze
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
-      has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
+      has_many :line_items, :class_name => "Breeze::Commerce::LineItem" # Ideally, this would be embedded, but we couldn't reference variant from an embedded line item
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
       embeds_many :notes, :class_name => "Breeze::Commerce::Note"
-
-      # TODO: I'm not sure why local_foreign_key was used here. It seems not to work.
-      # references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :local_foreign_key => true
-      # references_one :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
       belongs_to_related :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :inverse_of => :orders
+
+      accepts_nested_attributes_for :line_items
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
@@ -56,15 +53,19 @@ module Breeze
       end
 
       def item_total
-        line_items.map(&:amount).sum
+        line_items.unarchived.map(&:amount).sum
       end
 
       def item_count
-        line_items.map(&:quantity).sum
+        line_items.unarchived.map(&:quantity).sum
       end
 
       # def shipping_method
       #   shipping_method || Breeze::Commerce::Store.first.shipping_methods.first
+      # end
+
+      # def shipping_method
+      #   read_attribute(:shipping_method)
       # end
 
       def shipping_total

@@ -4,7 +4,7 @@
     <%= link_to("My Cart", breeze.cart_path) %>
   </h3>
   <ul>
-    <% order.line_items.each do |item| %>
+    <% order.line_items.unarchived.each do |item| %>
       <li>
         <%= item.quantity %>
         &times;
@@ -17,7 +17,7 @@
   
   <div class="actions">
     <%= link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary' %>
-    <% if order.line_items.count > 0 %>
+    <% if order.line_items.unarchived.count > 0 %>
       <%= link_to "Checkout", breeze.checkout_path, :class=> 'btn' %>
     <% end %>
   </div>

@@ -16,6 +16,15 @@ module Breeze
       # Displays the current cart
       def edit
         @order = current_order(session)
+        shipping_methods = store.shipping_methods.unarchived
+        unless @order.shipping_method && shipping_methods.include?(@order.shipping_method)
+          if store.shipping_methods.count > 1
+            @order.shipping_method = shipping_methods.unarchived.where(:is_default => true).first
+          else
+            @order.shipping_method = shipping_methods.unarchived.first
+          end
+          @order.save
+        end
       end
 
       def remove_item
@@ -32,7 +41,7 @@ module Breeze
         variant_id = params[:variant_id]
                 
         new_line_item =  Breeze::Commerce::LineItem.new(:variant_id => variant_id, :quantity => params[:quantity] || 1)
-        existing_line_item = @order.line_items.where(:variant_id => variant_id).first 
+        existing_line_item = @order.line_items.unarchived.where(:variant_id => variant_id).first 
         if existing_line_item
           existing_line_item.quantity += new_line_item.quantity
         else
@@ -44,6 +53,10 @@ module Breeze
 
       def checkout
         @order = current_order(session)
+        unless @order.shipping_method
+          @order.shipping_method = store.shipping_methods.where(:is_default => true).first
+          @order.save
+        end
         @customer = current_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new

@@ -4,15 +4,15 @@ module Breeze
       include Mongoid::Document
       extend ActiveSupport::Memoizable
 
-      belongs_to :order, :class_name => "Breeze::Commerce::Order" , :inverse_of => :line_items
-      field :quantity, :type => Integer
+      belongs_to :order, :class_name => "Breeze::Commerce::Order" , :inverse_of => :line_items # Ideally, this would be embedded, but we couldn't reference variant from an embedded line item
+      belongs_to :variant, :class_name => "Breeze::Commerce::Variant"
 
+      field :quantity, :type => Integer
       field :archived, type: Boolean, default: false
 
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       
-      belongs_to :variant, :class_name => "Breeze::Commerce::Variant"
 
       # def variant
       #   Variant.find(variant_id)
