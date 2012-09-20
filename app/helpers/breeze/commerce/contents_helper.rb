@@ -19,10 +19,10 @@ module Breeze
       #   @current_order
       # end
       
-      def cart
-        @order = current_order(session)
-        content_tag :div, link_to("My Cart", breeze.cart_path) + " " + number_to_currency(@order.total), :id => :cart
-      end
+      # def cart
+      #   @order = current_order(session)
+      #   content_tag :div, link_to("My Cart", breeze.cart_path) + " " + number_to_currency(@order.total), :id => :cart
+      # end
     end
   end
 end

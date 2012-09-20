@@ -1,24 +1,31 @@
-<% order = current_order(view.controller.session) unless order %>
+<% order = current_order(session) %>
 <div class="breeze-minicart well">
-  <h3>
-    <%= link_to("My Cart", breeze.cart_path) %>
-  </h3>
-  <ul>
-    <% order.line_items.unarchived.each do |item| %>
-      <li>
-        <%= item.quantity %>
-        &times;
-        <%= item.variant.name %>
-      </li>
-    <% end %>
-  </ul>
-  Total:
-  <%= number_to_currency(order.total) %>
-  
-  <div class="actions">
-    <%= link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary' %>
-    <% if order.line_items.unarchived.count > 0 %>
-      <%= link_to "Checkout", breeze.checkout_path, :class=> 'btn' %>
-    <% end %>
-  </div>
+  <% if order %>
+    <h3>
+      <%= link_to("My Cart", breeze.cart_path) %>
+    </h3>
+    <ul>
+      <% order.line_items.unarchived.each do |item| %>
+        <li>
+          <%= item.quantity %>
+          &times;
+          <%= item.variant.name %>
+        </li>
+      <% end %>
+    </ul>
+    Total:
+    <%= number_to_currency(order.total) %>
+    
+    <div class="actions">
+      <%= link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary' %>
+      <% if order.line_items.unarchived.count > 0 %>
+        <%= link_to "Checkout", breeze.checkout_path, :class=> 'btn' %>
+      <% end %>
+    </div>
+  <% else %>
+    <h3>
+      My Cart
+    </h3>
+    No items in your cart yet.
+  <% end %>
 </div>

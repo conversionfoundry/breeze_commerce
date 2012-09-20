@@ -1,0 +1,17 @@
+.orders-container.container
+  %table.fancy.contextual.orders
+    %thead
+      %tr
+        %th.first Date & Time
+        %th Products
+        %th Amount
+        %th Billing
+        %th.last Shipping
+    %tbody
+      - if orders.any?
+        = render :partial => "breeze/commerce/orders/order", :collection => orders
+      - else
+        %tr
+          %td.empty{:colspan => "6"} There are no orders to show here.
+    %tfoot
+      %tr

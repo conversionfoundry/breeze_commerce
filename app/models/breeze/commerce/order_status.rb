@@ -9,6 +9,7 @@ module Breeze
       field :name
       field :description
       field :type # :billing or :shipping
+      field :sort_order, type: Integer
       
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :order_statuses
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :order_statuses

@@ -1,0 +1,19 @@
+%tr.new_line_item{:id => line_item.id}
+  %td.item{:colspan => 3}
+    - variants_for_select = option_groups_from_collection_for_select(@products, :variants, :title, :id, :name, 3)
+    = line_item_fields.select :variant_id, variants_for_select, { :include_blank => true }, :label => false
+  %td.quantity
+    / = line_item_fields.text_field :quantity, :value => 1, :label => false
+  %td.subtotal
+
+  %td.actions
+    = link_to 'Add', '#', :class => 'button', :id => :new_line_item
+    = link_to 'Add', breeze.admin_store_order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "remove button"
+
+
+/ :javascript
+/   $('#new_line_item').click(function(e){
+/     line_item_id = $('.new_line_item').attr('id');
+/     variant_id = $('#order_line_items_attributes_' + line_item_id + '_variant_id').val();
+/     $('table#cart').append('<tr><td>' + variant_id + '</td></tr>');
+/   });

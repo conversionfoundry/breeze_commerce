@@ -35,7 +35,7 @@ module Breeze
 
       # Add items to the order (i.e. the shopping cart)
       def populate
-        @order = current_order(session)
+        @order = current_order(session) || create_order(session)
         
         # product_id = params[:product_id]
         variant_id = params[:variant_id]
@@ -53,10 +53,8 @@ module Breeze
 
       def checkout
         @order = current_order(session)
-        unless @order.shipping_method
-          @order.shipping_method = store.shipping_methods.where(:is_default => true).first
-          @order.save
-        end
+        @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Started Checkout").first
+        @order.save
         @customer = current_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
@@ -97,8 +95,7 @@ module Breeze
         if @order.save
           # TODO: Need a better way to reference order statuses
           # TODO: Store should not allow checkout if the appropriate order statuses don't exist yet
-          status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first
-          @order.billing_status = status
+          @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first
           @order.save
 
           
@@ -131,10 +128,12 @@ module Breeze
       end 
 
       def thankyou 
-        @order = Order.find params[:id]
+        @payment = Payment.find params[:id]
+        @payment.succeeded = true
+        @payment.save
+        @order = @payment.order
         @order.payment_completed = true # TODO: This should be redundant when we have a relation between a orders and payments
-        status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
-        @order.billing_status = status
+        @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
         @order.save
 
         # Empty the cart
@@ -172,7 +171,8 @@ module Breeze
 
       def pxpay_urls
         {
-          :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( current_order(session) ) ),
+          # :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( current_order(session) ) ),
+          :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( @payment.id ) ),
           :url_failure => request.protocol + request.host_with_port + url_for( breeze.payment_failed_order_path( current_order(session) ) ),
         }
       end

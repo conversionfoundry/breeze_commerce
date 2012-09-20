@@ -1,19 +1,20 @@
 %tr{:id => line_item.id}
-  %td
-  %td.icon
-    - image_tag line_item.product.icon_image if line_item.product.icon_image
-  %td= line_item.variant.name
-  %td
+  %td.item
+    %span.icon
+      - image_tag line_item.product.icon_image if line_item.product.icon_image
+    = line_item.variant.name
+  %td.description
+    = line_item.product.teaser
   %td.price
     - if line_item.variant.discounted_sell_price > 0
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
       %span.discounted_price.current_price= number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
     - else
       %span.current_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
-  %td= line_item_fields.text_field :quantity
-  %td.total
+  %td.quantity
+    = line_item_fields.text_field :quantity, :label => false
+  %td.subtotal
     = number_to_currency line_item.amount
     %span.currency NZD
-  %td
-    = link_to 'Remove', breeze.admin_store_order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "remove"
-  %td
+  %td.actions
+    = link_to 'Remove', breeze.admin_store_order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "remove button"

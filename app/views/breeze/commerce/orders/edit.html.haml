@@ -18,3 +18,16 @@
             = link_to breeze.checkout_path, :class => "btn btn-primary" do
               %i.icon-arrow-right
               %span.title Go to Checkout
+/ :javascript
+/   $('input').change(function() {
+/     alert('foo');
+/     $.ajax({
+/       type: 'POST',
+/       url: "/item/create",
+/       data:$('#create_item').serialize(),
+/       error: function(){  },
+/       success: function(data){ $("#item_form").hide();  $('#view_item').html(data); },
+/       complete: function (){   }
+/       });
+/     return false;
+/   });

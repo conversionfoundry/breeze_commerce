@@ -2,11 +2,11 @@
   <table class="fancy contextual orders">
     <thead>
       <tr>
-        <th class="order-number first">Order Number</th>
-        <th class="customer">Customer</th>
+        <th class="order-number first"><%= link_to "Order Number", :sort => "order_number" %></th>
+        <th class="customer"><%= link_to "Customer", :sort => "name" %></th>
         <th class="billing">Billing Details</th>
         <th class="shipping">Shipping Details</th>
-        <th class="amount">Amount</th>
+        <th class="amount"><%= link_to "Amount", :sort => "total" %></th>
         <th class="actions last">Actions</th>
       </tr>
     </thead>

@@ -1,0 +1,34 @@
+= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id, :"data-product-id" => variant.product.id do
+  - if variant.image && variant.image.url
+    %td.image
+      = image_tag variant.image.url(:thumbnail)
+  - else
+    %td.image.missing_value
+      No image
+  %td.name
+    = variant.name
+  %td.sku-code
+    = variant.sku_code
+  %td.price
+    - if variant.discounted_sell_price > 0
+      %span.old_price= number_to_currency(variant.sell_price, :locale => :nz)
+      %span.discounted_price.current_price= number_to_currency(variant.discounted_sell_price, :locale => :nz)
+    - else
+      %span.current_price= number_to_currency(variant.sell_price, :locale => :nz)
+  - variant.product.properties.each do |property|
+    - if variant.option_for_property(property)
+      %td
+        = variant.option_for_property(property).name
+    - else
+      %td.missing_value
+        Missing value
+  %td.available
+    .text
+      = variant.available ? "Yes" : "No"
+    .field
+      = check_box_tag "variant_#{variant.id}_available", "1", variant.available, :class => "variant-available"
+      .available-toggle{:style => "background-position: #{variant.available ? 0 : 100}% 0%"}
+  %td.actions
+    %p.variant-actions
+      = link_to "Delete", admin_store_product_variant_path(variant.product, variant), :remote => true, :method => :delete, :class => "small red delete button"
+      = link_to "Edit", edit_admin_store_product_variant_path(variant.product, variant), :class => "small black edit button"

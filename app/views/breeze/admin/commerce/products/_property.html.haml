@@ -1,0 +1,12 @@
+= content_tag :tr, :class => :property, :id => "property_#{property.id}", :"data-id" => property.id, :"data-product-id" => @product.id do
+  %td.name
+    = property.name
+  %td.options
+    - property.options.each do |option|
+      %span.option
+        = option.name
+
+  %td.actions
+    %p.property-actions
+      = link_to "Delete", admin_store_product_property_path(@product, property, :format => :js), :method => :delete, :remote => true, :class => "small red delete button"
+      = link_to "Edit", edit_admin_store_product_property_path(property.product, property), :class => "small black edit button"

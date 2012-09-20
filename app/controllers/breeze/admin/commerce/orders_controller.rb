@@ -5,9 +5,10 @@ module Breeze
         respond_to :html, :js, :csv
 
         def index
-          @orders = Breeze::Commerce::Order.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
-          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
-          @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
+          # binding.pry
+          @orders = Breeze::Commerce::Order.unarchived.where(:store_id => store.id).to_a.sort_by{ |o| params[:sort] ? o.send(params[:sort]) : o.created_at }.paginate(:page => params[:page], :per_page => 15)
+          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing).order(:sort_order)
+          @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping).order(:sort_order)
         end
         
         def show
@@ -37,6 +38,7 @@ module Breeze
           @order.billing_address ||= Breeze::Commerce::Address.new
           @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
+          @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:title.desc)
         end
 
         def update

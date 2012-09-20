@@ -17,13 +17,17 @@ module Breeze
         content = "<h3>#{title}</h3>"
 
         if list_type == 'category'
+          classes = 'categories'
           categories = self.categories
           categories.each do |category|
             products = products & category.products
+            classes += ' category-' + category.slug
           end
-          content += view.controller.render_to_string :partial => "partials/commerce/products", :layout => false, :locals => {:products => products}
+          content += view.controller.render_to_string :partial => "partials/commerce/products", :layout => false, :locals => {:products => products, :classes => classes}
         elsif list_type == 'related'
-          content += view.controller.render_to_string :partial => "partials/commerce/products", :layout => false, :locals => {:products => product.related_products}
+          classes = 'related_products'
+          classes += ' related_to-' + product.slug
+          content += view.controller.render_to_string :partial => "partials/commerce/products", :layout => false, :locals => {:products => product.related_products, :classes => classes}
         else
           content += 'Product List needs editing'
         end

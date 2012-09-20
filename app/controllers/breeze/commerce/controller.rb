@@ -20,6 +20,7 @@ module Breeze
         @store
       end
       helper_method :store
+
     end
   end
 end

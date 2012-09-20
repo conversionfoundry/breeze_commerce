@@ -24,10 +24,21 @@ module Breeze
       embeds_many :notes, :class_name => "Breeze::Commerce::Note"
       belongs_to_related :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :inverse_of => :orders
 
-      accepts_nested_attributes_for :line_items
+      accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
+
+      before_validation :set_initial_order_statuses
+
+      validates_presence_of :billing_status, :shipping_status
+
+      def set_initial_order_statuses
+        # TODO: Handle case where install generator hasn't been run yet, so these default statuses don't exist
+        self.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => 'Browsing').first unless billing_status
+        self.shipping_status = Breeze::Commerce::OrderStatus.where(:type => :shipping, :name => 'Not Shipped Yet').first unless shipping_status
+        self.shipping_method = Breeze::Commerce::Store.first.shipping_methods.where(:is_default => true).first unless shipping_method
+      end
 
       # Order numbers are strings in the format "2012-07-12-60319"
       # The last section is seconds since midnight on the order date, zero-padded to always be five digits
@@ -49,7 +60,11 @@ module Breeze
       end
 
       def name
-        billing_address.name || "unknown"
+        if billing_address && billing_address.name
+          billing_address.name
+        else
+          "unknown"
+        end
       end
 
       def item_total

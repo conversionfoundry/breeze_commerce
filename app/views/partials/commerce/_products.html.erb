@@ -1,7 +1,11 @@
-<% if products.any? %>
-  <%= content_tag :ul, :class => "products hfeed" do %>
-    <%= render :partial => "/partials/commerce/product", :collection => products, :locals => {:product_count => products.count} %>
-  <% end %>
-<% else %>
-  <p>There are no products to display.</p>
+<%= content_tag :ul, :class => "products hfeed " + classes do %>
+
+	<% if products.any? %>
+	  <%= content_tag :ul, :class => "products hfeed" do %>
+	    <%= render :partial => "/partials/commerce/product", :collection => products, :locals => {:product_count => products.count} %>
+	  <% end %>
+	<% else %>
+	  <p>There are no products to display.</p>
+	<% end %>
+
 <% end %>

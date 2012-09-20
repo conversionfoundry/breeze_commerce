@@ -85,7 +85,7 @@ a.customer-card:hover
 
 #order-customer
   float: right
-  margin: 1em 1em 2em 2em
+  margin: 0 1em 2em 2em
   width: 24em
   li
     list-style: none
@@ -100,6 +100,7 @@ a.customer-card:hover
   .section
     float: left
     margin: 0 2em 2em 0
+    width: 100%
   ol.form
     li
       list-style: none
@@ -115,21 +116,23 @@ a.customer-card:hover
     -o-transform: rotate(-15deg) /* Opera */
     -moz-transform: rotate(-15deg) /* Firefox */
     width: 10em
-  #order-shipping,
-  #order-billing
-    width: 50%
-    float: left
-    .status
-      border: dashed 4px #cccccc
-      -webkit-border-radius: 1em
-      -moz-border-radius: 1em
-      border-radius: 1em
-      padding: 1em 2em 2em 2em
-      .description
-        color: #cccccc
-        float: right
-        margin: 2em 0 0 2em
-        width: 40%
+  #order-shipping_billing
+    #order-shipping,
+    #order-billing
+      width: 50%
+      float: left
+      ol.status
+        border: dashed 4px #cccccc
+        -webkit-border-radius: 1em
+        -moz-border-radius: 1em
+        border-radius: 1em
+        margin: 2em
+        padding: 1em 2em 2em 2em
+        .description
+          color: #cccccc
+          float: right
+          margin: 2em 0 0 2em
+          width: 40%
 #order-payments,
   float: left
   margin: 2em
@@ -141,6 +144,9 @@ a.customer-card:hover
     li.payment
       background: white
       border: solid 1px #eeeeee
+      -webkit-border-radius: 4px
+      -moz-border-radius: 4px
+      border-radius: 4px
       -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
       -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
       box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
@@ -149,12 +155,22 @@ a.customer-card:hover
       margin-bottom: 1em
       padding: 1em
       width: 100%
+      &.declined
+        color: #b94a48
+        background-color: #f2dede
+        border-color: #eed3d7
+      &.approved
+        color: #468847
+        background-color: #dff0d8
+        border-color: #d6e9c6
   .payment
     border: solid 1px #cccccc
     float: left
     margin-bottom: 1em
     padding: 1em
     width: 100%
+
+
 #order-notes
   float: left
   margin: 2em
@@ -390,12 +406,18 @@ table
 #product-edit img.feature
   float: left
 
+#product-properties,
 #product-variants
-  .new.variant.button
+  .new.button
     float: right
     margin: 12px
+  table
+    background: white
+
+#product-variants
   td.missing_value
     background: yellow
+
 
 /* Variants
 
@@ -583,4 +605,3 @@ h1 .new
   background: #EEF0C4
   font-weight: bold
  
-

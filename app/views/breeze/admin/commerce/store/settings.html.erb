@@ -2,20 +2,20 @@
 
 <%= tabbed_layout do |tabs| %>
   <% tabs.general :title => "General settings" do %>
-<%= breeze_form_for store, :url => admin_store_settings_path, :method => :put do |form| %>
-  <%= scrollable_layout do %>
-    <h1>General settings</h1>
-    <%= form.fieldset :legend => "Store Home Page" do %>
-      <p>When customers return from the cart or checkout by clicking the "Continue Shopping" button, where should they go?</p>
-      
-      <%= form.select :home_page_id, Breeze::Content::Page.all.sort.map {|p|[ p.title, p.id ] }, { :required => true, :label => "Store home page"} %>
-    
+    <%= breeze_form_for store, :url => admin_store_settings_path, :method => :put do |form| %>
+      <%= scrollable_layout do %>
+        <h1>General settings</h1>
+        <%= form.fieldset :legend => "Store Home Page" do %>
+          <p>When customers return from the cart or checkout by clicking the "Continue Shopping" button, where should they go?</p>
+          
+          <%= form.select :home_page_id, Breeze::Content::Page.all.sort.map {|p|[ p.title, p.id ] }, { :required => true, :label => "Store home page"} %>
+        
+        <% end %>
+      <% end %>
+      <%= fake_right_sidebar do %>
+        <%= form.submit "Save settings", :class => "large green save button" %>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= fake_right_sidebar do %>
-    <%= form.submit "Save settings", :class => "large green save button" %>
-  <% end %>
-<% end %>
   <% end %>
 <% end %>
 

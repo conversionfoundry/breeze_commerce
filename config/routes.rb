@@ -44,7 +44,10 @@ Breeze::Engine.routes.draw do
 
   end
 
-  scope :module => "commerce" do    
+  devise_for :customer, :class_name => "Breeze::Commerce::Customer", :module => :devise, :controllers => {:sessions => "breeze/commerce/sessions"}
+
+  scope :module => "commerce" do        
+
     resources :orders do
       resources :line_items
       get :checkout, :on => :collection

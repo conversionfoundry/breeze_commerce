@@ -1,8 +1,12 @@
-%li.payment{:id => "payment_#{payment.id}"}
+%li.payment{:id => "payment_#{payment.id}", :class => payment.succeeded ? 'approved' : 'declined' }
   Payment of
   %span.amount
     = number_to_currency payment.amount, :locale => :nz
     %span.currency NZD
-  made on
+  - if payment.succeeded
+    made 
+  - else
+    declined
+  on
   %span.date= payment.created_at
   .gateway Payment Express

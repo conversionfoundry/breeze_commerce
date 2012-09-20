@@ -1,0 +1,6 @@
+= breeze_form_for @property, :as => :property, :url => url, :remote => true do |form|
+  = render "/breeze/admin/shared/error_messages", :target => @property, :object_name => :property
+  %fieldset
+    %ol.form
+      = form.text_field :name, :required => true
+      = form.text_field :option_names, :label => 'Options', :value => form.object.options.map{|o| o.name}.join(", "), :hint => "Press <strong>Return</strong> after each new option".html_safe, :wrap => { :class => "option-list" }

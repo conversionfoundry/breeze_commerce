@@ -106,6 +106,10 @@
           - if customer_signed_in?
             Signed in as #{current_customer.name}
             \#{link_to 'Sign Out', breeze.destroy_customer_session_path, :class => 'btn'}
+            .form-actions
+              = link_to '/products', :class => "btn btn-primary", :id => "continue-1a" do
+                %i.icon-arrow-down.icon-white
+                %span.title Continue to next step
           - else
             = form_for @customer, :url => breeze.customer_session_path do |form|
               %fieldset
@@ -129,10 +133,10 @@
                       %span.required *
                     = form.password_field :password
                     = form.submit "Sign in", :class => "btn"
-          .form-actions
-            = link_to '/products', :class => "btn btn-primary", :id => "continue-1b" do
-              %i.icon-arrow-down.icon-white
-              %span.title Continue to next step
+            .form-actions
+              = link_to '/products', :class => "btn btn-primary", :id => "continue-1b" do
+                %i.icon-arrow-down.icon-white
+                %span.title Continue to next step
         .checkout-summary
           .form-actions
             = link_to '#', :class => "btn", :id => "edit-sign-in" do
