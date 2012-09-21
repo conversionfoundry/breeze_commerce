@@ -15,11 +15,10 @@ module Breeze
 
     class Variant
       include Mongoid::Document
-      identity :type => String
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
-      has_one_related :image, :class_name => "Breeze::Commerce::VariantImage"
+      has_one :image, :class_name => "Breeze::Commerce::VariantImage"
       has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       
       field :image

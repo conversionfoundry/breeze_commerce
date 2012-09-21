@@ -7,7 +7,7 @@ module Breeze
       field :position, :type => Integer
 
       #embedded_in :product, :class_name => "Breeze::Commerce::Product", :inverse_of => :images
-      belongs_to_related :product, :class_name => "Breeze::Commerce::Product"
+      belongs_to :product, :class_name => "Breeze::Commerce::Product"
 
       mount_uploader :file, Breeze::Commerce::ProductUploader, :mount_on => :file
 
