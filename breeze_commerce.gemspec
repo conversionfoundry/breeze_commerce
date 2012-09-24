@@ -31,7 +31,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'will_paginate', "3.0.pre4"
   s.add_dependency "nested_form"
-  s.add_development_dependency "rspec"
+  # s.add_development_dependency "rspec"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "launchy"
+  s.add_development_dependency "capybara"
+  s.add_development_dependency 'factory_girl_rails'
+
+
 
   #s.add_development_dependency "sqlite3"
   

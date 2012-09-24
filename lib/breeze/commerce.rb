@@ -2,6 +2,10 @@ require "breeze/commerce/engine"
 require "breeze/commerce/current_order"
 require "breeze/commerce/current_cart"
 
+require "breeze/account"
+require "breeze/pay_online"
+require "breeze/apply_online"
+
 module Breeze
   module Commerce
 

@@ -5,6 +5,7 @@ Breeze::Engine.routes.draw do
       root :to => "store#index"
       
       controller :store do
+        post :setup_default
         get :settings
         put :settings     
       end

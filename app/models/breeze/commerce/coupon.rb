@@ -1,6 +1,6 @@
-# module Breeze
-#   module Commerce
-#     class Coupon
+module Breeze
+  module Commerce
+    class Coupon
 #       include Mongoid::Document
 
 #       TYPES = { 1 => "Fixed Amount", 2 => "% of Order Value", 3 => "Free Shipping" }
@@ -44,6 +44,6 @@
 #         self.now = true
 #         self.never = true
 #       end
-#     end
-#   end
-# end
+    end
+  end
+end

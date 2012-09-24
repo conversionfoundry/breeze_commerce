@@ -99,6 +99,7 @@ module Breeze
       def parent
         Breeze::Content::Page.where(:parent_id => nil).first
       end
+      
       def parent_id
         parent.id
       end

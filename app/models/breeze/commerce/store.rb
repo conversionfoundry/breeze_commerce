@@ -5,7 +5,7 @@ module Breeze
       
       has_many :categories, :class_name => "Breeze::Commerce::Category"
       has_many :products, :class_name => "Breeze::Commerce::Product"
-      has_many :coupons, :class_name => "Breeze::Commerce::Coupon"
+      # has_many :coupons, :class_name => "Breeze::Commerce::Coupon"
       has_many :customers, :class_name => "Breeze::Commerce::Customer"
       has_many :orders, :class_name => "Breeze::Commerce::Order"
       has_many :order_statuses, :class_name => "Breeze::Commerce::OrderStatus"

@@ -13,7 +13,10 @@ module Breeze
         Breeze::Content.register_class Breeze::Commerce::Cart # TODO: Rename to Minicart
         Breeze::Content.register_class Breeze::Commerce::CustomerLoginForm
       end
-      
+
+      config.generators do |g|
+        g.test_framework :rspec, :view_specs => false
+      end      
 
     end
   end
