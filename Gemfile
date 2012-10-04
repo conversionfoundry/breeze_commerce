@@ -8,4 +8,7 @@ group :test, :development do
   gem "breeze_account", :path => '~/dev/breeze_account'
   gem "breeze_pay_online", :path => '~/dev/breeze_pay_online'
   gem "breeze_apply_online", :path => '~/dev/breeze_apply_online'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'magic_encoding'
 end
