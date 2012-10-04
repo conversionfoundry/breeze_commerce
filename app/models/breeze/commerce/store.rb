@@ -1,6 +1,6 @@
 module Breeze
   module Commerce
-    class Store #< Breeze::Content::Page
+    class Store
       include Mongoid::Document
       
       has_many :categories, :class_name => "Breeze::Commerce::Category"
@@ -12,6 +12,10 @@ module Breeze
       has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
 
       belongs_to :home_page, :class_name => "Breeze::Content::Page"
+
+      def home_page
+        read_attribute(:home_page) || Breeze::Content::Page.root.first
+      end
       
     end
   end
