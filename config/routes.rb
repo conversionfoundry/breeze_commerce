@@ -17,6 +17,8 @@ Breeze::Engine.routes.draw do
         resources :properties
         resources :product_images
         resources :product_relationships
+        put       :mass_update, :on => :collection
+        delete    :mass_destroy, :on => :collection
       end
 
       resources :orders do
@@ -45,7 +47,9 @@ Breeze::Engine.routes.draw do
 
   end
 
-  devise_for :customer, :class_name => "Breeze::Commerce::Customer", :module => :devise, :controllers => {:sessions => "breeze/commerce/sessions"}
+  namespace "store", :module => "commerce", :name_prefix => "admin_store" do
+    devise_for :customer, :class_name => "Breeze::Commerce::Customer", :module => :devise, :controllers => {:sessions => "breeze/commerce/sessions"}
+  end
 
   scope :module => "commerce" do        
 

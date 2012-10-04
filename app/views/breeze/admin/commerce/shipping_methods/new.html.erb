@@ -1,2 +1,11 @@
-<% content_for :title, "New shipping method" %>
-<%= render "breeze/admin/commerce/shipping_methods/form", :url => admin_store_shipping_methods_path %>
+<% content_for :title, "New Shipping Method" %>
+
+<%= tabbed_layout do |tabs| %>
+  <% tabs.details :title => "New Shipping Method" do %>
+		<%= scrollable_layout do %>
+			<div id='<%= "shipping_method_new" %>' class="shipping_method-new">
+				<%= render "breeze/admin/commerce/shipping_methods/form", :url => admin_store_shipping_methods_path %>
+			</div>
+		<% end %>
+	<% end %>
+<% end %>

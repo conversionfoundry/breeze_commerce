@@ -1,0 +1,26 @@
+= content_tag :tr, :class => "product", :id => "product_#{product.id}" do
+  %td.first
+    = check_box_tag "product_ids[]", product.id
+  %td.image
+    - if false
+      - unless product.images.empty?
+        = image_tag product.images.ordered.first.file.url(:breeze_thumb)
+  %td.name
+    = link_to product.title, edit_admin_store_product_path(product), :class => "name-link"
+    .categories
+      = product.categories.collect(&:name).join(', ')
+  %td.price
+    - if product.variants.count > 1
+      From
+      = number_to_currency(product.display_price, :locale => :nz)
+      %span.currency NZD
+    - else
+      No price yet.
+  %td.last-edited= product.updated_at
+  %td.available
+    = product.available ? 'Available' : 'Not Available'
+  %td.actions.last
+    %p.product-actions
+      = link_to "View", product.permalink, :target => :_blank, :class => "small black button"
+      = link_to "Edit", edit_admin_store_product_path(product), :class => "small black button"
+      = link_to "Delete", admin_store_product_path(product), :remote => true, :method => :delete, :class => "small red delete button"
