@@ -65,6 +65,28 @@ a.customer-card:hover
 
 /* Checkout Funnel
 
+/* Cart table
+table#cart tr th.item
+  width: 40%
+table#cart tr th.price
+  width: 10%
+table#cart tr th.quantity
+  width: 30%
+table#cart tr th.total
+  width: 20%
+table#cart
+  tr 
+    td.total
+      font-size: 125%
+  tr.total
+    td.total
+      font-size: 150%
+  th,
+  td
+    vertical-align: top
+  td.total
+    text-align: right
+
 #checkout-container
   .form-actions .btn
     float: right
@@ -159,6 +181,9 @@ div.detail span
 
 /* Other
 
+.amount
+  text-align: right
+
 span.currency
   font-size: 80%
 
@@ -194,3 +219,35 @@ ol.form
 .first_name, .last_name
   float: left
   margin-right: 1em
+
+/* Product Lists
+
+ul.products li
+  list-style: none
+  margin-bottom: 2em
+  clear: both
+  .image
+    float: left
+    width: 128px
+    height: 128px
+    margin: 0 1em 1em 0
+  .actions
+    text-align: right
+
+/* Products Page
+
+.container.product .images
+  float: right
+
+.breeze-minicart, .breeze-customer_login
+  float: left
+
+.product-header .breeze-minicart
+  float: right
+
+.variants
+  float: left
+
+#product_info_region
+  clear: none
+  width: 50%
