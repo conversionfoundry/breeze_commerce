@@ -1,4 +1,4 @@
-# Tests for an example store
+# Basic tests for an example store, to confirm content generation
 
 describe "the dummy store", :type => :request do
 
@@ -8,19 +8,14 @@ describe "the dummy store", :type => :request do
     home_page = FactoryGirl.create(:home_page)
     welcome_snippet = FactoryGirl.create(:welcome_snippet)
     home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => welcome_snippet )
-
-    save_and_open_page
-
+    ventriloquist_dummy = FactoryGirl.create(:ventriloquist_dummy)
     # home_page.placements.first.should_receive(:position).and_return(1)
   end
 
   it "has a home page" do
     visit ('/')
-
     page.should have_content("Welcome to Breeze!")
   end
-
-
 
 
 

@@ -267,3 +267,90 @@ Home
   Rendered inline template within layouts/page (3.3ms)
   Rendered inline template (0.3ms)
 Completed 200 OK in 108ms (Views: 9.1ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (89.3679ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_commerce_categories", :query=>{}} (15.7168ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_commerce_stores selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (14.4629ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-25 10:04:21 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.0202ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (69.1128ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505feea6a6b1a0812b000006"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4408ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template within layouts/page (2.0ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 175ms (Views: 13.1ms)
+
+
+Started GET "/admin/pages" for 127.0.0.1 at 2012-09-25 10:14:44 +1200
+Processing by Breeze::Admin::PagesController#index as HTML
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/admin/sign_in" for 127.0.0.1 at 2012-09-25 10:14:49 +1200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/passwords/new.html.erb (2.3ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/sessions/new.html.erb within layouts/sessions (654.4ms)
+Compiled breeze/login.css  (584ms)  (pid 76659)
+Completed 200 OK in 5125ms (Views: 4877.8ms)
+
+
+Started GET "/cached/breeze/login.css?body=1" for 127.0.0.1 at 2012-09-25 10:14:56 +1200
+Served asset /breeze/login.css - 304 Not Modified (3ms)
+
+
+Started GET "/cached/breeze/icons/error.png" for 127.0.0.1 at 2012-09-25 10:15:00 +1200
+Served asset /breeze/icons/error.png - 304 Not Modified (26ms)
+
+
+Started GET "/cached/button-overlay.png" for 127.0.0.1 at 2012-09-25 10:15:00 +1200
+Served asset /button-overlay.png - 200 OK (24ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2012-09-25 10:15:00 +1200
+Processing by Breeze::Admin::DashboardsController#show as HTML
+Completed 401 Unauthorized in 2ms
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-25 10:15:01 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.7980ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5281ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505feea6a6b1a0812b000006"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.2961ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template within layouts/page (1.1ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 79ms (Views: 3.8ms)
+
+
+Started GET "/admin/store/orders/50593388a6b1a0217f000031/line_items/50593388a6b1a0217f000032" for 127.0.0.1 at 2012-09-25 10:15:01 +1200
+Processing by Breeze::ContentsController#show as HTML
+  Parameters: {"path"=>"admin/store/orders/50593388a6b1a0217f000031/line_items/50593388a6b1a0217f000032"}
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.6757ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/admin/store/orders/50593388a6b1a0217f000031/line_items/50593388a6b1a0217f000032"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.3440ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/breeze/errors/not_found.html.erb within layouts/error (0.7ms)
+Completed 404 Not Found in 64ms (Views: 60.5ms)
+
+
+Started GET "/admin/sign_in" for 127.0.0.1 at 2012-09-25 10:15:03 +1200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/passwords/new.html.erb (1.1ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/sessions/new.html.erb within layouts/sessions (4.7ms)
+Completed 200 OK in 9ms (Views: 8.0ms)
+
+
+Started GET "/admin/stylesheets/error.css" for 127.0.0.1 at 2012-09-25 10:15:05 +1200
+Processing by Breeze::ContentsController#show as HTML
+  Parameters: {"path"=>"admin/stylesheets/error.css"}
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/admin/stylesheets/error"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5469ms)
+  Rendered text template (0.0ms)
+Completed 404 Not Found in 17ms (Views: 14.1ms)
+
+
+Started GET "/cached/breeze/login.css?body=1" for 127.0.0.1 at 2012-09-25 10:15:07 +1200
+Served asset /breeze/login.css - 304 Not Modified (0ms)
+DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
+DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
