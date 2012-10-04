@@ -1,0 +1,100 @@
+- content_for :title, "Products"
+= pane_layout do |panes|
+  = panes.inner do
+    = scrollable_layout do
+      .actions.horizontal
+        = link_to "New Product", new_admin_store_product_path, :class => "large new green product button"
+      %h1
+        Products
+      .filters
+        .states
+          = link_to "All (#{store.products.count})", admin_store_products_path
+          |
+          \#{link_to "Published (#{store.products.published.count})", admin_store_products_path}
+      = will_paginate @products
+      = render :partial => "breeze/admin/commerce/products/products", :locals => { :products => @products.paginate(:page => params[:page], :per_page => 10) }
+= content_for :left do
+  - render :partial => "breeze/admin/commerce/commerce/left"
+ 
+:javascript 
+  // TODO: Abstract this code out to a reusable method
+
+  // Select/deselect all items from header checkbox
+  $('.products-container thead :checkbox').live('change', function() {
+    var products = $('tbody :checkbox', $(this).closest('table'));
+    if (this.checked) {
+      products.attr('checked', true);
+    } else {
+      products.removeAttr('checked');
+    }
+  });
+  
+  // Show the with_selected actions if a checkbox is active
+  $('.products-container :checkbox').live('change', function() {
+    var container = $(this).closest('.container');
+    $('.with-selected', container).toggle($('tbody :checked', container).length > 0);
+  });
+  
+  // TODO: separate this into two, one for each button is clearer
+  $('.products-container .with-selected .button:not(.delete)').live('click', function(e) {
+    var product_ids = [];
+    var products = $(this).closest('.container').find('tbody :checked').closest('.product');
+    products.each(function() { 
+      product_ids.push(this.id.replace(/^product_/, 'product_ids[]=')); 
+    });
+    var data = product_ids.join('&');
+    if ($(this).is('.publish')) { data += '&product[available]=true'; }
+    if ($(this).is('.unpublish')) { data += '&product[available]=false'; }
+
+    $.ajax({
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      url: '/admin/store/products/mass_update.js',
+      dataType: "html",
+      type: "PUT",
+      data: data,
+      success: function(result) { eval(result); },
+      error: function(result) { eval(result); }
+    });
+
+   $(this).closest('.container').find('thead :checked').removeAttr('checked');
+   $(this).closest('.with-selected').hide();
+   e.preventDefault();
+   return false;
+  });
+
+  
+  $('.products-container .with-selected .button.delete').live('click', function() {
+    var button = this;
+    var product_ids = [];
+    var products = $(this).closest('.container').find('tbody :checked').closest('.product');
+    products.each(function() { 
+      product_ids.push(this.id.replace(/^product_/, 'product_ids[]=')); 
+    });
+    var data = product_ids.join('&');
+
+    var $dialog = $('<div></div>')
+    .html('<p>Really delete these products?</p>')
+    .dialog({
+      title: 'Confirm delete',
+      modal: true,
+      resizable: false,
+      buttons: {
+        Delete: function() {
+          $(this).dialog('close');
+          $.ajax({
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            url: '/admin/store/products/mass_destroy.js',
+            dataType:'html',
+            type:'DELETE',
+            data: data,
+            success: function(result) { eval(result); },
+            error: function(result) { eval(result); }
+          });        
+        },
+        Cancel: function() {
+          $(this).dialog('close');
+        }
+      }
+    });
+    return false;
+  });

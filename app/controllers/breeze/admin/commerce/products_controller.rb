@@ -7,14 +7,16 @@ module Breeze
         end
         
         def new
-          @product = store.products.new
+          # New products appear by default as children of the site's root page.
+          # Note that new products are hidden from navigation by default, so it's OK to add new products without screwing up menus.
+          @product = store.products.new parent_id: Breeze::Content::Page.where(parent_id: nil).first.id
         end
         
         def create
           @product = store.products.build params[:product]
           if @product.save
-          # if @product = store.products.create(params[:product])
-            redirect_to admin_store_products_path
+            # redirect_to admin_store_products_path
+            redirect_to edit_admin_store_product_path(@product)
           else
             render :action => "new"
           end
@@ -39,6 +41,20 @@ module Breeze
         def destroy
           @product = store.products.find params[:id]
           @product.update_attributes(:archived => true)
+        end
+
+        def mass_update
+          @products = store.products.find params[:product_ids]
+          @products.each do |product|
+            product.update_attributes params[:product]
+          end
+        end
+        
+        def mass_destroy
+          @products = store.products.find params[:product_ids]
+          @products.each do |product|
+            product.update_attributes(:archived => true)
+          end
         end
 
       end

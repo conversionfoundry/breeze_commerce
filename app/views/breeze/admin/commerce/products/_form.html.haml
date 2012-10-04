@@ -1,0 +1,51 @@
+- content_for :head do
+  = stylesheet_link_tag "breeze/marquess/marquess.css"
+  = javascript_include_tag "breeze/marquess/marquess.js"
+  = stylesheet_link_tag "breeze/uploadify/uploadify.css"
+  = javascript_include_tag "breeze/uploadify/swfobject.js", "breeze/uploadify/uploadify.js"
+
+= breeze_form_for @product, :as => :product, :url => url do |form|
+  .actions
+    - unless @product.new_record?
+      = form.fieldset :id => "product-available" do
+        = form.check_box :available, :label => "Available?"
+    = link_to "View Product", @product.permalink, :class => "large view button", :target => :_blank unless @product.new_record?
+    = submit_tag "Save Product", :class => "large green save button"
+    = link_to "Delete Product", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record?
+    / - unless @product.new_record?
+    /   = form.fieldset :class => "upload" do
+    /     / TODO: Fix this
+    /     = content_tag :div, :id => "uploader", "data-session-key" => Rails.configuration.session_options[:key], "data-session-id" => cookies[Rails.configuration.session_options[:key]] do
+    /       = link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button"
+  %h1= @product.new_record? ? 'New Product' : "Editing Product \"#{@product.title}\""
+  = render "/breeze/admin/shared/error_messages", :target => @product, :object_name => :product
+
+  #product-details
+    = form.hidden_field :parent_id
+
+    = form.fieldset do
+      = form.text_field :title, :required => true, :label => "Product Name"
+      = form.text_field :teaser, :required => true
+      %li.text_field
+        = form.label :slug, nil, :required => true
+        %span.field
+          http://#{"#{request.host_with_port}#{form.object.parent.permalink}#{'/' unless form.object.parent.root?}"}#{form.text_field :slug, :wrap => false, :size => 16}
+        = form.errors_for :slug
+      = form.select :category_ids, store.categories.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Categories"}, :class => "multiselect", :multiple => "multiple"
+  - unless @product.new_record?
+    #product-gallery.well
+      / TODO: Separate this code into _product_images partial, as for properties and variants
+      %h2 Images
+      #assets
+        - unless @product.images.empty?
+          = render :partial => "breeze/admin/commerce/products/image", :collection => @product.images
+        - else
+          No images yet.
+        = link_to 'Add an Image', new_admin_store_product_product_image_path(@product), class: 'large new product_image button'
+    #product-properties
+      = render :partial => "breeze/admin/commerce/products/properties", :object => @product.properties
+    #product-variants
+      = render :partial => "breeze/admin/commerce/products/variants", :object => @product.variants.unarchived
+    #product-relationships
+      = render :partial => "breeze/admin/commerce/products/relationships", :object => @product.product_relationship_children
+
