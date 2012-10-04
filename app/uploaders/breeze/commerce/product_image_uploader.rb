@@ -1,8 +1,14 @@
+require 'carrierwave/mongoid'
+
+# encoding: utf-8
 module Breeze
   module Commerce
-    class ProductUploader < CarrierWave::Uploader::Base
-      # include CarrierWave::ConditionalVersions # This doesn't seem to be needed anymore?
+    class ProductImageUploader < CarrierWave::Uploader::Base
       include CarrierWave::RMagick
+
+      # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
+      include Sprockets::Helpers::RailsHelper
+      include Sprockets::Helpers::IsolatedHelper
 
       FULL_SIZE  = [ 544, 292 ].freeze unless defined?(FULL_SIZE)
       FEATURE_SIZE = [ 240, 204 ].freeze unless defined?(FEATURE_SIZE)
@@ -12,18 +18,30 @@ module Breeze
     
       storage :file
     
-      def store_path(for_file = filename)
-        File.join *[version_name ? "#{model.folder}#{version_name}" : "#{model.folder}", full_filename(for_file)].compact
-        # File.join *[version_name ? "images/galleries/#{model.gallery.title}/#{version_name}" : "images/galleries/#{model.gallery.title}", full_filename(for_file)].compact
-      end
+      # def store_path(for_file = filename)
+      #   File.join *[version_name ? "#{model.folder}#{version_name}" : "#{model.folder}", full_filename(for_file)].compact
+      #   # File.join *[version_name ? "images/galleries/#{model.gallery.title}/#{version_name}" : "images/galleries/#{model.gallery.title}", full_filename(for_file)].compact
+      # end
       
-      def full_filename(for_file)
-        for_file
+      def store_dir
+        "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
       end
 
-      def extension_white_list
-        %w(jpg jpeg gif png)
-      end
+      # Provide a default URL as a default if there hasn't been a file uploaded:
+      # def default_url
+      #   # For Rails 3.1+ asset pipeline compatibility:
+      #   # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+      #
+      #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+      # end
+
+      # def full_filename(for_file)
+      #   for_file
+      # end
+
+      # def extension_white_list
+      #   %w(jpg jpeg gif png)
+      # end
 
       version :full do
         process :resize_to_limit => FULL_SIZE
@@ -48,7 +66,8 @@ module Breeze
       before :cache, :capture_size_before_cache 
       before :retrieve_from_cache, :capture_size_after_retrieve_from_cache 
 
-    protected
+      protected
+  
       def capture_size_before_cache(new_file)
         capture_image_size!(new_file.path || new_file.file.tempfile.path)
       end
