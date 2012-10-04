@@ -52,6 +52,14 @@ module Breeze
 	        if Breeze::Commerce::OrderStatus.where(:type => :shipping, :name => "Will Not Ship").count == 0
 	        	Breeze::Commerce::OrderStatus.create(:type => :shipping, :name => "Will Not Ship", :sort_order => 3, :description => "Shipping has been cancelled", :store => store)
 	        end
+
+	        # Generate an initial shipping method
+	        if Breeze::Commerce::ShippingMethod.count == 0
+	        	Breeze::Commerce::ShippingMethod.create(:price => 10, :name => "Standard Shipping", :store => store)
+	        end
+
+	        # TODO: Put a list of things to do on the dashboard: check shipping methods, create a product, etc.
+
 	      end
 	    end
 	  end

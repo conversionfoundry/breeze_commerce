@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       <% if shipping_methods.any? %>
-        <%= render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :collection => shipping_methods %>
+        <%= render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :collection => shipping_methods, locals: {shipping_methods_count: shipping_methods.count} %>
       <% else %>
         <tr><td class="empty" colspan="6">There are no shipping methods to show here.</td></tr>
       <% end %>
