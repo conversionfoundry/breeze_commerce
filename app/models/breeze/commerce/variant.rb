@@ -18,7 +18,6 @@ module Breeze
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
-      has_one :image, :class_name => "Breeze::Commerce::VariantImage"
       has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       
       field :image
@@ -26,49 +25,41 @@ module Breeze
 
       field :name
       field :sku_code
-      # field :price_offset_cents, :type => Integer
-      field :available, :type => Boolean
+      field :available, type: Boolean
       field :blurb
+      field :discounted, type: Boolean
 
       field :cost_price_cents, :type => Integer
       field :sell_price_cents, :type => Integer
       field :discounted_sell_price_cents, :type => Integer
 
-      # field :folder
-      # field :image_width, :type => Integer
-      # field :image_height, :type => Integer
-
       field :archived, type: Boolean, default: false
 
+      scope :available, where(:available => true)
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
 
-      validates_presence_of :name, :sku_code, :cost_price, :sell_price
+      validates_presence_of :name, :sku_code, :cost_price_cents, :sell_price_cents
       validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator
 
-      # def price_offset
-      #   (self.price_offset_cents || 0) / 100.0
-      # end
-
-      # def price_offset=(offset)
-      #   self.price_offset_cents = offset.to_i * 100
-      # end
-
-      # def price
-      #   product.sell_price
-      # end
-      
-      # def display_price
-      #   (self.price || 0) / 100.0
-      # end
+      # If there's no variant image, try to find an image for the parent product
+      def image
+        if read_attribute(:image) 
+          read_attribute(:image) 
+        elsif product.images.first
+          product.images.first.file
+        else
+          nil
+        end
+      end
 
       def cost_price
         (self.cost_price_cents || 0) / 100.0
       end
 
       def cost_price=(price)
-        self.cost_price_cents = price.to_i * 100
+        self.cost_price_cents = (price.to_f  * 100).to_i
       end
 
       def sell_price
@@ -76,7 +67,7 @@ module Breeze
       end
 
       def sell_price=(price)
-        self.sell_price_cents = price.to_i * 100
+        self.sell_price_cents = (price.to_f  * 100).to_i
       end
 
       def discounted_sell_price
@@ -84,14 +75,17 @@ module Breeze
       end
 
       def discounted_sell_price=(price)
-        self.discounted_sell_price_cents = price.to_i * 100
+        self.discounted_sell_price_cents = (price.to_f  * 100).to_i
       end
       
+      # Show the most relevant price
+      # THis is used to calculate order totals. For display, it's better to display the sell price crossed out followed by the discounted price, if any.
       def display_price
-        self.discounted_sell_price > 0 ? self.discounted_sell_price : self.sell_price
+        self.discounted ? self.discounted_sell_price : self.sell_price
       end
       
-      
+      # Return the option this variant has for a given property
+      # e.g. For variant "red pants", given the property "colour", return the option "red"
       def option_for_property(property)
         self.options.select{|o| o.property == property}.first || nil
       end

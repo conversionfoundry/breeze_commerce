@@ -1,13 +1,13 @@
 <%= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id do %>
   <td class="image">
-    <%= image_tag variant.image.url(:thumbnail) if variant.image %>
+    <%= image_tag variant.image.url(:thumbnail) unless variant.image.blank? %>
   </td>
   <td class="name">
     <%= variant.name %><br />
     <%= variant.blurb %>
   </td>
   <td class="price">
-    <% if variant.discounted_sell_price > 0 %>
+    <% if variant.discounted %>
       <span class="old_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span> <span class="discounted_price current_price"><%= number_to_currency(variant.discounted_sell_price, :locale => :nz) %></span>
     <% else %>
       <span class="current_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span>
@@ -18,7 +18,7 @@
   </td>
   <td class="actions">
     <p class="variant-actions">
-      <%= button_to "Add to cart", breeze.populate_orders_path(:variant_id => variant.id), :class => "button-add_to_cart", :remote => true %>
+      <%= button_to "Add to Cart", breeze.populate_orders_path(:variant_id => variant.id), :class => "btn btn-add_to_cart", :remote => true %>
     </p>
   </td>
 <% end %>
