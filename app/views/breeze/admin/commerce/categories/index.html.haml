@@ -1,0 +1,11 @@
+- content_for :title, "Categories"
+= pane_layout do |pane|
+  = pane.inner do
+    = scrollable_layout do
+      .actions.horizontal
+        = link_to "New category", new_admin_store_category_path, :class => "large new green category button"
+      %h1 Categories
+      = will_paginate @categories
+      = render :partial => "breeze/admin/commerce/categories/categories", :locals => { :categories => @categories }
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"

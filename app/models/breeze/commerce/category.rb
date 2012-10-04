@@ -17,7 +17,7 @@ module Breeze
       scope :ordered, order_by([:position, :asc])
 
       validates_presence_of :name, :slug
-      validates_uniqueness_of :name, :slug, :scope => :store_id
+      # validates_uniqueness_of :name, :slug, :scope => :store_id # TODO: This seems to always be invalid.
 
       before_save :regenerate_permalink!
 
