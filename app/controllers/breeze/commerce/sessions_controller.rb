@@ -9,9 +9,10 @@ module Breeze
         # TODO: Show error message
       end
 
-      # TODO: currently warden.authenticate is denying login, and sending us to the login page
+      # TODO: This is kludgey. We should really be using breeze_account for customer login.
       def create
-        resource = warden.authenticate!(auth_options)
+        # resource = warden.authenticate!(auth_options)
+        resource = warden.authenticate!({:scope => :customer})
         set_flash_message(:notice, :signed_in) if is_navigational_format?
         sign_in(resource_name, resource)
         respond_with resource, :location => after_sign_in_path_for(resource)
