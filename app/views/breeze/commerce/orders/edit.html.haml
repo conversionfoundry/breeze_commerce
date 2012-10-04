@@ -9,25 +9,13 @@
     .span12
       = render :partial => "breeze/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
       .form-actions
-        = submit_tag "Save Changes to Cart", :class => "btn"
+        -# submit_tag "Save Changes to Cart", :class => "btn"
         .btn-group
           = link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do
             %i.icon-arrow-left
             %span.title Continue Shopping
-          - if @order.line_items.count > 0
+          - shipping_methods = Breeze::Commerce::Store.first.shipping_methods.unarchived
+          - if @order.line_items.count > 0 && shipping_methods.count > 0
             = link_to breeze.checkout_path, :class => "btn btn-primary" do
               %i.icon-arrow-right
               %span.title Go to Checkout
-/ :javascript
-/   $('input').change(function() {
-/     alert('foo');
-/     $.ajax({
-/       type: 'POST',
-/       url: "/item/create",
-/       data:$('#create_item').serialize(),
-/       error: function(){  },
-/       success: function(data){ $("#item_form").hide();  $('#view_item').html(data); },
-/       complete: function (){   }
-/       });
-/     return false;
-/   });

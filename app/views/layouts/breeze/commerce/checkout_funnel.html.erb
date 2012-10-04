@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%= stylesheet_link_tag "breeze/commerce.css" %>
-    <%= stylesheet_link_tag "breeze/bootstrap.min.css" %>
-    <%= javascript_include_tag :application %>
+    <%= javascript_include_tag "jquery" %>
+    <%= javascript_include_tag "jquery_ujs" %>
+    <%= stylesheet_link_tag "breeze/commerce" %>
+    <%= javascript_include_tag "breeze/commerce" %>
+
     <%= csrf_meta_tag %>
-    <%= javascript_include_tag "jquery.min" %>
-    <%= javascript_include_tag "jquery-ui.min" %>
-    <%= javascript_include_tag "bootstrap.min" %>
-    <%= javascript_include_tag "modernizr.min" %>
+
     <meta charset="utf-8" />
     <title>Order</title>
     <%= yield :head %>

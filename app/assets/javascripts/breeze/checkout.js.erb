@@ -1,19 +1,66 @@
+// Javascript used in the checkout funnel – shopping cart and checkout pages
 
+// Shopping Cart
+$(document).ready(function() {
 
-$(document).ready(function(){
-  // Update order status (billing or shipping) on the orders index page
-  // $('#cart input').change(function() {
-  //   alert('cart form changed');
-  //   // this.form.submit();
-  //   $(this.form).trigger('submit.rails');
-  // });
+  // Update the order immediately when line item quantities change in the cart
+  $('.line_item-quantity').change(function() {
+    if ( $(this).val() == 0 ) {
+      // Check whether to remove the line item entirely
+      if ( confirm('Remove the line item?') ) { 
+        $(this).siblings('.remove').click();
+      }
+      else {
+        // Update the line item to quantity of 1
+        $(this).val(1);
+        // TODO: DRY up this code: it's the same as below except for quantity
+        $.ajax({
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          url: '/orders/' + $(this).data('order-id') + '/line_items/' + $(this).data('line-item-id'),
+          dataType: "html",
+          type: "PUT",
+          data: { line_item: { quantity: 1 } },
+          success: function(result) { eval(result);  },
+          error: function(result) { eval(result); }
+        });        
+      }
+    }
+    else {
+      // Update the line item
+      $.ajax({
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        url: '/orders/' + $(this).data('order-id') + '/line_items/' + $(this).data('line-item-id'),
+        dataType: "html",
+        type: "PUT",
+        data: { line_item: { quantity: $(this).val() } },
+        success: function(result) { eval(result); },
+        error: function(result) { eval(result); }
+      });
+    }
+  });
+
+  // Update the order immediately when shipping method changes in the cart
+  $('.radio-shipping_method').change(function() {
+    $.ajax({
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      url: '/orders/' + $(this).data('order-id'),
+      dataType: "html",
+      type: "PUT",
+      data: { order: { shipping_method: $(this).val() } },
+      success: function(result) { eval(result); },
+      error: function(result) { eval(result); }
+    });
+  });
+
 });
 
 
 
-
-var panels = ['#sign-in', '#shipping', '#billing','#create-account'];
+// Checkout Form
 $(function() { 
+
+  // Panels for the checkout form
+  var panels = ['#sign-in', '#shipping', '#billing','#create-account'];
 
   // Tooltips
   // $('img#postcode-help').tooltip({
