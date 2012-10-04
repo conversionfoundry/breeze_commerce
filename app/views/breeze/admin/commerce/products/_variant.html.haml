@@ -10,7 +10,7 @@
   %td.sku-code
     = variant.sku_code
   %td.price
-    - if variant.discounted_sell_price > 0
+    - if variant.discounted
       %span.old_price= number_to_currency(variant.sell_price, :locale => :nz)
       %span.discounted_price.current_price= number_to_currency(variant.discounted_sell_price, :locale => :nz)
     - else
@@ -23,12 +23,17 @@
       %td.missing_value
         Missing value
   %td.available
-    .text
-      = variant.available ? "Yes" : "No"
     .field
       = check_box_tag "variant_#{variant.id}_available", "1", variant.available, :class => "variant-available"
-      .available-toggle{:style => "background-position: #{variant.available ? 0 : 100}% 0%"}
   %td.actions
     %p.variant-actions
       = link_to "Delete", admin_store_product_variant_path(variant.product, variant), :remote => true, :method => :delete, :class => "small red delete button"
       = link_to "Edit", edit_admin_store_product_variant_path(variant.product, variant), :class => "small black edit button"
+
+:javascript
+  $(function() {
+    $('#variant_#{variant.id}_available').hide();
+    $('<div id="#variant_#{variant.id}_available_toggle" class="available-toggle"></div>').insertAfter('#variant_#{variant.id}_available').css({
+       'background-position': ($('#variant_#{variant.id}_available:checked').length > 0 ? 0 : 100) + '% 0%'
+    })
+  });

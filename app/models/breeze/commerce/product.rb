@@ -23,9 +23,11 @@ module Breeze
       has_many :product_relationship_children, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :parent_product
       has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
 
+      field :show_in_navigation, :type => Boolean, :default => false
+
       field :teaser
-      field :available_stock, :type => Integer
-      field :content, :markdown => true
+      # field :available_stock, :type => Integer
+      # field :content, :markdown => true
       field :available, :type => Boolean
       field :archived, type: Boolean, default: false
 
@@ -52,9 +54,9 @@ module Breeze
       # end
 
       # e.g. Breeze::Commerce::Product is a NavigationItem, but it's managed under the Store admin area
-      def has_special_admin?
-        true
-      end
+      # def has_special_admin?
+      #   true
+      # end
 
       def related_products
         product_relationship_children.collect{|relationship| relationship.child_product}
@@ -96,24 +98,24 @@ module Breeze
       # Override the normal page hierarchy, so that products always appear as children of the root page.
       # This is done so that product pages can display navigation controls, even though they don't appear in the page hierarchy.
       # TODO: Is there a better way to do this?
-      def parent
-        Breeze::Content::Page.where(:parent_id => nil).first
-      end
+      # def parent
+      #   Breeze::Content::Page.where(:parent_id => nil).first
+      # end
       
-      def parent_id
-        parent.id
-      end
+      # def parent_id
+      #   parent.id
+      # end
 
-      def regenerate_permalink!
-        # TODO: Also need to set the parent_id
-        category = self.categories.first # TODO: This needs to changed to use the canonical category
-        if category
-          category_slug = category.name.downcase.parameterize.gsub(/(^[\-]+|[-]+$)/, "")
-          self.permalink = "/#{category}/#{slug}" unless store.nil? || slug.blank?
-        else
-          self.permalink = "/#{slug}" unless store.nil? || slug.blank?
-        end
-      end
+      # def regenerate_permalink!
+      #   # TODO: Also need to set the parent_id
+      #   category = self.categories.first # TODO: This needs to changed to use the canonical category
+      #   if category
+      #     category_slug = category.name.downcase.parameterize.gsub(/(^[\-]+|[-]+$)/, "")
+      #     self.permalink = "/#{category}/#{slug}" unless store.nil? || slug.blank?
+      #   else
+      #     self.permalink = "/#{slug}" unless store.nil? || slug.blank?
+      #   end
+      # end
 
 
     end
