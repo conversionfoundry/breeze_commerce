@@ -1,14 +1,24 @@
+require 'csv_shaper'
+
 module Breeze
   module Admin
     module Commerce
       class OrdersController < Breeze::Admin::Commerce::Controller
         respond_to :html, :js, :csv
 
+        # Index action takes a parameter :sort for sorting
+        # TODO: Filtering by status?
         def index
-          # binding.pry
-          @orders = Breeze::Commerce::Order.unarchived.where(:store_id => store.id).to_a.sort_by{ |o| params[:sort] ? o.send(params[:sort]) : o.created_at }.paginate(:page => params[:page], :per_page => 15)
-          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing).order(:sort_order)
-          @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping).order(:sort_order)
+          # Find all unarchived orders for the store which are ready for showing in admin (i.e. have gone to checkout)
+          @orders = Breeze::Commerce::Order.unarchived.where(:store_id => store.id).find_all{ |o| o.show_in_admin? }
+          # # @filters = Breeze::Commerce::Order::FILTERS
+          # # if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
+          # #   @orders = @orders.send(params[:show])
+          # # end  
+          @orders = @orders.to_a.sort_by{ |o| params[:sort] ? o.send(params[:sort]) : - o.created_at.to_i }.paginate(:page => params[:page], :per_page => 15)
+
+          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing).order_by(:sort_order.asc)
+          @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping).order_by(:sort_order.asc)
         end
         
         def show
@@ -46,7 +56,6 @@ module Breeze
           if @order.update_attributes(params[:order])
 
             flash[:notice] = "The order was saved."
-            # binding.pry
             respond_to do |format|
               format.html { redirect_to edit_admin_store_order_path(@order) }
               format.js
