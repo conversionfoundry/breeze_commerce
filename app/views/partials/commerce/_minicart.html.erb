@@ -1,0 +1,45 @@
+<% order = current_order(session) || create_order(session) %>
+<% title ||= 'My Cart' %>
+<div class="breeze-minicart well">
+  <% if order %>
+    <h3><%= link_to(title, breeze.cart_path) %></h3>
+
+    <% if order.line_items.unarchived.count > 0 %>
+      <table>
+        <% order.line_items.unarchived.each do |item| %>
+          <tr class="line_item">
+            <td class="item">
+              <span class="quantity"><%= item.quantity %>
+              <span class="times">&times;
+              <%= link_to item.variant.name, item.variant.product.permalink, class: 'variant_name' %>
+            </td>
+            <td class="amount">
+              <%= number_to_currency(item.amount) %>
+            </td>
+          </tr>
+        <% end %>
+        <tr class="shipping">
+          <td>Shipping</td>
+          <td class="amount"><%= number_to_currency(order.shipping_total) %></td>
+        </tr>
+        <tr class="total">
+          <td>Total</td>
+          <td class="amount"><%= number_to_currency(order.total) %></td>
+        </tr>
+      </table>
+    <% else %>
+      <span class="empty_cart">Your cart is empty.</span>
+    <% end %>
+
+    <div class="actions">
+      <%= link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary' %>
+      <% if order.line_items.unarchived.count > 0 %>
+        <%= link_to "Checkout", breeze.checkout_path, :class=> 'btn' %>
+      <% end %>
+    </div>
+  <% else %>
+    <%# There should always be an order (even if it's empty) but just in case... %>
+    <h3>My Cart</h3>
+    No order.
+  <% end %>
+</div>
