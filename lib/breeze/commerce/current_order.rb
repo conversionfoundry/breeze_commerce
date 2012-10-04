@@ -19,7 +19,7 @@ module Breeze
       end
       
       def create_order(session)
-        @current_order = Breeze::Commerce::Store.first.orders.create!()
+        @current_order = Breeze::Commerce::Store.first.orders.create!(shipping_method: Breeze::Commerce::ShippingMethod.default)
         @current_order.save
         session[:cart_id] = @current_order.id
         return @current_order

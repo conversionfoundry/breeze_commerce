@@ -14,6 +14,17 @@ module Breeze
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
 
+      scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
+      # scope :with_billing_status, lambda {|billing_status| where( :billing_status_id => billing_status ) }
+
+      # Scopes for filtering on the admin index page
+      # TODO: Build scopes and filters from all available order statuses
+      # scope :payment_received, where( :billing_status_id => Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first.id.to_s )
+      # FILTERS = [
+      #   {:scope => "all",         :label => "All"},
+      #   {:scope => "payment_received",      :label => "Payment Received"},
+      # ]
+
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -75,16 +86,8 @@ module Breeze
         line_items.unarchived.map(&:quantity).sum
       end
 
-      # def shipping_method
-      #   shipping_method || Breeze::Commerce::Store.first.shipping_methods.first
-      # end
-
-      # def shipping_method
-      #   read_attribute(:shipping_method)
-      # end
-
       def shipping_total
-        if shipping_method
+        if shipping_method && line_items.count > 0
           shipping_method.price  # TODO: calculate shipping
         else
           0
@@ -98,6 +101,14 @@ module Breeze
       def to_s
         '$' + total.to_s + ' ' + created_at.to_s
       end
+
+      def show_in_admin?
+        if billing_status.name == 'Browsing'
+          return false
+        end
+        true
+      end
+
     end
   end
 end
