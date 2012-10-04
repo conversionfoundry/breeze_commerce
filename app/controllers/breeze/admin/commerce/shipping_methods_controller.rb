@@ -11,6 +11,7 @@ module Breeze
         end
         
         def create
+          sanitize_input params[:shipping_method]
           @shipping_method = store.shipping_methods.build params[:shipping_method]
           if @shipping_method.save
             redirect_to admin_store_shipping_methods_path
@@ -24,6 +25,7 @@ module Breeze
         end
 
         def update
+          sanitize_input params[:shipping_method]
           @shipping_method = store.shipping_methods.find params[:id]
           if @shipping_method.update_attributes(params[:shipping_method])
             flash[:notice] = "The shipping_method was saved."
@@ -44,6 +46,9 @@ module Breeze
           @shipping_method = store.shipping_methods.find params[:id]
           @shipping_method.update_attributes(:archived => true)
           # if @shipping_method.is_default?
+
+          # We don't want people to delete the last available shipping method, so we pass this to destroy.js...
+          @shipping_methods_count = Breeze::Commerce::Store.first.shipping_methods.unarchived.count
         end
 
         protected
@@ -55,6 +60,12 @@ module Breeze
           end
           new_default_shipping_method.update_attributes(:is_default => true)
         end
+
+        # Deal with common form submission errors automatically, without causing a validation error
+        def sanitize_input(shipping_method)
+          shipping_method[:price] = shipping_method[:price].gsub(/[^0-9.]/, '') # Strip out any characters except numerals and decimal point (so people can type "$10" instead of "10")
+        end
+
 
       end
     end
