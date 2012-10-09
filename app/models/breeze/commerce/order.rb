@@ -10,26 +10,12 @@ module Breeze
       field :comment
       field :payment_completed
       field :archived, type: Boolean, default: false
-
-      scope :archived, where(:archived => true)
-      scope :unarchived, where(:archived.in => [ false, nil ])
-
-      scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
-      # scope :with_billing_status, lambda {|billing_status| where( :billing_status_id => billing_status ) }
-
-      # Scopes for filtering on the admin index page
-      # TODO: Build scopes and filters from all available order statuses
-      # scope :payment_received, where( :billing_status_id => Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first.id.to_s )
-      # FILTERS = [
-      #   {:scope => "all",         :label => "All"},
-      #   {:scope => "payment_received",      :label => "Payment Received"},
-      # ]
-
+      
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
-      has_many :line_items, :class_name => "Breeze::Commerce::LineItem" # Ideally, this would be embedded, but we couldn't reference variant from an embedded line item
+      has_many :line_items, :class_name => "Breeze::Commerce::LineItem" # Ideally, this would be embedded, but then we couldn't reference variant from an embedded line item
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
       embeds_many :notes, :class_name => "Breeze::Commerce::Note"
@@ -37,19 +23,16 @@ module Breeze
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
+      scope :archived, where(:archived => true)
+      scope :unarchived, where(:archived.in => [ false, nil ])
+      scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
+
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
 
       before_validation :set_initial_order_statuses
+      validates_presence_of :store, :billing_status, :shipping_status
 
-      validates_presence_of :billing_status, :shipping_status
-
-      def set_initial_order_statuses
-        # TODO: Handle case where install generator hasn't been run yet, so these default statuses don't exist
-        self.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => 'Browsing').first unless billing_status
-        self.shipping_status = Breeze::Commerce::OrderStatus.where(:type => :shipping, :name => 'Not Shipped Yet').first unless shipping_status
-        self.shipping_method = Breeze::Commerce::Store.first.shipping_methods.where(:is_default => true).first unless shipping_method
-      end
 
       # Order numbers are strings in the format "2012-07-12-60319"
       # The last section is seconds since midnight on the order date, zero-padded to always be five digits
@@ -82,13 +65,17 @@ module Breeze
         line_items.unarchived.map(&:amount).sum
       end
 
+      def item_total_cents
+        line_items.unarchived.map(&:amount_cents).sum
+      end
+
       def item_count
         line_items.unarchived.map(&:quantity).sum
       end
 
       def shipping_total
         if shipping_method && line_items.count > 0
-          shipping_method.price  # TODO: calculate shipping
+          shipping_method.price(self)
         else
           0
         end
@@ -107,6 +94,18 @@ module Breeze
           return false
         end
         true
+      end
+
+      protected
+
+      def set_initial_order_statuses 
+          # self.billing_status ||= Breeze::Commerce::OrderStatus.where(:store => store, :type => :billing, :name => 'Browsing').first
+          # binding.pry
+          self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default(store)
+          self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default(store)
+          self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(:store => store, :is_default => true).first
+        
+        # end
       end
 
     end

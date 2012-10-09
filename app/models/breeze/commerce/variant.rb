@@ -79,11 +79,15 @@ module Breeze
       end
       
       # Show the most relevant price
-      # THis is used to calculate order totals. For display, it's better to display the sell price crossed out followed by the discounted price, if any.
+      # This is used to calculate order totals. For display in views, it's better to display the sell price crossed out followed by the discounted price, if any.
       def display_price
         self.discounted ? self.discounted_sell_price : self.sell_price
       end
       
+      def display_price_cents
+        self.discounted ? self.discounted_sell_price_cents : self.sell_price_cents
+      end
+
       # Return the option this variant has for a given property
       # e.g. For variant "red pants", given the property "colour", return the option "red"
       def option_for_property(property)

@@ -36,23 +36,7 @@ module Breeze
               @variant.options << Breeze::Commerce::Option.find(option_id)
             end
           end
-          # @variant.update_attributes params[:variant]
-          # # render :layout => false unless params[:Filename].blank?
-          # respond_to do |format|
-          #   format.js
-          #   format.html { redirect_to edit_admin_store_product_path(product) }
-          # end
-
           @variant.update_attributes(params[:variant])
-          # if @variant.update_attributes(params[:variant])
-          #   flash[:notice] = "The variant was saved."
-            
-          #   redirect_to edit_admin_store_product_path(product)
-          # else
-          #   render :action => "edit"
-          # end
-
-
         end
 
         def destroy
