@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
   s.add_dependency "carrierwave-mongoid"
   # s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "mongoid-rspec"
   s.add_development_dependency "launchy"
   s.add_development_dependency "capybara"
   s.add_development_dependency 'factory_girl_rails'
