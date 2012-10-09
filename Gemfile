@@ -11,4 +11,14 @@ group :test, :development do
   gem 'pry'
   gem 'pry-rails'
   gem 'magic_encoding'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'guard-rspec'
+end
+
+group :test do
+	gem 'faker'
+	gem 'capybara'
+	gem 'database_cleaner'
+	gem 'launchy'
 end

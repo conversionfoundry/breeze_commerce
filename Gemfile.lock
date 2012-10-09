@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/isaacfreeman/breeze.git
-  revision: 27666d5e19624b8d969b4e86fa05f67670aaddf3
+  revision: 1f3c602d870cf0aa087ef1540a3b85131ce317f3
   branch: master
   specs:
     breeze (1.0.0)
@@ -18,7 +18,9 @@ GIT
 PATH
   remote: .
   specs:
-    breeze_commerce (1.0.0)
+    breeze_commerce (1.0.1)
+      carrierwave
+      carrierwave-mongoid
       csv_shaper
       haml
       jquery-rails
@@ -98,6 +100,7 @@ GEM
     coderay (1.0.7)
     csv_shaper (0.2.0)
       activesupport (>= 3.0.0)
+    database_cleaner (0.8.0)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -110,7 +113,15 @@ GEM
     factory_girl_rails (3.2.0)
       factory_girl (~> 3.2.0)
       railties (>= 3.0.0)
+    faker (1.1.2)
+      i18n (~> 0.5)
     ffi (1.1.5)
+    guard (1.4.0)
+      listen (>= 0.4.2)
+      thor (>= 0.14.6)
+    guard-rspec (2.0.0)
+      guard (>= 1.1)
+      rspec (~> 2.11)
     haml (3.1.7)
     hike (1.2.1)
     i18n (0.6.1)
@@ -123,6 +134,7 @@ GEM
       addressable (~> 2.3)
     libwebsocket (0.1.5)
       addressable
+    listen (0.5.3)
     magic_encoding (0.0.2)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -135,6 +147,10 @@ GEM
       moped (~> 1.1)
       origin (~> 1.0)
       tzinfo (~> 0.3.22)
+    mongoid-rspec (1.5.4)
+      mongoid (>= 3.0.1)
+      rake
+      rspec (>= 2.9)
     moped (1.2.2)
     multi_json (1.3.6)
     nested_form (0.2.3)
@@ -227,9 +243,13 @@ DEPENDENCIES
   breeze_commerce!
   breeze_pay_online!
   capybara
+  database_cleaner
   factory_girl_rails
+  faker
+  guard-rspec
   launchy
   magic_encoding
+  mongoid-rspec
   pry
   pry-rails
   rspec-rails
