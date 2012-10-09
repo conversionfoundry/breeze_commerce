@@ -17,7 +17,7 @@ module Breeze
           # # end  
           @orders = @orders.to_a.sort_by{ |o| params[:sort] ? o.send(params[:sort]) : - o.created_at.to_i }.paginate(:page => params[:page], :per_page => 15)
 
-          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing).order_by(:sort_order.asc)
+          @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing).order_by(:sort_order.asc) # DRY up this repeated code
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping).order_by(:sort_order.asc)
         end
         
