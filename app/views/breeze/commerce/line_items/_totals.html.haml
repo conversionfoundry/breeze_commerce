@@ -19,7 +19,7 @@
           %h4
             = shipping_method.name
             %span.amount
-              = number_to_currency shipping_method.price
+              = number_to_currency shipping_method.price(@order)
             %span.currency NZD
           %p.description
             = shipping_method.description
