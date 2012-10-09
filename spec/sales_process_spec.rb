@@ -42,38 +42,38 @@ describe "customer", :type => :request, :js => true do
 
     page.should have_content("Welcome to The Dummy Store")
 
-    page.should have_css('div.breeze-minicart')
-    find('div.breeze-minicart h3').should have_content("My Cart")
-    find('div.breeze-minicart').should have_content('No items in your cart yet.')
-    page.should have_css('div.breeze-content.breeze-product_list')
-    find('div.breeze-content.breeze-product_list h3').should have_content("Dummies")
-    page.should have_css('li.product')
-    page.should have_content("Ventriloquist Dummy")
+    # page.should have_css('div.breeze-minicart')
+    # find('div.breeze-minicart h3').should have_content("My Cart")
+    # find('div.breeze-minicart').should have_content('No items in your cart yet.')
+    # page.should have_css('div.breeze-content.breeze-product_list')
+    # find('div.breeze-content.breeze-product_list h3').should have_content("Dummies")
+    # page.should have_css('li.product')
+    # page.should have_content("Ventriloquist Dummy")
 
-    click_link 'Ventriloquist Dummy'
+    # click_link 'Ventriloquist Dummy'
 
-    find('h1').should have_content("Ventriloquist Dummy")
-    page.should have_content 'Scary but compelling'
-    page.should have_css('table.variants tr.variant')
-    find('table.variants tr.variant td.name').should have_content 'Freddie'
-    page.should have_css ('table.variants tr.variant td.actions input.btn.btn-add_to_cart')
-    find('table.variants tr.variant td.actions').should have_button('Add to Cart')
+    # find('h1').should have_content("Ventriloquist Dummy")
+    # page.should have_content 'Scary but compelling'
+    # page.should have_css('table.variants tr.variant')
+    # find('table.variants tr.variant td.name').should have_content 'Freddie'
+    # page.should have_css ('table.variants tr.variant td.actions input.btn.btn-add_to_cart')
+    # find('table.variants tr.variant td.actions').should have_button('Add to Cart')
 
+
+    # # save_and_open_page
+    # click_button 'Test'
+    # # click_on 'Add to Cart'
 
     # save_and_open_page
-    click_button 'Test'
-    # click_on 'Add to Cart'
 
-    save_and_open_page
+    # page.should have_content('Ventriloquist Dummy')
 
-    page.should have_content('Ventriloquist Dummy')
+    # minicart = find('div.breeze-minicart')
+    # minicart.find('ul.line_items li.line_item').should have_content('1 × Freddie')
 
-    minicart = find('div.breeze-minicart')
-    minicart.find('ul.line_items li.line_item').should have_content('1 × Freddie')
+    # # click_link 'Show Cart'
 
-    # click_link 'Show Cart'
-
-    # find('h1').should have_content('Shopping Cart')
+    # # find('h1').should have_content('Shopping Cart')
   end
 
   # it 'can add a second product variant to the cart' do
@@ -121,15 +121,15 @@ describe "customer", :type => :request, :js => true do
     dummy_store.products << ventriloquist_dummy
     freddie_dummy = FactoryGirl.create(:freddie_dummy)
     ventriloquist_dummy.variants << freddie_dummy
-    my_cart = FactoryGirl.create(:my_cart)
+    # my_cart = FactoryGirl.create(:my_cart)
 
     home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => FactoryGirl.create(:welcome_snippet) )
     home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => FactoryGirl.create(:store_welcome_snippet) )
     home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => FactoryGirl.create(:dummies_list) )
-    home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => my_cart )
+    # home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => my_cart )
     # home_page.placements.first.should_receive(:position).and_return(1)
 
-    ventriloquist_dummy.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => my_cart )
+    # ventriloquist_dummy.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => my_cart )
 
   end
 

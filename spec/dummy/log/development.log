@@ -354,3 +354,4 @@ Started GET "/cached/breeze/login.css?body=1" for 127.0.0.1 at 2012-09-25 10:15:
 Served asset /breeze/login.css - 304 Not Modified (0ms)
 DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
 DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
+DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
