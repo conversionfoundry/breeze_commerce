@@ -15,3 +15,7 @@
         = form.fieldset :legend => "Store Home Page" do
           %p When customers return from the cart or checkout by clicking the "Continue Shopping" button, where should they go?
           = form.select :home_page_id, Breeze::Content::Page.all.to_a.sort.map {|p|[ p.title, p.id ] }, { :required => true, :label => "Store home page"}
+        = form.fieldset :legend => "Returning Customer Login" do
+          = form.check_box :allow_returning_customer_login, :label => "Allow returning customers to log in?"
+
+
