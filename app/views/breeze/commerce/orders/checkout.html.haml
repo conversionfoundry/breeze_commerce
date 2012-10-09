@@ -60,13 +60,17 @@
           %h3.heading
             %span Step
             %span.number 1
-            %span.description Sign In or Proceed as a Guest
+            %span.description
+              - if @allow_returning_customer_login
+                Sign In or Proceed as a Guest
+              - else
+                Contact Email Address
         .checkout-body
           - if customer_signed_in?
             Signed in as #{current_store_customer.name}
             \#{link_to 'Sign Out', breeze.destroy_store_customer_session_path, :class => 'btn'}
             .form-actions
-              = link_to '/products', :class => "btn btn-primary", :id => "continue-1a" do
+              = link_to '#', :class => "btn btn-primary", :id => "continue-1a" do
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
           - else
@@ -82,18 +86,19 @@
                       .controls
                         = form.text_field :email, :class=>"required email", :placeholder => 'name@example.com'
                     %span.help-block We'll send a confirmation email to this address
-                  %li
-                    = form.label :returning_customer do |label|
-                      = check_box_tag :returning_customer, :returning_customer, false
-                      I'm a returning customer
-                  %li#returning_customer_password{:style => "display: none;"}
-                    = form.label :password do |label|
-                      Password
-                      %span.required *
-                    = form.password_field :password
-                    = form.submit "Sign in", :class => "btn"
+                  - if @allow_returning_customer_login
+                    %li
+                      = form.label :returning_customer do |label|
+                        = check_box_tag :returning_customer, :returning_customer, false
+                        I'm a returning customer
+                    %li#returning_customer_password{:style => "display: none;"}
+                      = form.label :password do |label|
+                        Password
+                        %span.required *
+                      = form.password_field :password
+                      = form.submit "Sign in", :class => "btn"
             .form-actions
-              = link_to '/products', :class => "btn btn-primary", :id => "continue-1b" do
+              = link_to '#', :class => "btn btn-primary", :id => "continue-1b" do
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
         .checkout-summary
@@ -172,7 +177,7 @@
                       .controls
                         = ship_form.text_field :phone, :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'
             .form-actions
-              = link_to '/products', :class => "btn btn-primary", :id => "continue-2" do
+              = link_to '#', :class => "btn btn-primary", :id => "continue-2" do
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
           .checkout-summary
@@ -261,7 +266,7 @@
               %span.number 4
               %span.description Confirmation
           .checkout-body
-            - if @customer.new_record?
+            - if @customer.new_record? and @allow_returning_customer_login
               %fieldset
                 %legend Save my details
                 %ol.form

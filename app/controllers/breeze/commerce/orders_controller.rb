@@ -60,6 +60,7 @@ module Breeze
         @customer = current_store_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
+        @allow_returning_customer_login = store.allow_returning_customer_login
       end
 
       # Checkout completed, ready to process order
