@@ -1,17 +1,6 @@
 module Breeze
   module Commerce
 
-    #TODO: validates_associated doesn't seem to work here, so I've stuck in this ugly custom validator
-    # class AllVariantsValidValidator < ActiveModel::Validator
-    #   def validate(product)
-    #     product.variants.each do |variant|
-    #       unless variant.valid?
-    #         product.errors[:base] << "Variant " + variant.name + " is missing a value."
-    #       end
-    #     end
-    #   end
-    # end
-
     class Product < Breeze::Content::Page
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
@@ -26,8 +15,6 @@ module Breeze
       field :show_in_navigation, :type => Boolean, :default => false
 
       field :teaser
-      # field :available_stock, :type => Integer
-      # field :content, :markdown => true
       field :available, :type => Boolean
       field :archived, type: Boolean, default: false
 
@@ -51,11 +38,6 @@ module Breeze
       #       errors[:variants] << "Variant " + variant.name + " is missing a value."
       #     end
       #   end
-      # end
-
-      # e.g. Breeze::Commerce::Product is a NavigationItem, but it's managed under the Store admin area
-      # def has_special_admin?
-      #   true
       # end
 
       def related_products
