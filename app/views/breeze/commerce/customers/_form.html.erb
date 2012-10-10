@@ -1,18 +1,11 @@
 <%= form_for @customer, :as => :customer, :url => url do |form| %>
   <h1>
-    <%= @customer.new_record? ? 'New Customer' : "Editing Customer" %>
+    Your Profile
   </h1>
-
-  <div class="form-actions">
-    <div class='btn-group'>
-    	<%= submit_tag "Save", :class => "btn" %>
-    	<%= link_to "Delete", breeze.customer_path(@customer, :format => :js), :method => :delete, :remote => true, :class => "btn" unless @customer.new_record? %>
-  	</div>
-	</div>
 
   <%= render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer %>
   <div id="customer-details">
-    <fieldset>
+    <fieldset class='customer_identity'>
     	<%= form.label :first_name %>
       <%= form.text_field :first_name, :required => true %>
     	<%= form.label :last_name %>
@@ -143,6 +136,12 @@
       <% end %>
     </div>
 
+  </div>
+  <div class="form-actions">
+    <div class='btn-group'>
+      <%= submit_tag "Save", :class => "btn" %>
+      <%= link_to "Delete", breeze.customer_path(@customer, :format => :js), :method => :delete, :remote => true, :class => "btn" unless @customer.new_record? %>
+    </div>
   </div>
 <% end %>
 
