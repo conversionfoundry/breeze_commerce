@@ -21,7 +21,6 @@ module Breeze
             subclass_params = params[:shipping_method_type].to_s.camelcase.demodulize.underscore
             @shipping_method = klass.new params[:shipping_method].merge params[subclass_params]
             @shipping_method.store = store
-            binding.pry
           end
           if @shipping_method.save
             redirect_to admin_store_shipping_methods_path
@@ -38,7 +37,14 @@ module Breeze
         def update
           sanitize_input params[:shipping_method]
           @shipping_method = store.shipping_methods.find params[:id]
-          if @shipping_method.update_attributes(params[:shipping_method])
+          klass = params[:shipping_method_type].camelcase.constantize
+          if klass == Breeze::Commerce::ShippingMethod
+            @shipping_method.update_attributes(params[:shipping_method])
+          else
+            subclass_params = params[:shipping_method_type].to_s.camelcase.demodulize.underscore
+            @shipping_method.update_attributes( params[:shipping_method].merge params[subclass_params] )
+          end
+          if @shipping_method.save
             flash[:notice] = "The shipping_method was saved."
             redirect_to admin_store_shipping_methods_path
           else
