@@ -5,21 +5,18 @@ module Breeze
       has_and_belongs_to_many :categories, :class_name => "Breeze::Commerce::Category"
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       field :title, :markdown => false
-      field :list_type # :category or :related
+      field :list_type # :category or :related # TODO: set default to :category
 
       include Breeze::Content::Mixins::Placeable
-      
-      # TODO: When properties are available for products, provide a better form
-      
+            
       def to_erb(view)
         store = Breeze::Commerce::Store.first # Assuming one store per site at this stage
-        products = store.products.available.unarchived
+        products = store ? store.products.available.unarchived : []
         content = "<h3>#{title}</h3>"
 
         if list_type == 'category'
           classes = 'categories'
-          categories = self.categories
-          categories.each do |category|
+          self.categories.each do |category|
             products = products & category.products
             classes += ' category-' + category.slug
           end

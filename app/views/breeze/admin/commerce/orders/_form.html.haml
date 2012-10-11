@@ -1,121 +1,67 @@
-- content_for :left do
-  = render :partial => "breeze/admin/commerce/commerce/left"
-
 #order-edit
+
   = breeze_form_for @order, :as => :order, :url => url do |form|
-    = submit_tag "Save", :class => "large green save button"
-    = link_to "Delete", admin_store_order_path(@order, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @order.new_record?
-    %h1= @order.new_record? ? 'New Order' : "Editing Order "
-    = render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order
-    #order-customer.section
-      - if @order.customer
-        = render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer}
-      - else
-        .customer-card
-          %p.customer-name
-            %span.name
-              Guest
-          %ul.customer-contact
-            %li.phone
-              = @order.billing_address.phone if @order.billing_address
-            %li.email
-              = @order.email
-      = form.label :customer_id, "Change customer for this order"
-      = form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :include_blank => true, :label => false}
-    #order-details
-      #order-number
-        Order number:
-        \#{@order.order_number}
-      #order-customer_comment
-        = @order.comment
-      - unless @order.new_record?
-        = form.fieldset do
-          #order-line_items.section
-            %h3 Line Items
-            = render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
-      #order-shipping_billing.section
-        #order-shipping
-          %ol.form.status
-            = form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => @order.id, :class => 'shipping_status status', :label => false}
-          = form.fields_for :shipping_address, @order.shipping_address do |ship_form|
-            %fieldset.address-shipping.address
-              %legend Shipping Address
-              %ol#order_shipping_address.form
-                %li.name
-                  = ship_form.label :name do |label|
-                    Name:
-                    %span.required *
+    .actions
+      = submit_tag "Save", :class => "large green save button"
+      = link_to "Delete", admin_store_order_path(@order, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @order.new_record?
+    .form-body
+      %h1= @order.new_record? ? 'New Order' : "Editing Order "
+      = render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order
+      #order-customer.section
+        - if @order.customer
+          = render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer}
+        - else
+          .customer-card
+            %p.customer-name
+              %span.name
+                Guest
+            %ul.customer-contact
+              %li.phone
+                = @order.billing_address.phone if @order.billing_address
+              %li.email
+                = @order.email
+        = form.label :customer_id, "Change customer for this order"
+        = form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :include_blank => true, :label => false}
+      #order-details
+        %h3#order-number
+          Order number:
+          \#{@order.order_number}
+        #order-customer_comment
+          = @order.comment
+        #order-notes
+          = render :partial => "breeze/admin/commerce/notes/notes", :object => @order.notes
+        - unless @order.new_record?
+          = form.fieldset class: 'line_items' do
+            #order-line_items.section
+              = render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
+        #order-shipping_billing.section
+          #order-shipping
+            %ol.form.status
+              = form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => @order.id, :class => 'shipping_status status', :label => false}
+            = form.fields_for :shipping_address, @order.shipping_address do |ship_form|
+              %fieldset.address-shipping.address
+                %legend Shipping Address
+                %ol#order_shipping_address.form
                   = ship_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'
-                %li.address
-                  = ship_form.label :address do |label|
-                    Address
-                    %span.required *
                   = ship_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                %li
-                  = ship_form.label :city do |label|
-                    City
-                    %span.required *
                   = ship_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
-                %li.state
-                  = ship_form.label :state do |label|
-                    State, Province or Region
-                    %span.optional (optional)
-                  = ship_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
-                = ship_form.label :postcode do |label|
-                  Postcode
-                  %span.optional (optional)
-                = ship_form.text_field :postcode, :class => 'input-small'
-                = image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode", :placeholder => '8011'
-                %li
-                  = ship_form.label :country do |label|
-                    Country
-                    %span.required *
+                  = ship_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium', :label => 'State, Province or Region'
+                  = ship_form.text_field :postcode, :class => 'input-small'
                   = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
-                %li
-                  = ship_form.label :phone do |label|
-                    Contact Phone Number
-                    %span.optional (optional)
-                  = ship_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
-        #order-billing
-          %ol.form.status
-            = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => @order.id, :class => 'billing_status status', :label => false}
-          = form.fields_for :billing_address, @order.billing_address do |bill_form|
-            %fieldset.address-billing.address
-              %legend Billing Address
-              %ol#order_billing_address.form
-                %li.name
-                  = bill_form.label :name do |label|
-                    Name:
-                    %span.required *
+                  = ship_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium', :label => 'Contact Phone Number'
+          #order-billing
+            %ol.form.status
+              = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => @order.id, :class => 'billing_status status', :label => false}
+            = form.fields_for :billing_address, @order.billing_address do |bill_form|
+              %fieldset.address-billing.address
+                %legend Billing Address
+                %ol#order_billing_address.form
                   = bill_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'
-                %li.address
-                  = bill_form.label :address do |label|
-                    Address
-                    %span.required *
                   = bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                %li
-                  = bill_form.label :city do |label|
-                    City
-                    %span.required *
                   = bill_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
-                %li.state
-                  = bill_form.label :state do |label|
-                    State, Province or Region
-                    %span.optional (optional)
-                  = bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
-                = bill_form.label :postcode do |label|
-                  Postcode
-                  %span.optional (optional)
-                = bill_form.text_field :postcode, :class => 'input-small'
-                = image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode", :placeholder => '8011'
-                %li
-                  = bill_form.label :country do |label|
-                    Country
-                    %span.required *
+                  = bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium', :label => 'State, Province or Region'
+                  = bill_form.text_field :postcode, :class => 'input-small'
                   = bill_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
-                %li
-                  = bill_form.label :phone do |label|
-                    Contact Phone Number
-                    %span.optional (optional)
-                  = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
-      .clearer
+                  = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium', :label => 'Contact Phone Number'
+
+        .clearer

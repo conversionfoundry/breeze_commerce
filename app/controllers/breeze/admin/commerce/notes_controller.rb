@@ -35,7 +35,6 @@ module Breeze
           @order = Breeze::Commerce::Order.find(params[:order_id])
           @note = @order.notes.find params[:id]
           @note.try :destroy
-          # TODO: also destroy all related options
         end
 
 

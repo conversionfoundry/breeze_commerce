@@ -1,0 +1,21 @@
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"
+  
+- content_for :head do
+  = stylesheet_link_tag asset_path "breeze/store.css"
+
+- content_for :title, "Store settings"
+= pane_layout do |panes|
+  = panes.inner do
+    = scrollable_layout do
+      = breeze_form_for store, :url => admin_store_settings_path, :method => :put do |form|
+        .actions.horizontal
+          = form.submit "Save settings", :class => "large green save button"
+        %h1 General settings
+        = form.fieldset :legend => "Store Home Page" do
+          %p When customers return from the cart or checkout by clicking the "Continue Shopping" button, where should they go?
+          = form.select :home_page_id, Breeze::Content::Page.all.to_a.sort.map {|p|[ p.title, p.id ] }, { :required => true, :label => "Store home page"}
+        = form.fieldset :legend => "Returning Customer Login" do
+          = form.check_box :allow_returning_customer_login, :label => "Allow returning customers to log in?"
+
+

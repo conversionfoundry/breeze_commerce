@@ -2,6 +2,10 @@ require "breeze/commerce/engine"
 require "breeze/commerce/current_order"
 require "breeze/commerce/current_cart"
 
+require "breeze/account"
+require "breeze/pay_online"
+require "breeze/apply_online"
+
 module Breeze
   module Commerce
 
@@ -259,3 +263,6 @@ end
 require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce.rb"
 require "#{Breeze::Commerce::Engine.root}/init.rb"
 
+# TODO: Can we delay loading these until we need them?
+require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/shipping_method"
+require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/threshold_shipping_method"

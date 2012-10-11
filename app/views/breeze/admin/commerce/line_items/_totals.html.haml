@@ -1,27 +1,36 @@
 %tr.subtotal
-  %td{:colspan => "4"}
-  %td Subtotal:
+  %td
+  %td.label{colspan: 2} Subtotal:
   %td.total
-    = number_to_currency @order.item_total
+    %span.amount
+      = number_to_currency @order.item_total
     %span.currency NZD
 %tr.shipping
-  %td{:colspan => "4"}
   %td
+  %td.label
     Shipping:
-  %td
-    - Breeze::Commerce::Store.first.shipping_methods.unarchived.each do |shipping_method|
-      %label.radio
-        = form.radio_button :shipping_method_id, shipping_method.id
-        %h4
-          = shipping_method.name
-        %p.description
-          = shipping_method.description
+  %td.shipping_methods
+    - shipping_methods = Breeze::Commerce::Store.first.shipping_methods.unarchived
+    - if shipping_methods.count > 1
+      - shipping_methods.each do |shipping_method|
+        = form.radio_button :shipping_method_id, shipping_method.id, :checked => shipping_method == @order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }, label: shipping_method.name
+
+    - else
+      - shipping_method = shipping_methods.first
+      %h4
+        = shipping_method.name
+      %p.description
+        = shipping_method.description
   %td.total
-    = number_to_currency @order.shipping_total
+    %span.amount
+      = number_to_currency @order.shipping_total
     %span.currency NZD
 %tr.total
-  %td{:colspan => "4"}
+  %td
   %td Total cost:
+  %td
   %td.total
-    = number_to_currency @order.total
+    %span.amount
+      = number_to_currency @order.total
     %span.currency NZD
+  %td

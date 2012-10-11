@@ -1,5 +1,3 @@
-  # csv.headers :name, :age, :gender, :pet_names
-  # csv.header Breeze::Commerce::Order
   csv.headers :date, :customer, :billing_address, :shipping_address, :amount, :email, :comment
 
   csv.rows @orders do |csv, order|

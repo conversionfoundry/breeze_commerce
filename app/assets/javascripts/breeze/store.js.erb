@@ -1,9 +1,88 @@
+// Show a form as a dialog, with OK and Cancel buttons
+// TODO: Make this into a jQuery method
+// TODO: Pass a function to use in open for any further form set-up e.g. TextBoxList for properties
+function dialogForm(id, title, data) {
+  $('<div id="' + id + '"></div>').html(data).dialog({
+    title: title,
+    modal: true,
+    width: 512,
+    resizable: false,
+    open: function() {
+      $('input', this)[0].focus();
+      // $('.uploadable', this).make_uploadable();
+    },
+    close: function() {
+      $(this).remove();
+    },
+    buttons: {
+      Cancel: function() { $(this).dialog('close'); },
+      OK: function() {
+        $('form', this).submit();
+      }
+    }
+  });
+}
+
 $(function() {
+
+  // Insert the toggle switch for product availability
+  // TODO: Abstract out this code into a sliderfy jQuery plugin
+  $('#product_available').hide();  
+  $('<div class="available-toggle"></div>').insertAfter('#product_available').css({
+     'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
+   })
+  .mousedown(function(event) {
+    $('#product_available').click().change();
+    $(this).animate({'background-position':($('#product_available:checked').length > 0 ? 0 : 100) + '%'}, 'slow', 'easeInOutQuad');
+  });
+
+
+  
+
+  // Multiselect widget for categories
+  // Multiselect widget by http://loudev.com
+  $('#product_category_ids').multiSelect({
+    selectableHeader:'<h4>Available</h4>',
+    selectedHeader:'<h4>Active</h4>'
+  });
+  $('#ms-product_category_ids').append("<div class='ms-actions btn-group'><button id='categories-select_all' class='btn'>select all</button><button id='categories-deselect_all' class='btn'>deselect all</button></div>");
+  $('#categories-select_all').click(function(){
+    $('#product_category_ids').multiSelect('select_all');
+    return false;
+  });
+  $('#categories-deselect_all').click(function(){
+    $('#product_category_ids').multiSelect('deselect_all');
+    return false;
+  });
+
+  // Update slug automatically as new product name is typed
+  $('#new_product #product_title').live('input', function() {
+    var slug_field = $('#product_slug', $(this).closest('form'));
+    if (slug_field.length > 0 && !slug_field[0].modified) {
+      slug_field.val($(this).val().toLowerCase().replace(/[^a-z0-9\-\_]+/g, '-').replace(/(^\-+|\-+$)/g, ''));
+    }
+  });
+  $('#new_product #product_slug').live('input', function() { this.modified = true; });
 
   // Update order status (billing or shipping) on the orders index page
   $('table.orders select.status').change(function() {
     // this.form.submit();
     $(this.form).trigger('submit.rails');
+  });
+
+  $('div#order-notes #note-save').live('click', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      url: '/admin/store/orders/' + $(this).data('order-id') + '/notes',
+      dataType: "html",
+      type: "POST",
+      data: { note: { body_text: $('#note-new-body').val() } },
+      // data: { note: {foo: $('#note-new-body').val(), bar: baz } },
+      success: function(result) { eval(result); },
+      error: function(result) { eval(result); }
+    });
   });
 
   $('.new.contextual.button').live('click', function(e) {
@@ -38,32 +117,32 @@ $(function() {
     e.preventDefault();
   });
 
-  $('table.contextual .actions a.edit').live('click', function(e) {
-    if ($(this).hasClass('disabled')) {
-      e.preventDefault();
-      return;
-    }
+  // $('table.contextual .actions a.edit').live('click', function(e) {
+  //   if ($(this).hasClass('disabled')) {
+  //     e.preventDefault();
+  //     return;
+  //   }
 
-    columns = $(this).parents('table.contextual').find('thead tr th').length;
-    $('.new.contextual.button').addClass('disabled');
+  //   columns = $(this).parents('table.contextual').find('thead tr th').length;
+  //   $('.new.contextual.button').addClass('disabled');
 
-    $(this)
-      .addClass('disabled')
-      .parents('tr')
-      .addClass('active')
-      .after('<tr class="edit"><td colspan="' + columns + '"><div class="edit-context" style="display: none; height: 180px;"><img src="<%= asset_path 'breeze/big-roller.gif' %>" /></div></td></tr>')
-      .parent()
-      .find('.edit-context')
-      .slideDown();
+  //   $(this)
+  //     .addClass('disabled')
+  //     .parents('tr')
+  //     .addClass('active')
+  //     .after('<tr class="edit"><td colspan="' + columns + '"><div class="edit-context" style="display: none; height: 180px;"><img src="<%= asset_path 'breeze/big-roller.gif' %>" /></div></td></tr>')
+  //     .parent()
+  //     .find('.edit-context')
+  //     .slideDown();
 
-    $tr = $(this).parents('tr');
-    $('table.fancy tbody tr').not($tr).addClass('disabled');
-    $('.new.context.button').fadeOut();
-    $.get(this.href, function(data) {
-      $('table.fancy tbody tr.edit .edit-context').html(data).height('auto');
-    });
-    e.preventDefault();
-  });
+  //   $tr = $(this).parents('tr');
+  //   $('table.fancy tbody tr').not($tr).addClass('disabled');
+  //   $('.new.context.button').fadeOut();
+  //   $.get(this.href, function(data) {
+  //     $('table.fancy tbody tr.edit .edit-context').html(data).height('auto');
+  //   });
+  //   e.preventDefault();
+  // });
 
   $('table.contextual tr.edit button.ok').live('click', function(e) {
     $(this).before('<img src="<%= asset_path 'breeze/big-roller.gif' %>" />');
@@ -91,27 +170,23 @@ $(function() {
     e.preventDefault();
   });
 
-  $('.new.variant.button, .variants .variant-actions .edit.button').live('click', function(e) {
+  $('.new.product_image.button').live('click', function(e) {
     $.get(this.href, function(data) {
-      $('<div id="variant-details"></div>').html(data).dialog({
-        title: 'New Variant',
-        modal: true,
-        width: 512,
-        resizable: false,
-        open: function() {
-          $('input', this)[0].focus();
-          $('.uploadable', this).make_uploadable();
-        },
-        close: function() {
-          $(this).remove();
-        },
-        buttons: {
-          Cancel: function() { $(this).dialog('close'); },
-          OK: function() {
-            $('form', this).submit();
-          }
-        }
-      });
+      dialogForm('product_image-details', 'New Product Image', data);
+    });
+    e.preventDefault();
+  });
+
+  $('.new.variant.button').live('click', function(e) {
+    $.get(this.href, function(data) {
+      dialogForm('variant-details', 'New Variant', data);
+    });
+    e.preventDefault();
+  });
+  
+  $('.variants .variant-actions .edit.button').live('click', function(e) {
+    $.get(this.href, function(data) {
+      dialogForm('variant-details', 'Edit Variant', data);
     });
     e.preventDefault();
   });
@@ -141,53 +216,33 @@ $(function() {
     e.preventDefault();
   });
 
-  $('.new.relationship.button, .relationships .relationship-actions .edit.button').live('click', function(e) {
+  $('.new.relationship.button').live('click', function(e) {
     $.get(this.href, function(data) {
-      $('<div id="relationship-details"></div>').html(data).dialog({
-        title: 'Relationship',
-        modal: true,
-        width: 512,
-        resizable: false,
-        open: function() {
-          $('input', this)[0].focus();
-        },
-        close: function() {
-          $(this).remove();
-        },
-        buttons: {
-          Cancel: function() { $(this).dialog('close'); },
-          OK: function() {
-            $('form', this).submit();
-          }
-        }
-      });
+      dialogForm('relationship-details', 'New Product Relationship', data);
     });
     e.preventDefault();
   });
 
-  $('.new.category.button, .categories .category-actions .edit.button').live('click', function(e) {
-        $.get(this.href, function(data) {
-          $('<div id="category-details"></div>').html(data).dialog({
-            title: 'Category',
-            modal: true,
-            width: 512,
-            resizable: false,
-            open: function() {
-              $('input', this)[0].focus();
-            },
-            close: function() {
-              $(this).remove();
-            },
-            buttons: {
-              Cancel: function() { $(this).dialog('close'); },
-              OK: function() {
-                $('form', this).submit();
-              }
-            }
-          });
-        });
-        e.preventDefault();
-      });
+  $('.relationships .relationship-actions .edit.button').live('click', function(e) {
+    $.get(this.href, function(data) {
+      dialogForm('relationship-details', 'Edit Product Relationship', data);
+    });
+    e.preventDefault();
+  });
+
+  $('.new.category.button').live('click', function(e) {
+    $.get(this.href, function(data) {
+      dialogForm('category-details', 'New Category', data);
+    });
+    e.preventDefault();
+  });
+
+  $('.categories .category-actions .edit.button').live('click', function(e) {
+    $.get(this.href, function(data) {
+      dialogForm('category-details', 'Edit Category', data);
+    });
+    e.preventDefault();
+  });
 
   $('.fake-right-sidebar #uploader').each(function() {
     product_id = $(this).parents('.product-edit').attr('id').slice(8);

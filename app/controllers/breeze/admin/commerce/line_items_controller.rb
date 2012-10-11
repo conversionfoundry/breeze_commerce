@@ -10,7 +10,6 @@ module Breeze
 
         def destroy
           @order = Breeze::Commerce::Order.find(params[:order_id])
-          #TODO: check that order is in "checkout" state
           @line_item = @order.line_items.find(params[:id])
           @line_item.update_attributes(:archived => true)
         end

@@ -1,0 +1,11 @@
+- content_for :title, "Editing Customer"
+= pane_layout do |main|
+  = main.inner do
+    = scrollable_layout do
+      .customer-edit{:id => "customer_#{@customer.id}"}
+        = render "breeze/admin/commerce/customers/form", :url => admin_store_customer_path(@customer)
+        .clearer
+      %h2 Orders
+      = render :partial => "breeze/admin/commerce/orders/orders", :object => @customer.orders
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"

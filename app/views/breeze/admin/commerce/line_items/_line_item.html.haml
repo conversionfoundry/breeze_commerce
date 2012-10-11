@@ -1,20 +1,26 @@
-%tr{:id => line_item.id}
+%tr.line_item{class: cycle("odd", "even"), id: line_item.id}
   %td.item
-    %span.icon
-      - image_tag line_item.product.icon_image if line_item.product.icon_image
-    = line_item.variant.name
-  %td.description
-    = line_item.product.teaser
+    = image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image
+    %h4= line_item.variant.name
+    = line_item.variant.blurb
   %td.price
-    - if line_item.variant.discounted_sell_price > 0
-      %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
-      %span.discounted_price.current_price= number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
+    - if line_item.variant.discounted
+      %span.old_price
+        = number_to_currency(line_item.variant.sell_price, :locale => :nz)
+        %span.currency NZD
+      %span.discounted_price.current_price
+        = number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
+        %span.currency NZD
     - else
-      %span.current_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
+      %span.current_price
+        = number_to_currency(line_item.variant.sell_price, :locale => :nz)
+        %span.currency NZD
+
   %td.quantity
-    = line_item_fields.text_field :quantity, :label => false
-  %td.subtotal
+    = line_item_fields.text_field :quantity, class: 'input-mini line_item-quantity', size: 2, data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }, label: false
+  %td.total
     = number_to_currency line_item.amount
     %span.currency NZD
   %td.actions
-    = link_to 'Remove', breeze.admin_store_order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "remove button"
+    = link_to 'Remove', breeze.admin_store_order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "button small remove"
+

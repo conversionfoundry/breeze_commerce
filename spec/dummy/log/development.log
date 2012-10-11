@@ -1,0 +1,357 @@
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 16:27:30 +1200
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (48.0258ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_configurations selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (65.9950ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_configurations documents=[{"_id"=>"505fe133a6b1a0671a000001", "notification_from_email"=>"system@example.com", "time_zone"=>"UTC"}] flags=[] (0.1600ms)
+Processing by Breeze::ContentsController#show as HTML
+Completed 500 Internal Server Error in 8ms
+
+NoMethodError (undefined method `red' for "find_by_perm":String):
+  /Users/isaacfreeman/dev/breeze_pay_online/app/models/breeze/pay_online/payment_page.rb:10:in `find_by_permalink'
+  /Users/isaacfreeman/dev/breeze_pay_online/init.rb:10:in `block in <top (required)>'
+  /Users/isaacfreeman/dev/breeze/lib/breeze/hooks.rb:13:in `call'
+  /Users/isaacfreeman/dev/breeze/lib/breeze/hooks.rb:13:in `block in run_hook'
+  /Users/isaacfreeman/dev/breeze/lib/breeze/hooks.rb:12:in `each'
+  /Users/isaacfreeman/dev/breeze/lib/breeze/hooks.rb:12:in `inject'
+  /Users/isaacfreeman/dev/breeze/lib/breeze/hooks.rb:12:in `run_hook'
+  /Users/isaacfreeman/dev/breeze/lib/breeze/content.rb:23:in `[]'
+  /Users/isaacfreeman/dev/breeze/app/controllers/breeze/contents_controller.rb:21:in `show'
+  actionpack (3.2.8) lib/action_controller/metal/implicit_render.rb:4:in `send_action'
+  actionpack (3.2.8) lib/abstract_controller/base.rb:167:in `process_action'
+  actionpack (3.2.8) lib/action_controller/metal/rendering.rb:10:in `process_action'
+  actionpack (3.2.8) lib/abstract_controller/callbacks.rb:18:in `block in process_action'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:416:in `block (2 levels) in _run__1462068333839469230__process_action__2126818069826430541__callbacks'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:215:in `block in _conditional_callback_around_308'
+  /Users/isaacfreeman/dev/breeze/lib/breeze.rb:36:in `with_domain'
+  /Users/isaacfreeman/dev/breeze/app/controllers/breeze/controller.rb:56:in `set_domain_from_request'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:214:in `_conditional_callback_around_308'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:415:in `block in _run__1462068333839469230__process_action__2126818069826430541__callbacks'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:215:in `block in _conditional_callback_around_307'
+  /Users/isaacfreeman/dev/breeze/app/controllers/breeze/controller.rb:61:in `set_time_zone'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:214:in `_conditional_callback_around_307'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:414:in `_run__1462068333839469230__process_action__2126818069826430541__callbacks'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:385:in `_run_process_action_callbacks'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.8) lib/abstract_controller/callbacks.rb:17:in `process_action'
+  actionpack (3.2.8) lib/action_controller/metal/rescue.rb:29:in `process_action'
+  actionpack (3.2.8) lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'
+  activesupport (3.2.8) lib/active_support/notifications.rb:123:in `block in instrument'
+  activesupport (3.2.8) lib/active_support/notifications/instrumenter.rb:20:in `instrument'
+  activesupport (3.2.8) lib/active_support/notifications.rb:123:in `instrument'
+  actionpack (3.2.8) lib/action_controller/metal/instrumentation.rb:29:in `process_action'
+  actionpack (3.2.8) lib/action_controller/metal/params_wrapper.rb:207:in `process_action'
+  actionpack (3.2.8) lib/abstract_controller/base.rb:121:in `process'
+  actionpack (3.2.8) lib/abstract_controller/rendering.rb:45:in `process'
+  actionpack (3.2.8) lib/action_controller/metal.rb:203:in `dispatch'
+  actionpack (3.2.8) lib/action_controller/metal/rack_delegation.rb:14:in `dispatch'
+  actionpack (3.2.8) lib/action_controller/metal.rb:246:in `block in action'
+  actionpack (3.2.8) lib/action_dispatch/routing/route_set.rb:73:in `call'
+  actionpack (3.2.8) lib/action_dispatch/routing/route_set.rb:73:in `dispatch'
+  actionpack (3.2.8) lib/action_dispatch/routing/route_set.rb:36:in `call'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.8) lib/action_dispatch/routing/route_set.rb:600:in `call'
+  railties (3.2.8) lib/rails/engine.rb:479:in `call'
+  railties (3.2.8) lib/rails/railtie/configurable.rb:30:in `method_missing'
+  journey (1.0.4) lib/journey/router.rb:68:in `block in call'
+  journey (1.0.4) lib/journey/router.rb:56:in `each'
+  journey (1.0.4) lib/journey/router.rb:56:in `call'
+  actionpack (3.2.8) lib/action_dispatch/routing/route_set.rb:600:in `call'
+  mongoid (3.0.6) lib/rack/mongoid/middleware/identity_map.rb:33:in `block in call'
+  mongoid (3.0.6) lib/mongoid/unit_of_work.rb:39:in `unit_of_work'
+  mongoid (3.0.6) lib/rack/mongoid/middleware/identity_map.rb:33:in `call'
+  warden (1.1.1) lib/warden/manager.rb:35:in `block in call'
+  warden (1.1.1) lib/warden/manager.rb:34:in `catch'
+  warden (1.1.1) lib/warden/manager.rb:34:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+  rack (1.4.1) lib/rack/etag.rb:23:in `call'
+  rack (1.4.1) lib/rack/conditionalget.rb:25:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/head.rb:14:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/flash.rb:242:in `call'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:205:in `context'
+  rack (1.4.1) lib/rack/session/abstract/id.rb:200:in `call'
+  /Users/isaacfreeman/dev/breeze/app/middleware/flash_session_cookie_middleware.rb:23:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/cookies.rb:339:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:405:in `_run__734871585910099528__call__3898712999958920919__callbacks'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:405:in `__run_callback'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+  activesupport (3.2.8) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (3.2.8) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/reloader.rb:65:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+  railties (3.2.8) lib/rails/rack/logger.rb:26:in `call_app'
+  railties (3.2.8) lib/rails/rack/logger.rb:16:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+  rack (1.4.1) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.4.1) lib/rack/runtime.rb:17:in `call'
+  activesupport (3.2.8) lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+  rack (1.4.1) lib/rack/lock.rb:15:in `call'
+  actionpack (3.2.8) lib/action_dispatch/middleware/static.rb:62:in `call'
+  railties (3.2.8) lib/rails/engine.rb:479:in `call'
+  railties (3.2.8) lib/rails/application.rb:223:in `call'
+  rack (1.4.1) lib/rack/content_length.rb:14:in `call'
+  railties (3.2.8) lib/rails/rack/log_tailer.rb:17:in `call'
+  rack (1.4.1) lib/rack/handler/webrick.rb:59:in `service'
+  /Users/isaacfreeman/.rvm/rubies/ruby-1.9.3-p125/lib/ruby/1.9.1/webrick/httpserver.rb:138:in `service'
+  /Users/isaacfreeman/.rvm/rubies/ruby-1.9.3-p125/lib/ruby/1.9.1/webrick/httpserver.rb:94:in `run'
+  /Users/isaacfreeman/.rvm/rubies/ruby-1.9.3-p125/lib/ruby/1.9.1/webrick/server.rb:191:in `block in start_thread'
+
+
+  Rendered /Users/isaacfreeman/.rvm/gems/ruby-1.9.3-p125/gems/actionpack-3.2.8/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.3ms)
+  Rendered /Users/isaacfreeman/.rvm/gems/ruby-1.9.3-p125/gems/actionpack-3.2.8/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.1ms)
+  Rendered /Users/isaacfreeman/.rvm/gems/ruby-1.9.3-p125/gems/actionpack-3.2.8/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (327.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 16:30:34 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.6702ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.7250ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/breeze/errors/not_found.html.erb within layouts/error (0.5ms)
+Completed 404 Not Found in 14ms (Views: 6.2ms)
+
+
+Started GET "/admin/stylesheets/error.css" for 127.0.0.1 at 2012-09-24 16:30:34 +1200
+Processing by Breeze::ContentsController#show as HTML
+  Parameters: {"path"=>"admin/stylesheets/error.css"}
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/admin/stylesheets/error"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4299ms)
+  Rendered text template (0.0ms)
+Completed 404 Not Found in 42ms (Views: 40.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:11:46 +1200
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (10.0992ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_configurations selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4859ms)
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.7041ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/breeze/errors/not_found.html.erb within layouts/error (2.9ms)
+Completed 404 Not Found in 91ms (Views: 64.7ms)
+
+
+Started GET "/admin/stylesheets/error.css" for 127.0.0.1 at 2012-09-24 17:11:47 +1200
+Processing by Breeze::ContentsController#show as HTML
+  Parameters: {"path"=>"admin/stylesheets/error.css"}
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/admin/stylesheets/error"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.7370ms)
+  Rendered text template (0.0ms)
+Completed 404 Not Found in 5ms (Views: 2.8ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.1041ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_custom_types selector={} flags=[] limit=0 skip=0 fields=nil (13.4611ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"parent_id"=>nil, "_type"=>{"$in"=>["Breeze::Content::NavigationItem", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Page", "Breeze::Content::Sitemap", "Breeze::ApplyOnline::ApplicationForm", "Breeze::Content::Placeholder"]}}} (0.4020ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"parent_id"=>nil, "position"=>{"$gt"=>-1}} update={"$inc"=>{:position=>1}} flags=[:multi] (0.0901ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_content_items documents=[{"show_in_navigation"=>true, "_type"=>"Breeze::Content::Page", "_id"=>"505febdba6b1a0b026000001", "ssl"=>false, "title"=>"Home", "slug"=>"home", "permalink"=>"/", "updated_at"=>2012-09-24 05:12:59 UTC, "created_at"=>2012-09-24 05:12:59 UTC, "position"=>0}] flags=[] (0.1438ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_admin_activity_log_messages selector={"$query"=>{}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (139.6351ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505febdba6b1a0b026000001", "_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap", "Breeze::ApplyOnline::ApplicationForm"]}}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.9620ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_admin_activity_log_messages documents=[{"_id"=>"505febdca6b1a0b026000002", "user_id"=>nil, "verb"=>"create", "options"=>{}, "text"=>"Home was created", "html"=>"<a href=\"/\">Home</a> was created", "updated_at"=>2012-09-24 05:13:00 UTC, "created_at"=>2012-09-24 05:13:00 UTC, "objects"=>[{"_id"=>"505febdca6b1a0b026000003", "class_name"=>"Breeze::Content::Page", "oid"=>"505febdba6b1a0b026000001", "str"=>"Home"}]}] flags=[] (0.2680ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"parent_id"=>"505febdba6b1a0b026000001", "_type"=>{"$in"=>["Breeze::Content::NavigationItem", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Page", "Breeze::Content::Sitemap", "Breeze::ApplyOnline::ApplicationForm", "Breeze::Content::Placeholder"]}} flags=[] limit=0 skip=0 fields=nil (10.2079ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_content_items documents=[{"placements_count"=>0, "_type"=>"Breeze::Content::Snippet", "_id"=>"505febe6a6b1a0b026000004", "content"=>"<h1>Welcome to Breeze!</h1>", "updated_at"=>2012-09-24 05:13:10 UTC, "created_at"=>2012-09-24 05:13:10 UTC}] flags=[] (0.1850ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505febdba6b1a0b026000001"} update={"$push"=>{"placements"=>{"position"=>0, "region"=>"sidebar", "content_id"=>"505febe6a6b1a0b026000004", "_id"=>"505febeda6b1a0b026000005"}}} flags=[] (0.1709ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505febe6a6b1a0b026000004"} update={"$inc"=>{:placements_count=>1}} flags=[:multi] (0.0761ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:13:20 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (5.2891ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.7000ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505febe6a6b1a0b026000004"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5848ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template within layouts/page (1.0ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 42ms (Views: 3.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:21:25 +1200
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (76.5882ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_configurations selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4580ms)
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.6609ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505febe6a6b1a0b026000004"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.6380ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template within layouts/page (43.8ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 190ms (Views: 106.9ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.4401ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_placements", :query=>{}} (19.4981ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_placements selector={} flags=[] limit=0 skip=0 fields=nil (0.2930ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_placements", :query=>{}} (0.3619ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:22:07 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.6039ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (269.0899ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505febe6a6b1a0b026000004"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.6809ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template within layouts/page (1.1ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 289ms (Views: 3.3ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.9232ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_custom_types selector={} flags=[] limit=0 skip=0 fields=nil (0.2708ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}} (0.3569ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (0.5960ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (0.6270ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (0.8647ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505febdba6b1a0b026000001"} update={"$pullAll"=>{"placements"=>[{"position"=>0, "region"=>"sidebar", "content_id"=>"505febe6a6b1a0b026000004", "_id"=>"505febeda6b1a0b026000005"}]}} flags=[] (0.1340ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505febe6a6b1a0b026000004"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5760ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505febe6a6b1a0b026000004"} flags=[:remove_first] (0.0989ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"placements.content_id"=>"505febe6a6b1a0b026000004"} flags=[] limit=0 skip=0 fields=nil (19.2201ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:22:48 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.7079ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4580ms)
+  Rendered inline template within layouts/page (0.4ms)
+Completed 200 OK in 9ms (Views: 2.8ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}} (0.8142ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}} flags=[] limit=0 skip=0 fields=nil (0.3703ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"parent_id"=>"505febdba6b1a0b026000001", "_type"=>{"$in"=>["Breeze::Content::NavigationItem", "Breeze::Content::Placeholder", "Breeze::ApplyOnline::ApplicationForm", "Breeze::Content::Page", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}} flags=[] limit=0 skip=0 fields=nil (0.7498ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_admin_activity_log_messages selector={"$query"=>{}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (0.4528ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505febdba6b1a0b026000001", "_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4861ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_admin_activity_log_messages documents=[{"_id"=>"505fee58a6b1a0812b000001", "user_id"=>nil, "verb"=>"delete", "options"=>{}, "text"=>"Home was deleted", "html"=>"<a href=\"/\">Home</a> was deleted", "updated_at"=>2012-09-24 05:23:36 UTC, "created_at"=>2012-09-24 05:23:36 UTC, "objects"=>[{"_id"=>"505fee58a6b1a0812b000002", "class_name"=>"Breeze::Content::Page", "oid"=>"505febdba6b1a0b026000001", "str"=>"Home"}]}] flags=[] (0.1860ms)
+  MOPED: 127.0.0.1:27017 DELETE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505febdba6b1a0b026000001"} flags=[:remove_first] (0.0720ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"parent_id"=>nil, "position"=>{"$gt"=>0}} update={"$inc"=>{:position=>1}} flags=[:multi] (0.1061ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{}} (0.4716ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={} flags=[] limit=0 skip=0 fields=nil (0.1826ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"_type"=>{"$in"=>["Breeze::Content::Snippet"]}}} (0.6502ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"_type"=>{"$in"=>["Breeze::Content::Snippet"]}} flags=[] limit=0 skip=0 fields=nil (0.2248ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"_type"=>{"$in"=>["Breeze::Content::Snippet"]}}} (0.4952ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"parent_id"=>nil, "_type"=>{"$in"=>["Breeze::Content::NavigationItem", "Breeze::Content::Placeholder", "Breeze::ApplyOnline::ApplicationForm", "Breeze::Content::Page", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}} (0.5531ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"parent_id"=>nil, "position"=>{"$gt"=>-1}} update={"$inc"=>{:position=>1}} flags=[:multi] (0.0913ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_content_items documents=[{"show_in_navigation"=>true, "_type"=>"Breeze::Content::Page", "_id"=>"505fee90a6b1a0812b000003", "ssl"=>false, "title"=>"Home", "slug"=>"home", "permalink"=>"/", "updated_at"=>2012-09-24 05:24:32 UTC, "created_at"=>2012-09-24 05:24:32 UTC, "position"=>0}] flags=[] (0.1600ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_admin_activity_log_messages selector={"$query"=>{}, "$orderby"=>{:_id=>-1}} flags=[] limit=-1 skip=0 fields=nil (0.6869ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505fee90a6b1a0812b000003", "_type"=>{"$in"=>["Breeze::Content::Page", "Breeze::ApplyOnline::ApplicationForm", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.6998ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_admin_activity_log_messages documents=[{"_id"=>"505fee90a6b1a0812b000004", "user_id"=>nil, "verb"=>"create", "options"=>{}, "text"=>"Home was created", "html"=>"<a href=\"/\">Home</a> was created", "updated_at"=>2012-09-24 05:24:32 UTC, "created_at"=>2012-09-24 05:24:32 UTC, "objects"=>[{"_id"=>"505fee90a6b1a0812b000005", "class_name"=>"Breeze::Content::Page", "oid"=>"505fee90a6b1a0812b000003", "str"=>"Home"}]}] flags=[] (0.1519ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"parent_id"=>"505fee90a6b1a0812b000003", "_type"=>{"$in"=>["Breeze::Content::NavigationItem", "Breeze::Content::Placeholder", "Breeze::ApplyOnline::ApplicationForm", "Breeze::Content::Page", "Breeze::PayOnline::PaymentForm", "Breeze::Content::Sitemap"]}} flags=[] limit=0 skip=0 fields=nil (0.5219ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:24:36 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.5751ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.3772ms)
+  Rendered inline template within layouts/page (0.3ms)
+Completed 200 OK in 7ms (Views: 2.0ms)
+  MOPED: 127.0.0.1:27017 INSERT       database=breeze_commerce_development collection=breeze_content_items documents=[{"placements_count"=>0, "_type"=>"Breeze::Content::Snippet", "_id"=>"505feea6a6b1a0812b000006", "content"=>"<h1>Welcome to Breeze!</h1>", "updated_at"=>2012-09-24 05:24:54 UTC, "created_at"=>2012-09-24 05:24:54 UTC}] flags=[] (0.1879ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_content_items", :query=>{"_type"=>{"$in"=>["Breeze::Content::Snippet"]}}} (0.5558ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505fee90a6b1a0812b000003"} update={"$push"=>{"placements"=>{"position"=>0, "region"=>"sidebar", "content_id"=>"505feea6a6b1a0812b000006", "_id"=>"505feebba6b1a0812b000007"}}} flags=[] (0.1798ms)
+  MOPED: 127.0.0.1:27017 UPDATE       database=breeze_commerce_development collection=breeze_content_items selector={"_id"=>"505feea6a6b1a0812b000006"} update={"$inc"=>{:placements_count=>1}} flags=[:multi] (0.0720ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-24 17:25:20 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (12.9979ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4239ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505feea6a6b1a0812b000006"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.6301ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template within layouts/page (0.9ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 22ms (Views: 3.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-25 08:49:36 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (31.1906ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.7858ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505feea6a6b1a0812b000006"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5653ms)
+  Rendered inline template (0.9ms)
+  Rendered inline template within layouts/page (3.3ms)
+  Rendered inline template (0.3ms)
+Completed 200 OK in 108ms (Views: 9.1ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (89.3679ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=breeze_commerce_development command={:count=>"breeze_commerce_categories", :query=>{}} (15.7168ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_commerce_stores selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (14.4629ms)
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-25 10:04:21 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (1.0202ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (69.1128ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505feea6a6b1a0812b000006"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.4408ms)
+  Rendered inline template (0.3ms)
+  Rendered inline template within layouts/page (2.0ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 175ms (Views: 13.1ms)
+
+
+Started GET "/admin/pages" for 127.0.0.1 at 2012-09-25 10:14:44 +1200
+Processing by Breeze::Admin::PagesController#index as HTML
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/admin/sign_in" for 127.0.0.1 at 2012-09-25 10:14:49 +1200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/passwords/new.html.erb (2.3ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/sessions/new.html.erb within layouts/sessions (654.4ms)
+Compiled breeze/login.css  (584ms)  (pid 76659)
+Completed 200 OK in 5125ms (Views: 4877.8ms)
+
+
+Started GET "/cached/breeze/login.css?body=1" for 127.0.0.1 at 2012-09-25 10:14:56 +1200
+Served asset /breeze/login.css - 304 Not Modified (3ms)
+
+
+Started GET "/cached/breeze/icons/error.png" for 127.0.0.1 at 2012-09-25 10:15:00 +1200
+Served asset /breeze/icons/error.png - 304 Not Modified (26ms)
+
+
+Started GET "/cached/button-overlay.png" for 127.0.0.1 at 2012-09-25 10:15:00 +1200
+Served asset /button-overlay.png - 200 OK (24ms)
+
+
+Started GET "/admin" for 127.0.0.1 at 2012-09-25 10:15:00 +1200
+Processing by Breeze::Admin::DashboardsController#show as HTML
+Completed 401 Unauthorized in 2ms
+
+
+Started GET "/" for 127.0.0.1 at 2012-09-25 10:15:01 +1200
+Processing by Breeze::ContentsController#show as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.7980ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5281ms)
+Home
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"_id"=>"505feea6a6b1a0812b000006"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.2961ms)
+  Rendered inline template (0.2ms)
+  Rendered inline template within layouts/page (1.1ms)
+  Rendered inline template (0.2ms)
+Completed 200 OK in 79ms (Views: 3.8ms)
+
+
+Started GET "/admin/store/orders/50593388a6b1a0217f000031/line_items/50593388a6b1a0217f000032" for 127.0.0.1 at 2012-09-25 10:15:01 +1200
+Processing by Breeze::ContentsController#show as HTML
+  Parameters: {"path"=>"admin/store/orders/50593388a6b1a0217f000031/line_items/50593388a6b1a0217f000032"}
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} (0.6757ms)
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/admin/store/orders/50593388a6b1a0217f000031/line_items/50593388a6b1a0217f000032"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.3440ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/breeze/errors/not_found.html.erb within layouts/error (0.7ms)
+Completed 404 Not Found in 64ms (Views: 60.5ms)
+
+
+Started GET "/admin/sign_in" for 127.0.0.1 at 2012-09-25 10:15:03 +1200
+Processing by Devise::SessionsController#new as HTML
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/passwords/new.html.erb (1.1ms)
+  Rendered /Users/isaacfreeman/dev/breeze/app/views/devise/sessions/new.html.erb within layouts/sessions (4.7ms)
+Completed 200 OK in 9ms (Views: 8.0ms)
+
+
+Started GET "/admin/stylesheets/error.css" for 127.0.0.1 at 2012-09-25 10:15:05 +1200
+Processing by Breeze::ContentsController#show as HTML
+  Parameters: {"path"=>"admin/stylesheets/error.css"}
+  MOPED: 127.0.0.1:27017 QUERY        database=breeze_commerce_development collection=breeze_content_items selector={"$query"=>{"permalink"=>"/admin/stylesheets/error"}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 fields=nil (0.5469ms)
+  Rendered text template (0.0ms)
+Completed 404 Not Found in 17ms (Views: 14.1ms)
+
+
+Started GET "/cached/breeze/login.css?body=1" for 127.0.0.1 at 2012-09-25 10:15:07 +1200
+Served asset /breeze/login.css - 304 Not Modified (0ms)
+DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
+DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)
+DEPRECATION WARNING: ActiveSupport::Memoizable is deprecated and will be removed in future releases,simply use Ruby memoization pattern instead. (called from extend at /Users/isaacfreeman/dev/breeze_commerce/app/models/breeze/commerce/line_item.rb:5)

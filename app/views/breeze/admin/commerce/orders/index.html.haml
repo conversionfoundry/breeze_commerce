@@ -1,0 +1,12 @@
+- content_for :title, "Orders"
+= pane_layout do |panes|
+  = panes.inner do
+    = scrollable_layout do
+      .actions.horizontal
+        = link_to "Download CSV file", admin_store_orders_path(:format => :csv), :class => "large button download_csv"
+        = link_to "New order", new_admin_store_order_path, :class => "large green button new order blue_monday how_does_it_feel"
+      %h1 Orders
+      = will_paginate @orders
+      = render :partial => "breeze/admin/commerce/orders/orders", :object => @orders
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"

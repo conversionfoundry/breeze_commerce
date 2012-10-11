@@ -2,7 +2,6 @@ module Breeze
   module Commerce
     class ProductRelationship
       include Mongoid::Document
-      identity :type => String
 
       RELATIONSHIPS = [ "is_related_to", "is_similar_to", "is_complemented_by", "goes_well_with", "could_be_upsold_to" ]
 

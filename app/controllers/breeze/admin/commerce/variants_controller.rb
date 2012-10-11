@@ -2,6 +2,9 @@ module Breeze
   module Admin
     module Commerce
       class VariantsController < Breeze::Admin::Commerce::Controller
+
+        respond_to :html, :js
+
         def new
           @variant = product.variants.new
         end
@@ -14,7 +17,11 @@ module Breeze
               @variant.options << Breeze::Commerce::Option.find(option_id)
             end
           end
-          @variant.save
+          if @variant.save
+            redirect_to edit_admin_store_product_path(product)
+          else
+            render :action => "new"
+          end
         end
 
         def edit
@@ -29,8 +36,7 @@ module Breeze
               @variant.options << Breeze::Commerce::Option.find(option_id)
             end
           end
-          @variant.update_attributes params[:variant]
-          # render :layout => false unless params[:Filename].blank?
+          @variant.update_attributes(params[:variant])
         end
 
         def destroy

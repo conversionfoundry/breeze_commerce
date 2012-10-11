@@ -1,12 +1,11 @@
-# module Breeze
-#   module Commerce
-#     class Coupon
+module Breeze
+  module Commerce
+    class Coupon
 #       include Mongoid::Document
-#       identity :type => String
 
 #       TYPES = { 1 => "Fixed Amount", 2 => "% of Order Value", 3 => "Free Shipping" }
 
-#       belongs_to_related :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :coupons
+#       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :coupons
 
 #       field :name
 #       field :code
@@ -45,6 +44,6 @@
 #         self.now = true
 #         self.never = true
 #       end
-#     end
-#   end
-# end
+    end
+  end
+end

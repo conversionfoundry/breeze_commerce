@@ -48,6 +48,27 @@ module Breeze
         image_options[:"data-url"] = options[:url] if options[:url].present?
         image_tag src, image_options
       end
+
+      # Filters for index pages
+      # Source: http://www.idolhands.com/ruby-on-rails/guides-tips-and-tutorials/add-filters-to-views-using-named-scopes-in-rails
+      def select_tag_for_filter(model, nvpairs, params)
+        options = { :query => params[:query] }
+        _url = url_for(eval("#{model}_url(options)"))
+        _html = %{<label for="show">Show:</label><br />}
+        _html << %{<select name="show" id="show"}
+        _html << %{onchange="window.location='#{_url}' + '?show=' + this.value">}
+        nvpairs.each do |pair|
+          _html << %{<option value="#{pair[:scope]}"}
+          if params[:show] == pair[:scope] || ((params[:show].nil? || 
+      params[:show].empty?) && pair[:scope] == "all")
+            _html << %{ selected="selected"}
+          end
+          _html << %{>#{pair[:label]}}
+          _html << %{</option>}
+        end
+        _html << %{</select>}
+      end
+
     end
   end
 end

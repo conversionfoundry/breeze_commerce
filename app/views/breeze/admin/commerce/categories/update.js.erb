@@ -1,7 +1,8 @@
 <% if @category.errors.empty? %>
-  closeContextualEdit();
-  $('#<%= "category_#{@category.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/breeze/commerce/categories/category", :object => @category) %>');
+  // closeContextualEdit();
+  $('#category-details').dialog('close');
+  $('#<%= "category_#{@category.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/breeze/admin/commerce/categories/category", :object => @category) %>');
   $('#<%= "category_#{@category.id}" %>').effect("highlight", { color: "#ffffc0" }, 3000);
 <% else %>
-  $('.edit-context').html('<%= escape_javascript render(:file => "/breeze/commerce/categories/edit") %>');
+  $('#category-details').html('<%= escape_javascript render(:file => "/breeze/admin/commerce/categories/edit") %>');
 <% end %>

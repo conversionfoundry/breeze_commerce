@@ -1,0 +1,32 @@
+= breeze_form_for @variant, :as => :variant, :url => url, :remote => true do |form|
+  = render "/breeze/admin/shared/error_messages", :target => @variant, :object_name => :variant
+  = form.fieldset do
+    %li.image
+      %label Image (124 × 192)
+      = image_tag(@variant.image_url(:breeze_thumbnail)) if @variant.image?
+      = form.file_field :image
+      = form.hidden_field :image_cache
+    = form.text_field :name, :required => true
+    %span.help-block This name will appear in the shopping cart and on invoices.
+    = form.text_field :sku_code, :required => true, :label => "SKU Code"
+    = form.text_field :blurb, :required => false
+    = form.number_field :cost_price, :required => true, :label => "Cost Price", before: '$', step: 0.01
+    = form.number_field :sell_price, :required => true, :label => "Base Sell Price", before: '$', step: 0.01
+    = form.check_box :discounted, :label => "Discounted"
+  = form.fieldset id: 'container-discounted_sell_price', style:('display: none' unless @variant.discounted) do
+    = form.number_field :discounted_sell_price, :label => "Discounted Sell Price", before: '$', step: 0.01
+  = form.fieldset 'options' do
+    - @variant.product.properties.each do |property|
+      - if property.options.count > 0
+        %h4= property.name
+        - selected_option_id = @variant.option_for_property(property)? @variant.option_for_property(property).id : nil
+        = select_tag "options[#{property.name}]", options_for_select(property.options.collect { |o| [ o.name, o.id ] }, selected_option_id)
+
+:javascript
+  // Show or hide the discounted sell price box depending on discounted checkbox state
+  $('#variant_discounted').live('change', function() {
+    $('#container-discounted_sell_price').toggle();
+  });
+
+
+
