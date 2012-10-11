@@ -146,7 +146,8 @@ module Breeze
         @order.save
 
         # Send notification emails
-        Breeze::Admin::Commerce::NewOrderAdminMailer.new_order_admin_notification(@order).deliver
+        Breeze::Admin::Commerce::OrderMailer.new_order_admin_notification(@order).deliver
+        Breeze::Admin::Commerce::OrderMailer.new_order_customer_notification(@order).deliver
 
         unless store_customer_signed_in?
           if @order.customer

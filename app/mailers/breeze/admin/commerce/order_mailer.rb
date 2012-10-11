@@ -2,7 +2,8 @@
 module Breeze
 	module Admin
 		module Commerce
-		  class NewOrderAdminMailer < Breeze::Mailer
+		  class OrderMailer < Breeze::Mailer
+
 		    def new_order_admin_notification(order)
 		    	# TODO: Use a merchant role, not admin
 		      admins = Breeze::Admin::User.all.select{|user| user.roles.include? :admin}
@@ -17,6 +18,17 @@ module Breeze
 			      )
 			    end
 		    end
+
+		    def new_order_customer_notification(order)
+		      @site = Socket.gethostname
+		      @order = order
+		      mail(
+		      	:to => @order.email, 
+		      	:from => Breeze.config.notification_from_email, 
+		      	:subject => "Order #{@order.order_number} at #{@site}"
+		      )
+		    end
+
 		  end
 		end
 	end
