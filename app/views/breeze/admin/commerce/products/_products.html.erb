@@ -2,9 +2,9 @@
 	<%= form_tag admin_store_products_path, :method => :put do -%>
     <div class="with-selected" style="display: none;">
       <strong>With selected:</strong>
-      <%= link_to "Publish", admin_store_products_path, :class => "small green publish button" %>
-      <%= link_to "Unpublish", admin_store_products_path, :class => "small unpublish button" %>
-      <%= link_to "Delete", admin_store_products_path, :class => "small red delete button" %>
+      <%= link_to "Publish", mass_update_admin_store_products_path, :class => "small green publish button" %>
+      <%= link_to "Unpublish", mass_update_admin_store_products_path, :class => "small unpublish button" %>
+      <%= link_to "Delete", mass_destroy_admin_store_products_path, :class => "small red delete button" %>
     </div>
     <table class="fancy products">
       <thead>

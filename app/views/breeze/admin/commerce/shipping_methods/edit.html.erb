@@ -1,5 +1,11 @@
-<% content_for :title, "Editing shipping method" %>
-<div id='<%= "shipping_method_#{@shipping_method.id}" %>' class="shipping_method-edit">
-  <%= render "breeze/admin/commerce/shipping_methods/form", :url => admin_store_shipping_method_path(@customer) %>
-</div>
+<% content_for :title, "Editing Shipping Method" %>
 
+<%= tabbed_layout do |tabs| %>
+  <% tabs.details :title => "Shipping Method #{@shipping_method.name}" do %>
+		<%= scrollable_layout do %>
+			<div id='<%= "shipping_method_#{@shipping_method.id}" %>' class="shipping_method-edit">
+			  <%= render "breeze/admin/commerce/shipping_methods/form", :url => admin_store_shipping_method_path(@shipping_method) %>
+			</div>
+		<% end %>
+	<% end %>
+<% end %>

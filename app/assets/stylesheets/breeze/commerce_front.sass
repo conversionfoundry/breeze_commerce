@@ -1,0 +1,273 @@
+/* Styles used in Breeze Commerce front end
+/* TODO: Should be named commerce_front.css
+
+/* Typography
+
+.old_price
+  text-decoration: line-through
+
+.discounted_price
+  color: red
+
+/* Order table
+table.order
+  td
+    vertical-align: top
+
+
+/* Customer Card
+.customer-card
+  background: white
+  border: solid 1px #eeeeee
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  color: #444444
+  display: block
+  float: left
+  margin: 0
+  padding: 2em
+  width: 20em
+  text-decoration: none
+  .customer-name
+    font-size: 200%
+  .customer-contact
+    li
+      list-style: none
+      text-align: right
+a.customer-card:hover
+  background: #cccccc
+
+
+/* Shopping Cart
+
+.cart-container
+  .form-actions .btn-group
+    float: right
+  table.summary
+    width: 100%
+    margin-bottom: 1em
+    thead th
+      text-align: left
+      &.total
+        text-align: right
+    tfoot
+      border-top: solid 1px #d7d7d7
+      border-bottom: solid 1px #d7d7d7
+      tr.total td.total
+        font-size: 2em
+    input[type=text]
+      width: 2em
+      text-align: center
+    td.total
+      font-weight: bold
+      text-align: right
+
+/* Checkout Funnel
+
+/* Cart table
+table#cart tr th.item
+  width: 40%
+table#cart tr th.price
+  width: 10%
+table#cart tr th.quantity
+  width: 30%
+table#cart tr th.total
+  width: 20%
+table#cart
+  tr 
+    td.total
+      font-size: 125%
+  tr.total
+    td.total
+      font-size: 150%
+  th,
+  td
+    vertical-align: top
+  td.total
+    text-align: right
+
+#checkout-container
+  .form-actions .btn
+    float: right
+  h1
+    background-image: url(' image_path "breeze/padlock.png" ')
+    background-repeat: no-repeat
+    background-position: 0px 6px
+    padding-left: 26px
+
+.checkout-header
+  background: #f5f5f5
+  -webkit-border-radius: 1em
+  -moz-border-radius: 1em
+  border-radius: 1em
+  margin-bottom: 1em
+  padding: 1em
+
+.checkout-summary,
+.checkout-body
+  clear: both
+  margin-left: 5em
+  margin-right: 5em
+  padding: 1em
+  .form-actions
+    background: transparent
+    border: none
+    float: right
+    margin: 0
+    padding: 0
+
+.address textarea
+  resize: vertical
+
+/* Thank You Page
+
+#order-customer
+  float: right
+  margin: 1em 1em 2em 2em
+  width: 24em
+  li
+    list-style: none
+
+#order-details
+  background: white
+  border: solid 1px #eeeeee
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  margin: 2em
+  .section
+    float: left
+    margin: 0 2em 2em 0
+  ol.form
+    li
+      list-style: none
+  #order-number
+    margin: 2em
+  #order-customer_comment
+    color: #383787
+    font: 400 40px/1.0 'Just Another Hand', Helvetica, sans-serif
+    margin: 1.5em 2em 2em 1em
+    transform: rotate(-15deg)
+    -ms-transform: rotate(-15deg) /* IE 9 */
+    -webkit-transform: rotate(-15deg) /* Safari and Chrome */
+    -o-transform: rotate(-15deg) /* Opera */
+    -moz-transform: rotate(-15deg) /* Firefox */
+    width: 10em
+  #order-shipping,
+  #order-billing
+    width: 50%
+    float: left
+    .status
+      border: dashed 4px #cccccc
+      -webkit-border-radius: 1em
+      -moz-border-radius: 1em
+      border-radius: 1em
+      padding: 1em 2em 2em 2em
+      .description
+        color: #cccccc
+        float: right
+        margin: 2em 0 0 2em
+        width: 40%
+
+.clearer
+  clear: both
+
+
+
+div.detail span
+  font-size: 130%
+  margin-left: 20px
+
+/* Other
+
+.amount
+  text-align: right
+
+span.currency
+  font-size: 80%
+
+fieldset
+  ol
+    margin: 0
+    padding: 0
+    float: left
+  li
+    list-style: none
+    padding: 0
+    margin: 0
+
+li.state-postcode
+  label
+    width: 80px
+  input[type=text]
+    width: 30px !important
+
+ol.form
+  span.required
+    font-size: 200%
+    font-weight: bold
+    color: #e33100
+    line-height: 0.2em
+    vertical-align: bottom
+    border: none
+  .optional
+    color: #cccccc
+  li.state-postcode abbr
+    margin-left: -80px
+
+.first_name, .last_name
+  float: left
+  margin-right: 1em
+
+/* Product Lists
+
+ul.products li
+  list-style: none
+  margin-bottom: 2em
+  clear: both
+  .image
+    float: left
+    width: 128px
+    height: 128px
+    margin: 0 1em 1em 0
+  .actions
+    text-align: right
+
+/* Products Page
+
+.container.product .images
+  float: right
+
+.breeze-minicart, .breeze-customer_login
+  float: left
+
+.product-header .breeze-minicart
+  float: right
+
+.variants
+  float: left
+
+#product_info_region
+  clear: none
+  width: 50%
+
+/* Profile Page
+
+#customer-details
+  clear: both
+  float: left
+  width: 100%
+  .customer_identity
+    float: left
+    margin-right: 6em
+    width: auto
+  .customer_addresses
+    float: left
+    .address
+      float: left
+      margin-right: 6em
+.form-actions
+  clear: both
+  float: left
+  width: 100%

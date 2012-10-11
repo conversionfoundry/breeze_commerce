@@ -1,0 +1,8 @@
+- content_for :title, "New Order"
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"
+= pane_layout do |main|
+  = main.inner do
+    = scrollable_layout do
+      .order-new{:id => "order_new"}
+        = render "breeze/admin/commerce/orders/form", :url => admin_store_orders_path

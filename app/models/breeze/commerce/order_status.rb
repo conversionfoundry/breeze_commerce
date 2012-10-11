@@ -16,6 +16,16 @@ module Breeze
       
       validates_presence_of :name
 
+      # Default billing status for new orders
+      def self.billing_default(store)
+        Breeze::Commerce::OrderStatus.where(:store => store, :type => :billing, :name => 'Browsing').first
+      end
+
+      # Default shipping status for new orders
+      def self.shipping_default(store)
+        Breeze::Commerce::OrderStatus.where(:store => store, :type => :shipping, :name => 'Not Shipped Yet').first
+      end
+
     end
   end
 end

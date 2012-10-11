@@ -16,11 +16,6 @@ module Breeze
 
         def create
           @category = store.categories.create params[:category].merge({ :position => (store.categories.max(:position) || 0) + 1 })
-          # if @category.save
-          #   redirect_to admin_store_categories_path
-          # else
-          #   render :action => "new"
-          # end
         end
                 
         def edit

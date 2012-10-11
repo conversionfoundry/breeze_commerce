@@ -3,7 +3,6 @@ module Breeze
     class Category
       include Mongoid::Document
       include Breeze::Content::Mixins::Permalinks
-      identity :type => String
 
       field :name
       field :sort
@@ -11,14 +10,14 @@ module Breeze
       field :position, :type => Integer
       # field :available, :type => Boolean
 
-      belongs_to_related :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :categories
+      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :categories
       has_and_belongs_to_many :products, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :product_lists, :class_name => "Breeze::Commerce::ProductList"
 
       scope :ordered, order_by([:position, :asc])
 
       validates_presence_of :name, :slug
-      validates_uniqueness_of :name, :slug, :scope => :store_id
+      # validates_uniqueness_of :name, :slug, :scope => :store_id # TODO: This seems to always be invalid.
 
       before_save :regenerate_permalink!
 

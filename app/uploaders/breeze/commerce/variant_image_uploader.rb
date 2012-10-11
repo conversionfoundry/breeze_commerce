@@ -4,10 +4,7 @@ require 'carrierwave/mongoid'
 module Breeze
   module Commerce
     class VariantImageUploader < CarrierWave::Uploader::Base
-
-      # Include RMagick or MiniMagick support:
       include CarrierWave::RMagick
-      # include CarrierWave::MiniMagick
 
       # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
       include Sprockets::Helpers::RailsHelper
@@ -16,16 +13,14 @@ module Breeze
       THUMB_SIZE = [ 50, 50 ].freeze unless defined?(THUMB_SIZE)
       BREEZE_THUMB_SIZE = [ 128, 128 ].freeze unless defined?(BREEZE_THUMB_SIZE)
 
-      # Choose what kind of storage to use for this uploader:
       storage :file
-      # storage :fog
 
       # I don't know why this method is missing from CarrierWave::Uploader::Base
       # TODO: Proper validation
-      def validated?
-        raise "Method unsafe" if Rails.env.production?
-        true
-      end
+      # def validated?
+      #   raise "Method unsafe" if Rails.env.production?
+      #   true
+      # end
 
       # Override the directory where uploaded files will be stored.
       # This is a sensible default for uploaders that are meant to be mounted:

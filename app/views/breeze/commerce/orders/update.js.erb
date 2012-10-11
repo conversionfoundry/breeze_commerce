@@ -1,2 +1,6 @@
-// Update all shopping carts (there may be more than one per page)
-$('#footer_totals').html('<%= escape_javascript render(:partial => "breeze/commerce/line_items/totals", :layout => false, :locals => {:order => @order}) %>');
+// // Update all shopping carts (there may be more than one per page)
+// alert('got to update.js');
+
+// Update order totals
+$('table#cart tfoot tr.shipping td.total span.amount').html('<%= number_to_currency @order.shipping_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+$('table#cart tfoot tr.total td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000);

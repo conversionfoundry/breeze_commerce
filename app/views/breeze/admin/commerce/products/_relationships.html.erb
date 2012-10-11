@@ -1,5 +1,6 @@
 <div class="relationships-container container">
   <%= link_to "New relationship...", new_admin_store_product_product_relationship_path(@product), :class => "large new relationship button" %>
+  <h2>Related Products</h2>
   <table class="fancy relationships">
     <thead>
       <tr>
@@ -14,7 +15,7 @@
       <% if @product.related_products.any? %>
         <%= render :partial => "breeze/admin/commerce/products/relationship", :collection => @product.product_relationship_children %>
       <% else %>
-        <tr><td class="empty" colspan="5">There are no relationships for this product.</td></tr>
+        <tr class="empty"><td class="empty" colspan="5">There are no relationships for this product.</td></tr>
       <% end %>
     </tbody>
     <tfoot>

@@ -1,5 +1,3 @@
-<%= @customer.name %>
-
 <div id='<%= "customer_#{@customer.id}" %>' class="customer-edit">
   <%= render "breeze/commerce/customers/form", :url => breeze.customer_path(@customer) %>
 </div>

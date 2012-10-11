@@ -1,0 +1,4 @@
+= form_for [@image.product, @image], url: breeze.admin_store_product_product_images_path(@product), :html => {:multipart => true} do |form|
+  =# form.error_messages
+  = form.file_field :file
+  = form.hidden_field :file_cache

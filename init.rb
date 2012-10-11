@@ -1,3 +1,4 @@
+require 'breeze'
 
 ## TODO: Not sure why this isn't working
 # Breeze.hook :define_abilities do |user, abilities|

@@ -2,10 +2,9 @@
   %thead
     %tr
       %th.item Item
-      %th.description Description
       %th.price Price
       %th.quantity Quantity
-      %th.subtotal Subtotal
+      %th.total Subtotal
       %th.actions
   %tbody
     - if line_items.unarchived.any?
@@ -13,12 +12,9 @@
         - if line_item_fields.object.archived?
           = ''
         - else
-          = render :partial => "breeze/admin/commerce/line_items/line_item", :locals => { :line_item_fields => line_item_fields, :line_item => line_item_fields.object }    
+          = render :partial => "breeze/admin/commerce/line_items/line_item", :locals => { :line_item_fields => line_item_fields, :line_item => line_item_fields.object }
     - else
       %tr
-        %td.empty{:colspan => "6"} No line items yet.
+        %td.empty{:colspan => "5"} No line items yet.
   %tfoot
-    / - new_line_item = Breeze::Commerce::LineItem.new
-    / = form.fields_for :line_items, new_line_item, child_index: new_line_item.object_id do |line_item_fields|
-    /  = render :partial => "breeze/admin/commerce/line_items/line_item_new", :locals => { :line_item_fields => line_item_fields, :line_item => new_line_item } 
     = render :partial => "breeze/admin/commerce/line_items/totals", :locals => { :form => form }

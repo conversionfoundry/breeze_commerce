@@ -1,0 +1,9 @@
+- content_for :title, "Editing Product"
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"
+
+= pane_layout do |main|
+  - main.inner do
+    = scrollable_layout do
+      .product-edit{:id => "product_#{@product.id}"}
+        = render "breeze/admin/commerce/products/form", :url => admin_store_product_path(@product)

@@ -3,29 +3,18 @@
   <head>
     <title><%= page.title if page %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "breeze/commerce.css" %>
-    <%= stylesheet_link_tag 'responsive.css' %>
-    <%= javascript_include_tag :application %>
-    <%= javascript_include_tag "jquery.min" %>
-    <%= javascript_include_tag "jquery-ui.min" %>
-    <%= javascript_include_tag "bootstrap.min" %>
-    <%= javascript_include_tag "modernizr.min" %>
-    <%= javascript_include_tag "galleria-1.2.7.min" %>
-    <%= javascript_include_tag "galleria.classic.min" %>
-    <%= stylesheet_link_tag 'galleria.classic.css' %>
-    <%# javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.easing-1.3.pack.js" %>
-    <%# javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.mousewheel-3.0.4.pack.js" %>
-    <%# javascript_include_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.pack.js" %>
-    <%# stylesheet_link_tag "../breeze_commerce/javascript/fancybox/jquery.fancybox-1.3.4.css" %>
-    <%# javascript_include_tag "../breeze_commerce/javascript/jquery.callout-min.js" %>
-  </head>
-  <script type="text/javascript">
+    <%= stylesheet_link_tag "breeze/commerce" %>
+    <%= javascript_include_tag "breeze/commerce" %>
+
+    <%= javascript_include_tag "breeze/galleria/galleria-1.2.7.min" %>
+    <%= stylesheet_link_tag 'breeze/galleria/themes/classic/galleria.classic.css' %>
+    <script type="text/javascript">
       $(document).ready(function() {
 
         // Image gallery, if product has more than one image
         // TODO: Replace with jQuery Cycle Plugin
         if ( $('#gallery').length > 0 ) {
-          Galleria.loadTheme("<%= asset_path 'galleria.classic.min' %>");
+          Galleria.loadTheme("<%= asset_path 'breeze/galleria/themes/classic/galleria.classic.min' %>");
           $('#gallery').galleria({
             width: 500,
             height: 500,
@@ -33,26 +22,26 @@
           });
         };
           
-        // Animate variants flying to the shopping cart
-        $('input.button-add_to_cart').live('click', function(event) {
+        // Animate variants flying to the minicart
+        $('input.btn-add_to_cart').live('click', function(event) {
           variant = $(this).closest('.variant');
-          cart = $('.breeze-minicart').first(); // Note that there could in principle be more than one minicart on the page
+          cart = $('.breeze-minicart').first(); // Note that there could be more than one minicart on the page
           startOffset = variant.offset();
-          endOffset = cart.offset(); // Note that there could in principle be more than one minicart on the page
+          endOffset = cart.offset();
           endOffset.top += cart.height() / 2 - variant.height() / 2;
           endOffset.left += cart.width() / 2 - variant.width() / 2;
           variant.clone()
             .prependTo($('.variant .name').first())
             .css({'position' : 'absolute', 'top' : startOffset.top, 'left' : startOffset.left})
-            // .animate({opacity: 0.4}, 100.0 )
             .animate({opacity: 0.1, left: endOffset.left, top: endOffset.top}, 1000, "easeInOutCirc", function() {
               // When animation is finished...
               $(this).remove();
               })
-
         });
       });
     </script>
+  </head>
+
   <body>    
   
     <div class="container product">
@@ -72,15 +61,14 @@
           </div>
         </div><!-- /navbar-inner -->
       </div>    
-      <%= navigation(:level => 2) %>
-      <%= navigation(:level => 3) %>
 
       <%= breadcrumb %>
 
 
       <div class="row product-header">
         <div class="span12">
-          <%= render :partial => "/partials/commerce/cart" %>
+          <%= render :partial => "partials/commerce/minicart", :locals => {title: 'Minicart', order: current_order(session)} %>
+
           <h1><%= page.title %></h1>
           <%= region :header %>
         </div>
@@ -112,9 +100,7 @@
           
         <%# This region is intended for placeable elements that describe the product. Note that the short product description is not used on this page, only on lists and checkout. %>
         <%= region :product_info %>
-            
-            
-       
+                   
         <%= content_tag :ul, :class => "variants" do %>
           <%= render :partial => "/partials/commerce/variants", :locals=>{:product => page} %>
         <% end %>

@@ -2,7 +2,6 @@ module Breeze
   module Commerce
     class Property
       include Mongoid::Document
-      identity :type => String
 
       has_and_belongs_to_many :product, :class_name => "Breeze::Commerce::Product"
       has_many :options, :class_name => "Breeze::Commerce::Option"

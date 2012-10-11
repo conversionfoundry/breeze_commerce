@@ -1,14 +1,14 @@
 - content_for :title, "Editing Order"
 - content_for :head do
-  %link{:href => "http://fonts.googleapis.com/css?family=Just+Another+Hand", :rel => "stylesheet", :type => "text/css"}
-= tabbed_layout do |tabs|
-  - tabs.details :title => "Order Details" do
+  %link{:href => "http://fonts.googleapis.com/css?family=Shadows+Into+Light", :rel => "stylesheet", :type => "text/css"}
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"
+  
+= pane_layout do |main|
+  - main.inner do
     = scrollable_layout do
       .order-edit{:id => "order_#{@order.id}"}
-        = render "breeze/admin/commerce/orders/form", :url => admin_store_order_path(@customer)
+        = render "breeze/admin/commerce/orders/form", :url => admin_store_order_path(@order)
       #order-payments
         %h2 Payments
         = render :partial => "breeze/admin/commerce/payments/payments", :object => @order.payments
-      #order-notes
-        %h2 Notes
-        = render :partial => "breeze/admin/commerce/notes/notes", :object => @order.notes

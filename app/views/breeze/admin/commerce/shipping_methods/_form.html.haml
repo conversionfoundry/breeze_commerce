@@ -1,0 +1,35 @@
+= breeze_form_for @shipping_method, :as => :shipping_method, :url => url do |form|
+  %h1= @shipping_method.new_record? ? 'New shipping method' : "Editing shipping method "
+  = submit_tag "Save", :class => "large green save button"
+  = link_to "Delete", admin_store_customer_path(@shipping_method, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @shipping_method.new_record?
+  = render "/breeze/admin/shared/error_messages", :target => @shipping_method, :object_name => :shipping_method
+
+  = form.fieldset legend: "Type of Shipping Method" do
+    - @shipping_method_types.each do |shipping_method_type|
+      %label.radio
+        = radio_button_tag :shipping_method_type, shipping_method_type.name.underscore, class: 'radio-shipping_method_type'
+        = shipping_method_type.name.demodulize.underscore.humanize
+
+  #shipping_method-details
+    = form.fieldset do
+      = form.text_field :name, :required => true, :label => "Name"
+      = form.text_field :description, :required => false, :label => "Description"
+      = form.number_field :price, required: true, label: 'Price', before: '$', step: 0.01
+
+  #threshold_shipping_method-details
+    = form.fieldset do
+      = fields_for :threshold_shipping_method do |threshold_fields|
+        %li
+          %label Threshold
+          %span.before-field $
+          = threshold_fields.number_field :threshold, required: true, step: 0.01, value: @shipping_method.threshold
+        %li
+          %label Price when order is above the threshold
+          %span.before-field $
+          = threshold_fields.number_field :above_threshold_price, required: true, step: 0.01, value: @shipping_method.above_threshold_price
+
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"
+
+/ TODO: Show / hide threshold fields depending on radio value
+/ TODO: Move threshold fields to separate file

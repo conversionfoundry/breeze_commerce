@@ -1,16 +1,19 @@
 = content_tag :tr, :class => :shipping_method, :id => "shipping_method_#{shipping_method.id}", :"data-id" => shipping_method.id do
   %td.name
-    = shipping_method.name
+    %h4
+      = shipping_method.name
     %p
       = shipping_method.description
     %p.default
-      = '(default shipping method for new orders)' if shipping_method.is_default?
+      = 'Default shipping method for new orders.' if shipping_method.is_default?
+  %td.type
+    = shipping_method.class.name.demodulize.underscore.humanize
   %td.price
-    = number_to_currency shipping_method.price, :locale => :nz
-    %span.currency NZD
+    = shipping_method.price_explanation
   %td.actions
     %p.shipping_method-actions
       = form_for shipping_method, :as => :shipping_method, :url => make_default_admin_store_shipping_method_path(shipping_method), :method => :post, :remote => true do |form|
         = form.submit "Make this the default", :class => "small black button"
       = link_to "Edit", edit_admin_store_shipping_method_path(shipping_method), :class => "small black button"
-      = button_to "Remove", breeze.admin_store_shipping_method_path(shipping_method), :method=>:delete, :remote => true, :class=>:remove
+      - if shipping_methods_count > 1
+        = button_to "Remove", admin_store_shipping_method_path(shipping_method), :method=>:delete, :remote => true, :class=>'small red button remove'
