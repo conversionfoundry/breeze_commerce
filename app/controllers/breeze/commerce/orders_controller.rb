@@ -139,10 +139,14 @@ module Breeze
         @payment = Payment.find params[:id]
         @payment.succeeded = true
         @payment.save
+
         @order = @payment.order
         @order.payment_completed = true # TODO: This should be redundant when we have a relation between a orders and payments
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
         @order.save
+
+        # Send notification emails
+        Breeze::Admin::Commerce::NewOrderAdminMailer.new_order_admin_notification(@order).deliver
 
         unless store_customer_signed_in?
           if @order.customer
