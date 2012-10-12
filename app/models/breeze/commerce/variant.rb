@@ -16,7 +16,7 @@ module Breeze
     class Variant
       include Mongoid::Document
 
-      attr_accessible :product_id, :archived, :available, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code
+      attr_accessible :product_id, :archived, :available, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
