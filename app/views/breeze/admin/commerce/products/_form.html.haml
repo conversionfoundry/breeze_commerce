@@ -29,7 +29,8 @@
       %li.text_field
         = form.label :slug, nil, :required => true
         %span.field
-          http://#{"#{request.host_with_port}#{form.object.parent.permalink}#{'/' unless form.object.parent.root?}"}#{form.text_field :slug, :wrap => false, :size => 16}
+          - unless @product.new_record?
+            http://#{"#{request.host_with_port}#{form.object.parent.permalink}#{'/' unless form.object.parent.root?}"}#{form.text_field :slug, :wrap => false, :size => 16}
         = form.errors_for :slug
       = form.select :category_ids, store.categories.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Categories"}, :class => "multiselect", :multiple => "multiple"
   - unless @product.new_record?
