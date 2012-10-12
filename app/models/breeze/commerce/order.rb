@@ -100,8 +100,6 @@ module Breeze
       protected
 
       def set_initial_order_statuses 
-          # self.billing_status ||= Breeze::Commerce::OrderStatus.where(:store => store, :type => :billing, :name => 'Browsing').first
-          # binding.pry
           self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default(store)
           self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default(store)
           self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(:store => store, :is_default => true).first
