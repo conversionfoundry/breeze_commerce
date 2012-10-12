@@ -1,11 +1,17 @@
 module Breeze
   module Commerce
     class ProductList < Breeze::Content::Item
-      
+          
+      attr_accessible :title, :list_type, :product_id, :category_ids
+
       has_and_belongs_to_many :categories, :class_name => "Breeze::Commerce::Category"
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
+
       field :title, :markdown => false
       field :list_type # :category or :related # TODO: set default to :category
+
+      validates_inclusion_of :list_type, :in => [ :category, :related ]
+
 
       include Breeze::Content::Mixins::Placeable
             

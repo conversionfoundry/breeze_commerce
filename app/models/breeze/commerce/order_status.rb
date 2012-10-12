@@ -6,6 +6,7 @@ module Breeze
       # Built-in billing statuses: :new, :payment_in_process, :payment_received, :partial_payment_received, :payment_declined, :cancelled_by_customer, :cancelled_by_merchant, :disputed
       # Built-in shipping statuses: :new, :processing, :delivered, :will_not_deliver
 
+      attr_accessible :name, :description, :type, :sort_order
       field :name
       field :description
       field :type # :billing or :shipping

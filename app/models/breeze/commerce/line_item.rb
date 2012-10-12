@@ -2,7 +2,8 @@ module Breeze
   module Commerce
     class LineItem
       include Mongoid::Document
-      # extend ActiveSupport::Memoizable
+
+      attr_accessible :quantity, :archived
 
       belongs_to :order, :class_name => "Breeze::Commerce::Order" , :inverse_of => :line_items # Ideally, this would be embedded, but we couldn't reference variant from an embedded line item
       belongs_to :variant, :class_name => "Breeze::Commerce::Variant"

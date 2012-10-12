@@ -16,24 +16,25 @@ module Breeze
     class Variant
       include Mongoid::Document
 
+      attr_accessible :product_id, :archived, :available, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code
+
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
       has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       
-      field :image
-      mount_uploader :image, Breeze::Commerce::VariantImageUploader
-
-      field :name
-      field :sku_code
+      field :archived, type: Boolean, default: false
       field :available, type: Boolean
       field :blurb
-      field :discounted, type: Boolean
-
       field :cost_price_cents, :type => Integer
-      field :sell_price_cents, :type => Integer
+      field :discounted, type: Boolean
       field :discounted_sell_price_cents, :type => Integer
+      field :image
+      field :name
+      field :sell_price_cents, :type => Integer
+      field :sku_code
 
-      field :archived, type: Boolean, default: false
+      mount_uploader :image, Breeze::Commerce::VariantImageUploader
+
 
       scope :available, where(:available => true)
       scope :archived, where(:archived => true)

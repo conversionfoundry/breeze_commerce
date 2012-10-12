@@ -6,6 +6,7 @@ module Breeze
     class ProductImage #< Breeze::Content::Asset
       include Mongoid::Document
 
+      attr_accessible :image_width, :image_height, :position
       field :image_width, :type => Integer
       field :image_height, :type => Integer
       field :position, :type => Integer

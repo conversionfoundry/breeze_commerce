@@ -3,6 +3,8 @@ module Breeze
     class ShippingMethod
       include Mongoid::Document
 
+      attr_accessible :name, :description, :price_cents, :is_default, :archived
+
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :shipping_methods
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_methods
 
@@ -20,7 +22,6 @@ module Breeze
       validates_uniqueness_of :name
 
       before_save :set_default_if_only
-      # before_destroy :set_a_new_default
 
       def self.default
         Breeze::Commerce::ShippingMethod.where(is_default: true).first
@@ -58,16 +59,6 @@ module Breeze
       def price_explanation
         "Flat shipping rate of $#{price} for all orders"
       end
-
-
-      # class ForeignDecoratorShipping
-      #   def intialize(klass)
-
-
-      #   end
-      # end
-
-
 
       private
 

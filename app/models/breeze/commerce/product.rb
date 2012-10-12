@@ -2,33 +2,29 @@ module Breeze
   module Commerce
 
     class Product < Breeze::Content::Page
+      attr_accessible :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_and_belongs_to_many :categories, :class_name => "Breeze::Commerce::Category"
-
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
-      has_many :variants, :class_name => "Breeze::Commerce::Variant"
       has_many :images, :class_name => "Breeze::Commerce::ProductImage"
       has_many :product_relationship_children, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :parent_product
       has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
+      has_many :variants, :class_name => "Breeze::Commerce::Variant"
 
-      field :show_in_navigation, :type => Boolean, :default => false
-
-      field :teaser
-      field :available, :type => Boolean
       field :archived, type: Boolean, default: false
+      field :available, :type => Boolean
+      field :show_in_navigation, :type => Boolean, :default => false
+      field :teaser
 
-      scope :available, where(:available => true)
-      scope :unavailable, where(:available.in => [ false, nil ])
       scope :archived, where(:archived => true)
-      scope :unarchived, where(:archived.in => [ false, nil ])
-      scope :published, where(:available => true)
+      scope :available, where(:available => true)
       scope :in_category, lambda { |category| where(:category_ids => category.id) }
-      
+      scope :published, where(:available => true)
+      scope :unarchived, where(:archived.in => [ false, nil ])
+      scope :unavailable, where(:available.in => [ false, nil ])
 
       validates_associated :variants
-      # validate :all_variants_must_be_valid
-
 
       before_save :regenerate_permalink!
 

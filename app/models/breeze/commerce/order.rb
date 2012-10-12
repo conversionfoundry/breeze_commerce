@@ -4,8 +4,9 @@ module Breeze
       include Mongoid::Document
       include Mongoid::Timestamps
       
+      attr_accessible :email, :personal_message, :comment, :archived
       field :email
-      field :subscribe, :type => Boolean
+      # field :subscribe, :type => Boolean
       field :personal_message
       field :comment
       field :payment_completed

@@ -9,7 +9,7 @@ module Breeze
         def new
           # New products appear by default as children of the site's root page.
           # Note that new products are hidden from navigation by default, so it's OK to add new products without screwing up menus.
-          @product = store.products.new parent_id: Breeze::Content::Page.where(parent_id: nil).first.id
+          @product = store.products.new parent_id: Breeze::Content::Page.root.first.id
         end
         
         def create
