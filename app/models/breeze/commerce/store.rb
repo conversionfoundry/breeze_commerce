@@ -13,7 +13,7 @@ module Breeze
       has_many :products, :class_name => "Breeze::Commerce::Product"
       has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
 
-      field :allow_returning_customer_login, :type => Boolean
+      field :allow_returning_customer_login, type: Boolean, default: true
 
       # Set up built-in order statuses
       # In future we may provide the option to create custom order statuses for stores, but we need some standard built-in ones to work with.
