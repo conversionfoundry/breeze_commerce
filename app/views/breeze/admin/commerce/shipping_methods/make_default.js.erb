@@ -1,1 +1,1 @@
-$('table.shipping_methods tbody').html('<%= escape_javascript render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :collection => @shipping_methods %>');
+$('table.shipping_methods tbody').html('<%= escape_javascript render :partial => "breeze/admin/commerce/shipping_methods/shipping_methods", locals: {shipping_methods: @shipping_methods} %>');

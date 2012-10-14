@@ -22,11 +22,11 @@
         %li
           %label Threshold
           %span.before-field $
-          = threshold_fields.number_field :threshold, required: true, step: 0.01, value: @shipping_method.threshold
+          = threshold_fields.number_field :threshold, required: true, step: 0.01, value: ( @shipping_method.threshold if @shipping_method.respond_to? :threshold )
         %li
           %label Price when order is above the threshold
           %span.before-field $
-          = threshold_fields.number_field :above_threshold_price, required: true, step: 0.01, value: @shipping_method.above_threshold_price
+          = threshold_fields.number_field :above_threshold_price, required: true, step: 0.01, value: ( @shipping_method.above_threshold_price if @shipping_method.respond_to? :above_threshold_price )
 
 - content_for :left do
   = render :partial => "breeze/admin/commerce/commerce/left"

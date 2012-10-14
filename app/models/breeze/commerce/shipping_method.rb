@@ -3,7 +3,7 @@ module Breeze
     class ShippingMethod
       include Mongoid::Document
 
-      attr_accessible :name, :description, :price_cents, :is_default, :archived
+      attr_accessible :name, :description, :price, :price_cents, :is_default, :archived
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :shipping_methods
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_methods

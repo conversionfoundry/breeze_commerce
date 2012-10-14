@@ -25,6 +25,7 @@ module Breeze
           if @shipping_method.save
             redirect_to admin_store_shipping_methods_path
           else
+            @shipping_method_types = Breeze::Commerce::ShippingMethod.types
             render :action => "new"
           end
         end
@@ -48,6 +49,7 @@ module Breeze
             flash[:notice] = "The shipping_method was saved."
             redirect_to admin_store_shipping_methods_path
           else
+            @shipping_method_types = Breeze::Commerce::ShippingMethod.types
             render :action => "edit"
           end
         end
