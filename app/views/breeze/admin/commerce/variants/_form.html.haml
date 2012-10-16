@@ -11,8 +11,8 @@
     = form.text_field :sku_code, :required => true, :label => "SKU Code"
     = form.text_field :blurb, :required => false
     = form.number_field :cost_price, :required => false, :label => "Cost Price", before: '$', step: 0.01
-    = form.number_field :sell_price, :required => true, :label => "Base Sell Price", before: '$', step: 0.01
-    = form.check_box :discounted, :label => "Discounted"
+    = form.number_field :sell_price, :required => true, :label => "Sell Price", before: '$', step: 0.01
+    = form.check_box :discounted, :label => "Temporary discount price"
   = form.fieldset id: 'container-discounted_sell_price', style:('display: none' unless @variant.discounted) do
     = form.number_field :discounted_sell_price, :label => "Discounted Sell Price", before: '$', step: 0.01
   = form.fieldset 'options' do
