@@ -11,9 +11,8 @@
   %td.price
     = shipping_method.price_explanation
   %td.actions
-    %p.shipping_method-actions
-      = form_for shipping_method, :as => :shipping_method, :url => make_default_admin_store_shipping_method_path(shipping_method), :method => :post, :remote => true do |form|
-        = form.submit "Make this the default", :class => "small black button"
-      = link_to "Edit", edit_admin_store_shipping_method_path(shipping_method), :class => "small black button"
-      - if shipping_methods_count > 1
-        = button_to "Remove", admin_store_shipping_method_path(shipping_method), :method=>:delete, :remote => true, :class=>'small red button remove'
+    = form_for shipping_method, :as => :shipping_method, :url => make_default_admin_store_shipping_method_path(shipping_method), :method => :post, :remote => true do |form|
+      = form.submit "Make this the default", :class => "small black button"
+    = link_to "Edit", edit_admin_store_shipping_method_path(shipping_method), :class => "small black edit button"
+    - if shipping_methods_count > 1
+      = button_to "Remove", admin_store_shipping_method_path(shipping_method), :method=>:delete, :remote => true, :class=>'small red button remove'

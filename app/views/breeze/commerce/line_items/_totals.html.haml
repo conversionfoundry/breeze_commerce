@@ -18,9 +18,6 @@
           = form.radio_button :shipping_method_id, shipping_method.id, :checked => shipping_method == @order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }
           %h4
             = shipping_method.name
-            %span.amount
-              = number_to_currency shipping_method.price(@order)
-            %span.currency NZD
           %p.description
             = shipping_method.description
     - elsif shipping_methods.count == 1

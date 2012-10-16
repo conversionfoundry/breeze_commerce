@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= page.title if page %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= javascript_include_tag "breeze/commerce" %>
+    <%= stylesheet_link_tag "breeze/commerce" %>
+    <%= stylesheet_link_tag 'breeze/galleria/themes/classic/galleria.classic.css' %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+
+        // Image gallery, if product has more than one image
+        // TODO: Replace with jQuery Cycle Plugin
+        if ( $('#gallery').length > 0 ) {
+          Galleria.loadTheme("<%= asset_path 'breeze/galleria/themes/classic/galleria.classic.min' %>");
+          $('#gallery').galleria({
+            width: 500,
+            height: 500,
+            transitionInitial: 'fade'  
+          });
+        };
+          
+        // Animate variants flying to the minicart
+        $('input.btn-add_to_cart').live('click', function(event) {
+          variant = $(this).closest('.variant');
+          cart = $('.breeze-minicart').first(); // Note that there could be more than one minicart on the page
+          startOffset = variant.offset();
+          endOffset = cart.offset();
+          endOffset.top += cart.height() / 2 - variant.height() / 2;
+          endOffset.left += cart.width() / 2 - variant.width() / 2;
+          variant.clone()
+            .prependTo($('.variant .name').first())
+            .css({'position' : 'absolute', 'top' : startOffset.top, 'left' : startOffset.left})
+            .animate({opacity: 0.1, left: endOffset.left, top: endOffset.top}, 1000, "easeInOutCirc", function() {
+              // When animation is finished...
+              $(this).remove();
+              })
+        });
+      });
+    </script>
+  </head>
+
+  <body>    
+  
+    <div class="container product">
+
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Project name</a>
+            <div class="nav-collapse">
+              <%= bootstrap_nav(:recurse => true) %>
+            </div><!-- /.nav-collapse -->
+          </div>
+        </div><!-- /navbar-inner -->
+      </div>    
+
+      <%= breadcrumb %>
+
+      <div class="row product-header">
+        <div class="span12">
+          <%= render :partial => "partials/commerce/minicart", :locals => {title: 'Minicart', order: current_order(session)} %>
+
+          <h1><%= page.title %></h1>
+          <%= region :header %>
+        </div>
+      </div>
+      
+      <% if page %>
+          <%# hidden_field_tag 'product_id', page.id %>
+            
+          <!-- Single image, or slideshow if there are multiple images -->
+          <div class="images">
+            <% if page.images.count == 1 %>
+              <%= image_tag page.images.last.file.url(:full) %>
+            <% elsif page.images.count > 1 %>
+              <div id="gallery">                
+                  <% page.images.each do |image| %>
+                    <a href="<%= image.file %>">
+                      <img data-title="title goes here"
+                           data-description="description goes here"
+                           src="<%= image.file.url(:breeze_thumb) %>">
+                    </a>
+                  <% end %>
+              </div>
+         
+            <% else %>
+              No images yet.
+            <% end %>
+          </div>
+          
+          
+
+        <%= region :product_info %>
+
+        <%= render :partial => "/partials/commerce/properties", locals: { product: page } %>
+        <div id="variants">
+ %>
+          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: [] } %>
+        </div>
+     
+      <% else %>
+        <p>The product you are looking for was not found.<p>
+      <% end %>
+
+
+    </div>
+    
+  </body>
+</html>
+

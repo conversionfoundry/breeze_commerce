@@ -3,8 +3,6 @@ module Breeze
     module Commerce
       class VariantsController < Breeze::Admin::Commerce::Controller
 
-        respond_to :html, :js
-
         def new
           @variant = product.variants.new
         end

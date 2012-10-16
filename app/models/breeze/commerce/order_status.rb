@@ -6,6 +6,8 @@ module Breeze
       # Built-in billing statuses: :new, :payment_in_process, :payment_received, :partial_payment_received, :payment_declined, :cancelled_by_customer, :cancelled_by_merchant, :disputed
       # Built-in shipping statuses: :new, :processing, :delivered, :will_not_deliver
 
+      STATUS_TYPES = [ :billing, :shipping ]
+
       attr_accessible :name, :description, :type, :sort_order
       field :name
       field :description
@@ -15,7 +17,8 @@ module Breeze
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :order_statuses
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :order_statuses
       
-      validates_presence_of :name
+      validates_presence_of :name, :type
+      validates_inclusion_of :type, :in => STATUS_TYPES
 
       # Default billing status for new orders
       def self.billing_default(store)

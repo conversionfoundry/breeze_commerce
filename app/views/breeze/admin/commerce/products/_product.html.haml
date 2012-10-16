@@ -1,14 +1,16 @@
 = content_tag :tr, :class => "product", :id => "product_#{product.id}" do
   %td.first
     = check_box_tag "product_ids[]", product.id
-  %td.image
-    - if false
+  %td.product
+    .image-container
       - unless product.images.empty?
-        = image_tag product.images.ordered.first.file.url(:breeze_thumb)
-  %td.name
+        = image_tag product.images.ordered.first.file.url(:thumbnail)
     = link_to product.title, edit_admin_store_product_path(product), :class => "name-link"
     .categories
       = product.categories.collect(&:name).join(', ')
+  %td.variants
+    %span.badge
+      = product.images.count
   %td.price
     - if product.variants.count > 1
       From
@@ -16,7 +18,6 @@
       %span.currency NZD
     - else
       No price yet.
-  %td.last-edited= product.updated_at
   %td.available
     = product.available ? 'Available' : 'Not Available'
   %td.actions.last

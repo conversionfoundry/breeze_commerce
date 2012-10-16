@@ -31,6 +31,19 @@
   text-decoration: line-through
 .discounted_price
   color: red
+.badge
+  font-size: 11.844px
+  font-weight: bold
+  line-height: 14px
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
+  white-space: nowrap
+  vertical-align: baseline
+  background: #aaaaaa
+  color: white
+  padding: 1px 9px 2px
+  -webkit-border-radius: 9px
+  -moz-border-radius: 9px
+  border-radius: 9px
 
 /* Customer Card
 .customer-card
@@ -362,6 +375,8 @@ a.customer-card:hover
           font-size: 125%
         &:hover
           background: #bbb
+        .badge
+          float: right
       &.active a
         background: #f2f2f2
         -webkit-border-top-right-radius: 0px
@@ -408,8 +423,21 @@ a.customer-card:hover
 table.products
   .product-actions
     visibility: hidden
-  tbody tr:hover .product-actions
-    visibility: visible
+  thead
+    th.variants
+      text-align: center
+  tbody 
+    tr:hover .product-actions
+      visibility: visible
+    td
+      padding: 0.5em
+    .image-container
+      float: left
+      height: 50px
+      margin-right: 1em
+      width: 50px
+    td.variants
+      text-align: center
 
 #product_available
   margin: 0px
@@ -482,14 +510,7 @@ table
     .actions .button
       visibility: hidden
       opacity: 0
-      /* -moz-transition: opacity 0.25s ease-in
-
       -webkit-transition: opacity 0.25s ease-in
-    /* &:hover td.available .text
-    /*   visibility: hidden
-    /*  opacity: 0
-      /* -moz-transition: opacity 0.25s ease-in
-
       -webkit-transition: opacity 0.25s ease-in
       height: 0
     &:hover

@@ -7,8 +7,10 @@ module Breeze
     # Variants should not be valid unless they have an option for each proprty of their parent product.
     class AllOptionsFilledValidator < ActiveModel::Validator
       def validate(variant)
-        variant.product.properties.each do |property|
-          variant.errors[:base] << "Must have a value for " + property.name unless variant.option_for_property(property)
+        if variant.product
+          variant.product.properties.each do |property|
+            variant.errors[:base] << "Must have a value for " + property.name unless variant.option_for_property(property)
+          end
         end
       end
     end
@@ -39,8 +41,9 @@ module Breeze
       scope :available, where(:available => true)
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
+      scope :with_option, lambda { |option| where(option_ids: option.id) }
 
-      validates_presence_of :name, :sku_code, :cost_price_cents, :sell_price_cents
+      validates_presence_of :product_id, :name, :sku_code, :cost_price_cents, :sell_price_cents
       validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator
 
@@ -48,7 +51,7 @@ module Breeze
       def image
         if read_attribute(:image) 
           read_attribute(:image) 
-        elsif product.images.first
+        elsif product && product.images.first
           product.images.first.file
         else
           nil
@@ -94,6 +97,8 @@ module Breeze
       def option_for_property(property)
         self.options.select{|o| o.property == property}.first || nil
       end
+
+
       
     end
     

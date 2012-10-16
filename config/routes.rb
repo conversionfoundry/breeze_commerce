@@ -65,6 +65,11 @@ Breeze::Engine.routes.draw do
     # TODO: There should be no index access here. Customers should only be allowed to manage their own accounts
     resources :customers 
     
+    # TODO: Only need index here
+    resources :variants do
+      get 'filter', :on => :collection
+    end
+
     # TODO: Not sure why this wasn't here. It needs to work with the normal Breeze hierarchy.
     # resources :products
      

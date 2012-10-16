@@ -7,8 +7,8 @@ module Breeze
       has_and_belongs_to_many :variant, :class_name => "Breeze::Commerce::Variant"
       
       attr_accessible :name
-      field name      
-      validates_presence_of :name
+      field :name      
+      validates_presence_of :name, :property_id
       
     end
   end

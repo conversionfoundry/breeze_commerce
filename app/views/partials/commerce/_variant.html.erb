@@ -1,4 +1,8 @@
-<%= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id do %>
+<% classes = 'variant' %>
+<% classes += ' ' + variant.options.map{|c| c.name.downcase.underscore}.join(' ') %>
+<% classes += ' first' if variant_counter == 0 %>
+<% classes += ' last' if variant_counter == variant_count - 1 %>
+<%= content_tag :tr, :class => classes, :id => "variant_#{variant.id}", :"data-id" => variant.id do %>
   <td class="image">
     <%= image_tag variant.image.url(:thumbnail) unless variant.image.blank? %>
   </td>

@@ -1,0 +1,70 @@
+# Show a form as a dialog, with OK and Cancel buttons
+# TODO: Make this into a jQuery method
+# TODO: Pass a function to use in open for any further form set-up e.g. TextBoxList for properties
+dialogForm = (id, title, data) ->
+  $("<div id=\"" + id + "\"></div>").html(data).dialog
+    title: title
+    modal: true
+    width: 512
+    resizable: false
+    open: ->
+      $("input", this)[0].focus()
+    close: ->
+      $(this).remove()
+    buttons:
+      Cancel: ->
+        $(this).dialog "close"
+      OK: ->
+        $("form", this)[0].submit()
+
+# Categories
+$(".new.category.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "category-details", "New Category", data
+  e.preventDefault()
+$(".categories .category-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "category-details", "Edit Category", data
+  e.preventDefault()
+
+# Products
+$(".new.product_image.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "product_image-details", "New Product Image", data
+  e.preventDefault()
+
+# Product Relationships
+$(".new.relationship.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "relationship-details", "New Product Relationship", data
+  e.preventDefault()
+$(".relationships .relationship-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "relationship-details", "Edit Product Relationship", data
+  e.preventDefault()
+
+# Shipping Methods
+$(".new.shipping_method.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "shipping_method-details", "New Shipping Method", data
+  e.preventDefault()
+$("table.shipping_methods td.actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "shipping_method-details", "Edit Shipping Method", data
+  e.preventDefault()
+$('fieldset.shipping_method_types input[name=shipping_method_type]').live "click", (e) ->
+	if $(this).val() == 'breeze/commerce/threshold_shipping_method'
+		$('#threshold_shipping_method-details').slideDown()
+	else
+		$('#threshold_shipping_method-details').slideUp()	
+
+# Variants
+$(".new.variant.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "variant-details", "New Variant", data
+  e.preventDefault()
+$(".variants .variant-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "variant-details", "Edit Variant", data
+  e.preventDefault()
+

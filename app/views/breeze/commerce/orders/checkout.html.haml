@@ -1,8 +1,4 @@
 - content_for :head do
-  =# javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-  = javascript_include_tag "breeze/jquery.validate.min.js"
-  = javascript_include_tag "breeze/checkout"
-  %script{:src => "http://jzaefferer.github.com/jquery-validation/jquery.validate.js", :type => "text/javascript"}
   :javascript
     $(document).ready(function(){
       $("#new_customer").validate({

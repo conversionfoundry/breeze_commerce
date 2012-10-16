@@ -1,8 +1,7 @@
 - content_for :head do
   = stylesheet_link_tag "breeze/marquess/marquess.css"
-  = javascript_include_tag "breeze/marquess/marquess.js"
   = stylesheet_link_tag "breeze/uploadify/uploadify.css"
-  = javascript_include_tag "breeze/uploadify/swfobject.js", "breeze/uploadify/uploadify.js"
+  =# javascript_include_tag "breeze/uploadify/swfobject.js", "breeze/uploadify/uploadify.js"
 
 = breeze_form_for @product, :as => :product, :url => url do |form|
   .actions

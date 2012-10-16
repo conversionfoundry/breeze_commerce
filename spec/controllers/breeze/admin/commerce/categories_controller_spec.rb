@@ -9,18 +9,18 @@ describe Breeze::Admin::Commerce::CategoriesController do
     sign_in @admin # Using factory girl as an example
   end
 
-	describe 'GET #index' do
-		it "populates an array of categories" do
-			category = create(:category)
-			# controller.stub(:current_user){ double'User' }
-			# Breeze::Commerce::Category.stub_chain(:where, :order_by, :paginate) { [category] }
-    binding.pry
-			get controller.index
-      response.should be_success
+	# describe 'GET #index' do
+	# 	it "populates an array of categories" do
+	# 		category = create(:category)
+	# 		# controller.stub(:current_user){ double'User' }
+	# 		# Breeze::Commerce::Category.stub_chain(:where, :order_by, :paginate) { [category] }
+ #    binding.pry
+	# 		get controller.index
+ #      response.should be_success
 
-			assigns(:categories).should eq [category]
-		end
-		it "renders the :index view"
-	end
+	# 		assigns(:categories).should eq [category]
+	# 	end
+	# 	it "renders the :index view"
+	# end
 	
 end

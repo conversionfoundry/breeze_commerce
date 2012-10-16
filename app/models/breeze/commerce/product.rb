@@ -1,6 +1,5 @@
 module Breeze
   module Commerce
-
     class Product < Breeze::Content::Page
       attr_accessible :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived
 
@@ -19,7 +18,7 @@ module Breeze
 
       scope :archived, where(:archived => true)
       scope :available, where(:available => true)
-      scope :in_category, lambda { |category| where(:category_ids => category.id) }
+      scope :in_category, lambda { |category| where(category_ids: category.id) }
       scope :published, where(:available => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       scope :unavailable, where(:available.in => [ false, nil ])
@@ -27,14 +26,6 @@ module Breeze
       validates_associated :variants
 
       before_save :regenerate_permalink!
-
-      # def all_variants_must_be_valid
-      #   variants.each do |variant|
-      #     unless variant.valid?
-      #       errors[:variants] << "Variant " + variant.name + " is missing a value."
-      #     end
-      #   end
-      # end
 
       def related_products
         product_relationship_children.collect{|relationship| relationship.child_product}
@@ -63,8 +54,16 @@ module Breeze
         (self.discounted_sell_price_cents || 0) / 100.0
       end
       
-      def display_price
+      def display_price_min
         variants.map{|v| v.display_price}.min
+      end
+
+      def display_price_max
+        variants.map{|v| v.display_price}.max
+      end
+
+      def display_price
+        display_price_min
       end
 
       def has_line_items?
@@ -97,9 +96,5 @@ module Breeze
 
 
     end
-
-
-
-
   end
 end
