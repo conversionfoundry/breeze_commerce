@@ -43,7 +43,7 @@ module Breeze
       scope :unarchived, where(:archived.in => [ false, nil ])
       scope :with_option, lambda { |option| where(option_ids: option.id) }
 
-      validates_presence_of :product_id, :name, :sku_code, :cost_price_cents, :sell_price_cents
+      validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
       validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator
 
