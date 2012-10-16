@@ -1,9 +1,9 @@
 %tr.line_item{:id => line_item.id}
   %td.item
-    = image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image
-    %h4= line_item.variant.name
-    %br
-    = line_item.variant.blurb
+    = image_tag line_item.variant.image.url(:thumbnail), class: 'thumbnail' if line_item.variant.image
+    %p.product_name= line_item.product.title
+    %h4.variant_name= line_item.variant.name
+    %p.variant_blurb= line_item.variant.blurb
   %td.price
     - if line_item.variant.discounted
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
