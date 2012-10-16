@@ -21,11 +21,11 @@
   <div class="price">
     <% if product.variants.count > 1 %>
       From
-      <%= number_to_currency(product.display_price_min, :locale => :nz) %><span class="currency">NZD</span>
+      <%= number_to_currency(product.display_price_min, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
       to
-      <%= number_to_currency(product.display_price_max, :locale => :nz) %><span class="currency">NZD</span>
+      <%= number_to_currency(product.display_price_max, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
     <% else %>
-      <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency">NZD</span>
+      <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
     <% end %>
   </div>
   <div class="actions">

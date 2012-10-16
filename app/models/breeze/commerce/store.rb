@@ -3,7 +3,7 @@ module Breeze
     class Store
       include Mongoid::Document
 
-      attr_accessible :home_page_id, :allow_returning_customer_login
+      attr_accessible :home_page_id, :allow_returning_customer_login, :currency
 
       belongs_to :home_page, :class_name => "Breeze::Content::Page"
       has_many :categories, :class_name => "Breeze::Commerce::Category"
@@ -14,6 +14,7 @@ module Breeze
       has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
 
       field :allow_returning_customer_login, type: Boolean, default: true
+      field :currency, default: 'NZD'
 
       # Set up built-in order statuses
       # In future we may provide the option to create custom order statuses for stores, but we need some standard built-in ones to work with.

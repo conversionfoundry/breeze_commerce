@@ -14,10 +14,19 @@
     = variant.sku_code
   %td.price
     - if variant.discounted
-      %span.old_price= number_to_currency(variant.sell_price, :locale => :nz)
-      %span.discounted_price.current_price= number_to_currency(variant.discounted_sell_price, :locale => :nz)
+      %span.old_price
+        = number_to_currency(variant.sell_price, :locale => :nz)
+      %span.currency 
+        = store.currency
+      %span.discounted_price.current_price
+        = number_to_currency(variant.discounted_sell_price, :locale => :nz)
+      %span.currency 
+        = store.currency
     - else
-      %span.current_price= number_to_currency(variant.sell_price, :locale => :nz)
+      %span.current_price
+        = number_to_currency(variant.sell_price, :locale => :nz)
+      %span.currency 
+        = store.currency
   - variant.product.properties.each do |property|
     - if variant.option_for_property(property)
       %td

@@ -87,7 +87,7 @@ module Breeze
       end
 
       def to_s
-        '$' + total.to_s + ' ' + created_at.to_s
+        '$' + total.to_s + store.currency + ' ' + created_at.to_s
       end
 
       def show_in_admin?

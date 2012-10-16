@@ -20,6 +20,8 @@
         = form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => order.id, :class => 'shipping_status status', :label => false}
       %td.amount
         = number_to_currency(order.total, :locale => :nz)
+        %span.currency
+          = store.currency
       %td.actions
         %p.order-actions
           = link_to "Details", admin_store_order_path(order), :remote => true, :class => "small black disclosure button"

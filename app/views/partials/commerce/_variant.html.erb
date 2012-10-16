@@ -12,9 +12,9 @@
   </td>
   <td class="price">
     <% if variant.discounted %>
-      <span class="old_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span> <span class="discounted_price current_price"><%= number_to_currency(variant.discounted_sell_price, :locale => :nz) %></span>
+      <span class="old_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span><span class="currency"><%= variant.product.store.currency %></span> <span class="discounted_price current_price"><%= number_to_currency(variant.discounted_sell_price, :locale => :nz) %></span><span class="currency"><%= variant.product.store.currency %></span>
     <% else %>
-      <span class="current_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span>
+      <span class="current_price"><%= number_to_currency(variant.sell_price, :locale => :nz) %></span><span class="currency"><%= variant.product.store.currency %></span>
     <% end %>
   </td>
   <td class="actions">
