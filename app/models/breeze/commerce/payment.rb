@@ -2,7 +2,8 @@ module Breeze
   module Commerce
     class Payment < Breeze::PayOnline::Payment
 
-      attr_accessible :archived
+      attr_accessible :archived, :name, :email, :amount, :reference, :currency
+
 
       field :archived, type: Boolean, default: false
 

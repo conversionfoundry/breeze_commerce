@@ -102,9 +102,15 @@ module Breeze
           @order.save
 
           
-          # Do payment with PxPay
-          # TODO: Not sure what reference should be yet
-          @payment = Breeze::Commerce::Payment.new(:name => @order.name, :email=> @order.email, :amount => @order.total, :reference => @order.id)
+          # Process payment with PxPay
+          @payment = Breeze::Commerce::Payment.new(
+            name:       @order.name, 
+            email:      @order.email, 
+            amount:     @order.total, 
+            reference:  @order.id, 
+            currency:   store.currency 
+          )
+          binding.pry
           if @payment.save and redirectable?
             redirect_to @payment.redirect_url and return
           else
@@ -141,7 +147,7 @@ module Breeze
         @payment.save
 
         @order = @payment.order
-        @order.payment_completed = true # TODO: This should be redundant when we have a relation between a orders and payments
+        @order.payment_completed = true # TODO: This should be redundant when we have a relation between orders and payments
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
         @order.save
 
