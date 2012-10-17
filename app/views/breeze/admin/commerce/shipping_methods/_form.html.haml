@@ -12,8 +12,8 @@
 
   #shipping_method-details
     = form.fieldset do
-      = form.text_field :name, :required => true, :label => "Name"
-      = form.text_field :description, :required => false, :label => "Description"
+      = form.text_field :name, :required => true, :label => "Name", :placeholder => 'e.g. Standard Shipping'
+      = form.text_field :description, :required => false, :label => "Description", :placeholder => 'e.g. $5 airmail to anywhere in the world'
       = form.number_field :price, required: true, label: 'Price', before: '$', step: 0.01
 
   #threshold_shipping_method-details{style: 'display: none'}

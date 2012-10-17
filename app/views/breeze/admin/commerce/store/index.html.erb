@@ -7,7 +7,7 @@
         <div id="products" class="box col3">
           <h2>Your products</h2>
           <table class="at-a-glance">
-            <%= at_a_glance store.products.published.count, "public product(s)", admin_store_products_path + "#tab_published" %>
+            <%= at_a_glance store.products.unarchived.available.count, "public product(s)", admin_store_products_path + "#tab_published" %>
             <%= at_a_glance store.customers.count, "registered customers", admin_store_products_path + "#tab_published" %>
             <%# at_a_glance store.products.pending.count, "product(s) scheduled for publication", admin_blog_posts_path + "#tab_pending" %>
             <%# at_a_glance blog.posts.draft.count, "draft(s)", admin_blog_posts_path + "#tab_draft" %>

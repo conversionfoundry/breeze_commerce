@@ -10,7 +10,7 @@
         .states
           = link_to "All (#{store.products.count})", admin_store_products_path
           |
-          \#{link_to "Published (#{store.products.published.count})", admin_store_products_path}
+          \#{link_to "Available (#{store.products.unarchived.available.count})", admin_store_products_path}
       = will_paginate @products
       = render :partial => "breeze/admin/commerce/products/products", :locals => { :products => @products.paginate(:page => params[:page], :per_page => 10) }
 = content_for :left do
