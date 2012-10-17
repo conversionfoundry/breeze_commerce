@@ -1,7 +1,7 @@
 module Breeze
   module Commerce
     class Product < Breeze::Content::Page
-      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived
+      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived, :parent_id
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_and_belongs_to_many :categories, :class_name => "Breeze::Commerce::Category"
