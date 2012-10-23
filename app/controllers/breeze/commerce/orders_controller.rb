@@ -28,6 +28,7 @@ module Breeze
         end
       end
 
+      # TODO: Is this method still used?
       def remove_item
         @order = current_order(session)
         line_item = @order.line_items.find(params[:id])
@@ -71,7 +72,6 @@ module Breeze
         
         # @order = store.orders.build params[:order]
         @order.update_attributes params[:order]
-        
 
         if customer_signed_in?
           @order.customer = current_store_customer
@@ -88,6 +88,7 @@ module Breeze
           )
           new_customer.shipping_address = Breeze::Commerce::Address.new params[:order][:shipping_address]
           new_customer.billing_address = Breeze::Commerce::Address.new params[:order][:billing_address]
+
           # TODO: Move this code out of the controller somehow
           if new_customer.save
             # set the order's customer
@@ -110,7 +111,6 @@ module Breeze
             reference:  @order.id, 
             currency:   store.currency 
           )
-          binding.pry
           if @payment.save and redirectable?
             redirect_to @payment.redirect_url and return
           else
