@@ -98,6 +98,16 @@ module Breeze
         self.options.select{|o| o.property == property}.first || nil
       end
 
+      def number_of_sales
+        count = 0
+        line_items.unarchived.each do | line_item|
+          if line_item.order && line_item.order.payment_completed?  # Line Item should always have an order, but occasionally the dev data gets screwed up
+            count += line_item.quantity
+          end
+        end
+        count
+      end
+
 
       
     end
