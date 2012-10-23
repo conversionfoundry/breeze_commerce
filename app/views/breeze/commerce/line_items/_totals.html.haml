@@ -1,3 +1,4 @@
+- store = Breeze::Commerce::Store.first
 %tr.subtotal
   %td
   %td Subtotal:
@@ -5,22 +6,20 @@
   %td.total
     %span.amount
       = number_to_currency @order.item_total
-    %span.currency NZD
+    %span.currency
+      = store.currency
 %tr.shipping
   %td
   %td
     Shipping:
   %td
-    - shipping_methods = Breeze::Commerce::Store.first.shipping_methods.unarchived
+    - shipping_methods = store.shipping_methods.unarchived
     - if shipping_methods.count > 1
       - shipping_methods.each do |shipping_method|
         %label.radio
           = form.radio_button :shipping_method_id, shipping_method.id, :checked => shipping_method == @order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }
           %h4
             = shipping_method.name
-            %span.amount
-              = number_to_currency shipping_method.price(@order)
-            %span.currency NZD
           %p.description
             = shipping_method.description
     - elsif shipping_methods.count == 1
@@ -35,7 +34,8 @@
   %td.total
     %span.amount
       = number_to_currency @order.shipping_total
-    %span.currency NZD
+    %span.currency
+      = store.currency
 %tr.total
   %td
   %td Total cost:
@@ -43,4 +43,5 @@
   %td.total
     %span.amount
       = number_to_currency @order.total
-    %span.currency NZD
+    %span.currency
+      = store.currency

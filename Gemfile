@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec # Dependencies are defined in the .gemspec file
 
-gem "breeze", :github => 'isaacfreeman/breeze', :branch => 'master' # Local breeze is in ~/dev/breeze
+gem "breeze", :github => 'isaacfreeman/breeze', :branch => '1.0.x' # Local breeze is in ~/dev/breeze
 
 group :test, :development do
   gem "breeze_account", :path => '~/dev/breeze_account'

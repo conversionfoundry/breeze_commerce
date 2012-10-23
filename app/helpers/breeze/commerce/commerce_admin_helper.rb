@@ -4,14 +4,18 @@ module Breeze
       def commerce_menu
         content_tag :ul, [
           commerce_menu_item("Store overview", admin_store_root_path),
-          commerce_menu_item("Orders", breeze.admin_store_orders_path),
-          commerce_menu_item("Customers", breeze.admin_store_customers_path),
-          commerce_menu_item("Products", breeze.admin_store_products_path),
-          commerce_menu_item("Categories", breeze.admin_store_categories_path),
-          commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path),
+          commerce_menu_item("Orders " + badge( store.orders.unarchived.count ), breeze.admin_store_orders_path),
+          commerce_menu_item("Customers " + badge( store.customers.unarchived.count ), breeze.admin_store_customers_path),
+          commerce_menu_item("Products " + badge( store.products.unarchived.count ), breeze.admin_store_products_path),
+          commerce_menu_item("Categories " + badge( store.categories.count ), breeze.admin_store_categories_path),
+          commerce_menu_item("Shipping Methods " + badge( store.shipping_methods.unarchived.count ), breeze.admin_store_shipping_methods_path),
           # commerce_menu_item("Coupons", breeze.admin_store_coupons_path),
           commerce_menu_item("Settings", breeze.admin_store_settings_path)
         ].join.html_safe, :class => :actions
+      end
+
+      def badge text
+        content_tag :span, text, class: 'badge'
       end
 
       def commerce_menu_item(name, path, options = {})

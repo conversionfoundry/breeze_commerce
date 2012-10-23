@@ -1,3 +1,4 @@
+<%# TODO: Move to shared? %>
 <%= pane_layout do |left| %>
   <% left.header do %>
     <h2>Commerce</h2>
@@ -10,5 +11,5 @@
 <% content_for :head do %>
   <%# stylesheet_link_tag "breeze/blog.css" %>
   <%= stylesheet_link_tag "breeze/store.css", "breeze/multi-select.css" %>
-  <%= javascript_include_tag "breeze/store.js", "breeze/jquery.multi-select.js" %>
+  <%= javascript_include_tag "breeze/commerce" %>
 <% end %>

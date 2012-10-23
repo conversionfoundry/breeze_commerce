@@ -2,6 +2,74 @@
 /* TODO: Rename to commerce_admin.sass
 /* TODO: Eventually, most of this should be standardised and migrate to the Breeze admin styles
 
+/* Mixins
+@mixin border-radius ($radii) 
+  -webkit-border-radius: $radii
+  -khtml-border-radius: $radii
+  -moz-border-radius: $radii
+  border-radius: $radii
+
+@mixin border-top-left-radius($radii) 
+  -webkit-border-top-left-radius: $radii
+  -khtml-border-radius-topleft: $radii
+  -moz-border-top-left-radius: $radii
+  -moz-border-radius-topleft: $radii
+  border-top-left-radius: $radii
+
+
+@mixin border-top-right-radius($radii) 
+  -webkit-border-top-right-radius: $radii
+  -khtml-border-radius-topright: $radii
+  -moz-border-top-right-radius: $radii
+  -moz-border-radius-topright: $radii
+  border-top-right-radius: $radii
+
+
+@mixin border-bottom-left-radius($radii) 
+  -webkit-border-bottom-left-radius: $radii
+  -khtml-border-radius-bottomleft: $radii
+  -moz-border-bottom-left-radius: $radii
+  -moz-border-radius-bottomleft: $radii
+  border-bottom-left-radius: $radii
+
+
+@mixin border-bottom-right-radius($radii) 
+  -webkit-border-bottom-right-radius: $radii
+  -khtml-border-radius-bottomright: $radii
+  -moz-border-bottom-right-radius: $radii
+  -moz-border-radius-bottomright: $radii
+  border-bottom-right-radius: $radii
+
+
+@mixin border-top-radius($radii) 
+  @include border-top-left-radius($radii)
+  @include border-top-right-radius($radii)
+
+
+@mixin border-right-radius($radii) 
+  @include border-top-right-radius($radii)
+  @include border-bottom-right-radius($radii)
+
+
+@mixin border-bottom-radius($radii) 
+  @include border-bottom-left-radius($radii)
+  @include border-bottom-right-radius($radii)
+
+
+@mixin border-left-radius($radii) 
+  @include border-top-left-radius($radii)
+  @include border-bottom-left-radius($radii)
+
+@mixin box-shadow
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+
+@mixin box-shadow-a
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+
 /* Bulk actions
 .container .with-selected
   position: absolute
@@ -9,8 +77,7 @@
   top: -32px
   background: #ffc
   padding: 4px 8px
-  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px
-  -webkit-border-radius: 4px
+  @include box-shadow
   &:after
     content: "."
     text-indent: -2em
@@ -31,14 +98,24 @@
   text-decoration: line-through
 .discounted_price
   color: red
+.badge
+  font-size: 11.844px
+  font-weight: bold
+  line-height: 14px
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
+  white-space: nowrap
+  vertical-align: baseline
+  background: #aaaaaa
+  color: white
+  padding: 1px 9px 2px
+  @include border-radius(9px)
+
 
 /* Customer Card
 .customer-card
   background: white
   border: solid 1px #eeeeee
-  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
-  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
-  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  @include box-shadow
   color: #444444
   display: block
   float: left
@@ -73,9 +150,9 @@ a.customer-card:hover
     float: left
     margin: 8px
     padding: 8px
-    background: #eee
-    -webkit-border-radius: 8px
-    -webkit-box-shadow: inset rgba(0, 0, 0, 0.25) 0px 1px 4px
+    background: white
+    @include border-radius(8px)
+    @include box-shadow
   .col1
     width: 96px
   .col2
@@ -124,10 +201,7 @@ a.customer-card:hover
 
 #order-details
   background: white url(image-path("breeze/paper_bg.jpg")) 0 0 repeat
-  /* border: solid 1px #eeeeee
-  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
-  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
-  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  @include box-shadow
   margin: 2em
   .section
     float: left
@@ -232,9 +306,7 @@ a.customer-card:hover
       float: left
       ol.status
         border: dashed 4px #cccccc
-        -webkit-border-radius: 1em
-        -moz-border-radius: 1em
-        border-radius: 1em
+        @include border-radius(1em)
         margin: 2em
         padding: 1em 2em 2em 2em
         .description
@@ -289,12 +361,8 @@ a.customer-card:hover
     li.payment
       background: white
       border: solid 1px #eeeeee
-      -webkit-border-radius: 4px
-      -moz-border-radius: 4px
-      border-radius: 4px
-      -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
-      -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
-      box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+      @include border-radius(4px)
+      @include box-shadow
       float: left
       list-style: none
       margin-bottom: 1em
@@ -353,20 +421,17 @@ a.customer-card:hover
         padding: 8px
         color: #222
         text-decoration: none
-        -webkit-border-radius: 4px
-        -moz-border-radius: 4px
-        -webkit-border-top-right-radius: 0px
-        -webkit-border-bottom-right-radius: 0px
+        @include border-left-radius(4px)
         strong
           display: block
           font-size: 125%
         &:hover
           background: #bbb
+        .badge
+          float: right
       &.active a
         background: #f2f2f2
-        -webkit-border-top-right-radius: 0px
-        -webkit-border-bottom-right-radius: 0px
-        -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px
+        @include box-shadow
       small
         position: absolute
         right: 0.5em
@@ -380,9 +445,7 @@ a.customer-card:hover
         background: #ec008c
         color: white
         font-size: 1.0em
-        -webkit-border-radius: 0.75em
-        -moz-border-radius: 0.75em
-        -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px -1px 1px, rgba(255, 255, 255, 0.5) 0px 1px 1px
+        @include border-radius(0.75em)
       &.active small
         margin-right: 8px
 
@@ -395,21 +458,50 @@ a.customer-card:hover
 #edit_product #main-tabs-content, #product_new #main-tabs-content
   position: relative
 
-#edit_product .well
-  background: #dddddd
-  border: solid 1px #cccccc
-  float: left
-  margin-bottom: 1em
-  width: 100%
-  -webkit-border-radius: 8px
-  -moz-border-radius: 8px
-  -khtml-border-radius: 8px
+
+#edit_product
+  .container
+    .new.button
+      float: right
+      margin: 12px
+    table
+      background: white
+  .container#product-images
+    ul#product_images
+      @include border-radius(8px)
+      background: #dddddd
+      border: solid 1px #cccccc
+      clear: both
+      margin-bottom: 1em
+      padding: 1em
+    li.product_image
+      cursor: move
+      list-style: none
+      float: left
+      margin-right: 1em
+  #product-variants
+    td.missing_value
+      background: yellow
+
 
 table.products
   .product-actions
     visibility: hidden
-  tbody tr:hover .product-actions
-    visibility: visible
+  thead
+    th.variants
+      text-align: center
+  tbody 
+    tr:hover .product-actions
+      visibility: visible
+    td
+      padding: 0.5em
+    .image-container
+      float: left
+      height: 50px
+      margin-right: 1em
+      width: 50px
+    td.variants
+      text-align: center
 
 #product_available
   margin: 0px
@@ -434,8 +526,7 @@ table.products
 .available-toggle
   background-image: url(image-path("breeze/yes-no-toggle.png"))
   background-repeat: no-repeat
-  -webkit-border-radius: 4px
-  -moz-border-radius: 4px
+  @include border-radius(4px)
   width: 114px
   height: 28px
   margin: 0px 0px 8px
@@ -470,7 +561,7 @@ fieldset.product-categories
       margin: 0px 0px 1px
       background: #ccc
       padding: 4px
-      -webkit-border-radius: 4px
+      @include border-radius(4px)
 
 table
   &.categories tr.category td
@@ -482,16 +573,7 @@ table
     .actions .button
       visibility: hidden
       opacity: 0
-      /* -moz-transition: opacity 0.25s ease-in
-
       -webkit-transition: opacity 0.25s ease-in
-    /* &:hover td.available .text
-    /*   visibility: hidden
-    /*  opacity: 0
-      /* -moz-transition: opacity 0.25s ease-in
-
-      -webkit-transition: opacity 0.25s ease-in
-      height: 0
     &:hover
       .actions .button, td.available .field
         visibility: visible
@@ -523,18 +605,7 @@ table
 #product-edit img.feature
   float: left
 
-#product-properties,
-#product-variants,
-#product-relationships
-  .new.button
-    float: right
-    margin: 12px
-  table
-    background: white
 
-#product-variants
-  td.missing_value
-    background: yellow
 
 
 /* Variants
@@ -613,6 +684,19 @@ h1 .new
 .new.contextual.disabled
   background-color: #6A952F
 
+/* Properties
+table.properties 
+  tr.property 
+    td
+      padding: 0.5em
+      .option
+        background: #999999
+        color: white
+        @include border-radius(0.25em)
+        line-height: 2em
+        margin: 0 0.5em 0.5em 0
+        padding: 0.25em 0.5em
+
 /* Post tags 
 .textboxlist 
   font-size: 11px
@@ -651,9 +735,7 @@ h1 .new
   position: relative
   line-height: 18px
   padding: 0 5px !important
-  -moz-border-radius: 3px
-  -webkit-border-radius: 3px
-  border-radius: 3px
+  @include border-radius(3px)
   border: 1px solid #CAD8F3
   background: #DEE7F8
   cursor: default
@@ -696,9 +778,7 @@ h1 .new
   opacity: 0.9
   filter: alpha(opacity=90)
   background: #eee
-  -webkit-box-shadow: 0 3px 3px #ccc
-  -moz-box-shadow: 0 3px 3px #ccc
-  box-shadow: 0 3px 3px #ccc
+  @include box-shadow
   border: 1px solid #999
   border-top: none
   display: none
@@ -729,8 +809,7 @@ h1 .new
   div.actions
     background: #cccccc
     border: 1px solid #aaaaaa
-    -webkit-border-radius: 4px
-    -moz-border-radius: 4px
+    @include border-radius(4px)
     float: right
     width: 223px 
     padding: 8px 8px 0 8px
@@ -749,6 +828,7 @@ h1 .new
 
 table.shipping_methods
   .shipping_method
+    cursor: move
     .default
       font-style: italic
       color: #aaaaaa

@@ -7,6 +7,7 @@
       %h1
         Shipping Methods
       = will_paginate @shipping_methods
-      = render :partial => "breeze/admin/commerce/shipping_methods/shipping_methods", :object => @shipping_methods
+      #shipping_methods
+        = render :partial => "breeze/admin/commerce/shipping_methods/shipping_methods", :object => @shipping_methods
 - content_for :left do
   = render :partial => "breeze/admin/commerce/commerce/left"

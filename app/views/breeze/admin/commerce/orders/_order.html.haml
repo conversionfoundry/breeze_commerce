@@ -18,10 +18,12 @@
       = order.shipping_address.to_html if order.shipping_address
       .status
         = form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => order.id, :class => 'shipping_status status', :label => false}
-      %td.amount
-        = number_to_currency(order.total, :locale => :nz)
-      %td.actions
-        %p.order-actions
-          = link_to "Details", admin_store_order_path(order), :remote => true, :class => "small black disclosure button"
-          = link_to "Edit", edit_admin_store_order_path(order), :class => "small black button"
-          = link_to "Delete", admin_store_order_path(order, :format => :js), :method => :delete, :remote => true, :class => "small red delete button"
+    %td.amount
+      = number_to_currency(order.total, :locale => :nz)
+      %span.currency
+        = store.currency
+    %td.actions
+      %p.order-actions
+        =# link_to "Details", admin_store_order_path(order), :remote => true, :class => "small black disclosure button"
+        = link_to "Edit", edit_admin_store_order_path(order), :class => "small black button"
+        = link_to "Delete", admin_store_order_path(order, :format => :js), :method => :delete, :remote => true, :class => "small red delete button"

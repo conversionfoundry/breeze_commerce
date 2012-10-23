@@ -1,8 +1,4 @@
 - content_for :head do
-  =# javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
-  = javascript_include_tag "breeze/jquery.validate.min.js"
-  = javascript_include_tag "breeze/checkout"
-  %script{:src => "http://jzaefferer.github.com/jquery-validation/jquery.validate.js", :type => "text/javascript"}
   :javascript
     $(document).ready(function(){
       $("#new_customer").validate({
@@ -96,15 +92,17 @@
                         Password
                         %span.required *
                       = form.password_field :password
-                      = form.submit "Sign in", :class => "btn"
+                      = form.submit "Sign in", :class => "btn btn-primary", :id => 'button-sign_in'
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-1b" do
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
         .checkout-summary
           .form-actions
-            = link_to '#', :class => "btn", :id => "edit-sign-in" do
-              %span.title Edit Sign In
+            - if customer_signed_in?
+              = link_to 'Sign Out', breeze.destroy_store_customer_session_path, id: 'sign-out', :class => 'btn'
+            - else
+              = link_to 'Edit Sign In', '#', :class => "btn", :id => "edit-sign-in"
           .summary
             - if customer_signed_in?
               %p

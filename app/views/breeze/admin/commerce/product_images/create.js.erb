@@ -1,0 +1,8 @@
+<% if @product_image.errors.empty? %>
+  $('ul#product_images li.empty').remove();
+  $('<%= escape_javascript render(:partial => "/breeze/admin/commerce/product_images/product_image", :object => @product_image) %>').appendTo('ul#product_images').effect("highlight", { color: "#ffffc0" }, 3000);
+  $('#product_image-details').dialog('close');
+<% else %>
+  $('#product_image-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/product_images/new") %>');
+<% end %>
+

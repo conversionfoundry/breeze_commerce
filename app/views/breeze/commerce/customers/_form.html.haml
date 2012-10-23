@@ -1,0 +1,102 @@
+= form_for @customer, :as => :customer, :url => url do |form|
+  %h1
+    Your Profile
+  = render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer
+  #customer-details
+    %fieldset.customer_identity
+      = form.label :first_name
+      = form.text_field :first_name, :required => true
+      = form.label :last_name
+      = form.text_field :last_name, :required => true
+      = form.label :email
+      = form.text_field :email, :required => true
+      = form.label :password
+      = form.password_field :password
+      = form.label :password_confirmation
+      = form.password_field :password_confirmation
+    .customer_addresses
+      = form.fields_for :shipping_address, @customer.shipping_address do |ship_form|
+        %fieldset.address-shipping.address
+          %legend Shipping Address
+          %ol#customer_shipping_address.form
+            %li.name
+              = ship_form.label :name do |label|
+                Name:
+                %span.required *
+              = ship_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'
+            %li.address
+              = ship_form.label :address do |label|
+                Address
+                %span.required *
+              = ship_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
+            %li
+              = ship_form.label :city do |label|
+                City
+                %span.required *
+              = ship_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
+            %li.state
+              = ship_form.label :state do |label|
+                State, Province or Region
+                %span.optional (optional)
+              = ship_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
+            = ship_form.label :postcode do |label|
+              Postcode
+              %span.optional (optional)
+            = ship_form.text_field :postcode, :class => 'input-small'
+            = image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode", :placeholder => '8011'
+            %li
+              = ship_form.label :country do |label|
+                Country
+                %span.required *
+              = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
+            %li
+              = ship_form.label :phone do |label|
+                Contact Phone Number
+                %span.optional (optional)
+              = ship_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+      = form.fields_for :billing_address, @customer.billing_address do |bill_form|
+        %fieldset.address-billing.address
+          %legend Billing Address
+          %ol#customer_billing_address.form
+            %li.name
+              = bill_form.label :name do |label|
+                Name:
+                %span.required *
+              = bill_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'
+            %li.address
+              = bill_form.label :address do |label|
+                Address
+                %span.required *
+              = bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
+            %li
+              = bill_form.label :city do |label|
+                City
+                %span.required *
+              = bill_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
+            %li.state
+              = bill_form.label :state do |label|
+                State, Province or Region
+                %span.optional (optional)
+              = bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
+            = bill_form.label :postcode do |label|
+              Postcode
+              %span.optional (optional)
+            = bill_form.text_field :postcode, :class => 'input-small'
+            = image_tag "breeze/help.png", :id => "postcode-help", :title => "Postcode", :placeholder => '8011'
+            %li
+              = bill_form.label :country do |label|
+                Country
+                %span.required *
+              = bill_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
+            %li
+              = bill_form.label :phone do |label|
+                Contact Phone Number
+                %span.optional (optional)
+              = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+  .form-actions
+    .btn-group
+      = link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do
+        %i.icon-arrow-left
+        %span.title Continue Shopping
+      = submit_tag "Save", :class => "btn btn-primary"
+      = link_to "Delete", breeze.customer_path(@customer, :format => :js), :method => :delete, :remote => true, :class => "btn" unless @customer.new_record?

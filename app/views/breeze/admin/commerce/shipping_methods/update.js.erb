@@ -1,0 +1,7 @@
+<% if @shipping_method.errors.empty? %>
+  $('#shipping_methods').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/shipping_methods/shipping_methods", :object => @shipping_methods) %>');
+  $('#shipping_method-details').dialog('close');
+<% else %>
+  $('#shipping_method-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/shipping_methods/edit") %>');
+<% end %>
+

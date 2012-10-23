@@ -1,4 +1,4 @@
-<table class="fancy contextual variants">
+<table class="variants">
   <thead>
     <tr>
       <th class="image first"></th>
@@ -8,8 +8,8 @@
     </tr>
   </thead>
   <tbody>
-    <% if product.variants.available.any? %>
-      <%= render :partial => "/partials/commerce/variant", :collection => product.variants.available %>
+    <% if variants.any? %>
+      <%= render :partial => "/partials/commerce/variant", :collection => variants, :locals => {:variant_count => variants.count} %>
     <% else %>
       <tr><td class="empty" colspan="5">There are no variants available for this product.</td></tr>
     <% end %>

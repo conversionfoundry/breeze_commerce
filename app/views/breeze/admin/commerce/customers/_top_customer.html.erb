@@ -4,7 +4,7 @@
     <%= top_customer.name %>
   </td>
   <td class="last-order">
-    <%= number_to_currency top_customer.order_total %> <span class="currency">NZD</span>
+    <%= number_to_currency top_customer.order_total %> <span class="currency"><%= top_customer.store.currency %></span>
   </td>
 
 <% end %>

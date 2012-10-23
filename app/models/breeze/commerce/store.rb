@@ -3,29 +3,20 @@ module Breeze
     class Store
       include Mongoid::Document
 
-      field :allow_returning_customer_login, :type => Boolean
-
-      has_many :categories, :class_name => "Breeze::Commerce::Category"
-      has_many :products, :class_name => "Breeze::Commerce::Product"
-      has_many :customers, :class_name => "Breeze::Commerce::Customer"
-      has_many :orders, :class_name => "Breeze::Commerce::Order"
-      has_many :order_statuses, :class_name => "Breeze::Commerce::OrderStatus"
-      has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
+      attr_accessible :home_page_id, :allow_returning_customer_login, :currency
 
       belongs_to :home_page, :class_name => "Breeze::Content::Page"
+      has_many :categories, :class_name => "Breeze::Commerce::Category"
+      has_many :customers, :class_name => "Breeze::Commerce::Customer"
+      has_many :order_statuses, :class_name => "Breeze::Commerce::OrderStatus"
+      has_many :orders, :class_name => "Breeze::Commerce::Order"
+      has_many :products, :class_name => "Breeze::Commerce::Product"
+      has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
+      belongs_to :default_shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
 
-      # after_create :set_up_order_statuses
 
-      # def self.create
-      #   Breeze::Commerce::Store.transaction do
-      #     super(*args)
-      #     set_up_order_statuses
-      #   end
-      # end
-
-      # def home_page
-      #   read_attribute(:home_page) || Breeze::Content::Page.root.first
-      # end
+      field :allow_returning_customer_login, type: Boolean, default: true
+      field :currency, default: 'NZD'
 
       # Set up built-in order statuses
       # In future we may provide the option to create custom order statuses for stores, but we need some standard built-in ones to work with.

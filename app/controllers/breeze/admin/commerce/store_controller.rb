@@ -13,6 +13,8 @@ module Breeze
 
         def index
           @top_customers = store.customers.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
+          @top_products = Breeze::Commerce::Product.all.sort_by { |order| order.number_of_sales }.reverse.paginate :page => 1, :per_page => 10
+          @ready_orders = store.orders.unarchived.ready.paginate :page => 1, :per_page => 10
         end
         
         def settings
@@ -24,6 +26,15 @@ module Breeze
             end
           end
         end
+
+        # TODO: Use update for this kind of method
+        def set_default_shipping_method
+          @shipping_method = store.shipping_methods.find params[:shipping_method]
+          store.default_shipping_method = @shipping_method
+          store.save
+          @shipping_methods = store.shipping_methods.unarchived
+        end
+
       end
     end
   end
