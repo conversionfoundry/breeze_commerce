@@ -5,9 +5,10 @@ Breeze::Engine.routes.draw do
       root :to => "store#index"
       
       controller :store do
-        post :setup_default
-        get :settings
-        put :settings     
+        post  :setup_default
+        post  :set_default_shipping_method
+        get   :settings
+        put   :settings     
       end
   
       resources :products do
@@ -15,10 +16,13 @@ Breeze::Engine.routes.draw do
           resources :variant_images
         end
         resources :properties
-        resources :product_images
+        resources :product_images do
+          put :reorder, :on => :collection
+        end
         resources :product_relationships
         put       :mass_update, :on => :collection
         delete    :mass_destroy, :on => :collection
+        post      :set_default_image, :on => :member
       end
 
       resources :orders do
@@ -29,18 +33,15 @@ Breeze::Engine.routes.draw do
       end
 
       resources :categories do
-        collection do
-          put :reorder
-        end
-
-      end    
+        put :reorder, :on => :collection
+      end
 
       resources :coupons
 
       resources :customers
 
       resources :shipping_methods do
-        post :make_default, :on => :member
+        put :reorder, :on => :collection
       end
   
     end
@@ -52,6 +53,9 @@ Breeze::Engine.routes.draw do
   end
 
   scope :module => "commerce" do        
+
+    # resources :products # TODO: Only need index here
+    get 'store/products', :to => 'products#index', as: 'products'
 
     resources :orders do
       resources :line_items
