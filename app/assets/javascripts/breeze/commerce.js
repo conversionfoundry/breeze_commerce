@@ -1,6 +1,7 @@
 /*
  *= require jquery.min
  *= require jquery-ui
+ *= require jquery_ujs
  *= require ./jquery.multi-select
  *= require ./bootstrap.min
  *= require ./galleria/galleria-1.2.7.min
