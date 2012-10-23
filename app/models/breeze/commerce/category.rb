@@ -27,6 +27,7 @@ module Breeze
       protected
 
       def regenerate_permalink!
+        self.slug = name.downcase.gsub(/[^a-z0-9\-]+/, '-')
         self.permalink = "/#{slug}" unless slug.blank?
       end
     end
