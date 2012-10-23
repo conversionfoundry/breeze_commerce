@@ -21,6 +21,8 @@
       No price yet.
   %td.available
     = product.available ? 'Available' : 'Not Available'
+  %td.last_update
+    = product.last_update
   %td.actions.last
     %p.product-actions
       = link_to "View", product.permalink, :target => :_blank, :class => "small black button"
