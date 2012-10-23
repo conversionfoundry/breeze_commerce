@@ -50,6 +50,14 @@ module Breeze
           end
         end
         
+        # TODO: Merge with update
+        def set_default_image
+          @product = store.products.find params[:id]
+          @product_image = @product.images.find params[:product_image]
+          @product.default_image = @product_image
+          @product.save
+        end
+
         def mass_destroy
           @products = store.products.find params[:product_ids]
           @products.each do |product|
