@@ -30,11 +30,16 @@ module Breeze
           @variant = product.variants.find params[:id]
           # TODO: Use accepts_nested_attributes_for in the model to tidy this up
           if params[:options]
+            @variant.options = []
             params[:options].each do |property, option_id|
               @variant.options << Breeze::Commerce::Option.find(option_id)
             end
           end
-          @variant.update_attributes(params[:variant])
+          if @variant.update_attributes(params[:variant])
+            redirect_to edit_admin_store_product_path(product)
+          else
+            render :action => "edit"
+          end
         end
 
         def destroy
