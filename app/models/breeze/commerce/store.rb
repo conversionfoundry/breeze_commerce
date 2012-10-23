@@ -12,6 +12,8 @@ module Breeze
       has_many :orders, :class_name => "Breeze::Commerce::Order"
       has_many :products, :class_name => "Breeze::Commerce::Product"
       has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
+      belongs_to :default_shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
+
 
       field :allow_returning_customer_login, type: Boolean, default: true
       field :currency, default: 'NZD'

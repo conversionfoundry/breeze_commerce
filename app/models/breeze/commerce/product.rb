@@ -1,12 +1,15 @@
 module Breeze
   module Commerce
     class Product < Breeze::Content::Page
-      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived, :parent_id
+      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived, :parent_id, :options
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_and_belongs_to_many :categories, :class_name => "Breeze::Commerce::Category"
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
+
       has_many :images, :class_name => "Breeze::Commerce::ProductImage"
+      belongs_to :default_image, :class_name => "Breeze::Commerce::ProductImage"
+      
       has_many :product_relationship_children, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :parent_product
       has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
       has_many :variants, :class_name => "Breeze::Commerce::Variant"
@@ -26,6 +29,10 @@ module Breeze
       validates_associated :variants
 
       before_save :regenerate_permalink!
+
+      def name
+        title
+      end
 
       def related_products
         product_relationship_children.collect{|relationship| relationship.child_product}
@@ -66,10 +73,20 @@ module Breeze
         display_price_min
       end
 
-      def has_line_items?
-        # variants.each do |v|
-          
-        # false
+      def last_update
+        if updated_at.to_date == Time.zone.now.to_date
+          updated_at.strftime('%l:%M %p') # e.g. 3:52 PM
+        else
+          updated_at.strftime('%A %d %B %Y, %l:%M %p') # e.g. 3:52 PM
+        end
+      end
+
+      def number_of_sales
+        count = 0
+        variants.unarchived.each do | variant|
+          count += variant.number_of_sales
+        end
+        count
       end
 
       # Override the normal page hierarchy, so that products always appear as children of the root page.

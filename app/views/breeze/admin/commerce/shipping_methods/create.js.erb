@@ -1,0 +1,8 @@
+<% if @shipping_method.errors.empty? %>
+  $('.shipping_methods tbody tr.empty').remove();
+  $('.shipping_methods tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/shipping_methods/shipping_method", locals: {shipping_method: @shipping_method, shipping_methods_count: @shipping_methods.count} ) %>');
+  $('#shipping_method-details').dialog('close');
+<% else %>
+  $('#shipping_method-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/shipping_methods/new") %>');
+<% end %>
+
