@@ -2,6 +2,8 @@ module Breeze
   module Admin
     module Commerce
       class ProductRelationshipsController < Breeze::Admin::Commerce::Controller
+        respond_to :html, :js
+
         def new
           @product = product
           @products = store.products.unarchived.where(:_id.ne => product.id)#.where(:_id.nin => product.related_product_ids)
