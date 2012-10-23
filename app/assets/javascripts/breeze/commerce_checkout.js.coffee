@@ -23,9 +23,9 @@ $(document).ready ->
             line_item:
               quantity: 1
           success: (result) ->
-            eval_ result
+            eval result
           error: (result) ->
-            eval_ result
+            eval result
     else
       # Update the line item
       $.ajax
@@ -38,9 +38,9 @@ $(document).ready ->
           line_item:
             quantity: $(this).val()
         success: (result) ->
-          eval_ result
+          eval result
         error: (result) ->
-          eval_ result
+          eval result
 
   # Update the order immediately when shipping method changes in the cart
   $(".radio-shipping_method").change ->
@@ -54,9 +54,9 @@ $(document).ready ->
         order:
           shipping_method: $(this).val()
       success: (result) ->
-        eval_ result
+        eval result
       error: (result) ->
-        eval_ result
+        eval result
 
 
 
@@ -71,7 +71,6 @@ $(document).ready ->
   
   # Step 1 - Sign In 
   
-  # Show/hide password field for returning customers
   
   # Step 2 - Shipping 
   
@@ -145,7 +144,13 @@ $(document).ready ->
     # Hide all but first panel
     $(panels.slice(1).join()).children(".checkout-body").hide()
     $(panels.join()).children(".checkout-summary").hide()
+  
+  # Show/hide password field for returning customers
   $("#returning_customer").change ->
+    if @checked 
+      $('#continue-1b').hide()
+    else
+      $('#continue-1b').show()
     $("li#returning_customer_password").slideToggle @checked
 
   $("#continue-1a").click (event) ->
