@@ -1,4 +1,7 @@
-= form_for [@image.product, @image], url: breeze.admin_store_product_product_images_path(@product), :html => {:multipart => true} do |form|
-  =# form.error_messages
-  = form.file_field :file
-  = form.hidden_field :file_cache
+= form_for [@product_image.product, @product_image], url: breeze.admin_store_product_product_images_path(@product), :html => {:multipart => true}, remote: true do |form|
+  = render "/breeze/admin/shared/error_messages", :target => @product_image, :object_name => :product_image
+  %fieldset
+    %ol.form
+      = form.hidden_field :product_id
+      = form.file_field :file
+      =# form.hidden_field :file_cache
