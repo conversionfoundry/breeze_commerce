@@ -2,6 +2,7 @@ module Breeze
   module Commerce
     class CustomerLoginForm < Breeze::Content::Item
       
+      attr_accessible :title
       field :title, :markdown => false
 
       include Breeze::Content::Mixins::Placeable

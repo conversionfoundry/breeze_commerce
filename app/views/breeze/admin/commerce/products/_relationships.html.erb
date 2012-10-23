@@ -1,28 +1,35 @@
 <div class="relationships-container container">
-  <%= link_to "New relationship...", new_admin_store_product_product_relationship_path(@product), :class => "large new relationship button" %>
-  <h2>Related Products</h2>
-  <table class="fancy relationships">
-    <thead>
-      <tr>
-        <th class="first"></th>
-        <th>Relationship</th>
-        <th>Other Product</th>
-        <th></th>
-        <th class="last" style="">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @product.related_products.any? %>
-        <%= render :partial => "breeze/admin/commerce/products/relationship", :collection => @product.product_relationship_children %>
-      <% else %>
-        <tr class="empty"><td class="empty" colspan="5">There are no relationships for this product.</td></tr>
-      <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-      </tr>
-    </tfoot>
-  </table>
+  <% if store.products.unarchived.count < 2 %>
+    <h2>Related Products</h2>
+    <p class="empty">
+        When you have more than one product in your store, you'll be able to set related products here.
+    </p>
+  <% else %>
+    <%= link_to "New relationship...", new_admin_store_product_product_relationship_path(@product), :class => "large new relationship button" %>
+    <h2>Related Products</h2>
+    <table class="fancy relationships">
+      <thead>
+        <tr>
+          <th class="first"></th>
+          <th>Relationship</th>
+          <th>Other Product</th>
+          <th></th>
+          <th class="last" style="">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @product.related_products.any? %>
+          <%= render :partial => "breeze/admin/commerce/products/relationship", :collection => @product.product_relationship_children %>
+        <% else %>
+          <tr class="empty"><td class="empty" colspan="5">There are no relationships for this product.</td></tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr>
+        </tr>
+      </tfoot>
+    </table>
+  <% end %>
 </div>
 
 

@@ -4,7 +4,8 @@
   %td.total
     %span.amount
       = number_to_currency @order.item_total
-    %span.currency NZD
+    %span.currency 
+      = store.currency
 %tr.shipping
   %td
   %td.label
@@ -24,7 +25,8 @@
   %td.total
     %span.amount
       = number_to_currency @order.shipping_total
-    %span.currency NZD
+    %span.currency 
+      = store.currency
 %tr.total
   %td
   %td Total cost:
@@ -32,5 +34,6 @@
   %td.total
     %span.amount
       = number_to_currency @order.total
-    %span.currency NZD
+    %span.currency 
+      = store.currency
   %td

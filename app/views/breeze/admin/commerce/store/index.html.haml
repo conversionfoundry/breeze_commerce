@@ -1,0 +1,24 @@
+- content_for :title, "Store Overview"
+= pane_layout do |panes|
+  = panes.inner do
+    = scrollable_layout do
+      #store_dashboard
+        #products.box.col3
+          %h2 Your products
+          %table.at-a-glance
+            = at_a_glance store.products.unarchived.available.count, "public product(s)", admin_store_products_path + "#tab_published"
+            = at_a_glance store.customers.count, "registered customers", admin_store_products_path + "#tab_published"
+          %p/
+        #orders-ready.box.col3
+          %h2 Orders to process
+          .hint
+            Paid orders that haven't been shipped yet.
+          = render :partial => "breeze/admin/commerce/orders/ready_orders", :locals => { :orders => @ready_orders }
+        #top.box.col3
+          %h2 Top Selling Products
+          = render partial: 'breeze/admin/commerce/products/top_sellers', locals: { products: @top_products }
+          %h2 Top Customers
+          = render :partial => "breeze/admin/commerce/customers/top_customers", :locals => { :customers => @top_customers }
+
+- content_for :left do
+  = render :partial => "breeze/admin/commerce/commerce/left"

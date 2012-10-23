@@ -4,8 +4,9 @@ module Breeze
       include Mongoid::Document
       include Mongoid::Timestamps
       
+      attr_accessible :email, :personal_message, :comment, :archived, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id
       field :email
-      field :subscribe, :type => Boolean
+      # field :subscribe, :type => Boolean
       field :personal_message
       field :comment
       field :payment_completed
@@ -26,6 +27,7 @@ module Breeze
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
+      scope :ready, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").last )
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
@@ -86,7 +88,7 @@ module Breeze
       end
 
       def to_s
-        '$' + total.to_s + ' ' + created_at.to_s
+        '$' + total.to_s + store.currency + ' ' + created_at.to_s
       end
 
       def show_in_admin?
@@ -99,8 +101,6 @@ module Breeze
       protected
 
       def set_initial_order_statuses 
-          # self.billing_status ||= Breeze::Commerce::OrderStatus.where(:store => store, :type => :billing, :name => 'Browsing').first
-          # binding.pry
           self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default(store)
           self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default(store)
           self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(:store => store, :is_default => true).first

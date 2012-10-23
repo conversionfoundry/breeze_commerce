@@ -3,12 +3,11 @@ module Breeze
     class Category
       include Mongoid::Document
       include Breeze::Content::Mixins::Permalinks
-
+      
+      attr_accessible :name, :sort, :position
       field :name
       field :sort
-      # field :products_per_page, :type => Integer
       field :position, :type => Integer
-      # field :available, :type => Boolean
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :categories
       has_and_belongs_to_many :products, :class_name => "Breeze::Commerce::Product"
@@ -28,6 +27,7 @@ module Breeze
       protected
 
       def regenerate_permalink!
+        self.slug = name.downcase.gsub(/[^a-z0-9\-]+/, '-')
         self.permalink = "/#{slug}" unless slug.blank?
       end
     end

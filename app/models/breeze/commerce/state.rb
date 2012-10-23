@@ -1,9 +1,9 @@
-module Breeze
-  module Commerce
-    class State
-      include Mongoid::Document
+# module Breeze
+#   module Commerce
+#     class State
+#       include Mongoid::Document
       
-      field :name
-    end
-  end
-end
+#       field :name
+#     end
+#   end
+# end

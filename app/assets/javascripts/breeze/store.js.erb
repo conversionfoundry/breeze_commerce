@@ -1,28 +1,4 @@
-// Show a form as a dialog, with OK and Cancel buttons
-// TODO: Make this into a jQuery method
-// TODO: Pass a function to use in open for any further form set-up e.g. TextBoxList for properties
-function dialogForm(id, title, data) {
-  $('<div id="' + id + '"></div>').html(data).dialog({
-    title: title,
-    modal: true,
-    width: 512,
-    resizable: false,
-    open: function() {
-      $('input', this)[0].focus();
-      // $('.uploadable', this).make_uploadable();
-    },
-    close: function() {
-      $(this).remove();
-    },
-    buttons: {
-      Cancel: function() { $(this).dialog('close'); },
-      OK: function() {
-        $('form', this).submit();
-      }
-    }
-  });
-}
-
+// TODO: Move these functions over to commerce_admin.js.coffee.erb
 $(function() {
 
   // Insert the toggle switch for product availability
@@ -155,92 +131,8 @@ $(function() {
     e.preventDefault();
   });
 
-  // $('table.sortable tbody').sortable({
-  //   update: function(e, ui) {
-  //       $.ajax({
-  //         url: '/admin/store/categories/reorder.js',
-  //         type: 'post',
-  //         data: '_method=put&' + $(this).sortable('serialize')
-  //       });
-  //     }
-  // });
-
   $('.filters a').live('click', function(e) {
     $.get(this.href);
-    e.preventDefault();
-  });
-
-  $('.new.product_image.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('product_image-details', 'New Product Image', data);
-    });
-    e.preventDefault();
-  });
-
-  $('.new.variant.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('variant-details', 'New Variant', data);
-    });
-    e.preventDefault();
-  });
-  
-  $('.variants .variant-actions .edit.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('variant-details', 'Edit Variant', data);
-    });
-    e.preventDefault();
-  });
-
-  $('.new.property.button, .properties .property-actions .edit.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      $('<div id="property-details"></div>').html(data).dialog({
-        title: 'Property',
-        modal: true,
-        width: 512,
-        resizable: false,
-        open: function() {
-          $('input', this)[0].focus();
-          new $.TextboxList('#property_option_names');
-        },
-        close: function() {
-          $(this).remove();
-        },
-        buttons: {
-          Cancel: function() { $(this).dialog('close'); },
-          OK: function() {
-            $('form', this).submit();
-          }
-        }
-      });
-    });
-    e.preventDefault();
-  });
-
-  $('.new.relationship.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('relationship-details', 'New Product Relationship', data);
-    });
-    e.preventDefault();
-  });
-
-  $('.relationships .relationship-actions .edit.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('relationship-details', 'Edit Product Relationship', data);
-    });
-    e.preventDefault();
-  });
-
-  $('.new.category.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('category-details', 'New Category', data);
-    });
-    e.preventDefault();
-  });
-
-  $('.categories .category-actions .edit.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      dialogForm('category-details', 'Edit Category', data);
-    });
     e.preventDefault();
   });
 

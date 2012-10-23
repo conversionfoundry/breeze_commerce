@@ -5,7 +5,7 @@
     <%= relationship.kind.humanize.downcase %>
   </td>
   <td>
-    <%= relationship.child_product.title %>
+    <%= relationship.child_product.title if relationship.child_product %>
   </td>
   <td>
   </td>

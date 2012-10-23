@@ -1,0 +1,19 @@
+.orders-container.container
+  %table.fancy.contextual.orders
+    %thead
+      %tr
+        %th.order-number.first= link_to "Order Number", :sort => "order_number"
+        %th.customer= link_to "Customer", :sort => "name"
+        %th.amount= link_to "Amount", :sort => "total"
+        %th.actions.last Actions
+    %tbody
+      - if orders.any?
+        = render :partial => "breeze/admin/commerce/orders/ready_order", :collection => orders
+      - else
+        %tr
+          %td.empty{:colspan => "4"} There are no orders to show here.
+    %tfoot
+      %tr
+        %td{colspan: '4'}
+
+          = link_to 'See all orders', breeze.admin_store_orders_path

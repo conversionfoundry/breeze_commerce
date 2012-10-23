@@ -3,10 +3,8 @@
   <head>
     <title><%= page.title if page %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "breeze/commerce" %>
     <%= javascript_include_tag "breeze/commerce" %>
-
-    <%= javascript_include_tag "breeze/galleria/galleria-1.2.7.min" %>
+    <%= stylesheet_link_tag "breeze/commerce" %>
     <%= stylesheet_link_tag 'breeze/galleria/themes/classic/galleria.classic.css' %>
     <script type="text/javascript">
       $(document).ready(function() {
@@ -64,7 +62,6 @@
 
       <%= breadcrumb %>
 
-
       <div class="row product-header">
         <div class="span12">
           <%= render :partial => "partials/commerce/minicart", :locals => {title: 'Minicart', order: current_order(session)} %>
@@ -100,18 +97,17 @@
           
         <%# This region is intended for placeable elements that describe the product. Note that the short product description is not used on this page, only on lists and checkout. %>
         <%= region :product_info %>
-                   
-        <%= content_tag :ul, :class => "variants" do %>
-          <%= render :partial => "/partials/commerce/variants", :locals=>{:product => page} %>
-        <% end %>
-        
-        
-    <% else %>
-      <p>The product you are looking for was not found.<p>
-    <% end %>
+
+        <div id="variants">
+          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: page.variants.unarchived.available } %>
+        </div>
+     
+      <% else %>
+        <p>The product you are looking for was not found.<p>
+      <% end %>
 
 
-  </div>
+    </div>
     
   </body>
 </html>

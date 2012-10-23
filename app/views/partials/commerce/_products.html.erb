@@ -1,11 +1,44 @@
-<%= content_tag :ul, :class => "products hfeed " + classes do %>
+<% if @product_list.list_type == 'category' %>
+  <% classes = 'categories' %>
+  <% @product_list.categories.each{ |category| classes += ' category-' + category.slug } %>
+<% elsif @product_list.list_type == 'related' %>
+  <% classes = "related_products related_to-#{@product_list.product.slug}" %>
+<% end %>
 
-	<% if products.any? %>
+<%= content_tag :div, :class => "products hfeed " + classes do %>
+
+	<% if @product_list.title %>
+		<h3><%= @product_list.title %></h3>
+	<% end %>
+
+	<% if @products.any? %>
+		<%= will_paginate @products, params: { controller: "/breeze/commerce/products", action: "index", product_list_id: @product_list.id } %>
 	  <%= content_tag :ul, :class => "products hfeed" do %>
-	    <%= render :partial => "/partials/commerce/product", :collection => products, :locals => {:product_count => products.count} %>
+	    <%= render :partial => "/partials/commerce/product", :collection => @products, :locals => {:product_count => @products.count} %>
 	  <% end %>
 	<% else %>
 	  <p>There are no products to display.</p>
 	<% end %>
 
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+   	$('.pagination a').attr('data-remote', 'true');
+      
+   //  $('div.pagination a').live('click', function(event) {
+   //  	// page_number = $(this).attr("href").split('=')[1] // TODO: need a more robust way to get the page number for the link
+   //   //  console.log( $(this).attr("href") );
+			// $(".pagination a").click(function() {
+   //      $.ajax({
+   //        type: "GET",
+   //        url: $(this).attr("href"),
+   //        dataType: "script"
+   //      });
+   //      return false;
+	  //   });
+   //    event.preventDefault();
+   //  });
+
+  });
+</script>

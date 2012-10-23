@@ -2,7 +2,8 @@
   Payment of
   %span.amount
     = number_to_currency payment.amount, :locale => :nz
-    %span.currency NZD
+    %span.currency
+      = store.currency
   - if payment.succeeded
     made 
   - else

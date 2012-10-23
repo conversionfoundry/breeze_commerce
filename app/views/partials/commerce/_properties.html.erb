@@ -1,0 +1,36 @@
+<ul class="properties">
+  <% properties = product.properties %>
+  <% if properties.any? %>
+    <%= render :partial => "/partials/commerce/property", :collection => properties, :locals => {:property_count => properties.count} %>
+  <% else %>
+    <li class="empty">There are no properties for this product.</li>
+  <% end %>
+</ul>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // When a property is selected, send the current set of properties to filters
+    $('ul.options input[type=radio]').live('click', function(e) { 
+      product_id = '<%= product.id %>';
+
+      // Get all checked options. Should be one per property.
+      option_ids = []
+      $('ul.options input[type=radio]:checked').each(function(index) {
+        option_ids.push( $(this).val() );
+      });
+
+      // Send to variants#filter
+      $.ajax({
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        url: '/variants/filter',
+        dataType: "html",
+        type: "GET",
+        data: { product_id: product_id, option_ids: option_ids },
+        success: function(result) { eval(result); },
+        error: function(result) { eval(result); }
+      });
+
+      // Results are updated by the view for the filter method
+    });
+  });
+</script>

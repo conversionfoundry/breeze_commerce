@@ -1,18 +1,25 @@
 %tr.line_item{:id => line_item.id}
   %td.item
-    = image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image
-    %h4= line_item.variant.name
-    %br
-    = line_item.variant.blurb
+    = image_tag line_item.variant.image.url(:thumbnail), class: 'thumbnail' if line_item.variant.image
+    %p.product_name= line_item.product.title
+    %h4.variant_name= line_item.variant.name
+    %p.variant_blurb= line_item.variant.blurb
   %td.price
     - if line_item.variant.discounted
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
+      %span.currency
+        = line_item.variant.product.store.currency
       %span.discounted_price.current_price= number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
+      %span.currency
+        = line_item.variant.product.store.currency
     - else
       %span.current_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
+      %span.currency
+        = line_item.variant.product.store.currency
   %td.actions
     = line_item_fields.text_field :quantity, class: 'input-mini line_item-quantity', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }
     = link_to 'Remove', breeze.order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "btn btn-mini remove"
   %td.total
     = number_to_currency line_item.amount
-    %span.currency NZD
+    %span.currency
+      = line_item.variant.product.store.currency

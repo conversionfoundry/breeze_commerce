@@ -17,5 +17,9 @@
           = form.select :home_page_id, Breeze::Content::Page.all.to_a.sort.map {|p|[ p.title, p.id ] }, { :required => true, :label => "Store home page"}
         = form.fieldset :legend => "Returning Customer Login" do
           = form.check_box :allow_returning_customer_login, :label => "Allow returning customers to log in?"
+        = form.fieldset :legend => "Currency" do
+          =# form.text_field :currency, :required => true, :label => "Currency"
+          = form.select :currency, [['New Zealand Dollars', 'NZD'], ['Australian Dollars', 'AUD']], :required => true
+
 
 

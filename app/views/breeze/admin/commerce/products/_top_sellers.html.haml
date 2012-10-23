@@ -1,0 +1,15 @@
+.products-container.container
+  %table.products
+    %thead
+      %tr
+        %th{:style => ""} Name
+        %th{:style => ""} Sales
+    %tbody
+      - if products.any?
+        = render :partial => "breeze/admin/commerce/products/top_seller", :collection => products
+      - else
+        %tr
+          %td.empty{:colspan => "2"} There are no products to show here.
+    %tfoot
+      %tr
+        %td{:colspan => "2"}  
