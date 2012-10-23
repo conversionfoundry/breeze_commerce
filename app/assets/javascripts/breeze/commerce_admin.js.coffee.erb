@@ -1,7 +1,6 @@
 # Show a form as a dialog, with OK and Cancel buttons
-# TODO: Make this into a jQuery method
-# TODO: Pass a function to use in open for any further form set-up e.g. TextBoxList for properties
-dialogForm = (id, title, data) ->
+# TODO: Make this into a jQuery function
+dialogForm = (id, title, data, method, setup_function = null) ->
   $("<div id=\"" + id + "\"></div>").html(data).dialog
     title: title
     modal: true
@@ -9,49 +8,116 @@ dialogForm = (id, title, data) ->
     resizable: false
     open: ->
       $("input", this)[0].focus()
+      setup_function() if setup_function
     close: ->
       $(this).remove()
     buttons:
-      Cancel: ->
-        $(this).dialog "close"
-      OK: ->
-        $("form", this)[0].submit()
+      Cancel: 
+        text: 'Cancel'
+        class: 'cancel'
+        click: ->
+          $(this).dialog "close"
+      OK:
+        text: 'Save'
+        class: 'save'
+        click: ->
+          # Get form data
+          form = $(this).children('form')
+          form_url = form.attr('action')
+          form_data = form.serializeObject()
+          # Send form
+          $.ajax
+            beforeSend: (xhr) ->
+              xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+            url: form_url
+            dataType: "html"
+            type: method
+            data: form_data
+            success: (result) ->
+              eval result
+            error: (result) ->
+              eval result
+
+# In some cases (e.g. product_images and variants (which also have images) we can't use AJAX submissions
+dialogFormSynchronous = (id, title, data, setup_function = null) ->
+  $("<div id=\"" + id + "\"></div>").html(data).dialog
+    title: title
+    modal: true
+    width: 512
+    resizable: false
+    open: ->
+      $("input", this)[0].focus()
+      setup_function() if setup_function
+    close: ->
+      $(this).remove()
+    buttons:
+      Cancel: 
+        text: 'Cancel'
+        class: 'cancel'
+        click: ->
+          $(this).dialog "close"
+      OK:
+        text: 'Save'
+        class: 'save'
+        click: ->
+          form = $(this).children('form')
+          form.submit()
+
+
+# Used to serialize form data as JSON
+jQuery.fn.serializeObject = ->
+  arrayData = @serializeArray()
+  objectData = {}
+  $.each arrayData, ->
+    if @value?
+      value = @value
+    else
+      value = ''
+    if objectData[@name]?
+      unless objectData[@name].push
+        objectData[@name] = [objectData[@name]]
+      objectData[@name].push value
+    else
+      objectData[@name] = value
+  return objectData
 
 # Categories
 $(".new.category.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "category-details", "New Category", data
+    dialogForm "category-details", "New Category", data, 'POST'
   e.preventDefault()
 $(".categories .category-actions .edit.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "category-details", "Edit Category", data
+    dialogForm "category-details", "Edit Category", data, 'PUT'
   e.preventDefault()
 
-# Products
+# Product Images
+# n.b. We can't upload images through javascript, so we have to do a normal form.submit
 $(".new.product_image.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "product_image-details", "New Product Image", data
+    dialogFormSynchronous "product_image-details", "New Product Image", data
   e.preventDefault()
 
 # Product Relationships
 $(".new.relationship.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "relationship-details", "New Product Relationship", data
+    dialogForm "relationship-details", "New Product Relationship", data, 'POST'
   e.preventDefault()
 $(".relationships .relationship-actions .edit.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "relationship-details", "Edit Product Relationship", data
+    dialogForm "relationship-details", "Edit Product Relationship", data, 'PUT'
   e.preventDefault()
 
 # Shipping Methods
 $(".new.shipping_method.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "shipping_method-details", "New Shipping Method", data
+    dialogForm "shipping_method-details", "New Shipping Method", data, 'POST'
   e.preventDefault()
 $("table.shipping_methods td.actions .edit.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "shipping_method-details", "Edit Shipping Method", data
+    dialogForm "shipping_method-details", "Edit Shipping Method", data, 'PUT'
   e.preventDefault()
+# Show/hide extra controls for shipping methods
 $('fieldset.shipping_method_types input[name=shipping_method_type]').live "click", (e) ->
 	if $(this).val() == 'breeze/commerce/threshold_shipping_method'
 		$('#threshold_shipping_method-details').slideDown()
@@ -61,10 +127,41 @@ $('fieldset.shipping_method_types input[name=shipping_method_type]').live "click
 # Variants
 $(".new.variant.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "variant-details", "New Variant", data
+    dialogFormSynchronous "variant-details", "New Variant", data
   e.preventDefault()
 $(".variants .variant-actions .edit.button").live "click", (e) ->
   $.get @href, (data) ->
-    dialogForm "variant-details", "Edit Variant", data
+    dialogFormSynchronous "variant-details", "Edit Variant", data
   e.preventDefault()
+
+# Properties
+$(".new.property.button").live "click", (e) ->
+  $.get @href, (data) ->
+    setup_function = =>
+      new $.TextboxList("#property_option_names")
+    dialogForm "property-details", "New Property", data, 'POST', setup_function
+  e.preventDefault()
+$(".properties .property-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    setup_function = =>
+      new $.TextboxList("#property_option_names")
+    dialogForm "property-details", "Edit Property", data, 'PUT', setup_function
+  e.preventDefault()
+
+
+
+
+
+# Drag-and-drop sorting
+$(document).ready ->
+  $("table.shipping_methods tbody").sortable update: (e, ui) ->
+    $.ajax
+      url: "/admin/store/shipping_methods/reorder.js"
+      type: "post"
+      data: "_method=put&" + $(this).sortable("serialize")
+  $("ul#product_images").sortable update: (e, ui) ->
+    $.ajax
+      url: "/admin/store/products/" + $(this).data('product_id') + "/product_images/reorder.js"
+      type: "post"
+      data: "_method=put&" + $(this).sortable("serialize")
 
