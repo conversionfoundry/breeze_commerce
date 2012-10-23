@@ -1,3 +1,4 @@
+// TODO: Move these functions over to commerce_admin.js.coffee.erb
 $(function() {
 
   // Insert the toggle switch for product availability
@@ -130,43 +131,8 @@ $(function() {
     e.preventDefault();
   });
 
-  // $('table.sortable tbody').sortable({
-  //   update: function(e, ui) {
-  //       $.ajax({
-  //         url: '/admin/store/categories/reorder.js',
-  //         type: 'post',
-  //         data: '_method=put&' + $(this).sortable('serialize')
-  //       });
-  //     }
-  // });
-
   $('.filters a').live('click', function(e) {
     $.get(this.href);
-    e.preventDefault();
-  });
-
-  $('.new.property.button, .properties .property-actions .edit.button').live('click', function(e) {
-    $.get(this.href, function(data) {
-      $('<div id="property-details"></div>').html(data).dialog({
-        title: 'Property',
-        modal: true,
-        width: 512,
-        resizable: false,
-        open: function() {
-          $('input', this)[0].focus();
-          new $.TextboxList('#property_option_names');
-        },
-        close: function() {
-          $(this).remove();
-        },
-        buttons: {
-          Cancel: function() { $(this).dialog('close'); },
-          OK: function() {
-            $('form', this).submit();
-          }
-        }
-      });
-    });
     e.preventDefault();
   });
 
