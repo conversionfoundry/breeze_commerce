@@ -1,7 +1,7 @@
 module Breeze
   module Commerce
     class Product < Breeze::Content::Page
-      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :available, :archived, :category_ids, :property_ids, :archived, :parent_id, :options
+      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :published, :archived, :category_ids, :property_ids, :archived, :parent_id, :options
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_and_belongs_to_many :categories, :class_name => "Breeze::Commerce::Category"
@@ -15,16 +15,15 @@ module Breeze
       has_many :variants, :class_name => "Breeze::Commerce::Variant"
 
       field :archived, type: Boolean, default: false
-      field :available, :type => Boolean
+      field :published, :type => Boolean, default: false
       field :show_in_navigation, :type => Boolean, :default => false
       field :teaser
 
       scope :archived, where(:archived => true)
-      scope :available, where(:available => true)
+      scope :published, where(:published => true)
       scope :in_category, lambda { |category| where(category_ids: category.id) }
-      scope :published, where(:available => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
-      scope :unavailable, where(:available.in => [ false, nil ])
+      scope :unpublished, where(:published.in => [ false, nil ])
 
       validates_associated :variants
 
@@ -87,6 +86,29 @@ module Breeze
           count += variant.number_of_sales
         end
         count
+      end
+
+      # Are any of the product's variants discounted?
+      def any_variants_discounted?
+        variants.unarchived.published.discounted.count > 0
+      end
+
+      # Are all of the product's variants discounted?
+      def all_variants_discounted?
+        variants.unarchived.published.discounted.count == variants.unarchived.published.count
+      end
+
+      # Are all the variants the same price?
+      def single_display_price?
+        price = nil
+        variants.unarchived.published.each do |variant|
+          if price
+            return false unless variant.display_price == price
+          else
+            price = variant.display_price
+          end
+        end
+        true
       end
 
       # Override the normal page hierarchy, so that products always appear as children of the root page.

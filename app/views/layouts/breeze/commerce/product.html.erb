@@ -100,7 +100,7 @@
         <%= region :product_info %>
 
         <div id="variants">
-          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: page.variants.unarchived.available } %>
+          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: page.variants.unarchived.published } %>
         </div>
      
       <% else %>

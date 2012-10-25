@@ -2,6 +2,9 @@
 <% classes += ' ' + product.categories.map{|c| c.slug}.join(' ') %>
 <% classes += ' first' if product_counter == 0 %>
 <% classes += ' last' if product_counter == product_count - 1 %>
+<% classes += ' product-some_variants_discounted' if product.any_variants_discounted? %>
+<% classes += ' product-all_variants_discounted' if product.all_variants_discounted? %>
+<% classes += ' product-single_display_price' if product.single_display_price? %>
 <%= content_tag :li, :class => classes, :id => "product_#{product.id}" do %>
 
   <div class="image">
@@ -19,13 +22,13 @@
     <p><%= product.teaser %></p>
   </div>
   <div class="price">
-    <% if product.variants.count > 1 %>
+    <% if product.single_display_price? %>
+      <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
+    <% else %>
       From
       <%= number_to_currency(product.display_price_min, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
       to
       <%= number_to_currency(product.display_price_max, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
-    <% else %>
-      <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
     <% end %>
   </div>
   <div class="actions">

@@ -11,7 +11,7 @@
 	</div>
 
 	<div id="list_type_related" class="list_type_option" style="display: none;">
-	 	<%= form.select :product_id, Breeze::Commerce::Store.first.products.available.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"} %>
+	 	<%= form.select :product_id, Breeze::Commerce::Store.first.products.published.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"} %>
 	  <p>The list will show items related to the selected product.</p>
 	</div>
 
@@ -22,29 +22,13 @@
 <script type="text/javascript" charset="utf-8">
 	  $(function() {
 
-    $('.multiselect').multiSelect(); // This causes a breakpoint for some reason
-    // Multiselect widget for categories
-	  
-	  // Multiselect widget by http://loudev.com
-	  // $('#content_category_ids').multiSelect({
-	  //   selectableHeader:'<h4>Available</h4>',
-	  //   selectedHeader:'<h4>Active</h4>'
-	  // });
-	  // $('#ms-content_category_ids').append("<div class='ms-actions btn-group'><button id='categories-select_all' class='btn'>select all</button><button id='categories-deselect_all' class='btn'>deselect all</button></div>");
-	  // $('#categories-select_all').click(function(){
-	  //   $('#content_category_ids').multiSelect('select_all');
-	  //   return false;
-	  // });
-	  // $('#categories-deselect_all').click(function(){
-	  //   $('#content_category_ids').multiSelect('deselect_all');
-	  //   return false;
-	  // });
+	    $('.multiselect').multiSelect();
 
-    $('#list_type_<%= @content.list_type %>').show();
+	    $('#list_type_<%= @content.list_type %>').show();
 
-    $('input.list_type').change(function(e) {
-    	$('.list_type_option').hide();
-			$( '#list_type_' + $(this).val() ).show();
+	    $('input.list_type').change(function(e) {
+	    	$('.list_type_option').hide();
+				$( '#list_type_' + $(this).val() ).show();
 		});
   });
 </script>
