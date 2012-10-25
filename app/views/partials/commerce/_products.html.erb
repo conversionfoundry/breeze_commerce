@@ -12,7 +12,7 @@
 	<% end %>
 
 	<% if @products.any? %>
-		<%= will_paginate @products, params: { controller: "/breeze/commerce/products", action: "index", product_list_id: @product_list.id } %>
+		<%#= will_paginate @products, params: { controller: "/breeze/commerce/products", action: "index", product_list_id: @product_list.id } %>
 	  <%= content_tag :ul, :class => "products hfeed" do %>
 	    <%= render :partial => "/partials/commerce/product", :collection => @products, :locals => {:product_count => @products.count} %>
 	  <% end %>
@@ -24,7 +24,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-   	$('.pagination a').attr('data-remote', 'true');
+   	// $('.pagination a').attr('data-remote', 'true');
       
    //  $('div.pagination a').live('click', function(event) {
    //  	// page_number = $(this).attr("href").split('=')[1] // TODO: need a more robust way to get the page number for the link
