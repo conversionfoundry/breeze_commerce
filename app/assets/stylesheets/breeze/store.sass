@@ -503,7 +503,7 @@ table.products
     td.variants
       text-align: center
 
-#product_available
+#product_published
   margin: 0px
   padding: 0px
   label
@@ -523,7 +523,7 @@ table.products
 
 
 
-.available-toggle
+.published-toggle
   background-image: url(image-path("breeze/yes-no-toggle.png"))
   background-repeat: no-repeat
   @include border-radius(4px)
@@ -531,54 +531,29 @@ table.products
   height: 28px
   margin: 0px 0px 8px
 
-#product-available .available-toggle
+#product-published .published-toggle
   float: right
 
-table
-  &.categories .available-toggle, &.variants .available-toggle
-    display: inline-block
-  &.categories input.category-available
-    display: none
 
-.fake-right-sidebar .product-categories label
-  float: none
-  width: auto
-  display: inline
 
-fieldset.product-categories
-  margin: 8px 0px
-  padding: 8px 0px 0px
-  legend
-    position: relative
-    top: 4px
-  ol.form
-    margin: 0px
-    width: 184px
-    /* max-height: 9em
+.product-edit .tab-pane, .product-new .tab-pane
+  /*  top: 0px !important
 
-    overflow-y: auto
-    li
-      margin: 0px 0px 1px
-      background: #ccc
-      padding: 4px
-      @include border-radius(4px)
+
+#product-edit img.feature
+  float: left
 
 table
-  &.categories tr.category td
-    padding: 4px 8px
-    &.name
-      font-size: 125%
-      font-weight: bold
   &.fancy tbody tr
     .actions .button
       visibility: hidden
       opacity: 0
       -webkit-transition: opacity 0.25s ease-in
     &:hover
-      .actions .button, td.available .field
+      .actions .button, td.published .field
         visibility: visible
         opacity: 1.0
-    td.available .text
+    td.published .text
       visibility: visible
       opacity: 1.0
     &.disabled:hover .actions .button
@@ -598,15 +573,66 @@ table
       visibility: visible
       opacity: 1.0
 
-.product-edit .tab-pane, .product-new .tab-pane
-  /*  top: 0px !important
+/* Categories Page
+table.categories 
+  .published-toggle, &.variants .published-toggle
+    display: inline-block
+  input.category-published
+    display: none
+  tr.category
+    td
+      padding: 4px 8px
+      &.name
+        font-size: 125%
+        font-weight: bold
+
+/* Product Categories
+fieldset.product-categories
+  margin: 8px 0px
+  padding: 8px 0px 0px
+  legend
+    position: relative
+    top: 4px
+  ol.form
+    margin: 0px
+    width: 184px
+    overflow-y: auto
+    li
+      margin: 0px 0px 1px
+      background: #ccc
+      padding: 4px
+      @include border-radius(4px)
+
+/* Tags Page
+table.tags 
+  .published-toggle, &.variants .published-toggle
+    display: inline-block
+  input.tag-published
+    display: none
+  tr.tag
+    td
+      padding: 4px 8px
+      &.name
+        font-size: 125%
+        font-weight: bold
 
 
-#product-edit img.feature
-  float: left
-
-
-
+/* Product Tags
+fieldset.product-tags
+  margin: 8px 0px
+  padding: 8px 0px 0px
+  legend
+    position: relative
+    top: 4px
+  ol.form
+    margin: 0px
+    width: 184px
+    overflow-y: auto
+    li
+      margin: 0px 0px 1px
+      background: #ccc
+      padding: 4px
+      @include border-radius(4px)
 
 /* Variants
 
@@ -668,8 +694,6 @@ table
   &.fancy tbody tr.edit .table-actions button
     margin-left: 8px
 
-.new-category button
-  margin-left: 8px
 
 #coupon-details #coupon_type li.radio_button
   width: 140px
@@ -692,8 +716,9 @@ table.properties
       .option
         background: #999999
         color: white
-        @include border-radius(0.25em)
-        line-height: 2em
+        float: left
+        @include border-radius(0.5em)
+        line-height: 1.5
         margin: 0 0.5em 0.5em 0
         padding: 0.25em 0.5em
 
