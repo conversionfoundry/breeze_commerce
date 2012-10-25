@@ -34,9 +34,9 @@
     - else
       %td.missing_value
         Missing value
-  %td.available
+  %td.published
     .field
-      = check_box_tag "variant_#{variant.id}_available", "1", variant.available, :class => "variant-available"
+      = check_box_tag "variant_#{variant.id}_published", "1", variant.published, :class => "variant-published", style: 'display: none;'
   %td.actions
     %p.variant-actions
       = link_to "Delete", admin_store_product_variant_path(variant.product, variant), :remote => true, :method => :delete, :class => "small red delete button"
@@ -44,8 +44,7 @@
 
 :javascript
   $(function() {
-    $('#variant_#{variant.id}_available').hide();
-    $('<div id="#variant_#{variant.id}_available_toggle" class="available-toggle"></div>').insertAfter('#variant_#{variant.id}_available').css({
-       'background-position': ($('#variant_#{variant.id}_available:checked').length > 0 ? 0 : 100) + '% 0%'
+    $('<div id="#variant_#{variant.id}_published_toggle" class="published-toggle"></div>').insertAfter('#variant_#{variant.id}_published').css({
+       'background-position': ($('#variant_#{variant.id}_published:checked').length > 0 ? 0 : 100) + '% 0%'
     })
   });
