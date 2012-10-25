@@ -18,7 +18,7 @@ module Breeze
       def products
         if list_type == 'category'
           store = Breeze::Commerce::Store.first # Assuming one store per site at this stage
-          product_array = store ? store.products.available.unarchived : []
+          product_array = store ? store.products.published.unarchived : []
           self.categories.each do |category|
             product_array = product_array & category.products
           end
@@ -31,7 +31,7 @@ module Breeze
       end
 
       def to_erb(view)
-        view.controller.render_to_string :partial => "partials/commerce/products", :layout => false, :locals => {:@product_list => self, :@products => products.paginate(:page => 1, :per_page =>3)}
+        view.controller.render_to_string :partial => "partials/commerce/products", :layout => false, :locals => {:@product_list => self, :@products => products}
       end
 
     end
