@@ -32,10 +32,6 @@ Breeze::Engine.routes.draw do
         # post :remove_item, :on => :member # TODO: SHouldn't need this
       end
 
-      resources :categories do
-        put :reorder, :on => :collection
-      end
-
       resources :tags do
         put :reorder, :on => :collection
       end

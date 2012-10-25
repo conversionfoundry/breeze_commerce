@@ -81,22 +81,12 @@ jQuery.fn.serializeObject = ->
       objectData[@name] = value
   return objectData
 
-# Categories
-$(".new.category.button").live "click", (e) ->
-  $.get @href, (data) ->
-    dialogForm "category-details", "New Category", data, 'POST'
-  e.preventDefault()
-$(".categories .category-actions .edit.button").live "click", (e) ->
-  $.get @href, (data) ->
-    dialogForm "category-details", "Edit Category", data, 'PUT'
-  e.preventDefault()
-
 # Tags
 $(".new.tag.button").live "click", (e) ->
   $.get @href, (data) ->
     dialogForm "tag-details", "New Tag", data, 'POST'
   e.preventDefault()
-$(".categories .tag-actions .edit.button").live "click", (e) ->
+$(".tags .tag-actions .edit.button").live "click", (e) ->
   $.get @href, (data) ->
     dialogForm "tag-details", "Edit Tag", data, 'PUT'
   e.preventDefault()

@@ -30,7 +30,6 @@
         %span.field
           http://#{"#{request.host_with_port}#{form.object.parent.permalink}#{'/' unless form.object.parent.root?}"}#{form.text_field :slug, :wrap => false, :size => 16}
         = form.errors_for :slug
-      = form.select :category_ids, store.categories.map {|c|[ c.name, c.id ] }, { :label => "Categories"}, :class => "multiselect", :multiple => "multiple"
       = form.select :tag_ids, store.tags.map {|c|[ c.name, c.id ] }, { :label => "Tags"}, :class => "multiselect", :multiple => "multiple"
   - unless @product.new_record?
     #product-images.container

@@ -6,8 +6,6 @@
       - unless product.images.empty?
         = image_tag product.images.ordered.first.file.url(:thumbnail)
     = link_to product.title, edit_admin_store_product_path(product), :class => "name-link"
-    .categories
-      = product.categories.collect(&:name).join(', ')
     .tags
       = product.tags.collect(&:name).join(', ')  
   %td.variants

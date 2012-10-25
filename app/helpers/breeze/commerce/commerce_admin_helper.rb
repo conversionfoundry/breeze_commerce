@@ -7,7 +7,6 @@ module Breeze
           commerce_menu_item("Orders " + badge( store.orders.unarchived.count ), breeze.admin_store_orders_path),
           commerce_menu_item("Customers " + badge( store.customers.unarchived.count ), breeze.admin_store_customers_path),
           commerce_menu_item("Products " + badge( store.products.unarchived.count ), breeze.admin_store_products_path),
-          commerce_menu_item("Categories " + badge( store.categories.count ), breeze.admin_store_categories_path),
           commerce_menu_item("Tags " + badge( store.tags.count ), breeze.admin_store_tags_path),
           commerce_menu_item("Shipping Methods " + badge( store.shipping_methods.unarchived.count ), breeze.admin_store_shipping_methods_path),
           # commerce_menu_item("Coupons", breeze.admin_store_coupons_path),

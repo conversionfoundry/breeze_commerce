@@ -1,5 +1,5 @@
 <% classes = 'product' %>
-<% classes += ' ' + product.categories.map{|c| c.slug}.join(' ') %>
+<% classes += ' ' + product.tags.map{|c| c.slug}.join(' ') %>
 <% classes += ' first' if product_counter == 0 %>
 <% classes += ' last' if product_counter == product_count - 1 %>
 <% classes += ' product-some_variants_discounted' if product.any_variants_discounted? %>

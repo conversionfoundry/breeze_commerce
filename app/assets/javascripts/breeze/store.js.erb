@@ -6,21 +6,6 @@ $(function() {
 
   
 
-  // Multiselect widget for categories
-  // Multiselect widget by http://loudev.com
-  $('#product_category_ids').multiSelect({
-    selectableHeader:'<h4>Available</h4>',
-    selectedHeader:'<h4>Active</h4>'
-  });
-  $('#ms-product_category_ids').append("<div class='ms-actions btn-group'><button id='categories-select_all' class='btn'>select all</button><button id='categories-deselect_all' class='btn'>deselect all</button></div>");
-  $('#categories-select_all').click(function(){
-    $('#product_category_ids').multiSelect('select_all');
-    return false;
-  });
-  $('#categories-deselect_all').click(function(){
-    $('#product_category_ids').multiSelect('deselect_all');
-    return false;
-  });
 
   // Multiselect widget for tags
   // Multiselect widget by http://loudev.com
