@@ -7,15 +7,16 @@ describe "the dummy store", :type => :request do
   before :each do
     home_page = FactoryGirl.create(:home_page)
     welcome_snippet = FactoryGirl.create(:welcome_snippet)
-    home_page.placements << Breeze::Content::Placement.new( :region => 'sidebar', :content => welcome_snippet )
-    ventriloquist_dummy = FactoryGirl.create(:ventriloquist_dummy)
+    home_page.placements.create( :region => 'sidebar', :content => welcome_snippet )
+    # ventriloquist_dummy = FactoryGirl.create(:ventriloquist_dummy)
     # home_page.placements.first.should_receive(:position).and_return(1)
   end
 
-  it "has a home page" do
-    visit ('/')
-    page.should have_content("Welcome to Breeze!")
-  end
+  # it "has a home page" do
+  #   visit ('/')
+  #   binding.pry
+  #   page.should have_content("Welcome to Breeze!")
+  # end
 
 
 
