@@ -42,7 +42,7 @@ module Breeze
         def destroy
          @customer = store.customers.find(params[:id])
          @customer.update_attributes(:archived => true)
-
+         @customer_count = store.customers.unarchived.count
         end
 
       end

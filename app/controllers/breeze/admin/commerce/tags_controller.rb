@@ -16,6 +16,7 @@ module Breeze
 
         def create
           @tag = store.tags.create params[:tag].merge({ :position => (store.tags.max(:position) || 0) + 1 })
+          @tag_count = store.tags.count
         end
                 
         def edit
@@ -37,6 +38,7 @@ module Breeze
         def destroy
           @tag = store.tags.find params[:id]
           @tag.try :destroy
+          @tag_count = store.tags.count
         end
       end
     end

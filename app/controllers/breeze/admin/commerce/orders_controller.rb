@@ -38,6 +38,8 @@ module Breeze
           if @order.save
             redirect_to admin_store_orders_path
           else
+            @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
+            @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
             render :action => "new"
           end
         end
@@ -74,6 +76,7 @@ module Breeze
         def destroy
          @order = store.orders.find(params[:id])
          @order.update_attributes(:archived => true)
+         @order_count = store.orders.unarchived.count
         end
         
       end

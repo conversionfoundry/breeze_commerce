@@ -41,6 +41,7 @@ module Breeze
         def destroy
           @product = store.products.find params[:id]
           @product.update_attributes(:archived => true)
+          @product_count = store.products.unarchived.count
         end
 
         def mass_update
@@ -63,6 +64,7 @@ module Breeze
           @products.each do |product|
             product.update_attributes(:archived => true)
           end
+          @product_count = store.products.unarchived.count
         end
 
       end
