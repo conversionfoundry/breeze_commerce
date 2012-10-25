@@ -118,44 +118,24 @@
           %table{:align => "center", :border => "0", :cellpadding => "0", :cellspacing => "0"}
             %tr
               %td{colspan: 2, valign: "top", width: "600"}
-                %h2 Actions
-                %ul
-                  %li
-                    = link_to "See the order on the website", edit_admin_store_order_url(@order, host: @site)
-                  %li
-                    = link_to "See all orders on the website", admin_store_orders_url(@order, host: @site)
-            %tr
-              %td{colspan: 2, valign: "top", width: "600"}
-                %p
-                  Hi #{@admin.name}
+                - if @order.customer
+                  %p
+                    Hi #{@order.customer.name}
                 %h1
                   Order #{@order.order_number}
                 %h2
                   #{@site}
             %tr
               %td{colspan: 2, valign: "top", width: "600"}
-                %h2 Customer
-                - if @order.customer
-                  = @order.customer.name
-                  (returning customer)
-                - else
-                  Guest order (not logged in)
+                %h2 
+                  New Shipping Status:
+                  = @order.shipping_status.name
                 %br/
-                = @order.email
-                %br/
-            %tr
-              %td{colspan: 2, valign: "top", width: "600"}
-                %h2 Payment Status
-                = @order.billing_status.name
-                %br/
-                = @order.billing_status.description
+                = @order.shipping_status.description
             %tr
               %td{:valign => "top", :width => "300"}
                 %h2 Shipping
                 = @order.shipping_address.to_html
-              %td{:valign => "top", :width => "300"}
-                %h2 Billing
-                = @order.billing_address.to_html
             %tr
               %td{colspan: 2, valign: "top", width: "600"}
                 %h2
@@ -165,4 +145,3 @@
               %td{colspan: 2, valign: "top", width: "600"}
                 %h2 Comment
                 = @order.comment
-
