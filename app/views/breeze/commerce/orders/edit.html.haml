@@ -1,3 +1,6 @@
+- content_for :head do
+  %title Shopping Cart
+
 = form_for @order, :as => :order, :url => breeze.order_path(@order), :method => :put, :remote => true do |form|
   .row
     .span12
