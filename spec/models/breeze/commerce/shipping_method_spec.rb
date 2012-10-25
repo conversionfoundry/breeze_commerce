@@ -25,23 +25,13 @@ describe Breeze::Commerce::ShippingMethod do
 		shipping_method.store = nil
 		shipping_method.should_not be_valid
 	end
-	it "is the default shipping method if it's the first created" do
-		first_shipping_method = Breeze::Commerce::ShippingMethod.first || create(:shipping_method) # We might have a first shipping method already set up
+	it "is the default shipping method if it was the first created" do
+		store = Breeze::Commerce::Store.first
+		first_shipping_method = Breeze::Commerce::ShippingMethod.first
 		second_shipping_method = create(:shipping_method)
-		first_shipping_method.is_default?.should eq true
-		second_shipping_method.is_default?.should eq false
-		Breeze::Commerce::ShippingMethod.default.should eq first_shipping_method
-		Breeze::Commerce::ShippingMethod.default.should_not eq second_shipping_method
+		store.default_shipping_method.should eq first_shipping_method
+		store.default_shipping_method.should_not eq second_shipping_method
 	end
-	it "can be set as default shipping method" do
-		first_shipping_method = Breeze::Commerce::ShippingMethod.first || create(:shipping_method) # We might have a first shipping method already set up
-		second_shipping_method = create(:shipping_method)
-		second_shipping_method.make_default
-		second_shipping_method.is_default?.should eq true
-		Breeze::Commerce::ShippingMethod.default.should_not eq first_shipping_method
-		Breeze::Commerce::ShippingMethod.default.should eq second_shipping_method
-	end
-	it "assigns some other shipping method as the new default before it's archived"
 	it "can set and retrieve a price" do
 		shipping_method = create :shipping_method
 		shipping_method.price = 5546
