@@ -119,10 +119,10 @@ $("table.shipping_methods td.actions .edit.button").live "click", (e) ->
   e.preventDefault()
 # Show/hide extra controls for shipping methods
 $('fieldset.shipping_method_types input[name=shipping_method_type]').live "click", (e) ->
-	if $(this).val() == 'breeze/commerce/threshold_shipping_method'
-		$('#threshold_shipping_method-details').slideDown()
-	else
-		$('#threshold_shipping_method-details').slideUp()	
+  if $(this).val() == 'breeze/commerce/threshold_shipping_method'
+    $('#threshold_shipping_method-details').slideDown()
+  else
+    $('#threshold_shipping_method-details').slideUp() 
 
 # Variants
 $(".new.variant.button").live "click", (e) ->
@@ -164,4 +164,36 @@ $(document).ready ->
       url: "/admin/store/products/" + $(this).data('product_id') + "/product_images/reorder.js"
       type: "post"
       data: "_method=put&" + $(this).sortable("serialize")
+
+
+
+
+# Published toggles
+$(document).ready ->
+  # Variants on product page
+  $("table.variants .published-toggle").live "mousedown", ->
+    $checkbox = $(this).siblings(".variant-published")
+    $checkbox.click().change()
+    checked = $(this).siblings(".variant-published:checked").length > 0
+    $(this).animate( {backgroundPosition: ((if checked then 0 else 100)) + "%"}, "slow", "easeInOutQuad" )
+    id = $(this).closest("tr.variant").attr("data-id")
+    product_id = $(this).closest("tr.variant").attr("data-product-id")
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      url: "/admin/store/products/" + product_id + "/variants/" + id + ".js"
+      type: "post"
+      dataType: "script"
+      data: "_method=put&variant[published]=" + checked
+
+  # Products on product page
+  # Insert the toggle switch for product availability
+  $('<div class="published-toggle"></div>').insertAfter("#product_published").css("background-position": ((if $("#product_published:checked").length > 0 then 0 else 100)) + "% 0%").mousedown (event) ->
+    $("#product_published").click().change()
+    $(this).animate
+      "background-position": ((if $("#product_published:checked").length > 0 then 0 else 100)) + "%"
+    , "slow", "easeInOutQuad"
+
+
+
 

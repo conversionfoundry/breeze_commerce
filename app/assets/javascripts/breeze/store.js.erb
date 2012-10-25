@@ -1,16 +1,7 @@
 // TODO: Move these functions over to commerce_admin.js.coffee.erb
 $(function() {
 
-  // Insert the toggle switch for product availability
-  // TODO: Abstract out this code into a sliderfy jQuery plugin
-  $('#product_available').hide();  
-  $('<div class="available-toggle"></div>').insertAfter('#product_available').css({
-     'background-position': ($('#product_available:checked').length > 0 ? 0 : 100) + '% 0%'
-   })
-  .mousedown(function(event) {
-    $('#product_available').click().change();
-    $(this).animate({'background-position':($('#product_available:checked').length > 0 ? 0 : 100) + '%'}, 'slow', 'easeInOutQuad');
-  });
+
 
 
   
