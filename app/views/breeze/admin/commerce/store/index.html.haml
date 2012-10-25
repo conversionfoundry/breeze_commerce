@@ -6,7 +6,7 @@
         #products.box.col3
           %h2 Your products
           %table.at-a-glance
-            = at_a_glance store.products.unarchived.available.count, "public product(s)", admin_store_products_path + "#tab_published"
+            = at_a_glance store.products.unarchived.published.count, "public product(s)", admin_store_products_path + "#tab_published"
             = at_a_glance store.customers.count, "registered customers", admin_store_products_path + "#tab_published"
           %p/
         #orders-ready.box.col3
