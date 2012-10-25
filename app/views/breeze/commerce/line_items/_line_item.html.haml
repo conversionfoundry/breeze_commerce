@@ -17,7 +17,7 @@
       %span.currency
         = line_item.variant.product.store.currency
   %td.actions
-    = line_item_fields.text_field :quantity, class: 'input-mini line_item-quantity', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }
+    = line_item_fields.number_field :quantity, class: 'input-mini line_item-quantity', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }, min: 1
     = link_to 'Remove', breeze.order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "btn btn-mini remove"
   %td.total
     = number_to_currency line_item.amount
