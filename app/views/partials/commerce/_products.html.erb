@@ -1,4 +1,7 @@
-<% if @product_list.list_type == 'category' %>
+<% if @product_list.list_type == 'by_tags' %>
+  <% classes = 'tags' %>
+  <% @product_list.tags.each{ |tag| classes += ' tag-' + tag.slug } %>
+<% elsif @product_list.list_type == 'category' %>
   <% classes = 'categories' %>
   <% @product_list.categories.each{ |category| classes += ' category-' + category.slug } %>
 <% elsif @product_list.list_type == 'related' %>

@@ -91,6 +91,16 @@ $(".categories .category-actions .edit.button").live "click", (e) ->
     dialogForm "category-details", "Edit Category", data, 'PUT'
   e.preventDefault()
 
+# Tags
+$(".new.tag.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "tag-details", "New Tag", data, 'POST'
+  e.preventDefault()
+$(".categories .tag-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "tag-details", "Edit Tag", data, 'PUT'
+  e.preventDefault()
+
 # Product Images
 # n.b. We can't upload images through javascript, so we have to do a normal form.submit
 $(".new.product_image.button").live "click", (e) ->

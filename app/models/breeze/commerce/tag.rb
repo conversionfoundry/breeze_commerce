@@ -9,7 +9,7 @@ module Breeze
       field :sort
       field :position, :type => Integer
 
-      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :categories
+      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :tags
       has_and_belongs_to_many :products, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :product_lists, :class_name => "Breeze::Commerce::ProductList"
 

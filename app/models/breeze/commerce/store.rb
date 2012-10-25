@@ -7,6 +7,7 @@ module Breeze
 
       belongs_to :home_page, :class_name => "Breeze::Content::Page"
       has_many :categories, :class_name => "Breeze::Commerce::Category"
+      has_many :tags, :class_name => "Breeze::Commerce::Tag"
       has_many :customers, :class_name => "Breeze::Commerce::Customer"
       has_many :order_statuses, :class_name => "Breeze::Commerce::OrderStatus"
       has_many :orders, :class_name => "Breeze::Commerce::Order"

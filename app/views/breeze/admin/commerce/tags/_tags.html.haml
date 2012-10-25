@@ -1,0 +1,16 @@
+.tags-container.container
+  %p These are your current available tags ready for your online store
+  %table.fancy.sortable.contextual.tags
+    %thead
+      %tr
+        %th.first{:style => ""} Name
+        %th{:style => ""} Slug
+        %th.last{:style => "width: 160px;"} Actions
+    %tbody
+      - if tags.any?
+        = render :partial => "breeze/admin/commerce/tags/tag", :collection => tags
+      - else
+        %tr
+          %td.empty{:colspan => "4"} There are no tags to show here.
+    %tfoot
+      %tr

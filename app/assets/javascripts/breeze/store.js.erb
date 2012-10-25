@@ -22,6 +22,23 @@ $(function() {
     return false;
   });
 
+  // Multiselect widget for tags
+  // Multiselect widget by http://loudev.com
+  $('#product_tag_ids').multiSelect({
+    selectableHeader:'<h4>Available</h4>',
+    selectedHeader:'<h4>Active</h4>'
+  });
+  $('#ms-product_tag_ids').append("<div class='ms-actions btn-group'><button id='tags-select_all' class='btn'>select all</button><button id='tags-deselect_all' class='btn'>deselect all</button></div>");
+  $('#tags-select_all').click(function(){
+    $('#product_tag_ids').multiSelect('select_all');
+    return false;
+  });
+  $('#tags-deselect_all').click(function(){
+    $('#product_tag_ids').multiSelect('deselect_all');
+    return false;
+  });
+
+
   // Update slug automatically as new product name is typed
   $('#new_product #product_title').live('input', function() {
     var slug_field = $('#product_slug', $(this).closest('form'));

@@ -1,0 +1,8 @@
+<% if @tag.errors.empty? %>
+
+  $('.tags tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/tags/tag", :object => @tag) %>');
+  $('#tag-details').dialog('close');
+<% else %>
+  $('#tag-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/tags/new") %>');
+<% end %>
+

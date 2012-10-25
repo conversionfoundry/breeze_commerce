@@ -36,6 +36,10 @@ Breeze::Engine.routes.draw do
         put :reorder, :on => :collection
       end
 
+      resources :tags do
+        put :reorder, :on => :collection
+      end
+
       resources :coupons
 
       resources :customers
