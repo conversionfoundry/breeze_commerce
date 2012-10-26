@@ -22,7 +22,7 @@ FactoryGirl.define do
     title "Ventriloquist Dummy"
     slug 'ventriloquist_dummy'
     vd.parent_id { |p| p.association(:home_page).id }
-    available true
+    published true
   end
 
   factory :freddie_dummy, class: Breeze::Commerce::Variant do |fd|
@@ -31,7 +31,7 @@ FactoryGirl.define do
     blurb 'Scary but compelling'
     cost_price_cents 5000
     sell_price_cents 10000
-    available true
+    published true
   end
 
   # factory :baby_dummy
