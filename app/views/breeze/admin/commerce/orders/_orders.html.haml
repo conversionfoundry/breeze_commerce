@@ -2,17 +2,17 @@
   %table.fancy.contextual.orders
     %thead
       %tr
-        %th.order-number.first= link_to "Order Number", :sort => "order_number"
-        %th.customer= link_to "Customer", :sort => "name"
-        %th.billing Billing Details
-        %th.shipping Shipping Details
-        %th.amount= link_to "Amount", :sort => "total"
+        %th.order.first= link_to "Order", :sort => "order_number"
+        %th.shipping Shipping Address
+        %th.line_items Line Items
+        %th.shipping_status Shipping Status
+        %th.billing_status Billing Status
         %th.actions.last Actions
     %tbody
       - if orders.any?
         = render :partial => "breeze/admin/commerce/orders/order", :collection => orders
       - else
         %tr
-          %td.empty{:colspan => "6"} There are no orders to show here.
+          %td.empty{:colspan => "6"} There are no orders yet.
     %tfoot
       %tr
