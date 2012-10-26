@@ -10,7 +10,7 @@
       = product.tags.collect(&:name).join(', ')  
   %td.variants
     %span.badge
-      = product.images.count
+      = product.variants.unarchived.count
   %td.price
     - if product.variants.count > 1
       From
