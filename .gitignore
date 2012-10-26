@@ -5,3 +5,4 @@
 spec/dummy/tmp/*
 spec/dummy/log/*
 *.log
+*.log
