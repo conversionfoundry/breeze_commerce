@@ -19,6 +19,7 @@ module Breeze
       field :show_in_navigation, :type => Boolean, :default => false
       field :teaser
 
+      default_scope order_by([:title, :asc])
       scope :archived, where(:archived => true)
       scope :published, where(:published => true)
       scope :with_tag, lambda { |tag| where(tag_ids: tag.id) }
