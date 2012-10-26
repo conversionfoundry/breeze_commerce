@@ -21,5 +21,4 @@ group :test do
 	gem 'capybara'
 	gem 'database_cleaner'
 	gem 'launchy'
-  gem 'cover_me', '>= 1.2.0'
 end

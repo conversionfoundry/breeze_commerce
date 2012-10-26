@@ -1,5 +1,3 @@
-require 'cover_me'
-
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../dummy/config/environment", __FILE__)
 # require Rails.root.join('db','seeds')
@@ -42,7 +40,7 @@ RSpec.configure do |config|
   # config.after(:each) do
   #   DatabaseCleaner.clean
   # end
-  
+
 end
 
 FactoryGirl.find_definitions

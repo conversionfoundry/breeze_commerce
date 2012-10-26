@@ -59,18 +59,18 @@ describe "customer", :type => :request, :js => true do
     
     find('table.variants tr.variant td.actions').should have_button('Add to Cart')
 
-    click_on 'Add to Cart'
+    # click_on 'Add to Cart'
 
-    save_and_open_page
+    # save_and_open_page
 
-    page.should have_content('Ventriloquist Dummy')
+    # page.should have_content('Ventriloquist Dummy')
 
-    minicart = find('div.breeze-minicart')
-    minicart.find('ul.line_items li.line_item').should have_content('1 × Freddie')
+    # minicart = find('div.breeze-minicart')
+    # minicart.find('ul.line_items li.line_item').should have_content('1 × Freddie')
 
-    click_link 'Show Cart'
+    # click_link 'Show Cart'
 
-    find('h1').should have_content('Shopping Cart')
+    # find('h1').should have_content('Shopping Cart')
   end
 
   # it 'can add a second product variant to the cart' do

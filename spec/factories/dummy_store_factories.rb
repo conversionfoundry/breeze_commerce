@@ -11,7 +11,7 @@ FactoryGirl.define do
 
   factory :dummies_list, class: Breeze::Commerce::ProductList do
     title "Dummies"
-    list_type 'category'
+    list_type 'by_tags'
   end
 
   factory :my_cart, class: Breeze::Commerce::Minicart do
