@@ -92,7 +92,7 @@ module Breeze
       end
 
       def show_in_admin?
-        if billing_status.name == 'Browsing'
+        if billing_status.name == 'Browsing' or billing_status.name == 'Started Checkout'
           return false
         end
         true
