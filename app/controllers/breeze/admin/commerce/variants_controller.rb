@@ -17,8 +17,6 @@ module Breeze
           end
           if @variant.save
             redirect_to edit_admin_store_product_path(product)
-          else
-            render :action => "new"
           end
         end
 
@@ -37,8 +35,6 @@ module Breeze
           end
           if @variant.update_attributes(params[:variant])
             redirect_to edit_admin_store_product_path(product)
-          else
-            render :action => "edit"
           end
         end
 
