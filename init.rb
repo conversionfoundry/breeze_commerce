@@ -17,6 +17,10 @@ Breeze.hook :admin_menu do |menu, user|
   menu << { :name => "Store", :path => "/admin/store" } if user.can? :manage, Breeze::Content::Item
 end
 
+Breeze.hook :user_roles do |user_roles|
+	user_roles << :merchant
+end
+
 Breeze.hook :get_content_by_permalink do |permalink_or_content|
   case permalink_or_content
   when Breeze::Content::Item then permalink_or_content
