@@ -5,37 +5,9 @@ require 'pry'
 
 describe "customer", :type => :request, :js => true do
 
-# def set_host (host)
-#   host! host
-#   Capybara.server_port = 31234
-#   Capybara.app_host = "http://" + host
-# end
-
-
-  # Set up a dummy store.
   before :each do
-    # host!  "localhost:3000"
-    # Capybara.app_host = 'http://localhost:7787'
-
-    # set_host "localhost:31234"
-
     set_up_dummy_store
   end
-
-  # def host!(&block)
-  #   before do
-  #     Capybara.current_session.driver.reset!
-  #     host! instance_eval(&block)
-  #     @old_app_host, Capybara.app_host = Capybara.app_host, "http://#{host}"
-  #     @old_default_host, Capybara.default_host = Capybara.default_host, "http://#{host}"
-  #   end
-
-  #   after do
-  #     Capybara.current_session.driver.reset!
-  #     Capybara.app_host = @old_app_host
-  #     Capybara.default_host = @old_default_host
-  #   end
-  # end
 
   it "can make a successful purchase" do
     visit ('/')

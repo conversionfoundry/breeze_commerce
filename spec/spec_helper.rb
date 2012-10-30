@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'factory_girl'
 require "database_cleaner"
+require 'haml'
 # require 'rspec/autorun'
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
@@ -24,6 +25,7 @@ RSpec.configure do |config|
 
   # Include Factory Girl syntax to simplify calls to factories
   config.include FactoryGirl::Syntax::Methods
+
 	config.include Breeze::Commerce::Engine.routes.url_helpers
 
   config.include Devise::TestHelpers, :type => :controller
