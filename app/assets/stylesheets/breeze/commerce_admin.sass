@@ -1,6 +1,7 @@
 /* CSS for Breeze Commerce Admin
-/* TODO: Rename to commerce_admin.sass
-/* TODO: Eventually, most of this should be standardised and migrate to the Breeze admin styles
+
+/* Variables
+$colour-highlight: rgba(141, 198, 63, 0.15)
 
 /* Mixins
 @mixin border-radius ($radii) 
@@ -101,14 +102,15 @@
 .badge
   font-size: 11.844px
   font-weight: bold
-  line-height: 14px
+  line-height: 1.2em
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
   white-space: nowrap
   vertical-align: baseline
   background: #aaaaaa
   color: white
   padding: 1px 9px 2px
-  @include border-radius(9px)
+  text-align: center
+  @include border-radius(0.75em)
 
 
 /* Customer Card
@@ -121,15 +123,25 @@
   float: left
   clear: right
   margin: 0
-  padding: 2em
+  padding: 1em 2em
   width: 20em
   text-decoration: none
   .customer-name
     font-size: 200%
+    margin-top: 1em
   .customer-contact
     li
       list-style: none
       text-align: right
+  .change_customer
+    font-size: 80%
+    margin: 1em 0
+    text-align: right
+    select,
+    label
+      font-size: 10px
+      margin: 0
+      width: auto
 a.customer-card:hover
   background: #cccccc
 
@@ -146,13 +158,6 @@ a.customer-card:hover
 /* Store overview 
 #store_dashboard
   margin: 0px 4px 16px
-  .box
-    float: left
-    margin: 8px
-    padding: 8px
-    background: white
-    @include border-radius(8px)
-    @include box-shadow
   .col1
     width: 96px
   .col2
@@ -169,36 +174,43 @@ a.customer-card:hover
     h2
       margin: 0px
       padding: 0px 0px 4px
-      border-bottom: 1px solid #999
       font-weight: normal
     .at-a-glance
       width: 100%
       margin: 0px
-      padding: 0px
+      padding: 0 0 0 1em
       border-spacing: 0px
       border-collapse: collapse
-      td
-        border-bottom: 1px solid #ccc
-        padding: 0px
-        vertical-align: middle
-        &.count
-          font-size: 200%
-          width: 1.5em
-          text-align: right
-          padding-right: 0.25em
+      tr
+        td
+          border-bottom: 1px solid #eeeeee
+          padding: 0px
+          vertical-align: middle
+          &.item-count
+            padding: 0.5em
+            width: 3em
+          .badge
+            font-size: 200%
     p
       margin: 1ex 0px 0px
+    p.hint
+      margin-bottom: 1em
+    &#top
+      .name
+        text-align: left
+      .sales
+        text-align: center
+      .total
+        text-align: right
 
 /* Orders Index Page
 table.orders
   tr.order
     td
-      vertical-align: top
-      padding: 0.5em
-      p
-        margin-bottom: 0.75em
       .total
         font-size: 1.5em
+      p.address
+        font-size: 0.8em
       ul
         margin: 0
         padding: 0
@@ -206,164 +218,170 @@ table.orders
 
 /* Order Page
 
-#order-customer
-  float: right
-  clear: right
-  margin: 1em 0 2em 2em
-  width: 24em
-  li
-    list-style: none
-
-#order-details
-  background: white url(image-path("breeze/paper_bg.jpg")) 0 0 repeat
-  @include box-shadow
-  margin: 2em
-  .section
-    float: left
-    margin: 0 2em 0 0
-    width: 100%
-  ol
+#order-edit
+  #order-customer
+    float: right
+    clear: right
+    margin: 1em 0 2em 2em
+    width: 24em
     li
       list-style: none
-  h3
-    font-size: 24px
-    font-weight: normal
-    float: left
-    margin: 1em
-  #order-customer_comment
-    color: #619cc1
-    float: left
-    clear: left
-    font: 400 24px/36px 'Shadows Into Light', cursive
-    margin: 0 2em 2em 4em
-    transform: rotate(-10deg)
-    -ms-transform: rotate(-10deg) /* IE 9 */
-    -webkit-transform: rotate(-10deg) /* Safari and Chrome */
-    -o-transform: rotate(-10deg) /* Opera */
-    -moz-transform: rotate(-10deg) /* Firefox */
-    width: 24em
-  fieldset
-    float: left
-    margin: 0
-    padding: 0
-    &.line_items
-      width: 100%
-  table#cart
-    border-spacing: 0
-    border-collapse: collapse
-    width: 100%
-    th,
-    td
-      vertical-align: top
-    thead
-      tr
-        background: rgba(141,198,63,0.15)
-        font-size: 18px
-        th
-          font-weight: normal
-          padding: 0.5em 0
-    tr.even
-      td
-        background-color: rgba(128,128,128,0.15)
-    th.total,
-    td.total
-      text-align: right
-    tr.line_item
-      td
-        vertical-align: middle
-        h4
-          font-size: 16px
-          margin: 0.5em 0 0 0
-        img
-          float: left
-          margin-right: 1em
-      td.price
-        text-align: right
-        font-size: 16px
-      td.quantity
-        text-align: center
-        input.line_item-quantity
-          text-align: right
-      td.total
-        font-size: 16px
-        text-align: right
-      td.actions
-        padding-right: 1em
-        text-align: right
-    tfoot
-      tr.subtotal
-        td.label,
-        td.total
-          border-bottom: solid 1px #cccccc
-          font-size: 16px
-          padding: 0.5em 0
-      tr.shipping
-        td
-          font-size: 16px
-          padding: 0.5em 0
-      tr.total
-        background: rgba(129,130,133,0.65)
-        td
-          color: white
-          font-size: 18px
-          font-weight: normal
-          padding: 0.5em 0
-          vertical-align: middle
-        td.total
-          font-size: 24px
-    .currency
-      font-size: 80%
-
-  #order-shipping_billing
-    #order-shipping,
-    #order-billing
-      width: 50%
+  #order-details
+    background: white url(image-path("breeze/paper_bg.jpg")) 0 0 repeat
+    @include box-shadow
+    margin: 2em
+    .section
       float: left
-      ol.status
-        border: dashed 4px #cccccc
-        @include border-radius(1em)
-        margin: 2em
-        padding: 1em 2em 2em 2em
-        .description
-          color: #cccccc
-          float: right
-          margin: 2em 0 0 2em
-          width: 40%
-  #order-notes
-    float: right
-    margin-bottom: 2em
-    ul.notes
-      color: red
-      font: 400 18px/27px 'Shadows Into Light', cursive
+      margin: 0 2em 0 0
+      width: 100%
+    ol
+      li
+        list-style: none
+    h3
+      font-size: 24px
+      font-weight: normal
+      float: left
+      margin: 1em
+    #order-customer_comment
+      color: #619cc1
+      float: left
+      clear: left
+      font: 400 24px/36px 'Shadows Into Light', cursive
+      margin: 0 2em 2em 4em
+      transform: rotate(-10deg)
+      -ms-transform: rotate(-10deg) /* IE 9 */
+      -webkit-transform: rotate(-10deg) /* Safari and Chrome */
+      -o-transform: rotate(-10deg) /* Opera */
+      -moz-transform: rotate(-10deg) /* Firefox */
+      width: 24em
+    fieldset
+      float: left
       margin: 0
       padding: 0
-      li.note
-        list-style: none
-        position: relative
-        float: left
-        margin: 0 2em 1em 0
-        max-width: 20em
-        padding: 1em
+      &.line_items
+        width: 100%
+        ol.form
+          float: left
+          width: 100%
+          margin: 0
+          padding: 0
+    table#cart
+      border-spacing: 0
+      border-collapse: collapse
+      width: 100%
+      th,
+      td
+        vertical-align: top
+      thead
+        tr
+          background: $colour-highlight
+          font-size: 18px
+          th
+            font-weight: normal
+            padding: 0.5em 0
+      tr.even
+        td
+          background-color: rgba(128,128,128,0.15)
+      th.total,
+      td.total
+        text-align: right
+      tr.line_item
+        td
+          vertical-align: middle
+          h4
+            font-size: 16px
+            margin: 0.5em 0 0 0
+          img
+            float: left
+            margin-right: 1em
+        td.price
+          text-align: right
+          font-size: 16px
+        td.quantity
+          text-align: center
+          input.line_item-quantity
+            text-align: right
+        td.total
+          font-size: 16px
+          text-align: right
+        td.actions
+          padding-right: 1em
+          text-align: right
+      tfoot
+        tr.subtotal
+          td.label_text,
+          td.total
+            border-bottom: solid 1px #cccccc
+            font-size: 16px
+            padding: 0.5em 0
+        tr.shipping
+          td
+            font-size: 16px
+            padding: 0.5em 0
+        tr.total
+          background: rgba(129,130,133,0.65)
+          td
+            color: white
+            font-size: 18px
+            font-weight: normal
+            padding: 0.5em 0
+            vertical-align: middle
+          td.total
+            font-size: 24px
+      .currency
+        font-size: 80%
 
-        .remove
-          display: none
-          font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif
-          position: absolute
-          top: 1em
-          right: 1em
-        &:hover
+    #order-shipping_billing
+      #order-shipping,
+      #order-billing
+        width: 50%
+        float: left
+        ol.status
+          border: dashed 4px #cccccc
+          @include border-radius(1em)
+          margin: 2em
+          padding: 1em 2em 2em 2em
+          .description
+            color: #cccccc
+            float: right
+            margin: 2em 0 0 2em
+            width: 40%
+    #order-notes
+      float: right
+      margin-bottom: 2em
+      margin-right: 25em
+      ul.notes
+        color: red
+        font: 400 18px/27px 'Shadows Into Light', cursive
+        margin: 0
+        padding: 0
+        li.note
+          list-style: none
+          position: relative
+          float: left
+          margin: 0 2em 1em 0
+          max-width: 20em
+          padding: 1em
+
           .remove
-            display: block
-    #note-new
-      float: left
-      margin-bottom: 1em
-      width: 11em
-      padding: 1em
-      textarea
-        font-size: 13px
-        padding: 1em
-      #note-save
+            display: none
+            font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif
+            position: absolute
+            top: 1em
+            right: 1em
+          &:hover
+            .remove
+              display: block
+      #note-new
         float: right
+        margin-bottom: 1em
+        width: 20em
+        padding: 1em
+        textarea
+          font-size: 13px
+          padding: 1em
+        #note-save
+          float: right
 
 #order-payments,
   float: left
@@ -398,6 +416,28 @@ table.orders
     padding: 1em
     width: 100%
 
+/* Customer Page
+.customer-edit,
+.customer-new
+  margin-right: 1em
+  width: 90%
+  #customer-details 
+    li.text_field,
+    li.text_area
+      input,
+      textarea
+        width: 50%
+      label
+        float: left
+        width: 25%
+    .customer_addresses 
+      width: 100%
+      legend
+        border-bottom: none
+        margin-bottom: none
+      .address
+        margin-right: 0
+        width: 50%
 
 
 
@@ -406,6 +446,9 @@ table.orders
 .clearer
   clear: both
 
+abbr[title]
+  border: none
+  cursor: normal
 
 
 
@@ -530,9 +573,11 @@ table.products
     padding-left: 0
 
 /* Product Relationships
-.product_relationship_fields li
-  display: inline
-
+.product_relationship_fields 
+  li
+    display: inline
+    select
+      width: auto
 
 
 
@@ -558,35 +603,62 @@ table.products
 #product-edit img.feature
   float: left
 
-table
-  &.fancy tbody tr
-    .actions .button
-      visibility: hidden
-      opacity: 0
-      -webkit-transition: opacity 0.25s ease-in
-    &:hover
-      .actions .button, td.published .field
+/* Common elements
+.box
+  float: left
+  margin: 8px
+  padding: 0.5em
+  background: white
+  @include border-radius(8px)
+  @include box-shadow
+
+table.fancy 
+  thead
+    th
+      background: #eeeeee
+      padding: 0 1em
+      text-align: center  
+  tbody 
+    tr
+      .actions .button
+        visibility: hidden
+        opacity: 0
+        -webkit-transition: opacity 0.25s ease-in
+      &:hover
+        td
+          background: $colour-highlight
+        .actions .button, td.published .field
+          visibility: visible
+          opacity: 1.0
+      td.published .text
         visibility: visible
         opacity: 1.0
-    td.published .text
-      visibility: visible
-      opacity: 1.0
-    &.disabled:hover .actions .button
-      visibility: hidden
-      opacity: 0
-    &.active
-      td
-        border-bottom: 0px
+      &.disabled:hover .actions .button
+        visibility: hidden
+        opacity: 0
+      &.active
+        td
+          border-bottom: 0px
+          background-color: #ffffc0
+        &:hover td
+          background-color: #ffffc0
+      &.edit td
         background-color: #ffffc0
-      &:hover td
-        background-color: #ffffc0
-    &.edit td
-      background-color: #ffffc0
-    .actions
+      .actions
+        text-align: right
+      &.active .actions .button
+        visibility: visible
+        opacity: 1.0
+      width: 100%
+  tbody
+    td
+      border-bottom: 1px solid #eeeeee
+      padding: 1em
+  tfoot
+    td
+      background: transparent
       text-align: right
-    &.active .actions .button
-      visibility: visible
-      opacity: 1.0
+      padding: 1em
 
 /* Tags Page
 table.tags 
