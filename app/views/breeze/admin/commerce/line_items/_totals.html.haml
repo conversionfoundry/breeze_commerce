@@ -1,6 +1,6 @@
 %tr.subtotal
   %td
-  %td.label{colspan: 2} Subtotal:
+  %td.label_text{colspan: 2} Subtotal:
   %td.total
     %span.amount
       = number_to_currency @order.item_total
@@ -8,7 +8,7 @@
       = store.currency
 %tr.shipping
   %td
-  %td.label
+  %td.label_text
     Shipping:
   %td.shipping_methods
     - shipping_methods = Breeze::Commerce::Store.first.shipping_methods.unarchived

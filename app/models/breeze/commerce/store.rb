@@ -3,10 +3,10 @@ module Breeze
     class Store
       include Mongoid::Document
 
-      attr_accessible :home_page_id, :allow_returning_customer_login, :currency
+      attr_accessible :home_page_id, :allow_returning_customer_login, :currency, :default_shipping_method, :default_shipping_method_id
 
       belongs_to :home_page, :class_name => "Breeze::Content::Page"
-      has_many :categories, :class_name => "Breeze::Commerce::Category"
+      has_many :tags, :class_name => "Breeze::Commerce::Tag"
       has_many :customers, :class_name => "Breeze::Commerce::Customer"
       has_many :order_statuses, :class_name => "Breeze::Commerce::OrderStatus"
       has_many :orders, :class_name => "Breeze::Commerce::Order"

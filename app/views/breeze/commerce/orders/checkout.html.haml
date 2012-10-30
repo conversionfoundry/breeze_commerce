@@ -1,4 +1,5 @@
 - content_for :head do
+  %title Checkout
   :javascript
     $(document).ready(function(){
       $("#new_customer").validate({
@@ -28,6 +29,7 @@
         }
       });
     });
+    
 .row
   #checkout-header.span12
     %h1 Secure Checkout

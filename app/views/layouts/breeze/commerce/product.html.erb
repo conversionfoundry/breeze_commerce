@@ -4,6 +4,7 @@
     <title><%= page.title if page %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag "breeze/commerce" %>
+    <%= javascript_include_tag "jquery_ujs" %>
     <%= stylesheet_link_tag "breeze/commerce" %>
     <%= stylesheet_link_tag 'breeze/galleria/themes/classic/galleria.classic.css' %>
     <script type="text/javascript">
@@ -99,7 +100,7 @@
         <%= region :product_info %>
 
         <div id="variants">
-          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: page.variants.unarchived.available } %>
+          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: page.variants.unarchived.published } %>
         </div>
      
       <% else %>

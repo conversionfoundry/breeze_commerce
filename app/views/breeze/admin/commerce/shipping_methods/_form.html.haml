@@ -29,7 +29,7 @@
           = threshold_fields.number_field :above_threshold_price, required: true, step: 0.01, value: ( @shipping_method.above_threshold_price if @shipping_method.respond_to? :above_threshold_price )
 
 - content_for :left do
-  = render :partial => "breeze/admin/commerce/commerce/left"
+  = render :partial => "breeze/admin/commerce/shared/left"
 
 / TODO: Show / hide threshold fields depending on radio value
 / TODO: Move threshold fields to separate file

@@ -4,22 +4,22 @@ module Breeze
       def commerce_menu
         content_tag :ul, [
           commerce_menu_item("Store overview", admin_store_root_path),
-          commerce_menu_item("Orders " + badge( store.orders.unarchived.count ), breeze.admin_store_orders_path),
-          commerce_menu_item("Customers " + badge( store.customers.unarchived.count ), breeze.admin_store_customers_path),
-          commerce_menu_item("Products " + badge( store.products.unarchived.count ), breeze.admin_store_products_path),
-          commerce_menu_item("Categories " + badge( store.categories.count ), breeze.admin_store_categories_path),
-          commerce_menu_item("Shipping Methods " + badge( store.shipping_methods.unarchived.count ), breeze.admin_store_shipping_methods_path),
+          commerce_menu_item("Orders", breeze.admin_store_orders_path, badge( store.orders.unarchived.count )),
+          commerce_menu_item("Customers", breeze.admin_store_customers_path, badge( store.customers.unarchived.count )),
+          commerce_menu_item("Products", breeze.admin_store_products_path, badge( store.products.unarchived.count )),
+          commerce_menu_item("Tags", breeze.admin_store_tags_path, badge( store.tags.count )),
+          commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path, badge( store.shipping_methods.unarchived.count )),
           # commerce_menu_item("Coupons", breeze.admin_store_coupons_path),
           commerce_menu_item("Settings", breeze.admin_store_settings_path)
         ].join.html_safe, :class => :actions
       end
 
       def badge text
-        content_tag :span, text, class: 'badge'
+        content_tag :span, text, class: "badge item-count"
       end
 
-      def commerce_menu_item(name, path, options = {})
-        content_tag :li, link_to(name.html_safe, path.is_a?(Regexp) ? path.source : path.to_s, options), :class => "#{:active if path === request.path}"
+      def commerce_menu_item(name, path, additional_html = '', options = {})
+        content_tag :li, link_to( (name + additional_html).html_safe, path.is_a?(Regexp) ? path.source : path.to_s, options), id: "menu-item-#{name.html_safe.downcase.parameterize.underscore}", class: "#{:active if path === request.path}"
       end
 
       def at_a_glance(count, label, link = nil, options = {})

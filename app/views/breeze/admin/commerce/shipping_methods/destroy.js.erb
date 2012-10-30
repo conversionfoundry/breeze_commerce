@@ -1,5 +1,6 @@
 // If there's only one shipping method left, it should be protected from deletion. It won't be rendered on a page refresh, but we also need to remove it here.
-if (<%= @shipping_methods_count %> == 1) {
+if (<%= @shipping_method_count %> == 1) {
 	$('.shipping_method .actions .remove').remove();
 }
+$('#menu-item-shipping_methods .item-count').html(<%= @shipping_method_count %>);
 $('#shipping_method_<%= @shipping_method.id %>').fadeOut(function() { $(this).remove(); });

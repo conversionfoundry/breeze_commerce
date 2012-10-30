@@ -19,6 +19,14 @@ module Breeze
       #   Variant.find(variant_id)
       # end
 
+      def name
+        variant.name
+      end
+      
+      def sku_code
+        variant.sku_code
+      end
+
       def product
         variant.product
       end

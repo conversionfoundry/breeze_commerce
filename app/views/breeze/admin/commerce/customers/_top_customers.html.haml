@@ -1,0 +1,16 @@
+.customers-container
+  %table.fancy.customers
+    %thead
+      %tr
+        %th.name
+        %th.total Order Total
+    %tbody
+      - if @top_customers.any?
+        = render :partial => "breeze/admin/commerce/customers/top_customer", :collection => @top_customers
+      - else
+        %tr
+          %td.empty{:colspan => "6"} There are no customers to show here.
+    %tfoot
+      %tr
+        %td{:colspan => "8"}
+          = link_to 'See all customers', breeze.admin_store_customers_path

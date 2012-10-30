@@ -1,2 +1,2 @@
 $('.properties tbody tr#property_<%= @property.id %>').remove();
-$('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/variants", :object => @product.variants) %>');
+$('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/variants/variants", :object => @product.variants) %>');

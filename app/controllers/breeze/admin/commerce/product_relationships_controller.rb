@@ -25,10 +25,10 @@ module Breeze
           @product_relationship.update_attributes params[:product_relationship]
         end
         
-       def destroy
-        @product_relationship = product.product_relationship_children.find params[:id]
-        @product_relationship.try :destroy
-       end
+        def destroy
+          @product_relationship = product.product_relationship_children.find params[:id]
+          @product_relationship.try :destroy
+        end
 
         private
 

@@ -1,28 +1,40 @@
-= content_tag :tr, :class => :order, :id => "order_#{order.id}", :"data-id" => order.id do
+- classes = ' status-shipping-' + order.shipping_status.name.parameterize.underscore
+- classes += ' status-billing-' + order.billing_status.name.parameterize.underscore
+= content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
   = form_for order, :as => :order, :url => admin_store_order_path(order), :remote => true do |form|
-    %td.order_number
-      %p.number= order.order_number
-      %p.time= order.created_at.strftime('%I:%M %P')
-    %td.customer
-      - if order.customer
-        = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
-      - else
-        Guest
-      %br/
-      = order.email
-    %td.billing
-      = order.billing_address.to_html if order.billing_address
-      .status
-        = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => order.id, :class => 'billing_status status', :label => false}
+    %td.order.first
+      %p.number
+        %span.order_number
+          = order.order_number
+        / %span.time
+        /   = order.created_at.strftime('%I:%M %P')
+      %p.customer
+        - if order.customer
+          = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
+        = order.email
+      %p.total
+        = number_to_currency(order.total, :locale => :nz)
+        %span.currency
+          = store.currency
     %td.shipping
       = order.shipping_address.to_html if order.shipping_address
+    %td.line_items
+      %ul.line_items
+        - order.line_items.each do |line_item|
+          %li.line_item
+            = line_item.quantity
+            &times;
+            = line_item.name
+            (
+            = line_item.sku_code
+            )
+    %td.shipping_status
       .status
         = form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => order.id, :class => 'shipping_status status', :label => false}
-    %td.amount
-      = number_to_currency(order.total, :locale => :nz)
-      %span.currency
-        = store.currency
-    %td.actions
+    %td.billing_status
+      .status
+        = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => order.id, :class => 'billing_status status', :label => false}
+    %td.actions.last
       %p.order-actions
         =# link_to "Details", admin_store_order_path(order), :remote => true, :class => "small black disclosure button"
         = link_to "Edit", edit_admin_store_order_path(order), :class => "small black button"

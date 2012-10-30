@@ -1,0 +1,15 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "breeze/commerce" %>
+  <%= stylesheet_link_tag "breeze/commerce_admin" %>
+  <%= javascript_include_tag "breeze/commerce" %>
+<% end %>
+
+<%= pane_layout do |left| %>
+  <% left.header do %>
+    <h2>Commerce</h2>
+  <% end %>
+  <% left.inner do %>
+    <%= commerce_menu %>
+  <% end %>
+<% end %>
+

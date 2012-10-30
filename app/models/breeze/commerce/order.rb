@@ -4,7 +4,7 @@ module Breeze
       include Mongoid::Document
       include Mongoid::Timestamps
       
-      attr_accessible :email, :personal_message, :comment, :archived, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id
+      attr_accessible :email, :personal_message, :comment, :archived, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id
       field :email
       # field :subscribe, :type => Boolean
       field :personal_message
@@ -27,7 +27,8 @@ module Breeze
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
-      scope :ready, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").last )
+      scope :unfulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").last )
+      scope :fulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").last )
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
@@ -92,7 +93,7 @@ module Breeze
       end
 
       def show_in_admin?
-        if billing_status.name == 'Browsing'
+        if billing_status.name == 'Browsing' or billing_status.name == 'Started Checkout'
           return false
         end
         true

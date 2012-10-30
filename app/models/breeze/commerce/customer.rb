@@ -17,6 +17,8 @@ module Breeze
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
 
+      validates_uniqueness_of :email
+
 
       # def first_name
       #   archived ? 'archived' : 'unarchived'

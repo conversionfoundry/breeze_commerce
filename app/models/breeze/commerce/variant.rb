@@ -18,14 +18,14 @@ module Breeze
     class Variant
       include Mongoid::Document
 
-      attr_accessible :product_id, :archived, :available, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price
+      attr_accessible :product, :product_id, :archived, :published, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
       has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       
       field :archived, type: Boolean, default: false
-      field :available, type: Boolean
+      field :published, type: Boolean, default: false
       field :blurb
       field :cost_price_cents, :type => Integer
       field :discounted, type: Boolean
@@ -38,10 +38,11 @@ module Breeze
       mount_uploader :image, Breeze::Commerce::VariantImageUploader
 
 
-      scope :available, where(:available => true)
+      scope :published, where(:published => true)
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       scope :with_option, lambda { |option| where(option_ids: option.id) }
+      scope :discounted, where(discounted: true)
 
       validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
       validates_uniqueness_of :sku_code
@@ -63,7 +64,7 @@ module Breeze
       end
 
       def cost_price=(price)
-        self.cost_price_cents = (price.to_f  * 100).to_i
+        self.cost_price_cents = (price.to_f  * 100).round
       end
 
       def sell_price
@@ -71,7 +72,7 @@ module Breeze
       end
 
       def sell_price=(price)
-        self.sell_price_cents = (price.to_f  * 100).to_i
+        self.sell_price_cents = (price.to_f  * 100).round
       end
 
       def discounted_sell_price
@@ -79,7 +80,7 @@ module Breeze
       end
 
       def discounted_sell_price=(price)
-        self.discounted_sell_price_cents = (price.to_f  * 100).to_i
+        self.discounted_sell_price_cents = (price.to_f  * 100).round
       end
       
       # Show the most relevant price
