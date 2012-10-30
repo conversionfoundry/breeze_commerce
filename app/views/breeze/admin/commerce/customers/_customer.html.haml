@@ -1,0 +1,28 @@
+= content_tag :tr, :class => "customer", :id => "customer_#{customer.id}" do
+  %td= check_box_tag "customer_ids[]", customer.id
+  %td.title
+    = customer.title
+  %td.first-name
+    = customer.first_name
+  %td.last-name
+    = customer.last_name
+  %td.phone
+    = customer.phone
+  %td.email
+    = customer.email
+  %td.last-order
+    - if customer.last_order
+      %p.number
+        %span.order_number
+          = link_to customer.last_order.order_number, edit_admin_store_order_path(customer.last_order)
+      %p.total
+        = number_to_currency(customer.last_order.total, :locale => :nz)
+        %span.currency
+          = store.currency
+    - else
+      No orders yet
+
+  %td.actions
+    %p.customer-actions
+      = link_to "Edit", edit_admin_store_customer_path(customer), :class => "small black button"
+      = link_to "Delete", admin_store_customer_path(customer), :remote => true, :method => :delete, :class => "small red delete button"
