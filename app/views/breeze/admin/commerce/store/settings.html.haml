@@ -1,8 +1,5 @@
 - content_for :left do
-  = render :partial => "breeze/admin/commerce/commerce/left"
-  
-- content_for :head do
-  = stylesheet_link_tag asset_path "breeze/store.css"
+  = render :partial => "breeze/admin/commerce/shared/left"
 
 - content_for :title, "Store settings"
 = pane_layout do |panes|

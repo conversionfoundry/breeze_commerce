@@ -6,11 +6,11 @@
         = link_to "New customer", new_admin_store_customer_path, :class => "large new green customer button"
       %h1
         Customers
-      .filters
-        .states
-          = link_to "All (#{store.customers.count})", admin_store_customers_path
-          |
-      = will_paginate @customers
-      = render :partial => "breeze/admin/commerce/customers/customers", :locals => { :customers => @customers }
+      .box
+        .filters
+          .states
+            = link_to "All (#{store.customers.count})", admin_store_customers_path
+        = will_paginate @customers
+        = render :partial => "breeze/admin/commerce/customers/customers", :locals => { :customers => @customers }
 = content_for :left do
-  - render :partial => "breeze/admin/commerce/commerce/left"
+  - render :partial => "breeze/admin/commerce/shared/left"
