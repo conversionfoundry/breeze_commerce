@@ -59,11 +59,11 @@ module Breeze
       end
       
       def display_price_min
-        variants.map{|v| v.display_price}.min
+        variants.unarchived.published.map{|v| v.display_price}.min
       end
 
       def display_price_max
-        variants.map{|v| v.display_price}.max
+        variants.unarchived.published.map{|v| v.display_price}.max
       end
 
       def display_price
