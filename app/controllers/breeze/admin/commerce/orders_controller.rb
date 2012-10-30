@@ -21,10 +21,6 @@ module Breeze
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping).order_by(:sort_order.asc)
         end
         
-        def show
-          @order = store.orders.find(params[:id])
-        end
-        
         def new
           @order = store.orders.new
           @order.shipping_address ||= Breeze::Commerce::Address.new
@@ -38,6 +34,8 @@ module Breeze
           if @order.save
             redirect_to admin_store_orders_path
           else
+            @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
+            @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
             render :action => "new"
           end
         end
@@ -53,9 +51,15 @@ module Breeze
 
         def update
           @order = store.orders.find params[:id]
-          if @order.update_attributes(params[:order])
+          old_shipping_status = @order.shipping_status
 
+          if @order.update_attributes(params[:order])
             flash[:notice] = "The order was saved."
+
+            unless @order.shipping_status == old_shipping_status
+              Breeze::Admin::Commerce::OrderMailer.shipping_status_change_customer_notification(@order).deliver 
+            end
+
             respond_to do |format|
               format.html { redirect_to edit_admin_store_order_path(@order) }
               format.js
@@ -68,6 +72,7 @@ module Breeze
         def destroy
          @order = store.orders.find(params[:id])
          @order.update_attributes(:archived => true)
+         @order_count = store.orders.unarchived.count
         end
         
       end

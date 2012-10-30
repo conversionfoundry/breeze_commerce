@@ -3,7 +3,7 @@ module Breeze
     class ShippingMethod
       include Mongoid::Document
 
-      attr_accessible :name, :description, :price, :price_cents, :is_default, :archived, :position
+      attr_accessible :name, :description, :price, :price_cents, :is_default, :archived, :position, :store
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :shipping_methods
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_methods
@@ -35,7 +35,7 @@ module Breeze
       end
 
       def price=(price)
-        self.price_cents = (price.to_f  * 100).to_i
+        self.price_cents = (price.to_f  * 100).round
       end
 
       def price_explanation
@@ -44,7 +44,7 @@ module Breeze
 
       private
 
-      # If this is the only product image, it should be set as the default image for the product
+      # If this is the only shipping method, it should be set as the default shipping method for the store
       def set_as_default
         unless store.default_shipping_method
           store.default_shipping_method = self

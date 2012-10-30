@@ -1,8 +1,0 @@
-<% if @category.errors.empty? %>
-
-  $('.categories tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/categories/category", :object => @category) %>');
-  $('#category-details').dialog('close');
-<% else %>
-  $('#category-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/categories/new") %>');
-<% end %>
-

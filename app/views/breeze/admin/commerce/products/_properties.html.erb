@@ -1,4 +1,4 @@
-<div class="properties-container container">
+<div class="properties-container">
   <%= link_to "New property...", new_admin_store_product_property_path(@product.id), :class => "large new property button" %>
   <h2>Properties</h2>
   <table class="fancy properties">
@@ -22,25 +22,3 @@
     </tfoot>
   </table>
 </div>
-
-<script type="text/javascript">
-  $(function() {
-    // $('.available-toggle').live('mousedown', function() {
-    //   $checkbox =  $(this).siblings('.property-available');
-    //   $checkbox.click().change();
-    //   checked = $(this).siblings('.property-available:checked').length > 0;
-    //   $(this).animate({
-    //     'background-position': (checked ? 0 : 100) + '% 0%'
-    //     }, 'slow', 'easeInOutQuad');
-    //   $(this).parents('.available').find('.text').html(checked ? 'Yes' : 'No');
-    //   id = $(this).closest('tr.property').attr('data-id');
-    //   product_id = $(this).closest('tr.property').attr('data-product-id');
-    //   $.ajax({
-    //     url: '/admin/store/products/' + product_id + '/properties/' + id + '.js',
-    //       type: 'post',
-    //       dataType: 'script',
-    //       data: '_method=put&property[available]=' + checked
-    //   });
-    // });
-  });
- </script>

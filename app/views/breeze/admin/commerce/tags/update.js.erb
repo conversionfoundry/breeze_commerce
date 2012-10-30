@@ -1,0 +1,7 @@
+<% if @tag.errors.empty? %>
+  $('#tag-details').dialog('close');
+  $('#<%= "tag_#{@tag.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/breeze/admin/commerce/tags/tag", :object => @tag) %>');
+  $('#<%= "tag_#{@tag.id}" %>').effect("highlight", { color: "#ffffc0" }, 3000);
+<% else %>
+  $('#tag-details').html('<%= escape_javascript render(:file => "/breeze/admin/commerce/tags/edit") %>');
+<% end %>

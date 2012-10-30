@@ -1,0 +1,50 @@
+= content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id, :"data-product-id" => variant.product.id do
+  - if variant.image_url
+    %td.image
+      = image_tag variant.image_url(:thumbnail)
+  - else
+    %td.image.missing_value
+      No image
+  %td.name
+    %h4
+      = variant.name
+    %p
+      = variant.blurb
+  %td.sku-code
+    = variant.sku_code
+  %td.price
+    - if variant.discounted
+      %span.old_price
+        = number_to_currency(variant.sell_price, :locale => :nz)
+      %span.currency 
+        = store.currency
+      %span.discounted_price.current_price
+        = number_to_currency(variant.discounted_sell_price, :locale => :nz)
+      %span.currency 
+        = store.currency
+    - else
+      %span.current_price
+        = number_to_currency(variant.sell_price, :locale => :nz)
+      %span.currency 
+        = store.currency
+  - variant.product.properties.each do |property|
+    - if variant.option_for_property(property)
+      %td
+        = variant.option_for_property(property).name
+    - else
+      %td.missing_value
+        Missing value
+  %td.published
+    .field
+      = check_box_tag "variant_#{variant.id}_published", "1", variant.published, :class => "variant-published", style: 'display: none;'
+  %td.actions
+    %p.variant-actions
+      = link_to "Delete", admin_store_product_variant_path(variant.product, variant), :remote => true, :method => :delete, :class => "small red delete button"
+      = link_to "Edit", edit_admin_store_product_variant_path(variant.product, variant), :class => "small black edit button"
+
+:javascript
+  $(function() {
+    $('<div id="#variant_#{variant.id}_published_toggle" class="published-toggle"></div>').insertAfter('#variant_#{variant.id}_published').css({
+       'background-position': ($('#variant_#{variant.id}_published:checked').length > 0 ? 0 : 100) + '% 0%'
+    })
+  });

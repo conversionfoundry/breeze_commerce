@@ -28,6 +28,7 @@ module Breeze
           if @shipping_method.save
             # Set up variables. The view will handle validation.
             @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
+            @shipping_method_count = store.shipping_methods.unarchived.count
           else
             @shipping_method_types = Breeze::Commerce::ShippingMethod.types
           end
@@ -68,7 +69,7 @@ module Breeze
           # if @shipping_method.is_default?
 
           # We don't want people to delete the last available shipping method, so we pass this to destroy.js...
-          @shipping_methods_count = Breeze::Commerce::Store.first.shipping_methods.unarchived.count
+          @shipping_method_count = store.shipping_methods.unarchived.count
         end
 
         # TODO: Move this to a mixin, as we'll also use it elsewhere

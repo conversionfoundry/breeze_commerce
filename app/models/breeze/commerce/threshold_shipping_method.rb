@@ -30,29 +30,29 @@ module Breeze
       def price(order=nil)
         if order 
           if order.item_total < threshold
-              read_attribute(:price_cents).to_i / 100.0
+              read_attribute(:price_cents).round / 100.0
           else
             above_threshold_price
           end
         else
-          read_attribute(:price_cents).to_i / 100.0
+          read_attribute(:price_cents).round / 100.0
         end
       end
 
       def threshold
-        self.threshold_cents.to_i / 100.0
+        self.threshold_cents.round / 100.0
       end
 
       def threshold=(amount)
-        self.threshold_cents = (amount.to_f  * 100).to_i
+        self.threshold_cents = (amount.to_f  * 100).round
       end
 
       def above_threshold_price
-        self.above_threshold_price_cents.to_i / 100.0
+        self.above_threshold_price_cents.round / 100.0
       end
 
       def above_threshold_price=(amount)
-        self.above_threshold_price_cents = (amount.to_f  * 100).to_i
+        self.above_threshold_price_cents = (amount.to_f  * 100).round
       end
 
       def price_explanation

@@ -3,6 +3,5 @@
     = render :partial => "breeze/admin/commerce/notes/note", :collection => @order.notes
 #note-new
   / We can't use a form here, because we're nested inside the order form, so we'll use jQuery to submit
-  =# form_for [:admin, :store, @order, Breeze::Commerce::Note.new], :remote => true do |form|
   %p= text_area_tag 'note-new-body', nil, {:rows => 3, :placeholder => 'Add a Merchant Note                                                      (this will not be visible to the customer)'}
   %p= link_to 'Save Note', '#', class: 'button small', id: 'note-save', data: { order_id: @order.id.to_s }

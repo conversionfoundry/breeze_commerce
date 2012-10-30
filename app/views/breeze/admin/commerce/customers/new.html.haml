@@ -2,7 +2,7 @@
 = pane_layout do |main|
   = main.inner do
     = scrollable_layout do
-      .customer-new
+      .customer-new.box
         = render "breeze/admin/commerce/customers/form", :url => admin_store_customers_path
 - content_for :left do
-  = render :partial => "breeze/admin/commerce/commerce/left"
+  = render :partial => "breeze/admin/commerce/shared/left"

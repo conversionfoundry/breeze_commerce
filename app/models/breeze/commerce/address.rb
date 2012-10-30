@@ -26,12 +26,12 @@ module Breeze
       def to_html
         result = '<p class="address">'
         result += '<span class="name">' + (name || 'Unknown Name') + '</span><br />'
-        result += '<span class="name">' + (address || '') + '</span><br />'
-        result += '<span class="name">' + (city || '') + '</span><br />'
-        result += '<span class="name">' + (state || '') + '</span><br />'
-        result += '<span class="name">' + (postcode || '') + '</span><br />'
-        result += '<span class="name">' + (country || '') + '</span><br />'
-        (result += '<span class="name">' + 'Contact Phone:' + phone + '</span>') if phone
+        result += '<span class="address">' + (address || '') + '</span><br />'
+        result += '<span class="city">' + (city || '') + '</span><br />' unless city.blank?
+        result += '<span class="state">' + (state || '') + '</span><br />' unless state.blank?
+        result += '<span class="postcode">' + (postcode || '') + '</span><br />' unless postcode.blank?
+        result += '<span class="country">' + (country || '') + '</span><br />'
+        (result += '<span class="phone">' + 'Contact Phone:' + phone + '</span>') unless phone.blank?
         result += '</p>'
         result.html_safe
       end

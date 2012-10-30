@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'will_paginate', "3.0.pre4"
   s.add_dependency "nested_form"
   s.add_dependency "haml"
+  s.add_dependency "sass-rails"
   s.add_dependency "carrierwave"
   s.add_dependency "carrierwave-mongoid"
   # s.add_development_dependency "rspec"

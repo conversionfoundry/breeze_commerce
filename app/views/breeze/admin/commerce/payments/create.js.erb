@@ -1,4 +1,3 @@
-alert('foo');
 <% if @payment.errors.empty? %>
   $('ol.payments').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/payments/payment", :object => @payment) %>');
 <% end %>

@@ -123,6 +123,15 @@ table#cart
     float: right
     margin: 0
     padding: 0
+  fieldset
+    ol
+      margin: 0
+      padding: 0
+      float: left
+    li
+      list-style: none
+      padding: 0
+      margin: 0
 
 .address textarea
   resize: vertical
@@ -165,7 +174,7 @@ table#cart
   #order-billing
     width: 50%
     float: left
-    .status
+    ol.status
       border: dashed 4px #cccccc
       -webkit-border-radius: 1em
       -moz-border-radius: 1em
@@ -194,15 +203,7 @@ div.detail span
 span.currency
   font-size: 80%
 
-fieldset
-  ol
-    margin: 0
-    padding: 0
-    float: left
-  li
-    list-style: none
-    padding: 0
-    margin: 0
+
 
 li.state-postcode
   label
@@ -252,8 +253,10 @@ ul.products li
 .product-header .breeze-minicart
   float: right
 
-.variants
+#variants
   float: left
+  table.variants
+    float: left
 
 #product_info_region
   clear: none

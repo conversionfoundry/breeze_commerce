@@ -4,16 +4,16 @@
     = scrollable_layout do
       #store_dashboard
         #products.box.col3
-          %h2 Your products
+          %h2 Your Store
           %table.at-a-glance
-            = at_a_glance store.products.unarchived.available.count, "public product(s)", admin_store_products_path + "#tab_published"
-            = at_a_glance store.customers.count, "registered customers", admin_store_products_path + "#tab_published"
-          %p/
+            = at_a_glance @published_products_count, 'published product'.pluralize(@published_products_count), admin_store_products_path
+            = at_a_glance store.customers.unarchived.count, "registered customers", admin_store_customers_path
+            = at_a_glance @fulfilled_orders.count, "fulfilled orders", admin_store_orders_path
         #orders-ready.box.col3
-          %h2 Orders to process
-          .hint
+          %h2 Orders to Fulfill
+          %p.hint
             Paid orders that haven't been shipped yet.
-          = render :partial => "breeze/admin/commerce/orders/ready_orders", :locals => { :orders => @ready_orders }
+          = render :partial => "breeze/admin/commerce/orders/ready_orders", :locals => { :orders => @unfulfilled_orders }
         #top.box.col3
           %h2 Top Selling Products
           = render partial: 'breeze/admin/commerce/products/top_sellers', locals: { products: @top_products }
@@ -21,4 +21,4 @@
           = render :partial => "breeze/admin/commerce/customers/top_customers", :locals => { :customers => @top_customers }
 
 - content_for :left do
-  = render :partial => "breeze/admin/commerce/commerce/left"
+  = render :partial => "breeze/admin/commerce/shared/left"

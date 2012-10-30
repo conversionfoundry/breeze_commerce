@@ -1,17 +1,17 @@
 <%= form.fieldset do %>
   <%= form.text_field :title, :required => false %>
 
-	<li><%= radio_button_tag 'content[list_type]', "category", @content.list_type=='category', :class => 'list_type' %> By Category</li>
+	<li><%= radio_button_tag 'content[list_type]', "by_tags", @content.list_type=='by_tags', :class => 'list_type' %> By Tags</li>
 	<li><%= radio_button_tag 'content[list_type]', "related", @content.list_type=='related', :class => 'list_type' %> Related to a product</li>
 
-	<div id="list_type_category" class="list_type_option" style="display: none;">
-	  <%= form.select :category_ids, Breeze::Commerce::Store.first.categories.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Categories"}, :class => "multiselect", :multiple => "multiple" %>
+	<div id="list_type_by_tags" class="list_type_option" style="display: none;">
+	  <%= form.select :tag_ids, Breeze::Commerce::Store.first.tags.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Tags"}, :class => "multiselect", :multiple => "multiple" %>
 
-	  <p>Select product categories to list (leave empty to list all products)</p>
+	  <p>Select product tags to list (leave empty to list all products)</p>
 	</div>
 
 	<div id="list_type_related" class="list_type_option" style="display: none;">
-	 	<%= form.select :product_id, Breeze::Commerce::Store.first.products.available.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"} %>
+	 	<%= form.select :product_id, Breeze::Commerce::Store.first.products.published.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"} %>
 	  <p>The list will show items related to the selected product.</p>
 	</div>
 
@@ -22,29 +22,13 @@
 <script type="text/javascript" charset="utf-8">
 	  $(function() {
 
-    $('.multiselect').multiSelect(); // This causes a breakpoint for some reason
-    // Multiselect widget for categories
-	  
-	  // Multiselect widget by http://loudev.com
-	  // $('#content_category_ids').multiSelect({
-	  //   selectableHeader:'<h4>Available</h4>',
-	  //   selectedHeader:'<h4>Active</h4>'
-	  // });
-	  // $('#ms-content_category_ids').append("<div class='ms-actions btn-group'><button id='categories-select_all' class='btn'>select all</button><button id='categories-deselect_all' class='btn'>deselect all</button></div>");
-	  // $('#categories-select_all').click(function(){
-	  //   $('#content_category_ids').multiSelect('select_all');
-	  //   return false;
-	  // });
-	  // $('#categories-deselect_all').click(function(){
-	  //   $('#content_category_ids').multiSelect('deselect_all');
-	  //   return false;
-	  // });
+	    $('.multiselect').multiSelect();
 
-    $('#list_type_<%= @content.list_type %>').show();
+	    $('#list_type_<%= @content.list_type %>').show();
 
-    $('input.list_type').change(function(e) {
-    	$('.list_type_option').hide();
-			$( '#list_type_' + $(this).val() ).show();
+	    $('input.list_type').change(function(e) {
+	    	$('.list_type_option').hide();
+				$( '#list_type_' + $(this).val() ).show();
 		});
   });
 </script>

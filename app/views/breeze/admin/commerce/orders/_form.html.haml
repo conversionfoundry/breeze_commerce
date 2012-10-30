@@ -8,10 +8,10 @@
       %h1= @order.new_record? ? 'New Order' : "Editing Order "
       = render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order
       #order-customer.section
-        - if @order.customer
-          = render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer}
-        - else
-          .customer-card
+        .customer-card
+          - if @order.customer
+            = render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer}
+          - else
             %p.customer-name
               %span.name
                 Guest
@@ -20,8 +20,9 @@
                 = @order.billing_address.phone if @order.billing_address
               %li.email
                 = @order.email
-        = form.label :customer_id, "Change customer for this order"
-        = form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :include_blank => true, :label => false}
+          .change_customer
+            = form.label :customer_id, @order.customer ? "Change customer for this order" : "Set customer for this order"
+            = form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :include_blank => 'None', :label => false}
       #order-details
         %h3#order-number
           Order number:

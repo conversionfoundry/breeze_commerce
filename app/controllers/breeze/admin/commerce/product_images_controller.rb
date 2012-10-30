@@ -16,21 +16,10 @@ module Breeze
           redirect_to edit_admin_store_product_path(@product)
         end
 
-        # def edit
-        #   @product_image = Breeze::Commerce::ProductImage.find params[:id]
-        # end
-
         def destroy
           @product_image = Breeze::Commerce::ProductImage.find params[:id]
           @product_image.try :destroy
         end
-
-        # def reorder
-        #   params[:image].each_with_index do |id, index|
-        #     Image.find(id).update_attributes :position => index
-        #   end
-        #   render :nothing => true
-        # end
 
         # TODO: Move this to a mixin, as we'll also use it elsewhere
         def reorder

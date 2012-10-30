@@ -2,19 +2,19 @@
 = content_tag :tr, :class => :order, :id => "order_#{order.id}", :"data-id" => order.id do
   = form_for order, :as => :order, :url => admin_store_order_path(order), :remote => true do |form|
     %td.order_number
-      %p.number= order.order_number
-      %p.time= order.created_at.strftime('%I:%M %P')
-    %td.customer
+      %p.number
+        %span.order_number
+          = order.order_number
+        / %span.time
+        /   = order.created_at.strftime('%I:%M %P')
       - if order.customer
         = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
-      - else
-        Guest
-      %br/
       = order.email
     %td.amount
-      = number_to_currency(order.total, :locale => :nz)
-      %span.currency
-        = store.currency
+      %p.total
+        = number_to_currency(order.total, :locale => :nz)
+        %span.currency
+          = store.currency
     %td.actions
       %p.order-actions
         = link_to "Edit", edit_admin_store_order_path(order), :class => "small black button"
