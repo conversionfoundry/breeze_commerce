@@ -1,20 +1,23 @@
 require 'breeze'
 
-## TODO: Not sure why this isn't working
-# Breeze.hook :define_abilities do |user, abilities|
-#   # Rails.logger.debug '********** user: ' + user.inspect
-#   # Rails.logger.debug '********** abilities: ' + abilities.inspect
-#   
-#   abilities.instance_eval do
-#     can :manage, Breeze::Commerce::Shop if user.editor?
-#   end
-# end
+Breeze.hook :define_abilities do |abilities_array, user, abilities|
+  abilities.instance_eval do
+    can :manage, Breeze::Commerce::Store if user.roles.include? :merchant
+    # can :manage, Breeze::Commerce::Customer if user.roles.include? :merchant
+    # can :manage, Breeze::Commerce::Customer, :user_id => current_user.id
+  end
+end
 
 Breeze.hook :admin_menu do |menu, user|
-  # Remove the menu item provided by Breeze Account, as we'll manage customers in the Store section
-  menu.delete_if{|item| item[:name] == "Customers"}
+  if user.can? :manage, Breeze::Commerce::Store
+    # Remove the menu item provided by Breeze Account, as we'll manage customers in the Store section
+    menu.delete_if{|item| item[:name] == "Customers"}
   
-  menu << { :name => "Store", :path => "/admin/store" } if user.can? :manage, Breeze::Content::Item
+    # Add Store menu item to main Breeze admin menu
+    menu << { :name => "Store", :path => "/admin/store" } if user.can? :manage, Breeze::Content::Item
+  else
+    menu
+  end
 end
 
 Breeze.hook :user_roles do |user_roles|
@@ -32,10 +35,4 @@ end
 Breeze.hook :component_info do |component_info|
 	component_info << {:name => 'Breeze Commerce', :version => Breeze::Commerce::VERSION }
 end
-
-# Rails.application.config.to_prepare do
-#   Breeze::Controller.helper Breeze::Commerce::ContentsHelper
-# end
-
-
 
