@@ -1,7 +1,5 @@
 - content_for :head do
   = stylesheet_link_tag "breeze/marquess/marquess.css"
-  = stylesheet_link_tag "breeze/uploadify/uploadify.css"
-  =# javascript_include_tag "breeze/uploadify/swfobject.js", "breeze/uploadify/uploadify.js"
 
 = breeze_form_for @product, :as => :product, :url => url do |form|
   .actions
@@ -11,11 +9,7 @@
     = link_to "View Product", @product.permalink, :class => "large view button", :target => :_blank unless @product.new_record?
     = submit_tag "Save Product", :class => "large green save button"
     = link_to "Delete Product", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record?
-    / - unless @product.new_record?
-    /   = form.fieldset :class => "upload" do
-    /     / TODO: Fix this
-    /     = content_tag :div, :id => "uploader", "data-session-key" => Rails.configuration.session_options[:key], "data-session-id" => cookies[Rails.configuration.session_options[:key]] do
-    /       = link_to "Upload file(s)...", new_admin_store_product_product_image_path(@product), :class => "large upload button"
+    
   %h1= @product.new_record? ? 'New Product' : "Editing Product \"#{@product.title}\""
   = render "/breeze/admin/shared/error_messages", :target => @product, :object_name => :product
 

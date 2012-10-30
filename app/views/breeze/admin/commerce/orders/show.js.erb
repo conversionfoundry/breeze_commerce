@@ -1,1 +1,0 @@
-$('#order_<%= @order.id %>').after('<%= escape_javascript render(:partial => "/breeze/admin/commerce/orders/details", :object => @order) %>').effect("highlight", { color: "#ffffc0" }, 3000);
