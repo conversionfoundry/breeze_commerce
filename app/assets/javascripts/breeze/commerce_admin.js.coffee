@@ -198,6 +198,31 @@ $(document).ready ->
       "background-position": ((if $("#product_published:checked").length > 0 then 0 else 100)) + "%"
     , "slow", "easeInOutQuad"
 
+# List Filters
+$(".filters a").live "click", (e) ->
+  $.get @href
+  e.preventDefault()
+
+# MultiSelect
+$(document).ready ->
+  $('.multiselect').multiSelect();
+
+# Merchant notes for orders
+$("div#order-notes #note-save").live "click", (e) ->
+  e.preventDefault()
+  $.ajax
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+    url: "/admin/store/orders/" + $(this).data("order-id") + "/notes"
+    dataType: "html"
+    type: "POST"
+    data:
+      note:
+        body_text: $("#note-new-body").val()
+    success: (result) ->
+      eval result
+    error: (result) ->
+      eval result
 
 
 
