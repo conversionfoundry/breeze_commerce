@@ -38,5 +38,10 @@ describe Breeze::Commerce::Customer do
 				Breeze::Commerce::Customer.archived.should_not include @jones
 			end
 		end
+
+		context "managing profile" do
+			it "can manage own profile"
+			it "cannot manage another user's profile"
+		end
 	end
 end
