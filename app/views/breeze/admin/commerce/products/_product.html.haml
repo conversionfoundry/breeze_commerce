@@ -12,7 +12,7 @@
     %span.badge
       = product.variants.unarchived.count
   %td.price
-    - if product.variants.count > 1
+    - if product.variants.count > 0
       From
       = number_to_currency(product.display_price, :locale => :nz)
       %span.currency 
