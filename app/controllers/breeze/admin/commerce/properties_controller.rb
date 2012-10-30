@@ -9,7 +9,6 @@ module Breeze
         end
 
         def create
-
           @property = product.properties.create(params[:property])
           if params[:property][:option_names].blank?
             @property.errors.add(:options, 'Please enter at least one option.')
@@ -39,9 +38,7 @@ module Breeze
           @property.options.each do |option|
             option.destroy unless param_options.include? option.name
           end
-          
           # TODO: Need to check variants are still OK after properties and options change
-          
         end
 
         def destroy

@@ -28,14 +28,6 @@ module Breeze
         end
       end
 
-      # TODO: Is this method still used?
-      def remove_item
-        @order = current_order(session)
-        line_item = @order.line_items.find(params[:id])
-        line_item.delete if line_item
-      end
-
-
       # Add items to the order (i.e. the shopping cart)
       def populate
         @order = current_order(session) || create_order(session)

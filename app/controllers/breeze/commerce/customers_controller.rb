@@ -38,7 +38,6 @@ module Breeze
       end
       
       def destroy
-        binding.pry
         @customer = store.customers.find(params[:id])
         @customer.orders.destroy_all
         @customer.try :destroy

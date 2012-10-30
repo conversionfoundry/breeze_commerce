@@ -21,10 +21,6 @@ module Breeze
           @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping).order_by(:sort_order.asc)
         end
         
-        def show
-          @order = store.orders.find(params[:id])
-        end
-        
         def new
           @order = store.orders.new
           @order.shipping_address ||= Breeze::Commerce::Address.new
