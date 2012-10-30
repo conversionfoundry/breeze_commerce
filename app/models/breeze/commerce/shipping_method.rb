@@ -35,7 +35,7 @@ module Breeze
       end
 
       def price=(price)
-        self.price_cents = (price.to_f  * 100).to_i
+        self.price_cents = (price.to_f  * 100).round
       end
 
       def price_explanation

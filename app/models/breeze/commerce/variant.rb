@@ -64,7 +64,7 @@ module Breeze
       end
 
       def cost_price=(price)
-        self.cost_price_cents = (price.to_f  * 100).to_i
+        self.cost_price_cents = (price.to_f  * 100).round
       end
 
       def sell_price
@@ -72,7 +72,7 @@ module Breeze
       end
 
       def sell_price=(price)
-        self.sell_price_cents = (price.to_f  * 100).to_i
+        self.sell_price_cents = (price.to_f  * 100).round
       end
 
       def discounted_sell_price
@@ -80,7 +80,7 @@ module Breeze
       end
 
       def discounted_sell_price=(price)
-        self.discounted_sell_price_cents = (price.to_f  * 100).to_i
+        self.discounted_sell_price_cents = (price.to_f  * 100).round
       end
       
       # Show the most relevant price
