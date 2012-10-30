@@ -1,9 +1,9 @@
-.products-container.container
-  %table.products
+.products-container
+  %table.fancy.products
     %thead
       %tr
-        %th{:style => ""} Name
-        %th{:style => ""} Sales
+        %th.name
+        %th.sales Sales
     %tbody
       - if products.any?
         = render :partial => "breeze/admin/commerce/products/top_seller", :collection => products
@@ -12,4 +12,5 @@
           %td.empty{:colspan => "2"} There are no products to show here.
     %tfoot
       %tr
-        %td{:colspan => "2"}  
+        %td{:colspan => "2"}
+          = link_to 'See all products', breeze.admin_store_products_path

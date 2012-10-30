@@ -12,9 +12,11 @@ module Breeze
         end
 
         def index
+          @published_products_count = store.products.unarchived.published.count
           @top_customers = store.customers.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
-          @top_products = Breeze::Commerce::Product.all.sort_by { |order| order.number_of_sales }.reverse.paginate :page => 1, :per_page => 10
-          @ready_orders = store.orders.unarchived.ready.paginate :page => 1, :per_page => 10
+          @top_products = Breeze::Commerce::Product.unarchived.sort_by { |order| order.number_of_sales }.reverse.paginate :page => 1, :per_page => 10
+          @fulfilled_orders = store.orders.unarchived.fulfilled
+          @unfulfilled_orders = store.orders.unarchived.unfulfilled
         end
         
         def settings
