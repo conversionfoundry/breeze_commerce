@@ -18,11 +18,6 @@ module Breeze
       scope :unarchived, where(:archived.in => [ false, nil ])
 
       validates_uniqueness_of :email
-
-
-      # def first_name
-      #   archived ? 'archived' : 'unarchived'
-      # end
       
       def last_order
         orders.last
