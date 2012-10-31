@@ -1,6 +1,12 @@
 = content_tag :tr, :class => :tag, :id => "tag_#{tag.id}", :"data-id" => tag.id do
   %td.name
-    = "#{tag.name} (#{Breeze::Commerce::Product.with_tag(tag).count})"
+    = "#{tag.name}" 
+    = badge( Breeze::Commerce::Product.with_tag(tag).count )
+    %ul.products
+      - products_count = tag.products.count
+      - tag.products.unarchived.each_with_index do |product, index|
+        %li.product
+          = link_to(product.name, edit_admin_store_product_path(product)) + (index == products_count - 1 ? '' : ', ')
   %td.actions
     %p.tag-actions
       = link_to "Edit", edit_admin_store_tag_path(tag), :class => "small black edit button"

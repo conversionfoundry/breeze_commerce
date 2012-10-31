@@ -2,11 +2,11 @@ module Breeze
   module Commerce
     class Tag
       include Mongoid::Document
-      include Breeze::Content::Mixins::Permalinks
       
       attr_accessible :name, :sort, :position
       field :name
       field :sort
+      field :slug
       field :position, :type => Integer
 
       belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :tags
@@ -19,14 +19,15 @@ module Breeze
       validates_presence_of :name
       # validates_uniqueness_of :name, :slug, :scope => :store_id # TODO: This seems to always be invalid.
 
-      before_save :regenerate_permalink!
+      # before_save :regenerate_slug!
+      before_validation :fill_in_slug
 
       protected
 
-      def regenerate_permalink!
+      def fill_in_slug
         self.slug = name.downcase.gsub(/[^a-z0-9\-]+/, '-')
-        self.permalink = "/#{slug}" unless slug.blank?
       end
+
     end
   end
 end
