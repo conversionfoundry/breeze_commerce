@@ -28,7 +28,7 @@ module Breeze
 
       validates_associated :variants
 
-      before_save :regenerate_permalink!
+      before_save :regenerate_permalink
 
       def name
         title
