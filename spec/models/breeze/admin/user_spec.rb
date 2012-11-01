@@ -2,18 +2,28 @@ require 'spec_helper'
 require "cancan/matchers"
 
 describe "Breeze::Admin::User" do
-  describe "abilities" do
-    subject { ability }
-    let(:ability){ Breeze::Admin::Ability.new(user) }
+  describe Breeze::Admin::Ability do
+    # subject { ability }
+    # let(:ability){ Breeze::Admin::Ability.new(user) }
 
-    context "when is an merchant" do
-      let(:user){ Factory(:merchant) }
-      it{ should be_able_to(:manage, Breeze::Commerce::Store.new) }
+    before :each do
+      @store = FactoryGirl.create :store
     end
 
-    context "when is an merchant" do
-      let(:user){ Factory(:nonmerchant) }
-      it{ should_not be_able_to(:manage, Breeze::Commerce::Store.new) }
+    context "when user is an merchant" do
+      it "can manage store" do
+        merchant = FactoryGirl.create :merchant
+        ability = Breeze::Admin::Ability.new(merchant)
+        ability.should be_able_to :manage, @store
+      end
+    end
+
+    context "when user isn't a merchant" do
+      it "can't manage store" do
+        nonmerchant = FactoryGirl.create :nonmerchant 
+        ability = Breeze::Admin::Ability.new(nonmerchant)
+        ability.should_not be_able_to :manage, @store
+      end
     end
 
   end

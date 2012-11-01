@@ -8,7 +8,6 @@ describe Breeze::Commerce::Order do
 
 
 	it "has a valid factory" do
-		# create(:order)
 		create(:order).should be_valid
 	end
 	it "has the default associations when first created" do

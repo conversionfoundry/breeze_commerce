@@ -18,6 +18,7 @@ describe Breeze::Commerce::Customer do
 	it "returns a customer's full name as a string" do
 		create(:customer, first_name: "John", last_name: "Doe").name.should eq "John Doe"
 	end
+
 	describe "scopes" do
 		before :each do
 			@smith = create(:customer, last_name: "Smith")
@@ -39,17 +40,20 @@ describe Breeze::Commerce::Customer do
 				Breeze::Commerce::Customer.archived.should_not include @jones
 			end
 		end
+	end
 
-		context "managing profile" do
-			it "can manage own profile" do
-	      customer = create(:customer)
-        customer.should be_able_to(:manage, customer)
-			end
-			it "cannot manage another user's profile" do
-	      customer1 = create(:customer)
-	      customer2 = create(:customer)
-        customer1.should be_able_to(:manage, customer2)
-			end
+	describe Breeze::Admin::Ability do
+		it "can manage own profile" do
+      customer = create :customer
+      ability = Breeze::Admin::Ability.new(customer)
+      ability.should be_able_to(:manage, customer)
+		end
+		it "cannot manage another user's profile" do
+      customer1 = create(:customer)
+      customer2 = create(:customer)
+      ability1 = Breeze::Admin::Ability.new(customer1)
+      ability1.should_not be_able_to(:manage, customer2)
 		end
 	end
+
 end
