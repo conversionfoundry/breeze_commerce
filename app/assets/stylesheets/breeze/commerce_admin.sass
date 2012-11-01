@@ -91,9 +91,6 @@ $colour-highlight: rgba(141, 198, 63, 0.15)
     border-left: 8px solid #ffc
     border-bottom: 8px solid transparent
 
-.products-container
-  position: relative
-
 /* Typography
 .old_price
   text-decoration: line-through
@@ -508,6 +505,8 @@ abbr[title]
         margin-right: 8px
 
 /* Products
+.products-container
+  position: relative
 
 #edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
   background: none
@@ -517,14 +516,25 @@ abbr[title]
   position: relative
 
 
-#edit_product
+form#edit_product
   .container
     .new.button
       float: right
       margin: 12px
     table
       background: white
-  .container#product-images
+  #product-details
+    position: relative
+    width: 100%
+    fieldset
+      input#product_title
+        width: 20em
+      input#product_teaser
+        width: 40em
+      input#product_slug
+        margin-left: 0.5em
+        width: 10em
+  #product-images
     ul#product_images
       @include border-radius(8px)
       background: #dddddd

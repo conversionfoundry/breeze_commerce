@@ -15,7 +15,6 @@ module Breeze
         end
 
         def create
-          binding.pry
           @tag = store.tags.create params[:tag].merge({ position: store.tags.count })
           @tag_count = store.tags.count
         end
