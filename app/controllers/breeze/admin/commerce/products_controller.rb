@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class ProductsController < Breeze::Admin::Commerce::Controller
         def index
-          @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
+          @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:created_at.desc)
         end
         
         def new
