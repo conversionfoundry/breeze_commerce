@@ -86,6 +86,17 @@ module Breeze
         count
       end
 
+      # Convenience method for designers
+      # ... allows setting up a conditional in product listing theme partials without having to know how to find a tag in the database
+      def has_tag_named? tag_name
+        tag = Breeze::Commerce::Tag.where( name: tag_name )
+        if tag.exists?
+          tags.include? tag.first
+        else
+          false
+        end
+      end
+
       # Are any of the product's variants discounted?
       def any_variants_discounted?
         variants.unarchived.published.discounted.count > 0
