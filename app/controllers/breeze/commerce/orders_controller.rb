@@ -28,6 +28,19 @@ module Breeze
         end
       end
 
+      def create
+      end
+
+      # Currently only need to update shipping method from shopping cart
+      def update
+        @order = current_order(session)
+        @order.update_attributes params[:order]
+        @order.save
+        respond_to do |format|
+          format.js
+        end
+      end 
+
       # Add items to the order (i.e. the shopping cart)
       def populate
         @order = current_order(session) || create_order(session)
@@ -116,22 +129,6 @@ module Breeze
           render :action => "checkout"
         end
       end
-
-      def create
-      end
-
-      # Currently only need to update shipping method from shopping cart
-      def update
-        @order = current_order(session)
-        # if params[:order].has_key? :shipping_method
-        #   params[:order].delete(:shipping_method)
-        # end
-        @order.update_attributes params[:order]
-        @order.save
-        respond_to do |format|
-          format.js
-        end
-      end 
 
       def thankyou 
         @payment = Payment.find params[:id]

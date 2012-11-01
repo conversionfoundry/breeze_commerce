@@ -52,7 +52,7 @@ $(document).ready ->
       type: "PUT"
       data:
         order:
-          shipping_method: $(this).val()
+          shipping_method_id: $(this).val()
       success: (result) ->
         eval result
       error: (result) ->

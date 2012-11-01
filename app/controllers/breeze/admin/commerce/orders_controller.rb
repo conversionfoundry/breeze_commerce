@@ -10,7 +10,7 @@ module Breeze
         # TODO: Filtering by status?
         def index
           # Find all unarchived orders for the store which are ready for showing in admin (i.e. have gone to checkout)
-          @orders = Breeze::Commerce::Order.unarchived.where(:store_id => store.id).find_all{ |o| o.show_in_admin? }
+          @orders = store.orders.unarchived.find_all{ |o| o.show_in_admin? }
           # # @filters = Breeze::Commerce::Order::FILTERS
           # # if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
           # #   @orders = @orders.send(params[:show])
