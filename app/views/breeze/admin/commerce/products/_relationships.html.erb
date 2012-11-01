@@ -21,7 +21,7 @@
         <% if @product.related_products.any? %>
           <%= render :partial => "breeze/admin/commerce/products/relationship", :collection => @product.product_relationship_children %>
         <% else %>
-          <tr class="empty"><td class="empty" colspan="5">There are no relationships for this product.</td></tr>
+          <tr class="empty"><td class="empty" colspan="5">There are no relationships for this product yet.</td></tr>
         <% end %>
       </tbody>
       <tfoot>

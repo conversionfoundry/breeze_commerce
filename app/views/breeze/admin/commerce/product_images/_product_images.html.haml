@@ -1,4 +1,4 @@
-.product_images-container.container
+.product_images-container
   = link_to 'Add an Image', new_admin_store_product_product_image_path(@product), class: 'large new product_image button'
   %h2 Images
   %ul#product_images{data: {product_id: @product.id } }
@@ -6,5 +6,5 @@
       = render partial: "breeze/admin/commerce/product_images/product_image", collection: @product.images, locals: {product_images_count: @product.images.count}
     - else
       %li.empty
-        No images yet.
+        There are no images for this product yet.
     .clearer

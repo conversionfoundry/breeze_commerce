@@ -26,7 +26,7 @@
         = form.errors_for :slug
       = form.select :tag_ids, store.tags.map {|c|[ c.name, c.id ] }, { :label => "Tags"}, :class => "multiselect", :multiple => "multiple"
   - unless @product.new_record?
-    #product-images.box
+    #product-images.box.container
       = render partial: "breeze/admin/commerce/product_images/product_images", :object => @product.images
     #product-properties.box.container
       = render :partial => "breeze/admin/commerce/products/properties", :object => @product.properties

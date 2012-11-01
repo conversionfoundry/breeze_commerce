@@ -71,6 +71,11 @@ $colour-highlight: rgba(141, 198, 63, 0.15)
   -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
   box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
 
+@mixin box-sizing($value)
+  box-sizing: $value
+  -moz-box-sizing: $value
+  -webkit-box-sizing: $value
+
 /* Bulk actions
 .container .with-selected
   position: absolute
@@ -517,7 +522,10 @@ abbr[title]
 
 
 form#edit_product
+  margin: 0 2em 1em 1em
   .container
+    @include box-sizing(border-box)
+    width: 100%
     .new.button
       float: right
       margin: 12px
@@ -536,17 +544,19 @@ form#edit_product
         width: 10em
   #product-images
     ul#product_images
-      @include border-radius(8px)
-      background: #dddddd
-      border: solid 1px #cccccc
       clear: both
-      margin-bottom: 1em
-      padding: 1em
-    li.product_image
-      cursor: move
-      list-style: none
-      float: left
-      margin-right: 1em
+      margin: 1em
+      padding: 0
+      li
+        list-style: none
+      li.empty
+        text-align: center
+        vertical-align: middle
+        color: #999
+      li.product_image
+        cursor: move
+        float: left
+        margin-right: 1em
   #product-variants
     td.missing_value
       background: yellow
