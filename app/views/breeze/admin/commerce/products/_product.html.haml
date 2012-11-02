@@ -15,8 +15,7 @@
     - if product.variants.count > 0
       From
       = number_to_currency(product.display_price, :locale => :nz)
-      %span.currency 
-        = Breeze::Commerce::Store.first.currency
+      %span.currency= currency
     - else
       No price yet.
   %td.published

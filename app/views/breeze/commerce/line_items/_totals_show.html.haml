@@ -17,13 +17,11 @@
       = @order.shipping_method.description
   %td.total
     = number_to_currency @order.shipping_total
-    %span.currency
-      = Breeze::Commerce::Store.first.currency
+    %span.currency= currency
 %tr.total
   %td{:colspan => "4"}
   %td Total cost:
   %td
   %td.total
     = number_to_currency @order.total
-    %span.currency
-      = Breeze::Commerce::Store.first.currency
+    %span.currency= currency

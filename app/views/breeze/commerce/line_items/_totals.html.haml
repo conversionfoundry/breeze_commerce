@@ -5,10 +5,9 @@
   %td.total
     %span.amount
       = number_to_currency @order.item_total
-    %span.currency
-      = Breeze::Commerce::Store.first.currency
+    %span.currency= currency
 
-= render :partial => "breeze/commerce/shipping_methods/shipping_methods", :object => Breeze::COmmerce::ShippinhMethod.unarchived, :locals => { :form => form }
+= render :partial => "breeze/commerce/shipping_methods/shipping_methods", :object => Breeze::Commerce::ShippingMethod.unarchived, :locals => { :form => form }
 
 %tr.total
   %td

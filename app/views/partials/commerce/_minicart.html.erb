@@ -14,17 +14,17 @@
               <%= link_to item.variant.name, item.variant.product.permalink, class: 'variant_name' %>
             </td>
             <td class="amount">
-              <%= number_to_currency(item.amount, :locale => :nz) %><span class="currency"><%= Breeze::Commerce::Store.first.currency %></span>
+              <%= number_to_currency(item.amount, :locale => :nz) %><span class="currency"><%= currency %></span>
             </td>
           </tr>
         <% end %>
         <tr class="shipping">
           <td>Shipping</td>
-          <td class="amount"><%= number_to_currency(order.shipping_total, :locale => :nz) %><span class="currency"><%= Breeze::Commerce::Store.first.currency %></span></td>
+          <td class="amount"><%= number_to_currency(order.shipping_total, :locale => :nz) %><span class="currency"><%= currency %></span></td>
         </tr>
         <tr class="total">
           <td>Total</td>
-          <td class="amount"><%= number_to_currency(order.total, :locale => :nz) %><span class="currency"><%= Breeze::Commerce::Store.first.currency %></span></td>
+          <td class="amount"><%= number_to_currency(order.total, :locale => :nz) %><span class="currency"><%= currency %></span></td>
         </tr>
       </table>
     <% else %>
