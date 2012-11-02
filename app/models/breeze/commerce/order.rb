@@ -12,7 +12,6 @@ module Breeze
       field :payment_completed
       field :archived, type: Boolean, default: false
       
-      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -35,13 +34,15 @@ module Breeze
       # validates_presence_of :customer
 
       before_validation :set_initial_order_statuses
-      validates_presence_of :store, :billing_status, :shipping_status
+      validates_presence_of :billing_status, :shipping_status
 
 
       # Order numbers are strings in the format "2012-07-12-60319"
       # The last section is seconds since midnight on the order date, zero-padded to always be five digits
       def order_number
         if created_at
+          # ssm = created_at.seconds_since_midnight.to_i
+          # created_at.to_date.to_s + '-' + sprintf( '%05d', (ssm + rand(100000)).modulo(100000) )
           created_at.to_date.to_s + '-' + sprintf('%05d', created_at.seconds_since_midnight.to_i)
         else
           'XXXX-XX-XX-XXXXX'
@@ -103,9 +104,9 @@ module Breeze
       protected
 
       def set_initial_order_statuses 
-          self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default(store)
-          self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default(store)
-          self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(:store => store, :is_default => true).first
+          self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
+          self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
+          self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(is_default: true).first
         
         # end
       end

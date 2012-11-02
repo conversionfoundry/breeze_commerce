@@ -1,5 +1,5 @@
 <div class="relationships-container">
-  <% if store.products.unarchived.count < 2 %>
+  <% if Breeze::Commerce::Product.unarchived.count < 2 %>
     <h2>Related Products</h2>
     <p class="empty">
         When you have more than one product in your store, you'll be able to set related products here.

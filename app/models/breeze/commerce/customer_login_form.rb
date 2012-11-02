@@ -9,7 +9,7 @@ module Breeze
       include Breeze::Commerce::CurrentOrder
             
       def to_erb(view)
-        store = Breeze::Commerce::Store.first # TODO: Remove assumption that there's only one store
+        store = Breeze::Commerce::Store.first
         session = view.controller.session
         content = view.controller.render_to_string :partial => "partials/commerce/customer_login_form", :layout => false, :locals => {allow_returning_customer_login: store.allow_returning_customer_login, title: title, order: current_order(session)}
       end

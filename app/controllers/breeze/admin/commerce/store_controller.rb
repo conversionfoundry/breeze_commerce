@@ -12,11 +12,11 @@ module Breeze
         end
 
         def index
-          @published_products_count = store.products.unarchived.published.count
-          @top_customers = store.customers.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
+          @published_products_count = Breeze::Commerce::Product.unarchived.published.count
+          @top_customers = Breeze::Commerce::Customer.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
           @top_products = Breeze::Commerce::Product.unarchived.sort_by { |order| order.number_of_sales }.reverse.paginate :page => 1, :per_page => 10
-          @fulfilled_orders = store.orders.unarchived.fulfilled
-          @unfulfilled_orders = store.orders.unarchived.unfulfilled
+          @fulfilled_orders = Breeze::Commerce::Order.unarchived.fulfilled
+          @unfulfilled_orders = Breeze::Commerce::Order.unarchived.unfulfilled
         end
         
         def settings
@@ -31,10 +31,10 @@ module Breeze
 
         # TODO: Use update for this kind of method
         def set_default_shipping_method
-          @shipping_method = store.shipping_methods.find params[:shipping_method]
+          @shipping_method = Breeze::Commerce::ShippingMethod.find params[:shipping_method]
           store.default_shipping_method = @shipping_method
           store.save
-          @shipping_methods = store.shipping_methods.unarchived
+          @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived
         end
 
       end

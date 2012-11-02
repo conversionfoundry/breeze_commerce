@@ -40,7 +40,6 @@ describe Breeze::Commerce::ThresholdShippingMethod do
 	end
 	it "is invalid without a store" do
 		threshold_shipping_method = create :threshold_shipping_method
-		threshold_shipping_method.store = nil
 		threshold_shipping_method.should_not be_valid
 	end
 

@@ -16,7 +16,7 @@
       From
       = number_to_currency(product.display_price, :locale => :nz)
       %span.currency 
-        = product.store.currency
+        = Breeze::Commerce::Store.first.currency
     - else
       No price yet.
   %td.published

@@ -5,7 +5,6 @@ module Breeze
 
       attr_accessible :name, :description, :price, :price_cents, :is_default, :archived, :position, :store
 
-      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :shipping_methods
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_methods
 
       field :name
@@ -18,7 +17,7 @@ module Breeze
       scope :archived, where(:archived => true)
       scope :unarchived, where(:archived.in => [ false, nil ])
       
-      validates_presence_of :store, :name, :price_cents
+      validates_presence_of :name, :price_cents
       validates_numericality_of :price_cents
       validates_uniqueness_of :name
 

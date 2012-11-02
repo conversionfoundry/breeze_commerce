@@ -4,7 +4,7 @@ module Breeze
       attr_accessor :slug
 
       def product
-        store.products.where(:slug => slug).first
+        Breeze::Commerce::Product.where(:slug => slug).first
       end
 
       def set_url_params(match)

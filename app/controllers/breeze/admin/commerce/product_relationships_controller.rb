@@ -6,7 +6,7 @@ module Breeze
 
         def new
           @product = product
-          @products = store.products.unarchived.where(:_id.ne => product.id)#.where(:_id.nin => product.related_product_ids)
+          @products = Breeze::Commerce::Product.unarchived.where(:_id.ne => product.id)#.where(:_id.nin => product.related_product_ids)
           @product_relationship = product.product_relationship_children.new
         end
 
@@ -16,7 +16,7 @@ module Breeze
 
         def edit
           @product = product
-          @products = store.products.unarchived.where(:_id.ne => product.id)#.where(:_id.nin => product.related_product_ids)
+          @products = Breeze::Commerce::Product.unarchived.where(:_id.ne => product.id)#.where(:_id.nin => product.related_product_ids)
           @product_relationship = product.product_relationship_children.find params[:id]
         end
 

@@ -24,7 +24,7 @@
         %span.field
           http://#{"#{request.host_with_port}#{form.object.parent.permalink}#{'/' unless form.object.parent.root?}"}#{form.text_field :slug, :wrap => false, :size => 16}
         = form.errors_for :slug
-      = form.select :tag_ids, store.tags.map {|c|[ c.name, c.id ] }, { :label => "Tags"}, :class => "multiselect", :multiple => "multiple"
+      = form.select :tag_ids, Breeze::Commerce::Tag.all.map {|c|[ c.name, c.id ] }, { :label => "Tags"}, :class => "multiselect", :multiple => "multiple"
   - unless @product.new_record?
     #product-images.box.container
       = render partial: "breeze/admin/commerce/product_images/product_images", :object => @product.images

@@ -13,21 +13,23 @@ module Breeze
       field :description
       field :type # :billing or :shipping
       field :sort_order, type: Integer
-      
-      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :order_statuses
+
+      scope :billing, where(type: :billing)
+      scope :shipping, where(type: :shipping)
+
       has_many :orders, :class_name => "Breeze::Commerce::Order", :inverse_of => :order_statuses
       
       validates_presence_of :name, :type
       validates_inclusion_of :type, :in => STATUS_TYPES
 
       # Default billing status for new orders
-      def self.billing_default(store)
-        Breeze::Commerce::OrderStatus.where(:store => store, :type => :billing, :name => 'Browsing').first
+      def self.billing_default
+        Breeze::Commerce::OrderStatus.where(type: :billing, name: 'Browsing').first
       end
 
       # Default shipping status for new orders
-      def self.shipping_default(store)
-        Breeze::Commerce::OrderStatus.where(:store => store, :type => :shipping, :name => 'Not Shipped Yet').first
+      def self.shipping_default
+        Breeze::Commerce::OrderStatus.where(type: :shipping, name: 'Not Shipped Yet').first
       end
 
     end

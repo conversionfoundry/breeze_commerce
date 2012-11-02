@@ -3,7 +3,6 @@ module Breeze
     class Product < Breeze::Content::Page
       attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :published, :archived, :tag_ids, :property_ids, :archived, :parent_id, :options, :slug
 
-      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :products
       has_and_belongs_to_many :tags, :class_name => "Breeze::Commerce::Tag"
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
 
@@ -28,11 +27,7 @@ module Breeze
 
       validates_associated :variants
 
-      before_save :regenerate_permalink
-
-      def name
-        title
-      end
+      alias :name :title
 
       def related_products
         product_relationship_children.collect{|relationship| relationship.child_product}

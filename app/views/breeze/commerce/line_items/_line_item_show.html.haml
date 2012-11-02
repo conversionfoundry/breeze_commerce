@@ -9,15 +9,15 @@
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
       %span.discounted_price.current_price= number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
       %span.currency
-        = line_item.variant.product.store.currency
+        = Breeze::Commerce::Store.first.currency
     - else
       %span.current_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
       %span.currency
-        = line_item.variant.product.store.currency
+        = Breeze::Commerce::Store.first.currency
   %td
     = line_item.quantity
   %td.total
     = number_to_currency line_item.amount
     %span.currency
-      = line_item.variant.product.store.currency
+      = Breeze::Commerce::Store.first.currency
 

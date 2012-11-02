@@ -1,4 +1,3 @@
-- store = Breeze::Commerce::Store.first
 %tr.subtotal
   %td{:colspan => "4"}
   %td Subtotal:
@@ -19,7 +18,7 @@
   %td.total
     = number_to_currency @order.shipping_total
     %span.currency
-      = store.currency
+      = Breeze::Commerce::Store.first.currency
 %tr.total
   %td{:colspan => "4"}
   %td Total cost:
@@ -27,4 +26,4 @@
   %td.total
     = number_to_currency @order.total
     %span.currency
-      = store.currency
+      = Breeze::Commerce::Store.first.currency

@@ -22,7 +22,7 @@
                 = @order.email
           .change_customer
             = form.label :customer_id, @order.customer ? "Change customer for this order" : "Set customer for this order"
-            = form.select :customer_id, Breeze::Commerce::Store.first.customers.map {|c|[ c.name, c.id ] }, { :include_blank => 'None', :label => false}
+            = form.select :customer_id, Breeze::Commerce::Customer.unarchived.map {|c|[ c.name, c.id ] }, { :include_blank => 'None', :label => false}
       #order-details
         %h3#order-number
           Order number:

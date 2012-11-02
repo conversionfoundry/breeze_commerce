@@ -17,9 +17,9 @@ module Breeze
       # Displays the current cart
       def edit
         @order = current_order(session) || create_order(session)
-        shipping_methods = store.shipping_methods.unarchived
+        shipping_methods = Breeze::Commerce::ShippingMethod.unarchived
         unless @order.shipping_method && shipping_methods.include?(@order.shipping_method)
-          if store.shipping_methods.count > 1
+          if Breeze::Commerce::ShippingMethod.count > 1
             @order.shipping_method = shipping_methods.unarchived.where(:is_default => true).first
           else
             @order.shipping_method = shipping_methods.unarchived.first
@@ -75,7 +75,6 @@ module Breeze
       def submit_order
         @order = current_order(session)
         
-        # @order = store.orders.build params[:order]
         @order.update_attributes params[:order]
 
         if customer_signed_in?

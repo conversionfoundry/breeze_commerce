@@ -1,4 +1,3 @@
-- store = Breeze::Commerce::Store.first
 %tr.subtotal
   %td
   %td Subtotal:
@@ -7,9 +6,9 @@
     %span.amount
       = number_to_currency @order.item_total
     %span.currency
-      = store.currency
+      = Breeze::Commerce::Store.first.currency
 
-= render :partial => "breeze/commerce/shipping_methods/shipping_methods", :object => store.shipping_methods.unarchived, :locals => { :form => form }
+= render :partial => "breeze/commerce/shipping_methods/shipping_methods", :object => Breeze::COmmerce::ShippinhMethod.unarchived, :locals => { :form => form }
 
 %tr.total
   %td

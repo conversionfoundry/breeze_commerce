@@ -1,5 +1,5 @@
 // Refresh line item
-$('table#cart tr#<%= @line_item.id %>').children('td.total').html('<%= number_to_currency @line_item.amount%> <span class="currency"><%= @order.store.currency %></span>').effect("highlight", { color: "#ffffc0" }, 3000);
+$('table#cart tr#<%= @line_item.id %>').children('td.total').html('<%= number_to_currency @line_item.amount%> <span class="currency"><%= @Breeze::Commerce::Store.first.currency %></span>').effect("highlight", { color: "#ffffc0" }, 3000);
 
 // Update order totals
 $('table#cart tfoot tr.subtotal td.total span.amount').html('<%= number_to_currency @order.item_total %>').effect("highlight", { color: "#ffffc0" }, 3000);

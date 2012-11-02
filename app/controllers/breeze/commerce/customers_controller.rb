@@ -6,13 +6,13 @@ module Breeze
       include Breeze::Commerce::ContentsHelper
 
       def new
-        @customer = store.customers.new
+        @customer = Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
       end
       
       def create
-        @customer = store.customers.build params[:customer]
+        @customer = Breeze::Commerce::Customer.build params[:customer]
         if @customer.save
           redirect_to breeze.customers_path
         else
@@ -21,15 +21,15 @@ module Breeze
       end
 
       def edit
-        @customer = store.customers.find params[:id]
+        @customer = Breeze::Commerce::Customer.find params[:id]
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
-        @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
-        @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
+        @billing_statuses = Breeze::Commerce::OrderStatus.billing
+        @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
      end
 
       def update
-        @customer = store.customers.find params[:id]
+        @customer = Breeze::Commerce::Customer.find params[:id]
         if @customer.update_attributes(params[:customer])
           redirect_to breeze.customer_path(@customer)
         else
@@ -38,7 +38,7 @@ module Breeze
       end
       
       def destroy
-        @customer = store.customers.find(params[:id])
+        @customer = Breeze::Commerce::Customer.find(params[:id])
         @customer.orders.destroy_all
         @customer.try :destroy
       end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Breeze::Commerce::Order do
 
 	subject do 
-		create(:order, store: Breeze::Commerce::Store.first)
+		create(:order)
 	end
 
 
@@ -11,17 +11,9 @@ describe Breeze::Commerce::Order do
 		create(:order).should be_valid
 	end
 	it "has the default associations when first created" do
-		order = create(:order, store: Breeze::Commerce::Store.first)
+		order = create(:order)
 		order.billing_status.name.should eq 'Browsing'
 		order.shipping_status.name.should eq 'Not Shipped Yet'
-	end
-	it "has a store" do
-		create(:order).store.should eq Breeze::Commerce::Store.first
-	end
-	it "is invalid without a store" do
-		order = create :order
-		order.store = nil
-		order.should_not be_valid
 	end
 	it "doesn't return a nil billing status" do
 		order = create :order
@@ -39,8 +31,6 @@ describe Breeze::Commerce::Order do
 		create(:order, email: "foo@example.com")
 		build(:order, email: "foo@example.com").should be_valid
 	end
-
-	it "has a name"
 	it "has an item total"
 	it "shows in admin if order status isn't Browsing"
 	it "doesn't show in admin if order status is Browsing"

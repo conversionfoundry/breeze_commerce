@@ -4,7 +4,6 @@ module Breeze
 
       attr_accessible :archived
 
-      belongs_to :store, :class_name => 'Breeze::Commerce::Store', :inverse_of => :customers
       has_many :orders, :class_name => 'Breeze::Commerce::Order'
       embeds_one :shipping_address, :class_name => 'Breeze::Commerce::Address'
       embeds_one :billing_address, :class_name => 'Breeze::Commerce::Address'

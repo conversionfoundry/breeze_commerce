@@ -11,7 +11,6 @@ module Breeze
       field :image_height, :type => Integer
       field :position, :type => Integer
 
-      #embedded_in :product, :class_name => "Breeze::Commerce::Product", :inverse_of => :images
       belongs_to :product, :class_name => "Breeze::Commerce::Product", :inverse_of => :images
 
       field :file
