@@ -45,6 +45,7 @@ module Breeze
 
       # If this is the only shipping method, it should be set as the default shipping method for the store
       def set_as_default
+        store = Breeze::Commerce::Store.first
         unless store.default_shipping_method
           store.default_shipping_method = self
           store.save

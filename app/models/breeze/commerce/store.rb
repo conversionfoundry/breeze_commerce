@@ -13,7 +13,6 @@ module Breeze
 
       # Set up built-in order statuses
       # In future we may provide the option to create custom order statuses for stores, but we need some standard built-in ones to work with.
-      # TODO: SHould this be in db/seeds?
       def set_up_order_statuses
           # Generate built-in order statuses for billing
           unless order_statuses.where(:type => :billing, :name => "Browsing").count > 0
