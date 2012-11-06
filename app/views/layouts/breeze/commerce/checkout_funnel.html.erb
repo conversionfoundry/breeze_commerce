@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <%= javascript_include_tag "breeze/breeze" %>
     <%= javascript_include_tag "breeze/commerce" %>
-    <%= javascript_include_tag "jquery_ujs" %>
     <%= stylesheet_link_tag "breeze/commerce" %>
-
     <%= csrf_meta_tag %>
 
     <meta charset="utf-8" />
@@ -22,12 +21,11 @@
           </a>
           <a class="brand" href="#">Project name</a>
           <div class="nav-collapse">
-            <%#= bootstrap_nav(Breeze::Content::Page.first, :recurse => true) %>
+            <%= bootstrap_nav(Breeze::Commerce::Store.first.home_page, :recurse => true) %>
           </div><!-- /.nav-collapse -->
         </div>
       </div><!-- /navbar-inner -->
     </div>    
-    <!-- TODO: Remove this navigation stuff. It's only here to confirm we can use it in themes if we want -->
 
     <div class="container">
       <%= yield %>
