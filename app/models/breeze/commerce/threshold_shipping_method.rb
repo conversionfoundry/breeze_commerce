@@ -4,7 +4,6 @@ module Breeze
     # e.g. $10 shipping, or $5 shipping if your order is over $100
     # A common use case will be free shipping for orders over the threshold
     class ThresholdShippingMethod < Breeze::Commerce::ShippingMethod
-
       attr_accessible :threshold, :threshold_cents, :above_threshold_price, :above_threshold_price_cents
 
       # price_cents field from parent is used for the below-threshold price

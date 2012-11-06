@@ -18,7 +18,6 @@ module Breeze
       validates_presence_of :name
       # validates_uniqueness_of :name, :slug, :scope => :store_id # TODO: This seems to always be invalid.
 
-      # before_save :regenerate_slug!
       before_validation :fill_in_slug
 
       protected
