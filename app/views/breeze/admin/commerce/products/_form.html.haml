@@ -6,7 +6,7 @@
     .actions
       - unless @product.new_record?
         = form.fieldset :id => "product-published" do
-          = form.check_box :published, :label => "Published", style: 'display: none;'
+          = form.check_box :published, label: 'Published', style: 'display: none;'
       = link_to "View Product", @product.permalink, :class => "large view button", :target => :_blank unless @product.new_record?
       = submit_tag "Save Product", :class => "large green save button"
       = link_to "Delete Product", admin_store_product_path(@product, :format => :js), :method => :delete, :remote => true, :class => "large red delete button" unless @product.new_record?
