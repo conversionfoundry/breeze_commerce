@@ -5,6 +5,7 @@ module Breeze
       layout "breeze/commerce/checkout_funnel"
       include Breeze::Commerce::ContentsHelper
       respond_to :html, :js
+      before_filter :require_nonempty_order, except: [:edit, :print, :update, :populate]
 
       def print
         @order = Order.find params[:id]
@@ -162,8 +163,14 @@ module Breeze
 
     private
 
+      def require_nonempty_order
+        @order = current_order(session) || create_order(session)
+        if @order.line_items.count == 0 || @order.shipping_method == nil
+          redirect_to breeze.cart_path
+        end
+      end
+
       # TODO: Move these private methods to a model – probably "order"
-      # TODO: Replace hard-coded 'checkout' in url
 
       def pxpay_success
         @payment.update_pxpay_attributes request.params
