@@ -3,10 +3,6 @@ module Breeze
     class ProductView < View
       attr_accessor :slug
 
-      def product
-        Breeze::Commerce::Product.where(:slug => slug).first
-      end
-
       def set_url_params(match)
         super
         self.slug = match[2].gsub('/', '')
@@ -22,7 +18,7 @@ module Breeze
 
       def variables_for_render
         super.tap do |vars|
-          vars[:products] = products
+          vars[:product] = page  # Allows using "product" in layout instead of "page".
         end
       end
 
