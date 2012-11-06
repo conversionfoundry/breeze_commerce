@@ -207,6 +207,12 @@ a.customer-card:hover
 
 /* Orders Index Page
 table.orders
+  thead
+    tr
+      th.order,
+      th.shipping,
+      th.line_items
+        text-align: left
   tr.order
     td
       .total
@@ -542,6 +548,17 @@ form#edit_product
       input#product_slug
         margin-left: 0.5em
         width: 10em
+    .actions
+      #product-published
+        margin: 0px
+        padding: 0px
+        label
+          padding-top: 6px
+          float: left
+          width: 60px
+          font-weight: bold
+        li.check_box
+          padding-left: 0
   #product-images
     ul#product_images
       clear: both
@@ -569,9 +586,6 @@ form#edit_product
 table.products
   .product-actions
     visibility: hidden
-  thead
-    th.variants
-      text-align: center
   tbody 
     tr:hover .product-actions
       visibility: visible
@@ -583,18 +597,8 @@ table.products
       margin-right: 1em
       width: 50px
     td.variants
-      text-align: center
-
-#product_published
-  margin: 0px
-  padding: 0px
-  label
-    padding-top: 6px
-    float: left
-    width: 60px
-    font-weight: bold
-  li.check_box
-    padding-left: 0
+      .badge
+        margin-right: 1em
 
 /* Product Relationships
 .product_relationship_fields 
@@ -644,6 +648,7 @@ table.fancy
       text-align: center  
   tbody 
     tr
+      width: 100%
       .actions .button
         visibility: hidden
         opacity: 0
@@ -673,11 +678,12 @@ table.fancy
       &.active .actions .button
         visibility: visible
         opacity: 1.0
-      width: 100%
-  tbody
-    td
-      border-bottom: 1px solid #eeeeee
-      padding: 1em
+      td
+        border-bottom: 1px solid #eeeeee
+        padding: 1em
+      &.last
+        td
+          border-bottom: none
   tfoot
     td
       background: transparent
@@ -692,7 +698,6 @@ table.tags
     display: none
   tr.tag
     td
-      padding: 4px 8px
       &.name
         font-size: 125%
         font-weight: bold
@@ -946,3 +951,6 @@ table.shipping_methods
     .default
       font-style: italic
       color: #aaaaaa
+
+form
+  margin: 0
