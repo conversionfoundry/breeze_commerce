@@ -1,4 +1,8 @@
-= content_tag :tr, :class => "customer", :id => "customer_#{customer.id}" do
+- classes = 'customer'
+- classes += ' first' if customer_counter == 0
+- classes += ' last' if customer_counter + 1 == count
+
+= content_tag :tr, class: classes, :id => "customer_#{customer.id}" do
   %td= check_box_tag "customer_ids[]", customer.id
   %td.title
     = customer.title
