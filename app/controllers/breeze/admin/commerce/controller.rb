@@ -6,7 +6,8 @@ module Breeze
         before_filter :check_for_stores, :except => [ :setup_default ]
         before_filter :check_permissions
 
-      protected
+        protected
+  
         def check_for_stores
           unless store
             render :action => "no_store"
