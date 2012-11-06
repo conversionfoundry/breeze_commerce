@@ -93,7 +93,8 @@
                         Password
                         %span.required *
                       = form.password_field :password
-                      = form.submit "Sign in", :class => "btn btn-primary", :id => 'button-sign_in'
+                      = link_to 'Sign in', breeze.store_customer_session_path, :class => 'btn btn-primary', :id => 'button-sign_in'
+
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-1b" do
                 %i.icon-arrow-down.icon-white
