@@ -1,7 +1,10 @@
 module Breeze
   module Commerce
     class Product < Breeze::Content::Page
-      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :published, :archived, :tag_ids, :property_ids, :archived, :parent_id, :options, :slug
+      include Mixins::Archivable
+      include Mixins::Publishable
+
+      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, :property_ids, :parent_id, :options, :slug
 
       has_and_belongs_to_many :tags, :class_name => "Breeze::Commerce::Tag"
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
@@ -13,44 +16,19 @@ module Breeze
       has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
       has_many :variants, :class_name => "Breeze::Commerce::Variant"
 
-      field :archived, type: Boolean, default: false
-      field :published, :type => Boolean, default: false
       field :show_in_navigation, :type => Boolean, :default => false
       field :teaser
 
       default_scope order_by([:title, :asc])
-      scope :archived, where(:archived => true)
-      scope :published, where(:published => true)
       scope :with_tag, lambda { |tag| where(tag_ids: tag.id) }
-      scope :unarchived, where(:archived.in => [ false, nil ])
-      scope :unpublished, where(:published.in => [ false, nil ])
 
       validates_associated :variants
 
       alias :name :title
+      alias :name= :title=
 
       def related_products
         product_relationship_children.collect{|relationship| relationship.child_product}
-      end
-
-      def icon_image
-        if self.images.first
-          self.images.first.file.url(:breeze_thumb) 
-        else
-          nil
-        end
-      end
-
-      def cost_price
-        (self.cost_price_cents || 0) / 100.0
-      end
-
-      def sell_price
-        (self.sell_price_cents || 0) / 100.0
-      end
-
-      def discounted_sell_price
-        (self.discounted_sell_price_cents || 0) / 100.0
       end
       
       def display_price_min
@@ -63,6 +41,31 @@ module Breeze
 
       def display_price
         display_price_min
+      end
+
+      # Are all the variants the same price?
+      def single_display_price?
+        price = nil
+        variants.unarchived.published.each do |variant|
+          if price
+            return false unless variant.display_price == price
+          else
+            price = variant.display_price
+          end
+        end
+        true
+      end
+
+      # Are any of the product's variants discounted?
+      def any_variants_discounted?
+        variants.unarchived.published.discounted.count > 0
+      end
+
+      # Are all of the product's variants discounted?
+      def all_variants_discounted?
+        all_variants_count = variants.unarchived.published.count
+        discounted_variants_count = variants.unarchived.published.discounted.count
+        discounted_variants_count > 0 && discounted_variants_count == all_variants_count
       end
 
       def last_update
@@ -90,29 +93,6 @@ module Breeze
         else
           false
         end
-      end
-
-      # Are any of the product's variants discounted?
-      def any_variants_discounted?
-        variants.unarchived.published.discounted.count > 0
-      end
-
-      # Are all of the product's variants discounted?
-      def all_variants_discounted?
-        variants.unarchived.published.discounted.count == variants.unarchived.published.count
-      end
-
-      # Are all the variants the same price?
-      def single_display_price?
-        price = nil
-        variants.unarchived.published.each do |variant|
-          if price
-            return false unless variant.display_price == price
-          else
-            price = variant.display_price
-          end
-        end
-        true
       end
 
     end

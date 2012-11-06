@@ -1,8 +1,9 @@
 module Breeze
   module Commerce
     class Customer < Breeze::Account::Customer
+      include Mixins::Archivable
 
-      attr_accessible :archived
+      attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :shipping_address_attributes, :billing_address_attributes
 
       has_many :orders, :class_name => 'Breeze::Commerce::Order'
       embeds_one :shipping_address, :class_name => 'Breeze::Commerce::Address'
@@ -10,11 +11,6 @@ module Breeze
 
       accepts_nested_attributes_for :billing_address
       accepts_nested_attributes_for :shipping_address
-
-      field :archived, type: Boolean, default: false
-
-      scope :archived, where(:archived => true)
-      scope :unarchived, where(:archived.in => [ false, nil ])
 
       validates_uniqueness_of :email
       
@@ -26,6 +22,10 @@ module Breeze
         orders.map{|o| o.total}.sum
       end
       
+      def editor?
+        false
+      end
+
     end
   end
 end

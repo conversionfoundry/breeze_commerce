@@ -3,14 +3,13 @@ module Breeze
     class Order
       include Mongoid::Document
       include Mongoid::Timestamps
+      include Mixins::Archivable
       
-      attr_accessible :email, :personal_message, :comment, :archived, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id
+      attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id
       field :email
-      # field :subscribe, :type => Boolean
       field :personal_message
       field :comment
       field :payment_completed
-      field :archived, type: Boolean, default: false
       
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -23,8 +22,6 @@ module Breeze
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
-      scope :archived, where(:archived => true)
-      scope :unarchived, where(:archived.in => [ false, nil ])
       scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
       scope :unfulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").last )
       scope :fulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").last )
@@ -104,11 +101,9 @@ module Breeze
       protected
 
       def set_initial_order_statuses 
-          self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
-          self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
-          self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(is_default: true).first
-        
-        # end
+        self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
+        self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
+        self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(is_default: true).first        
       end
 
     end
