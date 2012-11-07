@@ -34,17 +34,13 @@ Gem::Specification.new do |s|
   s.add_dependency "haml"
   s.add_dependency "sass-rails"
   s.add_dependency "carrierwave"
-  s.add_dependency "carrierwave-mongoid"
-  # s.add_development_dependency "rspec"
+  s.add_dependency "carrierwave-mongoid", "~> 0.1.0"
+  s.add_dependency "breeze", ">= 1.0.0"
+  s.add_dependency "breeze_account", ">= 1.0.0"
+  s.add_dependency "breeze_pay_online", ">= 0.1.0"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "mongoid-rspec"
   s.add_development_dependency "launchy"
   s.add_development_dependency "capybara"
   s.add_development_dependency 'factory_girl_rails'
-
-
-
-  #s.add_development_dependency "sqlite3"
-  
-  # TODO: Declare dependency on Breeze Account
 end
