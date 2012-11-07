@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class ProductsController < Breeze::Admin::Commerce::Controller
         def index
-          @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:created_at.desc)
+          @products = Breeze::Commerce::Product.unarchived.order_by(:created_at.desc)
         end
         
         def new
@@ -13,7 +13,7 @@ module Breeze
         end
         
         def create
-          @product = Breeze::Commerce::Product.build params[:product]
+          @product = Breeze::Commerce::Product.new params[:product]
           if @product.save
             # redirect_to admin_store_products_path
             redirect_to edit_admin_store_product_path(@product)
