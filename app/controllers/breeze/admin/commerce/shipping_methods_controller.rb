@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class ShippingMethodsController < Breeze::Admin::Commerce::Controller
         def index
-          @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
+          @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived.order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
         end
         
         def new
@@ -16,14 +16,17 @@ module Breeze
           if params[:shipping_method_type]
             klass = params[:shipping_method_type].camelcase.constantize
             if klass == Breeze::Commerce::ShippingMethod
-              @shipping_method = Breeze::Commerce::ShippingMethod.build params[:shipping_method]
+              @shipping_method = Breeze::Commerce::ShippingMethod.new params[:shipping_method]
             else
               subclass_params = params[:shipping_method_type].to_s.camelcase.demodulize.underscore
               @shipping_method = klass.new params[:shipping_method].merge params[subclass_params]
             end
           else
-            @shipping_method = Breeze::Commerce::ShippingMethod.build params[:shipping_method]
+            @shipping_method = Breeze::Commerce::ShippingMethod.new params[:shipping_method]
           end
+
+          @shipping_method.position = Breeze::Commerce::ShippingMethod.count
+
           if @shipping_method.save
             # Set up variables. The view will handle validation.
             @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
