@@ -5,6 +5,7 @@ module Breeze
       layout "breeze/commerce/checkout_funnel"
       include Breeze::Commerce::ContentsHelper
       respond_to :html, :js
+      before_filter :require_nonempty_order, except: [:edit, :print, :update, :populate]
 
       def print
         @order = Order.find params[:id]
@@ -17,9 +18,9 @@ module Breeze
       # Displays the current cart
       def edit
         @order = current_order(session) || create_order(session)
-        shipping_methods = store.shipping_methods.unarchived
+        shipping_methods = Breeze::Commerce::ShippingMethod.unarchived
         unless @order.shipping_method && shipping_methods.include?(@order.shipping_method)
-          if store.shipping_methods.count > 1
+          if Breeze::Commerce::ShippingMethod.count > 1
             @order.shipping_method = shipping_methods.unarchived.where(:is_default => true).first
           else
             @order.shipping_method = shipping_methods.unarchived.first
@@ -27,6 +28,19 @@ module Breeze
           @order.save
         end
       end
+
+      def create
+      end
+
+      # Currently only need to update shipping method from shopping cart
+      def update
+        @order = current_order(session)
+        @order.update_attributes params[:order]
+        @order.save
+        respond_to do |format|
+          format.js
+        end
+      end 
 
       # Add items to the order (i.e. the shopping cart)
       def populate
@@ -62,7 +76,6 @@ module Breeze
       def submit_order
         @order = current_order(session)
         
-        # @order = store.orders.build params[:order]
         @order.update_attributes params[:order]
 
         if customer_signed_in?
@@ -117,22 +130,6 @@ module Breeze
         end
       end
 
-      def create
-      end
-
-      # Currently only need to update shipping method from shopping cart
-      def update
-        @order = current_order(session)
-        # if params[:order].has_key? :shipping_method
-        #   params[:order].delete(:shipping_method)
-        # end
-        @order.update_attributes params[:order]
-        @order.save
-        respond_to do |format|
-          format.js
-        end
-      end 
-
       def thankyou 
         @payment = Payment.find params[:id]
         @payment.succeeded = true
@@ -166,8 +163,14 @@ module Breeze
 
     private
 
+      def require_nonempty_order
+        @order = current_order(session) || create_order(session)
+        if @order.line_items.count == 0 || @order.shipping_method == nil
+          redirect_to breeze.cart_path
+        end
+      end
+
       # TODO: Move these private methods to a model – probably "order"
-      # TODO: Replace hard-coded 'checkout' in url
 
       def pxpay_success
         @payment.update_pxpay_attributes request.params

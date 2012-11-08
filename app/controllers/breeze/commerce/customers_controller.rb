@@ -3,16 +3,16 @@ module Breeze
     class CustomersController < Breeze::Commerce::Controller
       helper Breeze::ContentsHelper
       layout "breeze/commerce/customer_profile"
-      include Breeze::Commerce::ContentsHelper
+      before_filter :check_permissions
 
       def new
-        @customer = store.customers.new
+        @customer = Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
       end
       
       def create
-        @customer = store.customers.build params[:customer]
+        @customer = Breeze::Commerce::Customer.build params[:customer]
         if @customer.save
           redirect_to breeze.customers_path
         else
@@ -21,26 +21,43 @@ module Breeze
       end
 
       def edit
-        @customer = store.customers.find params[:id]
+        @customer = Breeze::Commerce::Customer.find params[:id]
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
-        @billing_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :billing)
-        @shipping_statuses = Breeze::Commerce::Store.first.order_statuses.where(:type => :shipping)
+        @billing_statuses = Breeze::Commerce::OrderStatus.billing
+        @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
      end
 
       def update
-        @customer = store.customers.find params[:id]
+        @customer = Breeze::Commerce::Customer.find params[:id]
         if @customer.update_attributes(params[:customer])
-          redirect_to breeze.customer_path(@customer)
+          redirect_to breeze.edit_customer_path(@customer)
         else
           render :action => "edit"
         end
       end
       
       def destroy
-        @customer = store.customers.find(params[:id])
+        @customer = Breeze::Commerce::Customer.find(params[:id])
         @customer.orders.destroy_all
         @customer.try :destroy
+      end
+
+      protected
+
+      def check_permissions
+        begin
+          @customer = Breeze::Commerce::Customer.find(params[:id])
+          authorize! :manage, @customer
+        rescue
+          redirect_to Breeze::Commerce::Store.first.home_page.permalink
+        end
+      end
+
+      private
+
+      def current_ability
+        @current_ability ||= Breeze::Admin::Ability.new(current_customer)
       end
 
     end

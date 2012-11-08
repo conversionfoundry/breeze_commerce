@@ -1,0 +1,25 @@
+.customers-container
+  = form_tag admin_store_products_path, :method => :put do
+    .with-selected{:style => "display: none;"}
+      %strong With selected:
+      = link_to "Publish", admin_store_products_path, :class => "small green publish button"
+      = link_to "Unpublish", admin_store_products_path, :class => "small unpublish button"
+      = link_to "Delete", admin_store_products_path, :class => "small red delete button"
+    %table.fancy.customers
+      %thead
+        %tr
+          %th.first{:style => "width:2em;"}
+            %input.checkbox.select-all{:type => "checkbox"}/
+          %th{:style => ""} Title
+          %th{:style => ""} First Name
+          %th{:style => ""} Last Name
+          %th{:style => ""} Phone
+          %th{:style => ""} Email
+          %th{:style => ""} Last Order
+          %th.last{:style => "width:20%;"} Actions
+      %tbody
+        - if customers.any?
+          = render :partial => "breeze/admin/commerce/customers/customer", :collection => customers, locals: {count: customers.count}
+        - else
+          %tr
+            %td.empty{:colspan => "6"} There are no customers to show here.

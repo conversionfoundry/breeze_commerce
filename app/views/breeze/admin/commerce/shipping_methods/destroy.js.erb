@@ -3,4 +3,8 @@ if (<%= @shipping_method_count %> == 1) {
 	$('.shipping_method .actions .remove').remove();
 }
 $('#menu-item-shipping_methods .item-count').html(<%= @shipping_method_count %>);
-$('#shipping_method_<%= @shipping_method.id %>').fadeOut(function() { $(this).remove(); });
+$('#shipping_method_<%= @shipping_method.id %>').fadeOut(function() { 
+	$(this).remove(); 
+	$('.shipping_methods tbody tr:last').addClass('last');
+});
+

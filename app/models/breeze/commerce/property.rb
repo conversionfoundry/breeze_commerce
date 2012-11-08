@@ -12,14 +12,7 @@ module Breeze
       field :name      
 
       validates_presence_of :name
-      # validates_presence_of :options
       validates_associated :options
-
-      # def options=(values)
-      #   write_attribute :options, (Array(values).map { |option|
-      #     option.split(/[ \n\t]*,[ \n\t]*/).map { |o| o.strip }
-      #   }.flatten.reject(&:blank?).sort.uniq)
-      # end
 
     end
   end

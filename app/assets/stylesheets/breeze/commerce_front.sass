@@ -274,9 +274,37 @@ ul.products li
     width: auto
   .customer_addresses
     float: left
+    ol
+      margin: 0
+      padding: 0
+      li
+        list-style: none
     .address
       float: left
       margin-right: 6em
+table.orders
+  width: 100%
+  thead
+    tr
+      th
+        text-align: left
+  tr.order
+    padding: 1em
+    td
+      .total
+        font-size: 1.5em
+      p.address
+        font-size: 0.8em
+      ul
+        margin: 0
+        padding: 0
+
+.breeze-customer_login_form
+  .form-actions
+    margin: 0
+    padding: 1em 0 0 0
+    text-align: right
+
 .form-actions
   clear: both
   float: left

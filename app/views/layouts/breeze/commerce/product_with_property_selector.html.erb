@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= page.title if page %></title>
+    <title><%= product.name if product %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= javascript_include_tag "breeze/breeze" %>
     <%= javascript_include_tag "breeze/commerce" %>
-    <%= javascript_include_tag "jquery_ujs" %>
     <%= stylesheet_link_tag "breeze/commerce" %>
     <%= stylesheet_link_tag 'breeze/galleria/themes/classic/galleria.classic.css' %>
+    <%= csrf_meta_tag %>
+
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -67,21 +69,20 @@
         <div class="span12">
           <%= render :partial => "partials/commerce/minicart", :locals => {title: 'Minicart', order: current_order(session)} %>
 
-          <h1><%= page.title %></h1>
+          <h1><%= product.name %></h1>
           <%= region :header %>
         </div>
       </div>
       
-      <% if page %>
-          <%# hidden_field_tag 'product_id', page.id %>
+      <% if product %>
             
           <!-- Single image, or slideshow if there are multiple images -->
           <div class="images">
-            <% if page.images.count == 1 %>
-              <%= image_tag page.images.last.file.url(:full) %>
-            <% elsif page.images.count > 1 %>
+            <% if product.images.count == 1 %>
+              <%= image_tag product.images.last.file.url(:full) %>
+            <% elsif product.images.count > 1 %>
               <div id="gallery">                
-                  <% page.images.each do |image| %>
+                  <% product.images.each do |image| %>
                     <a href="<%= image.file %>">
                       <img data-title="title goes here"
                            data-description="description goes here"
@@ -99,9 +100,9 @@
 
         <%= region :product_info %>
 
-        <%= render :partial => "/partials/commerce/properties", locals: { product: page } %>
+        <%= render :partial => "/partials/commerce/properties", locals: { product: product } %>
         <div id="variants">
-          <%= render :partial => "/partials/commerce/variants", locals: { product: page, variants: [] } %>
+          <%= render :partial => "/partials/commerce/variants", locals: { product: product, variants: [] } %>
         </div>
      
       <% else %>

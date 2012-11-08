@@ -1,13 +1,6 @@
 module Breeze
   module Commerce
     class View < Breeze::Content::PageView
-      def store
-        content
-      end
-
-      def products
-        Breeze::Commerce::Product.all
-      end
 
       def with_url_params(match)
         dup.tap do |view|
@@ -28,7 +21,7 @@ module Breeze
       
       def variables_for_render
         super.tap do |vars|
-          vars[:products] = products
+          vars[:products] = Breeze::Commerce::Product.all
         end
       end
       

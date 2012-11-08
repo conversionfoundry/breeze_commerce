@@ -2,16 +2,16 @@
   %table.fancy.contextual.orders
     %thead
       %tr
-        %th.first Date & Time
-        %th Products
-        %th Amount
-        %th Billing
-        %th.last Shipping
+        %th.order.first
+        %th.shipping Shipping Address
+        %th.line_items Line Items
+        %th.shipping_status Shipping Status
+        %th.billing_status.last Billing Status
     %tbody
       - if orders.any?
         = render :partial => "breeze/commerce/orders/order", :collection => orders
       - else
         %tr
-          %td.empty{:colspan => "6"} There are no orders to show here.
+          %td.empty{:colspan => "6"} There are no orders to show here yet.
     %tfoot
       %tr

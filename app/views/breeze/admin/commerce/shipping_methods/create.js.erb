@@ -1,6 +1,7 @@
 <% if @shipping_method.errors.empty? %>
   $('.shipping_methods tbody tr.empty').remove();
-  $('.shipping_methods tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/shipping_methods/shipping_method", locals: {shipping_method: @shipping_method, shipping_methods_count: @shipping_methods.count} ) %>');
+  $('.shipping_methods tbody tr:last').removeClass('last');
+  $('.shipping_methods tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/shipping_methods/shipping_method", locals: {shipping_method: @shipping_method, shipping_method_counter: @shipping_methods.count - 1, count: @shipping_methods.count} ) %>');
   $('#menu-item-shipping_methods .item-count').html(<%= @shipping_method_count %>);
   $('#shipping_method-details').dialog('close');
 <% else %>

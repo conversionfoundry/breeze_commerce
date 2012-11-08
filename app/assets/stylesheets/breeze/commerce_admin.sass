@@ -71,6 +71,11 @@ $colour-highlight: rgba(141, 198, 63, 0.15)
   -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
   box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
 
+@mixin box-sizing($value)
+  box-sizing: $value
+  -moz-box-sizing: $value
+  -webkit-box-sizing: $value
+
 /* Bulk actions
 .container .with-selected
   position: absolute
@@ -90,9 +95,6 @@ $colour-highlight: rgba(141, 198, 63, 0.15)
     overflow: hidden
     border-left: 8px solid #ffc
     border-bottom: 8px solid transparent
-
-.products-container
-  position: relative
 
 /* Typography
 .old_price
@@ -205,6 +207,12 @@ a.customer-card:hover
 
 /* Orders Index Page
 table.orders
+  thead
+    tr
+      th.order,
+      th.shipping,
+      th.line_items
+        text-align: left
   tr.order
     td
       .total
@@ -508,6 +516,8 @@ abbr[title]
         margin-right: 8px
 
 /* Products
+.products-container
+  position: relative
 
 #edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
   background: none
@@ -517,26 +527,57 @@ abbr[title]
   position: relative
 
 
-#edit_product
+form#edit_product
+  margin: 0 2em 1em 1em
   .container
+    @include box-sizing(border-box)
+    width: 100%
     .new.button
       float: right
       margin: 12px
     table
       background: white
-  .container#product-images
+  #product-details
+    position: relative
+    width: 100%
+    fieldset
+      input#product_title
+        width: 20em
+      input#product_teaser
+        width: 40em
+      input#product_slug
+        margin-left: 0.5em
+        width: 10em
+    .actions
+      #product-published
+        margin: 0px
+        padding: 0px
+        label
+          padding-top: 6px
+          float: left
+          width: 60px
+          font-weight: bold
+        li.check_box
+          padding-left: 0
+  #product-images
     ul#product_images
-      @include border-radius(8px)
-      background: #dddddd
-      border: solid 1px #cccccc
       clear: both
-      margin-bottom: 1em
-      padding: 1em
-    li.product_image
-      cursor: move
-      list-style: none
-      float: left
-      margin-right: 1em
+      margin: 1em
+      padding: 0
+      li
+        list-style: none
+      li.empty
+        text-align: center
+        vertical-align: middle
+        color: #999
+      li.product_image
+        cursor: move
+        float: left
+        margin-right: 1em
+        .icon,
+        .meta
+          margin-bottom: 0.5em
+          min-width: 10em
   #product-variants
     td.missing_value
       background: yellow
@@ -545,9 +586,6 @@ abbr[title]
 table.products
   .product-actions
     visibility: hidden
-  thead
-    th.variants
-      text-align: center
   tbody 
     tr:hover .product-actions
       visibility: visible
@@ -559,18 +597,8 @@ table.products
       margin-right: 1em
       width: 50px
     td.variants
-      text-align: center
-
-#product_published
-  margin: 0px
-  padding: 0px
-  label
-    padding-top: 6px
-    float: left
-    width: 60px
-    font-weight: bold
-  li.check_box
-    padding-left: 0
+      .badge
+        margin-right: 1em
 
 /* Product Relationships
 .product_relationship_fields 
@@ -620,6 +648,7 @@ table.fancy
       text-align: center  
   tbody 
     tr
+      width: 100%
       .actions .button
         visibility: hidden
         opacity: 0
@@ -649,11 +678,12 @@ table.fancy
       &.active .actions .button
         visibility: visible
         opacity: 1.0
-      width: 100%
-  tbody
-    td
-      border-bottom: 1px solid #eeeeee
-      padding: 1em
+      td
+        border-bottom: 1px solid #eeeeee
+        padding: 1em
+      &.last
+        td
+          border-bottom: none
   tfoot
     td
       background: transparent
@@ -668,11 +698,18 @@ table.tags
     display: none
   tr.tag
     td
-      padding: 4px 8px
       &.name
         font-size: 125%
         font-weight: bold
-
+      ul.products
+        color: #aaaaaa
+        font-size: 80%
+        margin: 0
+        padding: 0
+        li.product
+          display: inline
+          font-weight: normal
+          list-style: none
 
 /* Product Tags
 fieldset.product-tags
@@ -914,3 +951,6 @@ table.shipping_methods
     .default
       font-style: italic
       color: #aaaaaa
+
+form
+  margin: 0

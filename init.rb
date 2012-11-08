@@ -2,9 +2,11 @@ require 'breeze'
 
 Breeze.hook :define_abilities do |abilities_array, user, abilities|
   abilities.instance_eval do
-    can :manage, Breeze::Commerce::Store if user.roles.include? :merchant
+    can :manage, Breeze::Commerce::Store if user.respond_to?(:roles) && user.roles.include?(:merchant)
+    can :manage, Breeze::Commerce::Customer do |customer|
+      customer.id == user.id
+    end
     # can :manage, Breeze::Commerce::Customer if user.roles.include? :merchant
-    # can :manage, Breeze::Commerce::Customer, :user_id => current_user.id
   end
 end
 

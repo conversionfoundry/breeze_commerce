@@ -17,8 +17,7 @@ module Breeze
             
       def products
         if list_type == 'by_tags' 
-          store = Breeze::Commerce::Store.first # Assuming one store per site at this stage
-          product_array = store ? store.products.published.unarchived : []
+          product_array = Breeze::Commerce::Product.published.unarchived || []
           self.tags.each do |tag|
             product_array = product_array & tag.products
           end

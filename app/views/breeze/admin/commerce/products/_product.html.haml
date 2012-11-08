@@ -1,4 +1,8 @@
-= content_tag :tr, :class => "product", :id => "product_#{product.id}" do
+- classes = 'product'
+- classes += ' first' if product_counter == 0
+- classes += ' last' if product_counter + 1 == count
+
+= content_tag :tr, class: classes, :id => "product_#{product.id}" do
   %td.first
     = check_box_tag "product_ids[]", product.id
   %td.product
@@ -11,14 +15,20 @@
   %td.variants
     %span.badge
       = product.variants.unarchived.count
-  %td.price
-    - if product.variants.count > 1
-      From
-      = number_to_currency(product.display_price, :locale => :nz)
-      %span.currency 
-        = product.store.currency
-    - else
-      No price yet.
+    - if product.variants.unarchived.count > 0
+      - if product.variants.unarchived.published.count == 0
+        No published variants
+      - elsif product.single_display_price?
+        = number_to_currency(product.display_price, :locale => :nz)
+        %span.currency= currency
+      - else
+        From
+        = number_to_currency(product.display_price_min, :locale => :nz)
+        %span.currency= currency
+        to
+        = number_to_currency(product.display_price_max, :locale => :nz)
+        %span.currency= currency
+
   %td.published
     = product.published ? 'Published' : 'Not Published'
   %td.last_update

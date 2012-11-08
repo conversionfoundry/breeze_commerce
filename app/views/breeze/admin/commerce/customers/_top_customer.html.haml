@@ -3,4 +3,4 @@
     = link_to top_customer.name, edit_admin_store_customer_path(top_customer)
   %td.total
     = number_to_currency top_customer.order_total
-    %span.currency= top_customer.store.currency
+    %span.currency= currency
