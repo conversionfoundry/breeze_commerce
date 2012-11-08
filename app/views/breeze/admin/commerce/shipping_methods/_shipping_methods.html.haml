@@ -1,0 +1,16 @@
+.shipping_methods-container
+  %table.fancy.shipping_methods
+    %thead
+      %tr
+        %th.name.first Name
+        %th.type Type
+        %th.price Price
+        %th.actions.last Actions
+    %tbody
+      - if shipping_methods.any?
+        = render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :collection => shipping_methods, locals: {count: shipping_methods.count}
+      - else
+        %tr
+          %td.empty{:colspan => "6"} There are no shipping methods to show here.
+    %tfoot
+      %tr

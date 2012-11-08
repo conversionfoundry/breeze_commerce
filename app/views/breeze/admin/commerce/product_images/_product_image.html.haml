@@ -5,10 +5,11 @@
     %span.filename{:title => "</haml:block><haml:silent></haml:silent><haml:block>"}/
     %small.dimensions
       = product_image.image_width || "??"
-      \× #{product_image.image_height || "??"},
+      \× #{product_image.image_height || "??"}
       %abbr/
+    - if product_image == @product.default_image
+      %span.badge.default
+        default 
   = content_tag :div, :class => :links do
-    %p.default
-      = 'Default' if product_image == @product.default_image
     = link_to "Delete", admin_store_product_product_image_path(@product, product_image), :method => :delete, :remote => true, :class => 'small red button delete', :rel => :delete
-    = link_to "Make Default", set_default_image_admin_store_product_path(@product, product_image: product_image), :method => :post, :remote => true, :class => 'small black button'
+    = link_to "Make Default", set_default_image_admin_store_product_path(@product, product_image: product_image), :method => :post, :remote => true, :class => 'small black button' unless product_image == @product.default_image

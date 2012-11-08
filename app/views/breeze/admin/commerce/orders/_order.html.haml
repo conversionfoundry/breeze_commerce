@@ -1,5 +1,8 @@
 - classes = ' status-shipping-' + order.shipping_status.name.parameterize.underscore
 - classes += ' status-billing-' + order.billing_status.name.parameterize.underscore
+- classes += ' first' if order_counter == 0
+- classes += ' last' if order_counter + 1 == count
+
 = content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
   = form_for order, :as => :order, :url => admin_store_order_path(order), :remote => true do |form|
     %td.order.first

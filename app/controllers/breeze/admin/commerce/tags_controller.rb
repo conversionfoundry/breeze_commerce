@@ -11,34 +11,34 @@ module Breeze
         end
 
         def new
-          @tag = store.tags.new
+          @tag = Breeze::Commerce::Tag.new
         end
 
         def create
-          @tag = store.tags.create params[:tag].merge({ :position => (store.tags.max(:position) || 0) + 1 })
-          @tag_count = store.tags.count
+          @tag_count = Breeze::Commerce::Tag.count
+          @tag = Breeze::Commerce::Tag.create params[:tag].merge({ position: @tag_count })
         end
                 
         def edit
-          @tag = store.tags.find params[:id]
+          @tag = Breeze::Commerce::Tag.find params[:id]
         end
         
         def update
-          @tag = store.tags.find params[:id]
+          @tag = Breeze::Commerce::Tag.find params[:id]
           @tag.update_attributes params[:tag]
         end
         
         def reorder
           params[:tag].each_with_index do |id, index|
-            store.tags.find(id).update_attributes :position => index
+            Breeze::Commerce::Tag.find(id).update_attributes :position => index
           end
           render :nothing => true
         end
         
         def destroy
-          @tag = store.tags.find params[:id]
+          @tag = Breeze::Commerce::Tag.find params[:id]
           @tag.try :destroy
-          @tag_count = store.tags.count
+          @tag_count = Breeze::Commerce::Tag.count
         end
       end
     end

@@ -43,7 +43,6 @@
     .span12
       = render :partial => "breeze/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => order_form }
       .form-actions
-        = submit_tag "Save Changes to Cart", :class => "btn"
         .btn-group
           = link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do
             %i.icon-arrow-left
@@ -94,7 +93,8 @@
                         Password
                         %span.required *
                       = form.password_field :password
-                      = form.submit "Sign in", :class => "btn btn-primary", :id => 'button-sign_in'
+                      = link_to 'Sign in', breeze.store_customer_session_path, :class => 'btn btn-primary', :id => 'button-sign_in'
+
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-1b" do
                 %i.icon-arrow-down.icon-white

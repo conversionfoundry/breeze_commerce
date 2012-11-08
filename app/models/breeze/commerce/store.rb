@@ -1,3 +1,4 @@
+# Stores settings for Breeze Commerce
 module Breeze
   module Commerce
     class Store
@@ -6,21 +7,12 @@ module Breeze
       attr_accessible :home_page_id, :allow_returning_customer_login, :currency, :default_shipping_method, :default_shipping_method_id
 
       belongs_to :home_page, :class_name => "Breeze::Content::Page"
-      has_many :tags, :class_name => "Breeze::Commerce::Tag"
-      has_many :customers, :class_name => "Breeze::Commerce::Customer"
-      has_many :order_statuses, :class_name => "Breeze::Commerce::OrderStatus"
-      has_many :orders, :class_name => "Breeze::Commerce::Order"
-      has_many :products, :class_name => "Breeze::Commerce::Product"
-      has_many :shipping_methods, :class_name => "Breeze::Commerce::ShippingMethod"
       belongs_to :default_shipping_method, :class_name => "Breeze::Commerce::ShippingMethod"
-
-
       field :allow_returning_customer_login, type: Boolean, default: true
       field :currency, default: 'NZD'
 
       # Set up built-in order statuses
       # In future we may provide the option to create custom order statuses for stores, but we need some standard built-in ones to work with.
-      # TODO: SHould this be in db/seeds?
       def set_up_order_statuses
           # Generate built-in order statuses for billing
           unless order_statuses.where(:type => :billing, :name => "Browsing").count > 0

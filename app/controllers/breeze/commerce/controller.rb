@@ -12,7 +12,6 @@ module Breeze
       end
     
       def store
-        # Rails.logger.debug "store_id: " + session[:store_id].to_s
         @store ||= if session[:store_id].present?
           Breeze::Commerce::Store.where(:_id => session[:store_id]).first
         end || Breeze::Commerce::Store.first

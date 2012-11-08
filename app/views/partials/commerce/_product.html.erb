@@ -23,12 +23,12 @@
   </div>
   <div class="price">
     <% if product.single_display_price? %>
-      <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
+      <%= number_to_currency(product.display_price, :locale => :nz) %><span class="currency"><%= currency %></span>
     <% else %>
       From
-      <%= number_to_currency(product.display_price_min, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
+      <%= number_to_currency(product.display_price_min, :locale => :nz) %><span class="currency"><%= currency %></span>
       to
-      <%= number_to_currency(product.display_price_max, :locale => :nz) %><span class="currency"><%= product.store.currency %></span>
+      <%= number_to_currency(product.display_price_max, :locale => :nz) %><span class="currency"><%= currency %></span>
     <% end %>
   </div>
   <div class="actions">

@@ -88,7 +88,6 @@ describe "customer", :type => :request, :js => true do
     home_page = FactoryGirl.create(:home_page)
     # ventriloquist_dummy = FactoryGirl.create(:ventriloquist_dummy)
     ventriloquist_dummy = FactoryGirl.create(:ventriloquist_dummy, parent_id: home_page.id)
-    store.products << ventriloquist_dummy
     freddie_dummy = FactoryGirl.create(:freddie_dummy, product: ventriloquist_dummy)
     # my_cart = FactoryGirl.create(:my_cart)
 

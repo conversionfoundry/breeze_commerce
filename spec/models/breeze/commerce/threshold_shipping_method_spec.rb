@@ -38,11 +38,6 @@ describe Breeze::Commerce::ThresholdShippingMethod do
 	it "is valid with zero above_threshold_price_cents" do
 		build(:threshold_shipping_method, above_threshold_price_cents: 0).should be_valid
 	end
-	it "is invalid without a store" do
-		threshold_shipping_method = create :threshold_shipping_method
-		threshold_shipping_method.store = nil
-		threshold_shipping_method.should_not be_valid
-	end
 
 	describe "price" do
 		before :each do

@@ -3,16 +3,14 @@ module Breeze
     class Order
       include Mongoid::Document
       include Mongoid::Timestamps
+      include Mixins::Archivable
       
-      attr_accessible :email, :personal_message, :comment, :archived, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id
+      attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id
       field :email
-      # field :subscribe, :type => Boolean
       field :personal_message
       field :comment
       field :payment_completed
-      field :archived, type: Boolean, default: false
       
-      belongs_to :store, :class_name => "Breeze::Commerce::Store", :inverse_of => :orders
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -24,23 +22,24 @@ module Breeze
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
-      scope :archived, where(:archived => true)
-      scope :unarchived, where(:archived.in => [ false, nil ])
       scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
       scope :unfulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").last )
       scope :fulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").last )
+      scope :show_in_admin, lambda { |o| o.show_in_admin? }
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
 
       before_validation :set_initial_order_statuses
-      validates_presence_of :store, :billing_status, :shipping_status
+      validates_presence_of :billing_status, :shipping_status
 
 
       # Order numbers are strings in the format "2012-07-12-60319"
       # The last section is seconds since midnight on the order date, zero-padded to always be five digits
       def order_number
         if created_at
+          # ssm = created_at.seconds_since_midnight.to_i
+          # created_at.to_date.to_s + '-' + sprintf( '%05d', (ssm + rand(100000)).modulo(100000) )
           created_at.to_date.to_s + '-' + sprintf('%05d', created_at.seconds_since_midnight.to_i)
         else
           'XXXX-XX-XX-XXXXX'
@@ -102,11 +101,9 @@ module Breeze
       protected
 
       def set_initial_order_statuses 
-          self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default(store)
-          self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default(store)
-          self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(:store => store, :is_default => true).first
-        
-        # end
+        self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
+        self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
+        self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(is_default: true).first        
       end
 
     end

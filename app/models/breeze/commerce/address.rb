@@ -2,13 +2,14 @@ module Breeze
   module Commerce
     class Address
       include Mongoid::Document
+      include Mixins::Archivable
 
       embedded_in :order, :class_name => "Breeze::Commerce::Order", :inverse_of => :shipping_address
       embedded_in :order, :class_name => "Breeze::Commerce::Order", :inverse_of => :billing_address
       embedded_in :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :shipping_address
       embedded_in :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :billing_address
 
-      attr_accessible :name, :address, :city, :state, :postcode, :country, :phone, :archived
+      attr_accessible :name, :address, :city, :state, :postcode, :country, :phon
       field :name
       field :address # May be multi-line
       field :city
@@ -16,10 +17,6 @@ module Breeze
       field :postcode
       field :country
       field :phone
-      field :archived, type: Boolean, default: false
-
-      scope :archived, where(:archived => true)
-      scope :unarchived, where(:archived.in => [ false, nil ])
 
       validates_presence_of :name, :address, :city, :country
       

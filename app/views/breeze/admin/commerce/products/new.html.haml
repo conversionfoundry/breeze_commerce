@@ -5,5 +5,5 @@
 = pane_layout do |main|
   - main.inner do
     = scrollable_layout do
-      .product-new.box{:id => "product_new"}
+      .product-new{:id => "product_new"}
         = render "breeze/admin/commerce/products/form", :url => admin_store_products_path

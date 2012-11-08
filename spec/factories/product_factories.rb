@@ -2,7 +2,6 @@ require 'faker'
 
 FactoryGirl.define do
   factory :product, class: Breeze::Commerce::Product do
-  	store { Breeze::Commerce::Store.first }
     sequence(:title) { |n| "Product #{n}"}
     sequence(:slug) { |n| "product_#{n}"}
   	parent { Breeze::Content::Page.first || nil }

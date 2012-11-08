@@ -1,0 +1,23 @@
+.products-container
+  = form_tag admin_store_products_path, :method => :put do
+    .with-selected{:style => "display: none;"}
+      %strong With selected:
+      = link_to "Publish", mass_update_admin_store_products_path, :class => "small green publish button"
+      = link_to "Unpublish", mass_update_admin_store_products_path, :class => "small unpublish button"
+      = link_to "Delete", mass_destroy_admin_store_products_path, :class => "small red delete button"
+    %table.fancy.products
+      %thead
+        %tr
+          %th.first.select{:style => "width:2em;"}
+            %input.checkbox.select-all{:type => "checkbox"}/
+          %th.product Product
+          %th.variants Variants
+          %th.published Published
+          %th.last_update Last Update
+          %th.last.actions Actions
+      %tbody
+        - if products.any?
+          = render :partial => "breeze/admin/commerce/products/product", :collection => products, locals: {count: products.count}
+        - else
+          %tr
+            %td.empty{:colspan => "8"} There are no products to show here.

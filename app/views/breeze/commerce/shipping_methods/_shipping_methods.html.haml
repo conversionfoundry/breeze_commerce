@@ -1,0 +1,27 @@
+%tr.shipping
+  %td
+  %td
+    Shipping:
+  %td
+    - if shipping_methods.count > 1
+      - shipping_methods.each do |shipping_method|
+        %label.radio
+          = form.radio_button :shipping_method_id, shipping_method.id, :checked => shipping_method == @order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }
+          %h4
+            = shipping_method.name
+          %p.description
+            = shipping_method.description
+    - elsif shipping_methods.count == 1
+      - shipping_method = shipping_methods.first
+      %h4
+        = shipping_method.name
+      %p.description
+        = shipping_method.description
+    - else
+      %p.label.label-warning
+        No shipping methods available
+  %td.total
+    %span.amount
+      = number_to_currency @order.shipping_total
+    %span.currency
+      = store.currency

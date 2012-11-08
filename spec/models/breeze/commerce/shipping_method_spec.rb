@@ -20,11 +20,6 @@ describe Breeze::Commerce::ShippingMethod do
 	it "is valid with zero price_cents" do
 		build(:shipping_method, price_cents: 0).should be_valid
 	end
-	it "is invalid without a store" do
-		shipping_method = create :shipping_method
-		shipping_method.store = nil
-		shipping_method.should_not be_valid
-	end
 	it "is the default shipping method if it was the first created" do
 		store = Breeze::Commerce::Store.first
 		first_shipping_method = Breeze::Commerce::ShippingMethod.first

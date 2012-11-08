@@ -1,20 +1,29 @@
-= content_tag :tr, :class => :order, :id => "order_#{order.id}", :"data-id" => order.id do
-  %td.date
-    = order.created_at
-  %td.products
-    - order.line_items.each do |item|
-      = item.quantity
-      = item.product.title
-  %td.amount
-    = order.total
-  %td.billing
-    %p
-      = order.billing_address
-    %p
-      = order.billing_status.name
+- classes = ' status-shipping-' + order.shipping_status.name.parameterize.underscore
+- classes += ' status-billing-' + order.billing_status.name.parameterize.underscore
+= content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
+  %td.order.first
+    %p.number
+      %span.order_number
+        = order.order_number
+    %p.total
+      = number_to_currency(order.total, :locale => :nz)
+      %span.currency
+        = store.currency
   %td.shipping
-    %p
-      = order.shipping_address
-    %p
+    = order.shipping_address.to_html if order.shipping_address
+  %td.line_items
+    %ul.line_items
+      - order.line_items.each do |line_item|
+        %li.line_item
+          = line_item.quantity
+          &times;
+          = line_item.name
+          (
+          = line_item.sku_code
+          )
+  %td.shipping_status
+    .status
       = order.shipping_status.name
-
+  %td.billing_status
+    .status
+      = order.billing_status.name

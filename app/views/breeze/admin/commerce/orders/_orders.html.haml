@@ -10,7 +10,7 @@
         %th.actions.last Actions
     %tbody
       - if orders.any?
-        = render :partial => "breeze/admin/commerce/orders/order", :collection => orders
+        = render :partial => "breeze/admin/commerce/orders/order", :collection => orders, locals: {count: orders.count}
       - else
         %tr
           %td.empty{:colspan => "6"} There are no orders yet.

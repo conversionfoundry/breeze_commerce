@@ -13,7 +13,7 @@
       <% if @product.properties.any? %>
         <%= render :partial => "breeze/admin/commerce/products/property", :collection => @product.properties %>
       <% else %>
-        <tr class="empty"><td class="empty" colspan="5">There are no properties for this product.</td></tr>
+        <tr class="empty"><td class="empty" colspan="5">There are no properties for this product yet.</td></tr>
       <% end %>
     </tbody>
     <tfoot>

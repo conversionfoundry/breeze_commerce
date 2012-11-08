@@ -52,7 +52,7 @@ $(document).ready ->
       type: "PUT"
       data:
         order:
-          shipping_method: $(this).val()
+          shipping_method_id: $(this).val()
       success: (result) ->
         eval result
       error: (result) ->
@@ -153,6 +153,20 @@ $(document).ready ->
       $('#continue-1b').show()
     $("li#returning_customer_password").slideToggle @checked
 
+  $('#button-sign_in').click (e) ->
+    e.preventDefault()
+    # customer = { email: 'test@example.com', password: 'test' }
+    post(
+      "/store/customer/sign_in"
+      commit: "Sign in"
+      authenticity_token: $('meta[name=csrf-token]').attr('content')
+      utf8: "✓"
+      'customer[email]': 'test@example.com'
+      'customer[password]': 'test'
+    )
+
+
+
   $("#continue-1a").click (event) ->
     change 0, 1
 
@@ -209,3 +223,19 @@ $(document).ready ->
   $("#changed-my-mind").click (event) ->
     change currentStepIndex(), 3
 
+# Post to the provided URL with the specified parameters.
+post = (path, parameters) ->
+  form = $("<form></form>")
+  form.attr "method", "post"
+  form.attr "action", path
+  $.each parameters, (key, value) ->
+    field = $("<input></input>")
+    field.attr "type", "hidden"
+    field.attr "name", key
+    field.attr "value", value
+    form.append field
+  console.log form
+  # The form needs to be a part of the document in
+  # order for us to be able to submit it.
+  $(document.body).append form
+  form.submit()

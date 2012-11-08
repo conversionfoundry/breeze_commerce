@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "cancan/matchers"
 
 describe Breeze::Commerce::Customer do
 	it "has a valid factory" do
@@ -17,6 +18,7 @@ describe Breeze::Commerce::Customer do
 	it "returns a customer's full name as a string" do
 		create(:customer, first_name: "John", last_name: "Doe").name.should eq "John Doe"
 	end
+
 	describe "scopes" do
 		before :each do
 			@smith = create(:customer, last_name: "Smith")
@@ -39,4 +41,19 @@ describe Breeze::Commerce::Customer do
 			end
 		end
 	end
+
+	describe Breeze::Admin::Ability do
+		it "can manage own profile" do
+      customer = create :customer
+      ability = Breeze::Admin::Ability.new(customer)
+      ability.should be_able_to(:manage, customer)
+		end
+		it "cannot manage another user's profile" do
+      customer1 = create(:customer)
+      customer2 = create(:customer)
+      ability1 = Breeze::Admin::Ability.new(customer1)
+      ability1.should_not be_able_to(:manage, customer2)
+		end
+	end
+
 end
