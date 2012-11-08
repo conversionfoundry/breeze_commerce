@@ -17,7 +17,7 @@ module Breeze
             
       def products
         if list_type == 'by_tags' 
-          product_array = Breeze::Commerce::Product.published.unarchived || []
+          product_array = Breeze::Commerce::Product.published.unarchived
           self.tags.each do |tag|
             product_array = product_array & tag.products
           end
