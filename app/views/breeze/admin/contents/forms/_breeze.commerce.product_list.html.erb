@@ -5,7 +5,7 @@
 	<li><%= radio_button_tag 'content[list_type]', "related", @content.list_type=='related', :class => 'list_type' %> Related to a product</li>
 
 	<div id="list_type_by_tags" class="list_type_option" style="display: none;">
-	  <%= form.select :tag_ids, Breeze::Commerce::Tag.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Tags"}, :class => "multiselect", :multiple => "multiple" %>
+	  <%= form.select :tag_ids, Breeze::Commerce::Tag.all.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Tags"}, :class => "multiselect", :multiple => "multiple" %>
 
 	  <p>Select product tags to list (leave empty to list all products)</p>
 	</div>
