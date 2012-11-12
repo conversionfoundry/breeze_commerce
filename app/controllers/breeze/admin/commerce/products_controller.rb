@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class ProductsController < Breeze::Admin::Commerce::Controller
         def index
-          @products = Breeze::Commerce::Product.unarchived.order_by(:created_at.desc)
+          @products = Breeze::Commerce::Product.includes(:variants).unarchived.order_by(:created_at.desc)
         end
         
         def new

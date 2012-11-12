@@ -14,7 +14,6 @@ describe "the dummy store", :type => :request do
 
   # it "has a home page" do
   #   visit ('/')
-  #   binding.pry
   #   page.should have_content("Welcome to Breeze!")
   # end
 

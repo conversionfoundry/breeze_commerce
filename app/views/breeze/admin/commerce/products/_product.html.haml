@@ -13,10 +13,11 @@
     .tags
       = product.tags.collect(&:name).join(', ')  
   %td.variants
+    - unarchived_variants = product.variants.unarchived
     %span.badge
-      = product.variants.unarchived.count
-    - if product.variants.unarchived.count > 0
-      - if product.variants.unarchived.published.count == 0
+      = unarchived_variants.count
+    - if unarchived_variants.any?
+      - if unarchived_variants.published.count == 0
         No published variants
       - elsif product.single_display_price?
         = number_to_currency(product.display_price, :locale => :nz)

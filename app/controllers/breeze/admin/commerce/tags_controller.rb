@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class TagsController < Breeze::Admin::Commerce::Controller
         def index
-          @tags = Breeze::Commerce::Tag.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
+          @tags = Breeze::Commerce::Tag.includes(:products).order_by(:created_at.desc)
           respond_to do |format|
             format.html
             format.json { render :json => @tags.map{|c| { :id => c.id, :name => c.name } } }

@@ -36,7 +36,6 @@ module Breeze
       def update
         @order = current_order(session)
         @order.update_attributes params[:order]
-        @order.save
         respond_to do |format|
           format.js
         end
@@ -165,7 +164,7 @@ module Breeze
 
       def require_nonempty_order
         @order = current_order(session) || create_order(session)
-        if @order.line_items.count == 0 || @order.shipping_method == nil
+        if @order.line_items.empty?
           redirect_to breeze.cart_path
         end
       end
