@@ -1,4 +1,6 @@
 require 'breeze'
+require 'breeze_account'
+require 'breeze_pay_online'
 
 Breeze.hook :define_abilities do |abilities_array, user, abilities|
   abilities.instance_eval do
