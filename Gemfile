@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 
 gemspec # Dependencies are defined in the .gemspec file
 
-gem "breeze", :github => 'isaacfreeman/breeze', :branch => '1.0.x' # Local breeze is in ~/dev/breeze
+gem "breeze", :github => 'isaacfreeman/breeze', branch: '1.0.x'
+gem "breeze_account", :github => 'isaacfreeman/breeze', branch: 'master'
+gem "breeze_pay_online", :github => 'isaacfreeman/breeze', branch: 'master'
+gem "breeze_apply_online", :github => 'isaacfreeman/breeze', branch: 'master'
 
 group :test, :development do
-  gem "breeze_account", :path => '~/dev/breeze_account'
-  gem "breeze_pay_online", :path => '~/dev/breeze_pay_online'
-  gem "breeze_apply_online", :path => '~/dev/breeze_apply_online'
   gem 'pry'
   gem 'pry-rails'
   gem 'magic_encoding'
