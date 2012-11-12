@@ -9,8 +9,6 @@
       %p.number
         %span.order_number
           = order.order_number
-        / %span.time
-        /   = order.created_at.strftime('%I:%M %P')
       %p.customer
         - if order.customer
           = link_to order.customer.name, edit_admin_store_customer_path(order.customer)

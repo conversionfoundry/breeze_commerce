@@ -24,8 +24,8 @@ module Breeze
 
       validates_associated :variants
 
-      alias :name :title
-      alias :name= :title=
+      alias_method :name, :title
+      alias_method :name=, :title=
 
       def related_products
         product_relationship_children.collect{|relationship| relationship.child_product}
@@ -58,7 +58,7 @@ module Breeze
 
       # Are any of the product's variants discounted?
       def any_variants_discounted?
-        variants.unarchived.published.discounted.count > 0
+        variants.unarchived.published.discounted.exists?
       end
 
       # Are all of the product's variants discounted?

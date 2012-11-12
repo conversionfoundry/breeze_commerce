@@ -23,7 +23,7 @@ module Breeze
       protected
 
       def fill_in_slug
-        self.slug = name.downcase.gsub(/[^a-z0-9\-]+/, '-')
+        self.slug = name.downcase.gsub(/[^a-z0-9\-]+/, '-') if name
       end
 
     end

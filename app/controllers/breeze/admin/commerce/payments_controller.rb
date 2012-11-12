@@ -11,7 +11,6 @@ module Breeze
           @payment = Breeze::Commerce::Payment.new(params[:payment])
           @payment.reference = @order.id
           @payment.created_by_merchant = true
-          binding.pry
           @payment.save
         end
 

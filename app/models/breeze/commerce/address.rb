@@ -9,7 +9,7 @@ module Breeze
       embedded_in :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :shipping_address
       embedded_in :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :billing_address
 
-      attr_accessible :name, :address, :city, :state, :postcode, :country, :phon
+      attr_accessible :name, :address, :city, :state, :postcode, :country, :phone
       field :name
       field :address # May be multi-line
       field :city

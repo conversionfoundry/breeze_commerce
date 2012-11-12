@@ -52,7 +52,6 @@ describe Breeze::Commerce::LineItem do
 			it "keeps the old price when the variant price changes" do
 				old_variant_price = @variant.display_price
 				@variant.update_attribute(:sell_price_cents, @variant.sell_price_cents + 100)
-				binding.pry
 				@line_item.price.should_not eq @variant.display_price
 				@line_item.price.should eq old_variant_price
 			end
