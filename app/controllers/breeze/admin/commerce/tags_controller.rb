@@ -3,7 +3,7 @@ module Breeze
     module Commerce
       class TagsController < Breeze::Admin::Commerce::Controller
         def index
-          @tags = Breeze::Commerce::Tag.includes(:products).order_by(:created_at.desc)
+          @tags = Breeze::Commerce::Tag.includes(:products)
           respond_to do |format|
             format.html
             format.json { render :json => @tags.map{|c| { :id => c.id, :name => c.name } } }
@@ -15,7 +15,8 @@ module Breeze
         end
 
         def create
-          @tag_count = Breeze::Commerce::Tag.count
+          @tags = Breeze::Commerce::Tag.includes(:products)
+          @tag_count = @tags.count
           @tag = Breeze::Commerce::Tag.create params[:tag].merge({ position: @tag_count })
         end
                 

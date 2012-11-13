@@ -12,8 +12,7 @@ module Breeze
       has_and_belongs_to_many :products, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :product_lists, :class_name => "Breeze::Commerce::ProductList"
 
-      default_scope order_by([:name, :asc])
-      scope :ordered, order_by([:position, :asc])
+      default_scope order_by([:position, :asc])
 
       validates_presence_of :name
       # validates_uniqueness_of :name, :slug, :scope => :store_id # TODO: This seems to always be invalid.

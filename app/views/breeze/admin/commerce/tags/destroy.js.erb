@@ -1,2 +1,7 @@
 $('#menu-item-tags .item-count').html(<%= @tag_count %>);
-$('#<%= "tag_#{@tag.id}" %>').fadeOut(function() { $(this).remove(); });
+$('#tag_<%= @tag.id %>').fadeOut(function() { 
+	$(this).remove(); 
+	$('table.tags tbody tr:first').addClass('first');
+	$('table.tags tbody tr:last').addClass('last');
+});
+

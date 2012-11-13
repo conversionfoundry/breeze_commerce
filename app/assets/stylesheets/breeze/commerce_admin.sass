@@ -456,7 +456,7 @@ table.orders
 
 abbr[title]
   border: none
-  cursor: normal
+  cursor: default
 
 
 
@@ -946,11 +946,15 @@ table.properties
       text-align: center
 
 table.shipping_methods
-  .shipping_method
+  .default
+    font-style: italic
+    color: #aaaaaa
+table.sortable
+  tr
     cursor: move
-    .default
-      font-style: italic
-      color: #aaaaaa
+  tr.empty
+    cursor: default
+
 
 form
   margin: 0

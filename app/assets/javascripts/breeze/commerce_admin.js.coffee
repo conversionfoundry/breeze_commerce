@@ -168,7 +168,13 @@ $(document).ready ->
       url: "/admin/store/products/" + $(this).data('product_id') + "/product_images/reorder.js"
       type: "post"
       data: "_method=put&" + $(this).sortable("serialize")
-
+  $("table.tags tbody").sortable update: (e, ui) ->
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      url: "/admin/store/tags/reorder.js"
+      type: "post"
+      data: "_method=put&" + $(this).sortable("serialize")
 
 
 
