@@ -43,7 +43,7 @@ module Breeze
 
       # Add items to the order (i.e. the shopping cart)
       def populate
-        @order = current_order(session) || create_order(session)
+        @order = current_order(session)
         variant_id = params[:variant_id]
                 
         new_line_item =  Breeze::Commerce::LineItem.new(:variant_id => variant_id, :quantity => params[:quantity] || 1)
