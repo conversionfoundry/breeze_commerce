@@ -5,6 +5,8 @@ require "breeze/commerce/current_cart"
 require "breeze/account"
 require "breeze/pay_online"
 
+require "kaminari"
+
 module Breeze
   module Commerce
 

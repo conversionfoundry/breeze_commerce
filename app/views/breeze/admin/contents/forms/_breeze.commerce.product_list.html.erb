@@ -1,9 +1,13 @@
 <%= form.fieldset do %>
   <%= form.text_field :title, :required => false %>
+<% end %>
 
+<%= form.fieldset do %>
 	<li><%= radio_button_tag 'content[list_type]', "by_tags", @content.list_type=='by_tags', :class => 'list_type' %> By Tags</li>
 	<li><%= radio_button_tag 'content[list_type]', "related", @content.list_type=='related', :class => 'list_type' %> Related to a product</li>
+<% end %>
 
+<%= form.fieldset do %>
 	<div id="list_type_by_tags" class="list_type_option" style="display: none;">
 	  <%= form.select :tag_ids, Breeze::Commerce::Tag.all.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Tags"}, :class => "multiselect", :multiple => "multiple" %>
 
@@ -14,7 +18,10 @@
 	 	<%= form.select :product_id, Breeze::Commerce::Product.published.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"} %>
 	  <p>The list will show items related to the selected product.</p>
 	</div>
+<% end %>
 
+<%= form.fieldset do %>
+	<%= form.check_box :use_pagination,label: "Divide list into pages" %>
 <% end %>
 
 

@@ -3,8 +3,8 @@ module Breeze
     class ProductsController < Breeze::Commerce::Controller
       def index
         @product_list = Breeze::Commerce::ProductList.includes(:tags).find(params[:product_list_id])
-        @products = @product_list.products #.paginate(:page => params[:page], :per_page => 3)
-        @page = params[:page]
+        page_number = params[:page_number]||1
+        @products = Kaminari.paginate_array(@product_list.products).page(page_number).per(1)
       end
     end
   end

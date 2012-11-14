@@ -1,3 +1,6 @@
-$('div.pagination').replaceWith('<%#= escape_javascript( will_paginate( @products, params: { controller: "/breeze/commerce/products", action: "index", product_list_id: @product_list.id }) ) %>');
-$('.pagination a').attr('data-remote', 'true');
+// TODO: Figure out why the paginate call breaks
+$('.pagination').replaceWith('<%= escape_javascript( paginate @products ) %>');
 $('ul.products').html('<%= escape_javascript render :partial => "/partials/commerce/product", :collection => @products, :locals => {:product_count => @products.count} %>');
+
+// TODO: WHen paginate is working, use the following to re-render the whole products partial, for compatibility with themes
+// $('div.products[data-product-list-id=<%= @product_list.id %>]').replaceWith(<%#= escape_javascript render :partial => "partials/commerce/products", :layout => false, :locals => {:@product_list => @product_list, :@products => @products} %>)
