@@ -1,9 +1,8 @@
 module Breeze
   module Commerce
     class OrdersController < Breeze::Commerce::Controller
-      helper Breeze::ContentsHelper
+      include Breeze::Commerce::CurrentOrder
       layout "breeze/commerce/checkout_funnel"
-      include Breeze::Commerce::ContentsHelper
       respond_to :html, :js
       before_filter :require_nonempty_order, except: [:edit, :print, :update, :populate]
 

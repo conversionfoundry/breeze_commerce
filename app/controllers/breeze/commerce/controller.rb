@@ -1,6 +1,7 @@
 module Breeze
   module Commerce
     class Controller < Breeze::ContentsController
+      helper Breeze::ContentsHelper
       helper Breeze::Commerce::ContentsHelper
       before_filter :check_for_stores, :except => [ :setup_default ]
 
