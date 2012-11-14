@@ -12,7 +12,7 @@ module Breeze
 
       config.to_prepare do
         ApplicationController.helper Breeze::Commerce::ContentsHelper
-        ApplicationController.helper Breeze::Commerce::CommerceAdminHelper
+        ApplicationController.helper Breeze::Commerce::AdminHelper
         Breeze::Content.register_class Breeze::Commerce::Store
         Breeze::Content.register_class Breeze::Commerce::ProductList
         Breeze::Content.register_class Breeze::Commerce::Minicart
