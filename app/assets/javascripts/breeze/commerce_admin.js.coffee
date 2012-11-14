@@ -175,7 +175,13 @@ $(document).ready ->
       url: "/admin/store/tags/reorder.js"
       type: "post"
       data: "_method=put&" + $(this).sortable("serialize")
-
+  $("table.variants tbody").sortable update: (e, ui) ->
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      url: "/admin/store/products/" + $(this).data('product_id') + "/variants/reorder.js"
+      type: "post"
+      data: "_method=put&" + $(this).sortable("serialize")
 
 
 # Published toggles

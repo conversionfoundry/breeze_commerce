@@ -31,7 +31,7 @@
     #product-properties.box.container
       = render :partial => "breeze/admin/commerce/products/properties", :object => @product.properties
     #product-variants.box.container
-      = render :partial => "breeze/admin/commerce/variants/variants", :object => @product.variants.unarchived
+      = render :partial => "breeze/admin/commerce/variants/variants", :object => @product.variants.unarchived.ordered
     #product-relationships.box.container
       = render :partial => "breeze/admin/commerce/products/relationships", :object => @product.product_relationship_children
 
