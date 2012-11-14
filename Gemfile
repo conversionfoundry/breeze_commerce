@@ -7,6 +7,10 @@ gem "breeze_account", :github => 'isaacfreeman/breeze_account', branch: 'master'
 gem "breeze_pay_online", :github => 'isaacfreeman/breeze_pay_online', branch: 'master'
 gem "breeze_apply_online", :github => 'isaacfreeman/breeze_apply_online', branch: 'master'
 
+group :development do 
+  gem 'fuubar'
+end
+
 group :test, :development do
   gem 'pry'
   gem 'pry-rails'
