@@ -42,6 +42,8 @@ module Breeze
       scope :discounted, where(discounted: true)
       scope :ordered, order_by(:position.asc)
 
+      before_validation :set_initial_position
+
       validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
       validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator
@@ -107,7 +109,11 @@ module Breeze
         count
       end
 
+      private
 
+      def set_initial_position
+        self.position = product.variants.count if product
+      end
       
     end
     
