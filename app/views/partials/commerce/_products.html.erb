@@ -14,33 +14,13 @@
 	<% end %>
 
 	<% if @products.any? %>
-    <%= paginate @products if @product_list.use_pagination %>
+    <%= paginate_products @products if @product_list.use_pagination %>
 	  <%= content_tag :ul, :class => "products hfeed" do %>
 	    <%= render :partial => "/partials/commerce/product", :collection => @products, :locals => {:product_count => @products.count} %>
 	  <% end %>
+    <%= paginate_products @products if @product_list.use_pagination %>
 	<% else %>
 	  <p>There are no products to display.</p>
 	<% end %>
 
 <% end %>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-   	// $('.pagination a').attr('data-remote', 'true');
-      
-   //  $('div.pagination a').live('click', function(event) {
-   //  	// page_number = $(this).attr("href").split('=')[1] // TODO: need a more robust way to get the page number for the link
-   //   //  console.log( $(this).attr("href") );
-			// $(".pagination a").click(function() {
-   //      $.ajax({
-   //        type: "GET",
-   //        url: $(this).attr("href"),
-   //        dataType: "script"
-   //      });
-   //      return false;
-	  //   });
-   //    event.preventDefault();
-   //  });
-
-  });
-</script>
