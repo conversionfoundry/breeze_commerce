@@ -1,4 +1,18 @@
-# Javascript used in the checkout funnel – shopping cart and checkout pages
+# Product Pagination
+$(document).ready ->
+  $(".product_pagination a").live "click", (event) ->
+    page_number = $(this).attr("href") #.split('=')[1] // TODO: need a more robust way to get the page number for the link
+    product_list_id = $(this).parents("div.products").data("product-list-id")
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      type: "GET"
+      url: "products"
+      data:
+        product_list_id: product_list_id
+        page: page_number
+      dataType: "script"
+    event.preventDefault()
 
 # Shopping Cart
 $(document).ready ->
