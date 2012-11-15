@@ -62,14 +62,14 @@ describe Breeze::Commerce::Product do
 	describe "price methods" do
 		before :each do
 			@product = create(:product)
-			@product.variants << create(:variant, sell_price: 0.01)
-			@product.variants << create(:variant, sell_price: 10.00)
-			@product.variants << create(:variant, sell_price: 10000.00)
+			create(:variant, sell_price: 0.01, product_id: @product.id)
+			create(:variant, sell_price: 10.00, product_id: @product.id)
+			create(:variant, sell_price: 10000.00, product_id: @product.id)
 		end
-		it "can report the minimum display prices for its variants" do
+		it "can report the minimum display price for its variants" do
 			@product.display_price_min.should eq 0.01
 		end
-		it "can report the maximum display prices for its variants" do
+		it "can report the maximum display price for its variants" do
 			@product.display_price_max.should eq 10000.00
 		end
 		it "can report a single display price" do
@@ -88,15 +88,15 @@ describe Breeze::Commerce::Product do
 		end
 		context "when the variants have different prices" do
 			it "reports that all variants have the same price" do
-				@product.variants << create(:variant, sell_price: 1)
-				@product.variants << create(:variant, sell_price: 2)
+				create(:variant, sell_price: 1, product_id: @product.id)
+				create(:variant, sell_price: 2, product_id: @product.id)
 				@product.single_display_price?.should eq false
 			end
 		end
 		context "when the variants all have the same price" do
 			it "reports that all variants have the same price" do
-				@product.variants << create(:variant, sell_price: 1)
-				@product.variants << create(:variant, sell_price: 1)
+				create(:variant, sell_price: 1, product_id: @product.id)
+				create(:variant, sell_price: 1, product_id: @product.id)
 				@product.single_display_price?.should eq true
 			end
 		end
@@ -116,8 +116,8 @@ describe Breeze::Commerce::Product do
 		end
 		context "when it has no discounted variants" do
 			before :each do
-				@product.variants << create(:variant)
-				@product.variants << create(:variant)
+				create(:variant, product_id: @product.id)
+				create(:variant, product_id: @product.id)
 			end
 			it "reports no discounted variants" do
 				@product.any_variants_discounted?.should eq false
@@ -128,8 +128,8 @@ describe Breeze::Commerce::Product do
 		end
 		context "when it has discounted and non-discounted variants" do
 			before :each do
-				@product.variants << create(:variant)
-				@product.variants << create(:discounted_variant)
+				create(:variant, product_id: @product.id)
+				create(:discounted_variant, product_id: @product.id)
 			end
 			it "reports it has discounted variants" do
 				@product.any_variants_discounted?.should eq true
@@ -140,8 +140,8 @@ describe Breeze::Commerce::Product do
 		end
 		context "when it has only discounted variants" do
 			before :each do
-				@product.variants << create(:discounted_variant)
-				@product.variants << create(:discounted_variant)
+				create(:discounted_variant, product_id: @product.id)
+				create(:discounted_variant, product_id: @product.id)
 			end
 			it "reports it has discounted variants" do
 				@product.any_variants_discounted?.should eq true
@@ -179,20 +179,18 @@ describe Breeze::Commerce::Product do
 	  end
 		context "when its variants have had no sales" do
 			it "has had no sales" do
-				variant1 = create(:variant)
-				variant2 = create(:variant)
+				variant1 = create(:variant, product_id: @product.id)
+				variant2 = create(:variant, product_id: @product.id)
 				variant1.stub(:number_of_sales){0} 
 				variant2.stub(:number_of_sales){0} 
-				@product.variants << variant1
-				@product.variants << variant2
 				@product.number_of_sales.should eq 0
 			end
 		end
 		context "when some variants have had sales" do
 			it "counts the correct number of sales" do
-				variant1 = create(:variant)
-				variant2 = create(:variant)
-				variant3 = create(:variant)
+				variant1 = create(:variant, product_id: @product.id)
+				variant2 = create(:variant, product_id: @product.id)
+				variant3 = create(:variant, product_id: @product.id)
 				variant1.stub(:number_of_sales){0} 
 				variant2.stub(:number_of_sales){1} 
 				variant3.stub(:number_of_sales){3} 
