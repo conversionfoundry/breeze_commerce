@@ -16,7 +16,7 @@
           %th.last{:style => ""} Actions
       %tbody
         - if @product.related_products.any?
-          = render :partial => "breeze/admin/commerce/relationships/relationship", :collection => @product.product_relationship_children
+          = render :partial => "breeze/admin/commerce/product_relationships/relationship", :collection => @product.product_relationship_children
         - else
           %tr.empty
             %td.empty{:colspan => "5"} There are no relationships for this product yet.
