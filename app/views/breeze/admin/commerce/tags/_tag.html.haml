@@ -5,9 +5,9 @@
 = content_tag :tr, class: classes, id: "tag_#{tag.id}", data: {:id => "#{tag.id}", :position => "#{tag.position}"} do
   %td.name
     = "#{tag.name}" 
-    = badge( Breeze::Commerce::Product.with_tag(tag).count )
+    = badge( Breeze::Commerce::Product.with_tag(tag).unarchived.count )
     %ul.products
-      - products_count = tag.products.count
+      - products_count = tag.products.unarchived.count
       - tag.products.unarchived.each_with_index do |product, index|
         %li.product
           = link_to(product.name, edit_admin_store_product_path(product)) + (index == products_count - 1 ? '' : ', ')
