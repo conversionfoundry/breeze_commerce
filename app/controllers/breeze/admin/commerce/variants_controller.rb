@@ -45,11 +45,12 @@ module Breeze
         
         def reorder
           params[:variant].each_with_index do |id, index|
-            Breeze::Commerce::Variant.find(id).update_attributes :position => index
+            Breeze::Commerce::Variant.find(id).update_attribute( :position, index )
           end
           render :nothing => true
         end
-        private
+        
+      private
 
         def product
           @product ||= ::Breeze::Commerce::Product.find params[:product_id]
