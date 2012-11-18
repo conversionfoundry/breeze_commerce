@@ -1,6 +1,6 @@
 <% if @product_relationship.errors.empty? %>
   $('.relationships tbody tr.empty').remove();
-  $('<%= escape_javascript render(:partial => "/breeze/admin/commerce/products/relationship", :object => @product_relationship) %>').appendTo('table.relationships tbody').effect("highlight", { color: "#ffffc0" }, 3000);
+  $('<%= escape_javascript render(:partial => "/breeze/admin/commerce/relationships/relationship", :object => @product_relationship) %>').appendTo('table.relationships tbody').effect("highlight", { color: "#ffffc0" }, 3000);
   $('#relationship-details').dialog('close');
 <% else %>
   $('#relationship-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/product_relationships/new") %>');

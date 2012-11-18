@@ -1,6 +1,6 @@
 <% if @property.errors.empty? %>
   $('.properties tbody tr.empty').remove();
-  $('.properties tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/property", :object => @property) %>');
+  $('.properties tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/properties/property", :object => @property) %>');
   $('#property-details').dialog('close');
   $('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/variants/variants", :object => @product.variants) %>');
 <% else %>

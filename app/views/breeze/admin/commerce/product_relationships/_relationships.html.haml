@@ -1,0 +1,24 @@
+.relationships-container
+  - if Breeze::Commerce::Product.unarchived.count < 2
+    %h2 Related Products
+    %p.empty
+      When you have more than one product in your store, you'll be able to set related products here.
+  - else
+    = link_to "New relationship...", new_admin_store_product_product_relationship_path(@product), :class => "large new relationship button"
+    %h2 Related Products
+    %table.fancy.relationships
+      %thead
+        %tr
+          %th.first
+          %th Relationship
+          %th Other Product
+          %th
+          %th.last{:style => ""} Actions
+      %tbody
+        - if @product.related_products.any?
+          = render :partial => "breeze/admin/commerce/relationships/relationship", :collection => @product.product_relationship_children
+        - else
+          %tr.empty
+            %td.empty{:colspan => "5"} There are no relationships for this product yet.
+      %tfoot
+        %tr

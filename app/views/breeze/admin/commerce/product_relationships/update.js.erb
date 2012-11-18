@@ -1,5 +1,5 @@
 <% if @product_relationship.errors.empty? %>
-  $('#<%= "relationship_#{@product_relationship.id}" %>').replaceWith('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/relationship", :object => @product_relationship) %>');
+  $('#<%= "relationship_#{@product_relationship.id}" %>').replaceWith('<%= escape_javascript render(:partial => "breeze/admin/commerce/relationships/relationship", :object => @product_relationship) %>');
   $('#relationship-details').dialog('close');
 <% else %>
   $('#relationship-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/product_relationships/edit") %>');
