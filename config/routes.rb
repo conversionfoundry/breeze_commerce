@@ -12,7 +12,9 @@ Breeze::Engine.routes.draw do
       end
   
       resources :products, except: [:show] do
-        resources :variants, except: [:index, :show]
+        resources :variants, except: [:index, :show] do
+          put :reorder, on: :collection
+        end
         resources :properties, except: [:index, :show]
         resources :product_images, except: [:index, :show, :edit, :update] do
           put :reorder, on: :collection

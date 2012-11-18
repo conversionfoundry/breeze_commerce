@@ -42,8 +42,15 @@ module Breeze
           @variant = product.variants.find params[:id]
           @variant.update_attributes(:archived => true)
         end
-
-        private
+        
+        def reorder
+          params[:variant].each_with_index do |id, index|
+            Breeze::Commerce::Variant.find(id).update_attribute( :position, index )
+          end
+          render :nothing => true
+        end
+        
+      private
 
         def product
           @product ||= ::Breeze::Commerce::Product.find params[:product_id]

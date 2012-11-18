@@ -1,6 +1,6 @@
 module Breeze
   module Commerce
-    module CommerceAdminHelper
+    module AdminHelper
       include Breeze::Commerce::ContentsHelper
       
       def commerce_menu

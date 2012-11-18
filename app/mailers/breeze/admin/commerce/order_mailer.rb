@@ -4,6 +4,9 @@ module Breeze
 		module Commerce
 		  class OrderMailer < Breeze::Mailer
 
+	      helper Breeze::ContentsHelper
+	      helper Breeze::Commerce::ContentsHelper
+
 		    def new_order_admin_notification(order)
 		    	# TODO: Use a merchant role, not admin
 		      admins = Breeze::Admin::User.all.select{|user| user.roles.include? :admin}

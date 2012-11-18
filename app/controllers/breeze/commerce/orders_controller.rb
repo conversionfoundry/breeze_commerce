@@ -1,9 +1,8 @@
 module Breeze
   module Commerce
     class OrdersController < Breeze::Commerce::Controller
-      helper Breeze::ContentsHelper
+      include Breeze::Commerce::CurrentOrder
       layout "breeze/commerce/checkout_funnel"
-      include Breeze::Commerce::ContentsHelper
       respond_to :html, :js
       before_filter :require_nonempty_order, except: [:edit, :print, :update, :populate]
 
@@ -43,7 +42,7 @@ module Breeze
 
       # Add items to the order (i.e. the shopping cart)
       def populate
-        @order = current_order(session) || create_order(session)
+        @order = current_order(session)
         variant_id = params[:variant_id]
                 
         new_line_item =  Breeze::Commerce::LineItem.new(:variant_id => variant_id, :quantity => params[:quantity] || 1)
@@ -71,51 +70,29 @@ module Breeze
       # Checkout completed, ready to process order
       def submit_order
         @order = current_order(session)
-        @order.update_attributes params[:order]
 
+        # Set customer, if any
         if customer_signed_in?
           @order.customer = current_store_customer
-        elsif params[:create_new_account]
-          # create and save a new customer
-          new_customer = Breeze::Commerce::Customer.new(
-            :first_name => params[:order][:billing_address][:name].split(' ').first,
-            :last_name => params[:order][:billing_address][:name].split(' ').last,
-            :email => params[:order][:email],
-            :password => params[:new_account_password],
-            :password_confirmation => params[:new_account_password],
-            :store => store
-          )
-          new_customer.shipping_address = Breeze::Commerce::Address.new params[:order][:shipping_address]
-          new_customer.billing_address = Breeze::Commerce::Address.new params[:order][:billing_address]
-
-          # TODO: Move this code out of the controller somehow
-          if new_customer.save
-            # set the order's customer
-            @order.customer = new_customer
+        else
+          if params[:create_new_account]
+            @order.customer = create_customer(@order, params[:new_account_password], store)
           end
         end
 
-        if @order.save
-          # TODO: Need a better way to reference order statuses
-          # TODO: Store should not allow checkout if the appropriate order statuses don't exist yet
-          @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first
-          @order.save
+        @order.update_attributes params[:order] # SHouldn't need this as well as save below
+        @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
 
-          
+
+        if @order.save          
           # Process payment with PxPay
-          @payment = Breeze::Commerce::Payment.new(
-            name:       @order.name, 
-            email:      @order.email, 
-            amount:     @order.total, 
-            order:      @order, 
-            currency:   store.currency 
-          )
+          @payment = create_payment(@order, store)
           if @payment.save and redirectable?
             redirect_to @payment.redirect_url and return
           else
             Rails.logger.debug @payment.errors.to_s
             @payment.errors.each { |attrib, err| Rails.logger.debug attrib.to_s + ': ' + err.to_s }
-            flash[:error] = "Sorry, we can't reach the payment gateway right now."
+            flash[:error] = "Sorry, we can't reach the payment gateway right now." # This error message might not be accurate!
             redirect_to breeze.checkout_path and return
           end
         else
@@ -162,6 +139,30 @@ module Breeze
         if @order.line_items.empty?
           redirect_to breeze.cart_path
         end
+      end
+
+      def create_customer(order, password, store)
+        new_customer = Breeze::Commerce::Customer.new(
+          :first_name => order[:billing_address][:name].split(' ').first,
+          :last_name => order[:billing_address][:name].split(' ').last,
+          :email => order[:email],
+          :password => password,
+          :password_confirmation => password,
+          :store => store
+        )
+        new_customer.shipping_address = Breeze::Commerce::Address.new params[:order][:shipping_address]
+        new_customer.billing_address = Breeze::Commerce::Address.new params[:order][:billing_address]
+        new_customer.save
+      end
+
+      def create_payment(order, store)
+        Breeze::Commerce::Payment.new(
+            name:       order.name, 
+            email:      order.email, 
+            amount:     order.total, 
+            order:      order, 
+            currency:   store.currency 
+          )
       end
 
       def pxpay_success

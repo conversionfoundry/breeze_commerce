@@ -1,0 +1,9 @@
+- content_for :head do
+  = stylesheet_link_tag "breeze/commerce"
+  = stylesheet_link_tag "breeze/commerce_admin"
+  = javascript_include_tag "breeze/commerce"
+= pane_layout do |left|
+  - left.header do
+    %h2 Commerce
+  - left.inner do
+    = commerce_menu

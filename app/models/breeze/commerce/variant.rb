@@ -20,7 +20,7 @@ module Breeze
       include Mixins::Archivable
       include Mixins::Publishable
 
-      attr_accessible :product, :product_id, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price
+      attr_accessible :product, :product_id, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price, :position
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
@@ -34,11 +34,15 @@ module Breeze
       field :name
       field :sell_price_cents, :type => Integer
       field :sku_code
+      field :position, :type => Integer
 
       mount_uploader :image, Breeze::Commerce::VariantImageUploader
 
       scope :with_option, lambda { |option| where(option_ids: option.id) }
       scope :discounted, where(discounted: true)
+      scope :ordered, order_by(:position.asc)
+
+      before_validation :set_initial_position
 
       validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
       validates_uniqueness_of :sku_code
@@ -105,7 +109,11 @@ module Breeze
         count
       end
 
+      private
 
+      def set_initial_position
+        self.position = product.variants.count if product
+      end
       
     end
     

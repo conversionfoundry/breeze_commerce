@@ -1,5 +1,0 @@
-<% if @order.payments.any? %>
-  <%= render :partial => "breeze/commerce/payments/payment", :collection => @order.payments %>
-<% else %>
-  There are no payments for this prder.
-<% end %>

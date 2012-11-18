@@ -1,0 +1,5 @@
+= breeze_form_for @product_relationship, :as => :product_relationship, :url => url, :remote => true do |form|
+  %ul.product_relationship_fields
+    = @product.title
+    = form.select :kind, Breeze::Commerce::ProductRelationship::RELATIONSHIPS.map{|r| [r.humanize.downcase, r]}, :required => true, :label => false
+    = form.select :child_product_id, @products.collect{|p| [ p.title, p.id ] }, :required => true, :label => false

@@ -1,7 +1,7 @@
 .variants-container.container
   = link_to "New variant...", new_admin_store_product_variant_path(@product.id), :class => "large new variant button"
   %h2 Variants
-  %table.fancy.variants
+  %table.fancy.sortable.variants
     %thead
       %tr
         %th.first{:colspan => "2", :style => ""} Name
@@ -14,7 +14,7 @@
         %th.last{:style => ""} Actions
     %tbody
       - if @product.variants.any?
-        = render :partial => "breeze/admin/commerce/variants/variant", :collection => @product.variants.unarchived
+        = render :partial => "breeze/admin/commerce/variants/variant", :collection => @product.variants.unarchived.ordered
       - else
         %tr
           %td.empty{:colspan => "5"} There are no variants for this product yet.

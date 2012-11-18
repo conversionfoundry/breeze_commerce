@@ -1,0 +1,9 @@
+- content_for :title, "Orders"
+- pane_layout do |panes|
+  - panes.inner do
+    = scrollable_layout do
+      %h1
+        Orders
+      = render :partial => "orders", :object => @orders
+- content_for :left do
+  = render :partial => "breeze/commerce/commerce/left"

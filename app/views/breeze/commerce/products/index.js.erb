@@ -1,3 +1,1 @@
-$('div.pagination').replaceWith('<%#= escape_javascript( will_paginate( @products, params: { controller: "/breeze/commerce/products", action: "index", product_list_id: @product_list.id }) ) %>');
-$('.pagination a').attr('data-remote', 'true');
-$('ul.products').html('<%= escape_javascript render :partial => "/partials/commerce/product", :collection => @products, :locals => {:product_count => @products.count} %>');
+$('div.products[data-product-list-id=<%= @product_list.id %>]').replaceWith('<%= escape_javascript render partial: "partials/commerce/products", layout: false, locals: {:@product_list => @product_list, :@products => @products} %>')
