@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  # s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   # s.test_files = Dir["test/**/*"]
   
   
@@ -26,21 +26,22 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
   # s.add_dependency "jquery-rails"
-  s.add_dependency "rails", "~> 3.2.3"
-  s.add_dependency 'csv_shaper'
-  s.add_dependency 'jquery-rails'
-  s.add_dependency 'will_paginate', "3.0.pre4"
-  s.add_dependency "nested_form"
-  s.add_dependency "haml"
-  s.add_dependency "sass-rails"
-  s.add_dependency "carrierwave"
-  s.add_dependency "carrierwave-mongoid", "~> 0.1.0"
   s.add_dependency "breeze", ">= 1.0.0"
   s.add_dependency "breeze_account", ">= 1.0.0"
   s.add_dependency "breeze_pay_online", ">= 0.1.0"
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "mongoid-rspec"
-  s.add_development_dependency "launchy"
+  s.add_dependency "carrierwave"
+  s.add_dependency "carrierwave-mongoid", "~> 0.1.0"
+  s.add_dependency "haml"
+  s.add_dependency "kaminari"
+  s.add_dependency "nested_form"
+  s.add_dependency "rails", "~> 3.2.3"
+  s.add_dependency "sass-rails"
+  s.add_dependency 'csv_shaper'
+  s.add_dependency 'jquery-rails'
+  s.add_dependency 'will_paginate', "3.0.pre4"
   s.add_development_dependency "capybara"
+  s.add_development_dependency "launchy"
+  s.add_development_dependency "mongoid-rspec"
+  s.add_development_dependency "rspec-rails"
   s.add_development_dependency 'factory_girl_rails'
 end

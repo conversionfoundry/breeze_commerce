@@ -1,5 +1,7 @@
 <% if @tag.errors.empty? %>
-  $('.tags tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/tags/tag", :object => @tag) %>');
+  $('table.tags tbody tr.empty').remove();
+  $('table.tags tbody tr:last').removeClass('last');
+  $('table.tags tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/tags/tag", locals: {tag: @tag, tag_counter: @tags.count - 1, count: @tags.count} ) %>');
   $('#menu-item-tags .item-count').html(<%= @tag_count %>);
   $('#tag-details').dialog('close');
 <% else %>

@@ -11,7 +11,7 @@ module Breeze
 	    	source_root File.expand_path('../templates', __FILE__)
 
 	      def install_breeze_commerce
-	      	store = Breeze::Commerce::Store.first || Breeze::Commerce::Store.create ( home_page: Breeze::Content::Page.first, allow_returning_customer_login: true )
+	      	store = Breeze::Commerce::Store.first || Breeze::Commerce::Store.create( home_page: Breeze::Content::Page.first, allow_returning_customer_login: true )
 
 	      # Setting up order statuses is now done in the store model
 	      	# # Generate built-in order statuses for billing
@@ -56,7 +56,7 @@ module Breeze
 
 	        # Generate an initial shipping method
 	        if Breeze::Commerce::ShippingMethod.count == 0
-	        	Breeze::Commerce::ShippingMethod.create(:price => 10, :name => "Standard Shipping", :store => store)
+	        	Breeze::Commerce::ShippingMethod.create(:price => 10, :name => "Standard Shipping")
 	        end
 
 	        # TODO: Put a list of things to do on the dashboard: check shipping methods, create a product, etc.

@@ -1,0 +1,31 @@
+= form.fieldset do
+  = form.text_field :title, :required => false
+= form.fieldset do
+  %li
+    = radio_button_tag 'content[list_type]', "by_tags", @content.list_type=='by_tags', :class => 'list_type'
+    By Tags
+  %li
+    = radio_button_tag 'content[list_type]', "related", @content.list_type=='related', :class => 'list_type'
+    Related to a product
+= form.fieldset do
+  #list_type_by_tags.list_type_option{:style => "display: none;"}
+    = form.select :tag_ids, Breeze::Commerce::Tag.all.map {|c|[ c.name, c.id ] }, { :required => true, :label => "Tags"}, :class => "multiselect", :multiple => "multiple"
+    %p Select product tags to list (leave empty to list all products)
+  #list_type_related.list_type_option{:style => "display: none;"}
+    = form.select :product_id, Breeze::Commerce::Product.published.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"}
+    %p The list will show items related to the selected product.
+= form.fieldset do
+  = form.check_box :use_pagination,label: "Divide list into pages"
+  = form.text_field :products_per_page
+%script{:charset => "utf-8", :type => "text/javascript"}
+  $(function() {
+  
+  $('.multiselect').multiSelect();
+  
+  $('#list_type_#{@content.list_type}').show();
+  
+  $('input.list_type').change(function(e) {
+  $('.list_type_option').hide();
+  $( '#list_type_' + $(this).val() ).show();
+  });
+  });

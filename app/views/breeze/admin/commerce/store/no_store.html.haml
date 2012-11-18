@@ -1,0 +1,19 @@
+- content_for :title, "Store"
+= pane_layout do |main|
+  - main.header do
+    %h2
+  - main.inner do
+    %h1 You have no stores set up.
+    = form_tag admin_store_setup_default_path do
+      %p
+        = submit_tag "Click here", :class => :button
+        to set up a new store at
+        = succeed "." do
+          %tt /store
+- content_for :left do
+  = pane_layout do |left|
+    - left.header do
+      %h2
+    - left.inner do
+- content_for :right do
+  = pane_layout do |right|

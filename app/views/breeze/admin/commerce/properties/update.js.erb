@@ -1,5 +1,5 @@
 <% if @property.errors.empty? %>
-  $('#product-properties').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/products/properties", :object => @product.properties) %>');
+  $('#product-properties').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/properties/properties", :object => @product.properties) %>');
   $('#property-details').dialog('close');
   $('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/variants/variants", :object => @product.variants) %>');
 <% else %>

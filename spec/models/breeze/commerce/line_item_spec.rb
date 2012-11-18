@@ -23,6 +23,9 @@ describe Breeze::Commerce::LineItem do
 		it "is invalid with zero quantity" do
 			build(:line_item, quantity: 0).should_not be_valid
 		end
+		it "is invalid with negative quantity" do
+			build(:line_item, quantity: -100).should_not be_valid
+		end
 	end
 
 	describe "data integrity" do
@@ -50,9 +53,9 @@ describe Breeze::Commerce::LineItem do
 				@line_item.name.should eq old_variant_name
 			end
 			it "keeps the old price when the variant price changes" do
-				old_variant_price = @variant.display_price
-				@variant.update_attribute(:sell_price_cents, @variant.sell_price_cents + 100)
-				@line_item.price.should_not eq @variant.display_price
+				old_variant_price = @variant.sell_price
+				@variant.update_attribute(:sell_price_cents, 50)
+				@line_item.price.should_not eq @variant.sell_price
 				@line_item.price.should eq old_variant_price
 			end
 			it "keeps the old SKU when the variant SKU changes" do

@@ -22,6 +22,7 @@ module Breeze
       default_scope order_by([:title, :asc])
       scope :with_tag, lambda { |tag| where(tag_ids: tag.id) }
 
+      before_validation :set_parent_id
       validates_associated :variants
 
       alias_method :name, :title
@@ -92,6 +93,15 @@ module Breeze
           tags.include? tag.first
         else
           false
+        end
+      end
+
+      private
+
+      # If a product is created under store admin, set the root page, if any, as the parent
+      def set_parent_id
+        unless self.parent_id
+          self.parent_id = Breeze::Content::NavigationItem.root.first.id if Breeze::Content::NavigationItem.root.first
         end
       end
 

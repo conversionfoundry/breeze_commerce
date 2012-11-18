@@ -1,0 +1,33 @@
+%tr{:colspan => "6"}
+  %td
+    .items
+      %table
+        %thead
+          %tr
+            %th{:colspan => "2"} Item
+            %th SKU
+            %th Price
+            %th Quantity
+            %th Total
+        %tbody
+          - @order.line_items.each do |item|
+            %tr
+              %td
+              %td= item.product.title
+              %td
+              %td= item.price
+              %td= item.quantity
+              %td
+        $tfoot
+          %tr
+            %td{:colspan => "3"}
+            %td{:colspan => "2"} Sub Total
+            %td= @order.item_total
+          %tr
+            %td{:colspan => "3"}
+            %td{:colspan => "2"} Shipping
+            %td
+          %tr
+            %td{:colspan => "3"}
+            %td{:colspan => "2"} Total
+            %td= @order.total

@@ -7,7 +7,7 @@
  *= require ./textboxlist/GrowingInput
  *= require ./textboxlist/TextboxList
  *= require ./textboxlist/TextboxList.Autocomplete
- *= require ./commerce_checkout
+ *= require ./commerce_front
  *= require ./commerce_admin
  *= require breeze/marquess/marquess
  *= require ./jquery.validate.min

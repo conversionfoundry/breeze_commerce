@@ -1,0 +1,19 @@
+.coupons-container.container
+  %table.fancy.contextual.coupons
+    %thead
+      %tr
+        %th.first{:style => "width: 10%;"} Code
+        %th Name
+        %th{:style => "width:20%;"} Start on
+        %th{:style => "width:20%;"} Expire on
+        %th{:style => "width:10%;"} Days Remaining
+        %th{:style => "width:10%"} Active
+        %th.last{:style => ""} Actions
+    %tbody
+      - if coupons.any?
+        = render :partial => "breeze/admin/commerce/coupons/coupon", :collection => coupons
+      - else
+        %tr
+          %td.empty{:colspan => "6"} There are no coupons to show here.
+    %tfoot
+      %tr
