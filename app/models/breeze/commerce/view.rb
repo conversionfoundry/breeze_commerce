@@ -19,12 +19,6 @@ module Breeze
         end
       end
       
-      def variables_for_render
-        super.tap do |vars|
-          vars[:products] = Breeze::Commerce::Product.all
-        end
-      end
-      
     end
   end
 end
