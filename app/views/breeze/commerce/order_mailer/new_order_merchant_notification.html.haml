@@ -121,9 +121,9 @@
                 %h2 Actions
                 %ul
                   %li
-                    = link_to "See the order on the website", edit_admin_store_order_url(@order, host: @site)
+                    = link_to "See the order on the website", breeze.edit_admin_store_order_url(@order, host: @site)
                   %li
-                    = link_to "See all orders on the website", admin_store_orders_url(@order, host: @site)
+                    = link_to "See all orders on the website", breeze.admin_store_orders_url(@order, host: @site)
             %tr
               %td{colspan: 2, valign: "top", width: "600"}
                 %p
