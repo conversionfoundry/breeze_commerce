@@ -15,7 +15,7 @@ describe "customer", :type => :request, :js => true do
     page.should have_content("Welcome to The Dummy Store")
     page.should have_css('div.breeze-minicart')
     find('div.breeze-minicart h3').should have_content("My Cart")
-    find('div.breeze-minicart').should have_content('Your cart is empty.')
+    find('div.breeze-minicart div.breeze-minicart').should have_content('Your cart is empty.')
     page.should have_css('div.breeze-content.breeze-product_list')
     find('div.breeze-content.breeze-product_list h3').should have_content("Dummies")
     page.should have_css('li.product')

@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe Breeze::Admin::Commerce::StoreController do
 
   describe "authorization" do
