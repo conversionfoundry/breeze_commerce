@@ -19,6 +19,7 @@ describe Breeze::Commerce::OrdersController do
 					Breeze.config.pxpay_key = ENV["Breeze_Commerce_PxPay_Key"]
 
 			  	put :submit_order, order: @order.attributes, use_route: 'breeze_commerce'
+			  	binding.pry
 			  	response.redirect_url.should match /https:\/\/sec.paymentexpress.com\/pxpay\/pxpay.aspx/
 		    end
 		  end

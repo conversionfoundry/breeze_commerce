@@ -1,6 +1,6 @@
 <% order = current_order(session) || create_order(session) %>
 <% title ||= 'My Cart' %>
-<div class="breeze-minicart well">
+<div class="well">
   <% if order %>
     <h3><%= link_to(title, breeze.cart_path) %></h3>
 
