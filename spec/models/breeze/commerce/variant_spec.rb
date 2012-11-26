@@ -32,10 +32,10 @@ describe Breeze::Commerce::Variant do
 
 	describe "published scope" do
 		before :each do
-			@variant1 = create(:variant)
-			@variant2 = create(:variant)
-			@variant3 = create(:variant, published: true)
-			@variant4 = create(:variant, published: true)
+			@variant1 = create(:unpublished_variant)
+			@variant2 = create(:unpublished_variant)
+			@variant3 = create(:variant)
+			@variant4 = create(:variant)
 		end			
 		it "returns an array of published variants" do
 			Breeze::Commerce::Variant.published.should eq [@variant3, @variant4]

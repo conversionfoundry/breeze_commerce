@@ -6,7 +6,7 @@ module Breeze
       helper Breeze::ContentsHelper
       helper Breeze::Commerce::ContentsHelper
 
-	    def new_order_admin_notification(order)
+	    def new_order_merchant_notification(order)
 	      merchants = Breeze::Admin::User.all.select{|user| user.roles.include? :merchant}
 	      @site = Socket.gethostname
 	      @order = order
