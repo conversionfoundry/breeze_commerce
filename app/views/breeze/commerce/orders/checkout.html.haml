@@ -1,34 +1,5 @@
 - content_for :head do
   %title Checkout
-  :javascript
-    $(document).ready(function(){
-      $("#new_customer").validate({
-        // onkeyup: false,
-        errorElement: 'span',
-        errorClass: 'help-inline',
-        highlight: function(label) {
-          $(label).closest('.control-group').removeClass('success').addClass('error');
-        },
-        success: function(label) {
-          label
-            .append('')
-            .closest('.control-group').removeClass('error').addClass('success');
-        }
-      });
-      $("#checkout-form").validate({
-        // onkeyup: false,
-        errorElement: 'span',
-        errorClass: 'help-inline',
-        highlight: function(label) {
-          $(label).closest('.control-group').removeClass('success').addClass('error');
-        },
-        success: function(label) {
-          label
-            .append('')
-            .closest('.control-group').removeClass('error').addClass('success');
-        }
-      });
-    });
     
 .row
   #checkout-header.span12
@@ -259,7 +230,7 @@
               = link_to '#', :class => "btn", :id => "edit-payment" do
                 %span.title Edit Payment
             .summary
-        #create-account
+        #confirmation
           .checkout-header
             %h3.heading
               %span Step
@@ -285,10 +256,11 @@
               %ol.form
                 %li
                   = order_form.label :read_terms do |label|
-                    = check_box_tag :read_terms, :read_terms, false, :class => :required
-                    I accept the
-                    %a{:href => "/terms_and_conditions", :target => "_blank"} terms and conditions
-                    %span.required *
+                    .control-group
+                      = check_box_tag :read_terms, :read_terms, false, :class => :required
+                      I accept the
+                      %a{:href => "/terms_and_conditions", :target => "_blank"} terms and conditions
+                      %span.required *
             %fieldset
               %legend Add an Optional Comment
               %ol.form

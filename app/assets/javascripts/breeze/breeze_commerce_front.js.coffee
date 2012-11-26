@@ -77,7 +77,23 @@ $(document).ready ->
 
 # Checkout Form
 $(document).ready ->
-  
+  $("#new_customer").validate
+    # onkeyup: false,
+    errorElement: "span"
+    errorClass: "help-inline"
+    highlight: (label) ->
+      $(label).closest(".control-group").removeClass("success").addClass "error"
+    success: (label) ->
+      label.append("").closest(".control-group").removeClass("error").addClass "success"
+
+  $("#checkout-form").validate
+    # onkeyup: false,
+    errorElement: "span"
+    errorClass: "help-inline"
+    highlight: (label) ->
+      $(label).closest(".control-group").removeClass("success").addClass "error"
+    success: (label) ->
+      label.append("").closest(".control-group").removeClass("error").addClass "success"
 
 
   
@@ -145,7 +161,7 @@ $(document).ready ->
     panels.indexOf "#" + element
 
   # Panels for the checkout form
-  panels = ["#sign-in", "#shipping", "#billing", "#create-account"]
+  panels = ["#sign-in", "#shipping", "#billing", "#confirmation"]
 
   # Starting status
   # ... depends on whether we have a customer already signed in
@@ -222,7 +238,7 @@ $(document).ready ->
     $("li#new_account_password").slideToggle @checked
 
   $("#continue-4").click (event) ->
-    @form.submit()  if validateStep("#create-account")
+    @form.submit()  if validateStep("#confirmation")
     false
 
   $("#edit-sign-in").click (event) ->
