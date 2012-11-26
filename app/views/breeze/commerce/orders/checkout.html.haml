@@ -259,7 +259,8 @@
                     .control-group
                       = check_box_tag :read_terms, :read_terms, false, :class => :required
                       I accept the
-                      %a{:href => "/terms_and_conditions", :target => "_blank"} terms and conditions
+                      = link_to store.terms_page.permalink do
+                        terms and conditions
                       %span.required *
             %fieldset
               %legend Add an Optional Comment
