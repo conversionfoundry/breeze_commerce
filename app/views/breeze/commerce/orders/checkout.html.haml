@@ -52,7 +52,7 @@
                         Email:
                         %span.required *
                       .controls
-                        = form.text_field :email, :class=>"required email", :placeholder => 'name@example.com'
+                        = form.text_field :email, type: 'email', :class=>"required email", :placeholder => 'name@example.com'
                     %span.help-block We'll send a confirmation email to this address
                   - if @allow_returning_customer_login
                     %li
@@ -146,7 +146,7 @@
                         Contact Phone Number
                         %span.optional (optional)
                       .controls
-                        = ship_form.text_field :phone, :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+                        = ship_form.text_field :phone, type: 'tel', :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-2" do
                 %i.icon-arrow-down.icon-white
@@ -220,7 +220,7 @@
                         Contact Phone Number
                         %span.optional (optional)
                       .controls
-                        = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+                        = bill_form.text_field :phone, type: 'tel', :placeholder => '64 3 1234567', :class => 'input-medium'
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-3" do
                 %i.icon-arrow-down.icon-white
