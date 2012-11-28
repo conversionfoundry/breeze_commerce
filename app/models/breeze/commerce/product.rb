@@ -4,7 +4,7 @@ module Breeze
       include Mixins::Archivable
       include Mixins::Publishable
 
-      attr_accessible :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, :property_ids, :parent_id, :options, :slug, :position
+      attr_accessible :view, :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, :property_ids, :parent_id, :options, :slug, :position
 
       has_and_belongs_to_many :tags, :class_name => "Breeze::Commerce::Tag"
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
