@@ -140,7 +140,62 @@
               %td{colspan: 2, valign: "top", width: "600"}
                 %h2
                   Ordered Items
-                = render :partial => "breeze/commerce/line_items/line_items_show", :locals => {:line_items => @order.line_items.unarchived}
+                %table#cart.table-striped.order
+                  %thead
+                    %tr
+                      %th{:colspan => "3"} Item
+                      %th Description
+                      %th Price
+                      %th Quantity
+                      %th TOTAL
+                  %tbody
+                    - @order.line_items.unarchived.each do |line_item|
+                      %tr{:id => line_item.id}
+                        %td
+                        %td
+                        %td= line_item.variant.name
+                        %td
+                        %td.price
+                          - if line_item.variant.discounted
+                            %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
+                            %span.discounted_price.current_price= number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
+                            %span.currency= currency
+                          - else
+                            %span.current_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
+                            %span.currency= currency
+                        %td
+                          = line_item.quantity
+                        %td.total
+                          = number_to_currency line_item.amount
+                          %span.currency= currency
+                  %tfoot
+                    %tr.subtotal
+                      %td{:colspan => "4"}
+                      %td Subtotal:
+                      %td
+                      %td.total
+                        = number_to_currency @order.item_total
+                        %span.currency
+                          = currency
+                    %tr.shipping
+                      %td{:colspan => "4"}
+                      %td
+                        Shipping:
+                      %td
+                        %h4
+                          = @order.shipping_method.name
+                        %p.description
+                          = @order.shipping_method.description
+                      %td.total
+                        = number_to_currency @order.shipping_total
+                        %span.currency= currency
+                    %tr.total
+                      %td{:colspan => "4"}
+                      %td Total cost:
+                      %td
+                      %td.total
+                        = number_to_currency @order.total
+                        %span.currency= currency
             %tr
               %td{colspan: 2, valign: "top", width: "600"}
                 %h2 Comment
