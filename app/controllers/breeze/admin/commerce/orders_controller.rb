@@ -57,7 +57,7 @@ module Breeze
             flash[:notice] = "The order was saved."
 
             unless @order.shipping_status == old_shipping_status
-              Breeze::Admin::Commerce::OrderMailer.shipping_status_change_customer_notification(@order).deliver 
+              Breeze::Commerce::OrderMailer.shipping_status_change_customer_notification(@order).deliver 
             end
 
             respond_to do |format|
