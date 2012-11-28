@@ -5,10 +5,5 @@
 spec/dummy/tmp/*
 spec/dummy/log/*
 *.log
-*.log
-
-*.log
-
 Gemfile.lock
-
-spec/dummy/log/test.log
+.DS_Store
