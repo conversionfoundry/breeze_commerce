@@ -5,7 +5,6 @@ module Breeze
       
       def commerce_menu
         content_tag :ul, [
-          commerce_menu_item("Store overview", admin_store_root_path),
           commerce_menu_item("Orders", breeze.admin_store_orders_path, badge( Breeze::Commerce::Order.unarchived.find_all{ |o| o.show_in_admin? }.count )),
           commerce_menu_item("Registered Customers", breeze.admin_store_customers_path, badge( Breeze::Commerce::Customer.unarchived.count )),
           commerce_menu_item("Products", breeze.admin_store_products_path, badge( Breeze::Commerce::Product.unarchived.count )),
