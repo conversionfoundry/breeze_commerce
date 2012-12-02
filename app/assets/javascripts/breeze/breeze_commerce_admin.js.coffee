@@ -148,9 +148,15 @@ $(".properties .property-actions .edit.button").live "click", (e) ->
     dialogForm "property-details", "Edit Property", data, 'PUT', setup_function
   e.preventDefault()
 
-
-
-
+# Orders
+# Shipping and Billing status selectors in index.html
+$("table.orders select.status").live "change", (e) ->
+  $.ajax
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+    url: "/admin/store/orders/" + $(this).data('order_id')
+    type: "put"
+    data: $(this).parent('form').serializeObject()
 
 # Drag-and-drop sorting
 $(document).ready ->
