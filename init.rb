@@ -18,9 +18,20 @@ Breeze.hook :admin_menu do |menu, user|
     menu.delete_if{|item| item[:name] == "Customers"}
   
     # Add Store menu item to main Breeze admin menu
-    menu << { :name => "Store", :path => "/admin/store" } if user.can? :manage, Breeze::Content::Item
+    menu << { :name => "Store", :path => "/admin/store/orders" } if user.can? :manage, Breeze::Content::Item
   else
     menu
+  end
+end
+
+Breeze.hook :dashboard_panels do |dashboard_panels, user|
+  if user.can? :manage, Breeze::Commerce::Store
+    # Add commerce panels to Breeze dashboard
+    dashboard_panels << { partial: "breeze/admin/dashboard_panels/your_store" }
+    dashboard_panels << { partial: "breeze/admin/dashboard_panels/orders_to_fulfill" }
+    dashboard_panels << { partial: "breeze/admin/dashboard_panels/top_sellers" }
+  else
+    dashboard_panels
   end
 end
 
