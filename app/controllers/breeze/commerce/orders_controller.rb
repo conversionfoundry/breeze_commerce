@@ -112,7 +112,10 @@ module Breeze
         @order.save
 
         # Send notification emails
-        Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order).deliver
+        merchants = Breeze::Admin::User.all.select{|user| user.roles.include? :merchant}
+        merchants.each do |merchant|
+          Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order, merchant).deliver
+        end
         Breeze::Commerce::OrderMailer.new_order_customer_notification(@order).deliver
 
         unless store_customer_signed_in?

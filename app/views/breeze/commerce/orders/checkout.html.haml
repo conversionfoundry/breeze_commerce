@@ -111,35 +111,35 @@
                         Address
                         %span.required *
                       .controls
-                        = ship_form.text_area :address, :class => :required, :value => @customer.shipping_address.address, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
+                        = ship_form.text_area :address, :class => :required, :value => (@customer.shipping_address.address if @customer.shipping_address), :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
                   %li
                     .control-group
                       = ship_form.label :city do |label|
                         City
                         %span.required *
                       .controls
-                        = ship_form.text_field :city, :value => @customer.shipping_address.city, :placeholder => 'Christchurch', :class => 'required input-medium'
+                        = ship_form.text_field :city, :value => (@customer.shipping_address.city if @customer.shipping_address), :placeholder => 'Christchurch', :class => 'required input-medium'
                   %li.state
                     .control-group
                       = ship_form.label :state do |label|
                         State, Province or Region
                         %span.optional (optional)
                       .controls
-                        = ship_form.text_field :state, :value => @customer.shipping_address.state, :placeholder => 'Canterbury', :class => 'input-medium'
+                        = ship_form.text_field :state, :value => (@customer.shipping_address.state if @customer.shipping_address), :placeholder => 'Canterbury', :class => 'input-medium'
                   %li.state
                     .control-group
                       = ship_form.label :postcode do |label|
                         Postcode
                         %span.optional (optional)
                       .controls
-                        = ship_form.text_field :postcode, :value => @customer.shipping_address.postcode, :class => 'input-small'
+                        = ship_form.text_field :postcode, :value => (@customer.shipping_address.postcode if @customer.shipping_address), :class => 'input-small'
                   %li.country
                     .control-group
                       = ship_form.label :country do |label|
                         Country
                         %span.required *
                       .controls
-                        = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => (@customer.shipping_address.country ||'New Zealand'), :class => :required
+                        = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => ((@customer.shipping_address.country if @customer.shipping_address) ||'New Zealand'), :class => :required
                   %li.phone
                     .control-group
                       = ship_form.label :phone do |label|
