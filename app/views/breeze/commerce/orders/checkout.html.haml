@@ -42,7 +42,7 @@
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
           - else
-            = form_for @customer, :url => breeze.customer_session_path do |form|
+            = fields_for @customer, :url => breeze.customer_session_path do |form|
               %fieldset
                 %legend Email Address
                 %ol.form
