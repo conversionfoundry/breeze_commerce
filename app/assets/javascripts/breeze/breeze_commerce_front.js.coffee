@@ -118,7 +118,14 @@ $(document).ready ->
   validateStep = (stepName) ->
     stepValid = true
     $(stepName + " input").add(stepName + " textarea").add(stepName + " select").each (index) ->
-      stepValid = false  unless $(this).valid() is 1
+      # alert( $(this).attr('id') )
+      if $(this)[0].form == null
+        # IE9 gets a null form.
+        # Temporary shim to bypass client-side validation on IE9
+        alert('Form is null.')
+        stepValid = true
+      else
+        stepValid = false  unless $(this).valid() is 1
     stepValid
   
   # Return a nicely-formatted address
@@ -185,7 +192,6 @@ $(document).ready ->
 
   $('#button-sign_in').click (e) ->
     e.preventDefault()
-    # customer = { email: 'test@example.com', password: 'test' }
     post(
       "/store/customer/sign_in"
       commit: "Sign in"
@@ -194,8 +200,6 @@ $(document).ready ->
       'customer[email]': 'test@example.com'
       'customer[password]': 'test'
     )
-
-
 
   $("#continue-1a").click (event) ->
     change 0, 1
@@ -207,7 +211,7 @@ $(document).ready ->
       return change(0, 1)
     false
 
-  $("#continue-2").click (event) ->
+  $("#continue-2").live "click", (event) ->
     if validateStep("#shipping")
       duplicateAddress()
       $("#shipping .checkout-summary .summary").html formatAddress("shipping")
@@ -238,7 +242,8 @@ $(document).ready ->
     $("li#new_account_password").slideToggle @checked
 
   $("#continue-4").click (event) ->
-    @form.submit()  if validateStep("#confirmation")
+    # @form.submit()  if validateStep("#confirmation")
+    $('form#checkout-form').submit()  if validateStep("#confirmation")
     false
 
   $("#edit-sign-in").click (event) ->
