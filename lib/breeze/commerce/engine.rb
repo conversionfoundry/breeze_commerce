@@ -6,8 +6,11 @@ module Breeze
       if Rails.version >= '3.1'
         initializer :assets do |config|
            Rails.application.config.assets.paths += [ root.join("app/assets/breeze/javascripts").to_s ]
-
         end
+      end
+
+      initializer "breeze_commerce.assets.precompile" do |app|
+        app.config.assets.precompile += [ "breeze/commerce/*" ]
       end
 
       config.to_prepare do
