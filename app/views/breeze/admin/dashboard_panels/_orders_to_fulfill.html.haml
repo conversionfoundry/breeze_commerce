@@ -1,0 +1,11 @@
+- orders = Breeze::Commerce::Order.unarchived.unfulfilled
+#orders-ready.box.col3
+  %h2 Orders to Fulfill
+  %table.at-a-glance
+    - if orders.count == 0
+      No waiting orders
+    - elsif orders.count == 1
+      = at_a_glance orders.count, "paid order hasn't been shipped yet", admin_store_orders_path
+    - else
+      = at_a_glance orders.count, "paid orders haven't been shipped yet", admin_store_orders_path
+  = render :partial => "breeze/admin/commerce/orders/ready_orders", :locals => { :orders => orders }

@@ -10,15 +10,7 @@ module Breeze
 
           redirect_to admin_store_root_path
         end
-
-        def index
-          @published_products_count = Breeze::Commerce::Product.unarchived.published.count
-          @top_customers = Breeze::Commerce::Customer.all.sort { |a,b| a.order_total <=> b.order_total }.reverse.paginate :page => 1, :per_page => 10
-          @top_products = Breeze::Commerce::Product.unarchived.sort_by { |order| order.number_of_sales }.reverse.paginate :page => 1, :per_page => 10
-          @fulfilled_orders = Breeze::Commerce::Order.unarchived.fulfilled
-          @unfulfilled_orders = Breeze::Commerce::Order.unarchived.unfulfilled
-        end
-        
+      
         def settings
           if request.put?
             if store.update_attributes params[:store]

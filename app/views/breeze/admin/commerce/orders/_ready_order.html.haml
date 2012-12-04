@@ -12,7 +12,7 @@
       %p.total
         = number_to_currency(order.total, :locale => :nz)
         %span.currency
-          = store.currency
+          = currency
     %td.actions
       %p.order-actions
         = link_to "Edit", edit_admin_store_order_path(order), :class => "small black button"
