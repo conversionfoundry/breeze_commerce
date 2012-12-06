@@ -6,7 +6,7 @@
       %th.quantity Quantity
       %th.total Total
   %tbody
-    - if line_items.unarchived.any?
+    - if line_items.unarchived.exists?
       = form.fields_for :line_items do |line_item_fields|
         - if line_item_fields.object.archived?
           = ''

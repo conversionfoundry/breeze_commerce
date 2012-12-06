@@ -26,6 +26,8 @@ module Breeze
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
       has_many :line_items, :class_name => "Breeze::Commerce::LineItem"
       
+      index({ product_id: 1 })
+
       field :blurb
       field :cost_price_cents, :type => Integer
       field :discounted, type: Boolean
