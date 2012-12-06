@@ -29,7 +29,7 @@ module Breeze
       alias_method :name=, :title=
 
       def related_products
-        product_relationship_children.collect{|relationship| relationship.child_product}
+        product_relationship_children.collect(&:child_product)
       end
       
       def display_price_min

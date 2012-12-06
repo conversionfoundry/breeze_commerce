@@ -15,7 +15,7 @@
           %th
           %th.last{:style => ""} Actions
       %tbody
-        - if @product.related_products.any?
+        - if @product.product_relationship_children.exists?
           = render :partial => "breeze/admin/commerce/product_relationships/relationship", :collection => @product.product_relationship_children
         - else
           %tr.empty

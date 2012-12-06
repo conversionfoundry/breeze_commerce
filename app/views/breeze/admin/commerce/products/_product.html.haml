@@ -17,7 +17,7 @@
     - unarchived_variants = product.variants.unarchived
     %span.badge
       = unarchived_variants.count
-    - if unarchived_variants.any?
+    - if unarchived_variants.exists?
       - if unarchived_variants.published.count == 0
         No published variants
       - elsif product.single_display_price?

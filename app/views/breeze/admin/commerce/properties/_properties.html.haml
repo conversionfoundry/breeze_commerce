@@ -8,7 +8,7 @@
         %th{:style => "width:20%;"} Options
         %th.last{:style => ""} Actions
     %tbody
-      - if @product.properties.any?
+      - if @product.properties.exists?
         = render :partial => "breeze/admin/commerce/properties/property", :collection => @product.properties
       - else
         %tr.empty
