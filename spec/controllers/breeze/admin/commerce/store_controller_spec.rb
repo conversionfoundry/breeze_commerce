@@ -35,13 +35,6 @@ describe Breeze::Admin::Commerce::StoreController do
 				sign_in FactoryGirl.create(:merchant)
 			end
 
-			it "shows the dashboard" do
-				get :index, use_route: 'breeze_commerce'
-	      response.should be_success
-	      response.should render_template("index")
-			end
-
-
 			it "shows the settings page" do
 				get :settings, use_route: 'breeze_commerce'
 	      response.should be_success
