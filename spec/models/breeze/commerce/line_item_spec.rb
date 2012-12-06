@@ -5,11 +5,6 @@ describe Breeze::Commerce::LineItem do
 		create(:line_item).should be_valid
 	end
 
-
-	describe "fields" do
-		it "has a serialized variant"
-	end
-
 	describe "validation" do
 		it "is invalid with no order" do
 			build(:line_item, order: nil).should_not be_valid

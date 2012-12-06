@@ -46,7 +46,7 @@ module Breeze
         end
       end
 
-      # In principle, there could be more than one payment associated with an order. FOr example, there might be a failed payment then a successful one.
+      # There could be more than one payment associated with an order. For example, there might be a failed payment then a successful one.
       def payments
         Breeze::Commerce::Payment.where(:reference => id)
       end

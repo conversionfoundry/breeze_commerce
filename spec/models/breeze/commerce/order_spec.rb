@@ -113,11 +113,6 @@ describe Breeze::Commerce::Order do
 		end
 	end
 
-	describe "payment methods" do
-		it "returns a list of payments"
-		it "reports whether payment is completed"
-	end
-
 	describe "name method" do
 		before :each do
 			@order = create(:order)
@@ -156,10 +151,6 @@ describe Breeze::Commerce::Order do
 				Breeze::Commerce::Order.archived.should_not include @order2
 			end
 		end
-		it "has a working fulfilled scope"
-		it "has a working unfulfilled scope"
-		it "has a working not_browsing scope"
-		it "has a working show_in_admin scope"
 	end
 
 end
