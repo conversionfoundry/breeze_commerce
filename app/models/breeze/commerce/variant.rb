@@ -41,7 +41,8 @@ module Breeze
       mount_uploader :image, Breeze::Commerce::VariantImageUploader
 
       scope :with_option, lambda { |option| where(option_ids: option.id) }
-      scope :discounted, where(discounted: true)
+      scope :discounted, -> { where(discounted: true) }
+      scope :not_discounted, -> { where(discounted: [false, nil]) }
       scope :ordered, order_by(:position.asc)
 
       before_validation :set_initial_position

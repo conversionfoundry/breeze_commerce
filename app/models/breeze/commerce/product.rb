@@ -33,28 +33,17 @@ module Breeze
       end
       
       def display_price_min
-        variants.unarchived.published.map{|v| v.display_price}.min
+        variants.unarchived.published.map(&:display_price).min
       end
+      alias_method :display_price, :display_price_min
 
       def display_price_max
-        variants.unarchived.published.map{|v| v.display_price}.max
-      end
-
-      def display_price
-        display_price_min
+        variants.unarchived.published.map(&:display_price).max
       end
 
       # Are all the variants the same price?
       def single_display_price?
-        price = nil
-        variants.unarchived.published.each do |variant|
-          if price
-            return false unless variant.display_price == price
-          else
-            price = variant.display_price
-          end
-        end
-        true
+        variants.unarchived.published.map(&:display_price).uniq.size == 1
       end
 
       # Are any of the product's variants discounted?
@@ -64,9 +53,7 @@ module Breeze
 
       # Are all of the product's variants discounted?
       def all_variants_discounted?
-        all_variants_count = variants.unarchived.published.count
-        discounted_variants_count = variants.unarchived.published.discounted.count
-        discounted_variants_count > 0 && discounted_variants_count == all_variants_count
+        !variants.unarchived.published.not_discounted.exists?
       end
 
       def last_update
@@ -78,11 +65,7 @@ module Breeze
       end
 
       def number_of_sales
-        count = 0
-        variants.unarchived.each do | variant|
-          count += variant.number_of_sales
-        end
-        count
+        variants.unarchived.sum(&:number_of_sales)
       end
 
       # Convenience method for designers
