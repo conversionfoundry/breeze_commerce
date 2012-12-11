@@ -71,15 +71,11 @@ module Breeze
       # Convenience method for designers
       # ... allows setting up a conditional in product listing theme partials without having to know how to find a tag in the database
       def has_tag_named? tag_name
-        tag = Breeze::Commerce::Tag.where( name: tag_name )
-        if tag.exists?
-          tags.include? tag.first
-        else
-          false
-        end
+        looked_up_tag_id = Breeze::Commerce::Tag.where(name: tag_name).only(:id).first.try(:id)
+        tag_ids.include? looked_up_tag_id
       end
 
-      private
+    private
 
       # If a product is created under store admin, set the root page, if any, as the parent
       def set_parent_id

@@ -5,6 +5,7 @@ module Breeze
       
       attr_accessible :name, :sort, :position
       field :name
+      index({ name: 1 }, {unique: true})
       field :sort
       field :slug
       field :position, :type => Integer
@@ -19,7 +20,7 @@ module Breeze
 
       before_validation :fill_in_slug
 
-      protected
+    protected
 
       def fill_in_slug
         self.slug = name.downcase.gsub(/[^a-z0-9\-]+/, '-') if name
