@@ -21,8 +21,6 @@ module Breeze
             
       def products
         if list_type == 'by_tags' 
-          # excluded_tags = Breeze::Commerce::Tag.where(:id.nin => tag_ids)
-          # Breeze::Commerce::Product.published.unarchived.where(:tag_ids.nin => excluded_tags)
           product_array = Breeze::Commerce::Product.published.unarchived
           self.tags.each do |tag|
             product_array = product_array & tag.products
