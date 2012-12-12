@@ -43,7 +43,7 @@ module Breeze
 
       # Are all the variants the same price?
       def single_display_price?
-        variants.unarchived.published.map(&:display_price).uniq.size == 1
+        variants.unarchived.published.only(:display_price).map(&:display_price).uniq.size == 1
       end
 
       # Are any of the product's variants discounted?
