@@ -1,4 +1,4 @@
-require 'spec helper'
+require 'spec_helper'
 
 describe Breeze::Commerce::ProductList do
   subject { create(:product_list) }
