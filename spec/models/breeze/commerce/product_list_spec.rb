@@ -15,11 +15,6 @@ describe Breeze::Commerce::ProductList do
         subject.stub(:products) { [product] }
       end
 
-
-      it "gives products related to associated tags" do
-        subject.products.should eq([tag_two])
-      end
-
     end
   end
 end

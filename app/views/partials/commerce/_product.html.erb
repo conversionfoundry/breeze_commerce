@@ -1,4 +1,4 @@
-<li id="product_#{product.id}" class="#{product_class(product, product_counter, product_count)}" >
+<li id="product_<%= product.id %>" class="<%= product_class(product, product_counter, product_count) %>" >
 
   <div class="image">
     <% if product.images.exists? %>

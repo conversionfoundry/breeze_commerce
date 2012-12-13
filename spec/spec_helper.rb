@@ -14,6 +14,7 @@ Spork.prefork do
   require "database_cleaner"
   require 'shoulda'
   require 'haml'
+  require 'pry'
   # require 'rspec/autorun'
 
   ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')

@@ -20,7 +20,21 @@ module Breeze
       include Breeze::Content::Mixins::Placeable
             
       def products
-        if list_type == 'by_tags' 
+        @products ||= determine_products
+      end
+
+      def show_pagination?
+        use_pagination && products_per_page < products.count
+      end
+
+      def to_erb(view, page_number=1)
+        products_local = use_pagination? ? Kaminari.paginate_array(products).page(page_number).per(products_per_page) : products
+        view.controller.render_to_string partial: "partials/commerce/products", layout: false, locals: {:@product_list => self, :@products => products_local}
+      end
+    private
+
+      def determine_products
+        if list_type == 'by_tags'
           product_array = Breeze::Commerce::Product.published.unarchived
           self.tags.each do |tag|
             product_array = product_array & tag.products
@@ -32,15 +46,6 @@ module Breeze
         else
           []
         end
-      end
-
-      def show_pagination?
-        use_pagination && products_per_page < products.count
-      end
-
-      def to_erb(view, page_number=1)
-        products_local = use_pagination? ? Kaminari.paginate_array(products).page(page_number).per(products_per_page) : products
-        view.controller.render_to_string partial: "partials/commerce/products", layout: false, locals: {:@product_list => self, :@products => products_local}
       end
 
     end

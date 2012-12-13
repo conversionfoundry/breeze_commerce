@@ -4,7 +4,10 @@ module Breeze
       include Mixins::Archivable
       include Mixins::Publishable
 
-      attr_accessible :view, :order, :template, :title, :subtitle, :show_in_navigation, :ssl, :seo_title, :seo_meta_description, :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, :property_ids, :parent_id, :options, :slug, :position
+      attr_accessible :view, :order, :template, :title, :subtitle, 
+        :show_in_navigation, :ssl, :seo_title, :seo_meta_description, 
+        :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, 
+        :property_ids, :parent_id, :options, :slug, :position
 
       has_and_belongs_to_many :tags, :class_name => "Breeze::Commerce::Tag"
       has_and_belongs_to_many :properties, :class_name => "Breeze::Commerce::Property"
@@ -43,7 +46,7 @@ module Breeze
 
       # Are all the variants the same price?
       def single_display_price?
-        variants.unarchived.published.only(:display_price).map(&:display_price).uniq.size == 1
+        variants.unarchived.published.map(&:display_price).uniq.size < 2
       end
 
       # Are any of the product's variants discounted?
@@ -53,7 +56,7 @@ module Breeze
 
       # Are all of the product's variants discounted?
       def all_variants_discounted?
-        !variants.unarchived.published.not_discounted.exists?
+        variants.present? && !variants.unarchived.published.not_discounted.exists?
       end
 
       def last_update
@@ -69,7 +72,8 @@ module Breeze
       end
 
       # Convenience method for designers
-      # ... allows setting up a conditional in product listing theme partials without having to know how to find a tag in the database
+      # ... allows setting up a conditional in product listing theme partials 
+      # without having to know how to find a tag in the database
       def has_tag_named? tag_name
         looked_up_tag_id = Breeze::Commerce::Tag.where(name: tag_name).only(:id).first.try(:id)
         tag_ids.include? looked_up_tag_id
