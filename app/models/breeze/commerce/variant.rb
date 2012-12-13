@@ -42,6 +42,7 @@ module Breeze
 
       scope :with_option, lambda { |option| where(option_ids: option.id) }
       scope :discounted, where(discounted: true)
+      scope :not_discounted, where(:discounted.in => [false, nil])
       scope :ordered, order_by(:position.asc)
 
       before_validation :set_initial_position
