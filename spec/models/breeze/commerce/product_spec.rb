@@ -87,7 +87,7 @@ describe Breeze::Commerce::Product do
 			end
 		end
 		context "when the variants have different prices" do
-			it "reports that all variants have the same price" do
+			it "reports that all variants have different price" do
 				create(:variant, sell_price: 1, product_id: @product.id)
 				create(:variant, sell_price: 2, product_id: @product.id)
 				@product.single_display_price?.should eq false

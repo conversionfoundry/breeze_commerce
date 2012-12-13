@@ -1,15 +1,11 @@
 source 'https://rubygems.org'
 
+gem "breeze", github: "leftclick/breeze", branch: '1.0.x' 
+gem "breeze_account", github: "leftclick/breeze_account", branch: 'master' 
+gem "breeze_pay_online", github: "leftclick/breeze_pay_online", branch: 'master' 
+gem "breeze_apply_online", github: "leftclick/breeze_apply_online", branch: 'master' 
+
 gemspec # Dependencies are defined in the .gemspec file
-
-gem "breeze", :github => 'isaacfreeman/breeze', branch: '1.0.x'
-gem "breeze_account", :github => 'isaacfreeman/breeze_account', branch: 'master'
-gem "breeze_pay_online", :github => 'isaacfreeman/breeze_pay_online', branch: 'master'
-gem "breeze_apply_online", :github => 'isaacfreeman/breeze_apply_online', branch: 'master'
-
-group :development do 
-  gem 'fuubar'
-end
 
 group :test, :development do
   gem 'pry'
@@ -19,9 +15,16 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'guard-rspec'
   gem 'capybara'
+  gem 'fuubar'
 end
 
 group :test do
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'capybara'
+  gem 'rb-fsevent'
+  gem 'shoulda'
+  gem 'jasmine'
 	gem 'faker'
 	gem 'database_cleaner'
 	gem 'launchy'

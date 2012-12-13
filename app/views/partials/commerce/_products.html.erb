@@ -1,17 +1,5 @@
-<% if @product_list.list_type == 'by_tags' %>
-  <% classes = 'tags' %>
-  <% @product_list.tags.each{ |tag| classes += ' tag-' + tag.slug } %>
-<% elsif @product_list.list_type == 'related' %>
-  <% classes = "related_products related_to-#{@product_list.product.slug}" %>
-<% else %>
-  <% classes = '' %>
-<% end %>
-
-<%= content_tag :div, :class => "products hfeed " + classes do %>
-
-	<% unless @product_list.title.blank? %>
-		<h3><%= @product_list.title %></h3>
-	<% end %>
+<div class="products hfeed #{product_list_class(@product_list)}">
+  <h3><%= @product_list.title || "Product list" %></h3>
 
 	<% if @products.any? %>
     <%= paginate_products @products if @product_list.use_pagination %>
@@ -22,5 +10,4 @@
 	<% else %>
 	  <p>There are no products to display.</p>
 	<% end %>
-
-<% end %>
+</div>

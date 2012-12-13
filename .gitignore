@@ -7,3 +7,4 @@ spec/dummy/log/*
 *.log
 Gemfile.lock
 .DS_Store
+tmp/
