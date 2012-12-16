@@ -54,6 +54,7 @@ Spork.prefork do
   end
 
   FactoryGirl.find_definitions
+
 end
 
 Spork.each_run do
