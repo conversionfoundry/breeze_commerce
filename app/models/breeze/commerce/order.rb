@@ -22,10 +22,10 @@ module Breeze
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
-      scope :not_browsing, lambda { conditions( [ "billing_status_id != " + Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id.to_s ] ) }
-      scope :unfulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").last )
-      scope :fulfilled, where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').last, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").last )
-      scope :show_in_admin, lambda { |o| o.show_in_admin? }
+      scope :not_browsing, -> { ne( :billing_status => Breeze::Commerce::OrderStatus.where(name: 'Browsing').first ) }
+      scope :unfulfilled, -> { where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").first ) }
+      scope :fulfilled, -> { where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").first ) }
+      scope :show_in_admin, -> { nin( :billing_status => [ Breeze::Commerce::OrderStatus.where(name: 'Browsing').first, Breeze::Commerce::OrderStatus.where(name: 'Started Checkout').first ] ) }
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
@@ -91,12 +91,12 @@ module Breeze
         '$' + total.to_s + store.currency + ' ' + created_at.to_s
       end
 
-      def show_in_admin?
-        if billing_status.name == 'Browsing' or billing_status.name == 'Started Checkout'
-          return false
-        end
-        true
-      end
+      # def show_in_admin?
+      #   if billing_status.name == 'Browsing' or billing_status.name == 'Started Checkout'
+      #     return false
+      #   end
+      #   true
+      # end
 
       protected
 
