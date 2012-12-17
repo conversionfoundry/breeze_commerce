@@ -79,7 +79,35 @@ module Breeze
         tag_ids.include? looked_up_tag_id
       end
 
+      # Create a variant for each combination of proprty options
+      # e.g. if a product has colours red, green and blue and sizes small, medium and large, this will create a small red variant, a medium red variant, a large red variant, asmall green variant and so foth
+      def generate_variants( sell_price_cents )
+        option_arrays = properties.map{ |property| property.options }
+        variants_array = combine_arrays( *option_arrays ) do | *args |
+          name = self.name + " " + args.map{ |option| option.name}.join(" ")
+          sku_code = name.downcase.gsub(" ", "_")
+          foo = Breeze::Commerce::Variant.new product: self, name: name, sku_code: sku_code, sell_price_cents: sell_price_cents
+          args.each do |option|
+            foo.options << option
+          end
+          foo.save
+        end
+        # what if there are more than three options x, y, z?
+      end
+
     private
+
+      def combine_arrays(*arrays)
+        if arrays.empty?
+          yield
+        else
+          first, *rest = arrays
+          first.map do |x|
+            combine_arrays(*rest) {|*args| yield x, *args }
+          end.flatten
+            #.flatten(1)
+        end
+      end
 
       # If a product is created under store admin, set the root page, if any, as the parent
       def set_parent_id
