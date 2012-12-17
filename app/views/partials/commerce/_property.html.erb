@@ -6,7 +6,7 @@
   <h3><%= property.name %></h3>
   <ul class="options">
     <% property.options.each do |option| %>
-      <li class="radio option-<%= option.name.downcase.underscore %>">
+      <li class="radio option-<%= option.name.downcase.gsub(" ", "_") %>">
         <%#= link_to option.name, filter_variants_path(option_id: option.id), class: 'btn option', remote: true %>
         <label class="radio">
           <%= radio_button_tag property.name, option.id, class: 'option' %>
