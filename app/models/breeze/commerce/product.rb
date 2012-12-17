@@ -80,7 +80,7 @@ module Breeze
       end
 
       # Create a variant for each combination of proprty options
-      # e.g. if a product has colours red, green and blue and sizes small, medium and large, this will create a small red variant, a medium red variant, a large red variant, asmall green variant and so foth
+      # e.g. if a product has colours red, green and blue and sizes small, medium and large, this will create a small red variant, a medium red variant, a large red variant, asmall green variant and so forth
       def generate_variants( sell_price_cents )
         option_arrays = properties.map{ |property| property.options }
         variants_array = combine_arrays( *option_arrays ) do | *args |
@@ -92,7 +92,6 @@ module Breeze
           end
           foo.save
         end
-        # what if there are more than three options x, y, z?
       end
 
     private
