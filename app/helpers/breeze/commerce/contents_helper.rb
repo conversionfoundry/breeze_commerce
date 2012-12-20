@@ -8,8 +8,10 @@ module Breeze
     	end
 
     	# Replace normal Kaminari pagination rendering, which didn't work for me - Isaac
-    	def paginate_products(products)
-    		content_tag :div, class: 'pagination product_pagination' do
+    	def paginate_products(products, options = {} )
+        options[:class].to_s << ' pagination product_pagination'
+
+    		content_tag :div, options do
 	    		content_tag :ul do
 	    			ul_content = ''
     			  unless products.current_page == 1
@@ -32,6 +34,7 @@ module Breeze
             ul_content.html_safe
  		    	end
 	    	end
+
     	end
 
     end

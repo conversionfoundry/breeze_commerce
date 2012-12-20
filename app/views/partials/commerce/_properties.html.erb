@@ -19,6 +19,9 @@
         option_ids.push( $(this).val() );
       });
 
+      $(this).closest('li').siblings().removeClass('active');
+      $(this).closest('li').addClass('active');
+
       // Send to variants#filter
       $.ajax({
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},

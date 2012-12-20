@@ -11,10 +11,10 @@ module Breeze
       include Sprockets::Helpers::RailsHelper
       include Sprockets::Helpers::IsolatedHelper
 
-      FULL_SIZE  = [ 544, 292 ].freeze unless defined?(FULL_SIZE)
-      FEATURE_SIZE = [ 240, 204 ].freeze unless defined?(FEATURE_SIZE)
-      LISTING_SIZE = [ 192, 162 ].freeze unless defined?(LISTING_SIZE)
-      THUMB_SIZE = [ 50, 50 ].freeze unless defined?(THUMB_SIZE)
+      FULL_SIZE  = [ 512, 512 ].freeze unless defined?(FULL_SIZE)
+      FEATURE_SIZE = [ 256, 256 ].freeze unless defined?(FEATURE_SIZE)
+      LISTING_SIZE = [ 128, 128 ].freeze unless defined?(LISTING_SIZE)
+      THUMB_SIZE = [ 32, 32 ].freeze unless defined?(THUMB_SIZE)
       BREEZE_THUMB_SIZE = [ 128, 128 ].freeze unless defined?(BREEZE_THUMB_SIZE)
 
       # Choose what kind of storage to use for this uploader:
