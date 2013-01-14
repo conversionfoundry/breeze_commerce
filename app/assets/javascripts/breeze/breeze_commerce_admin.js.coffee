@@ -134,6 +134,12 @@ $(".variants .variant-actions .edit.button").live "click", (e) ->
     dialogFormSynchronous "variant-details", "Edit Variant", data
   e.preventDefault()
 
+# Variant Factory
+$(".new.variant_factory.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogFormSynchronous "variant_factory-details", "New Variant Factory", data
+  e.preventDefault()
+
 # Properties
 $(".new.property.button").live "click", (e) ->
   $.get @href, (data) ->

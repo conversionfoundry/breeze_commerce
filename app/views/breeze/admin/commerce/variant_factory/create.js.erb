@@ -1,0 +1,6 @@
+<% if @errors.any? %>
+  $('#variant_factory-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/variant_factory/new") %>');
+<% else %>
+  $('#product-variants.box.container').html('<%= escape_javascript render :partial => "breeze/admin/commerce/variants/variants", :object => @product.variants.unarchived.ordered %>');
+  $('#variant_factory-details').dialog('close');
+<% end %>
