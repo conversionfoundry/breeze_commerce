@@ -35,6 +35,15 @@ Breeze.hook :dashboard_panels do |dashboard_panels, user|
   end
 end
 
+Breeze.hook :settings_panels do |settings_panels, user|
+  if user.can? :manage, Breeze::Commerce::Store
+    # Add tabs to Breeze settings
+    settings_panels << { partial: "breeze/admin/settings_panels/store_settings" }
+  else
+    settings_panels
+  end
+end
+
 Breeze.hook :user_roles do |user_roles|
 	user_roles << :merchant
 end

@@ -7,6 +7,26 @@ describe Breeze::Commerce::Variant do
 	it "is invalid without a product_id" do
 		build(:variant, product_id: nil).should_not be_valid
 	end
+
+	describe "sku_code" do
+		context "missing SKU" do
+			it "creates a SKU for a variant with no options" do
+				@product = create(:product, name: 'Widget')
+				@variant = create(:variant, product_id: @product.id, sku_code: nil)
+				@variant.sku_code.should eq 'widget'
+			end
+			it "creates a SKU for a variant with options" do
+				@option = create(:option, name: 'foo')
+				@variant = create(:variant, sku_code: nil)
+				@variant.options << @option
+				binding.pry
+				@variant.sku_code.should eq 'widget_foo'
+			end
+		end
+		it "adds -2 to the end if given a SKU that already exists"
+		it "increments final SKU digit until it finds one that doesn't exist"
+	end
+
 	describe "archive scopes" do
 		before :each do
 			@variant1 = create(:variant)

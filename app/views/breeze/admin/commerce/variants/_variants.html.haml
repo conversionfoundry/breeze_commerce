@@ -10,13 +10,15 @@
         - @product.properties.each do |property|
           %th
             = property.name
-        %th{:style => "width:20%;"} Published
+        %th Published
         %th.last{:style => ""} Actions
     %tbody
-      - if @product.variants.exists?
+      - if @product.variants.unarchived.exists?
         = render :partial => "breeze/admin/commerce/variants/variant", :collection => @product.variants.unarchived.ordered
       - else
         %tr
-          %td.empty{:colspan => "5"} There are no variants for this product yet.
+          %td.empty{:colspan => "5"} 
+            There are no variants for this product yet.
+            = link_to "Bulk create variants from properties", new_admin_store_variant_factory_path(product_id: @product.id), class: "large new variant_factory button"
     %tfoot
       %tr
