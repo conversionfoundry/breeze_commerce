@@ -4,9 +4,9 @@
   %table.fancy.properties
     %thead
       %tr
-        %th.first{:style => ""} Name
-        %th{:style => "width:20%;"} Options
-        %th.last{:style => ""} Actions
+        %th.first{:style => "width: 20%"} Name
+        %th{:style => "width: 60%;"} Options
+        %th.last{:style => "width: 20%"} Actions
     %tbody
       - if @product.properties.exists?
         = render :partial => "breeze/admin/commerce/properties/property", :collection => @product.properties

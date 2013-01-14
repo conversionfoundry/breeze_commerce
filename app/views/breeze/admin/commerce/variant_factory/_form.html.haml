@@ -1,0 +1,22 @@
+/ = breeze_form_for @variant_factory, :as => :variant_factory, :url => url, :remote => true do |form|
+= form_tag(url, remote: true) do |form|
+  - if @errors and @errors.any?
+    - @errors.each do |error|
+      = error
+  = hidden_field_tag :product_id, @product.id
+  = label_tag :cost_price, 'Cost Price'
+  = number_field :variant_form_fields, :cost_price, before: '$', step: 0.01
+  = label_tag :sell_price, 'Sell Price'
+  = number_field :variant_form_fields, :sell_price, before: '$', step: 0.01
+
+  / = render "/breeze/admin/shared/error_messages", :target => @variant_factory, :object_name => :variant_factory
+  / = form.fieldset do
+  / = form.number_field :cost_price, :required => false, :label => "Cost Price", before: '$', step: 0.01
+
+/ :javascript
+/   // Show or hide the discounted sell price box depending on discounted checkbox state
+/   $('#variant_discounted').live('change', function() {
+/     $('#container-discounted_sell_price').toggle();
+/   });
+
+

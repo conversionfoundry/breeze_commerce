@@ -25,6 +25,8 @@ Breeze::Engine.routes.draw do
         post      :set_default_image, on: :member
       end
 
+      resource :variant_factory, only: [:new, :create], controller: "variant_factory"
+
       resources :orders, except: [:show] do
         resources :line_items, only: [:create, :destroy]
         resources :notes, only: [:create, :destroy]

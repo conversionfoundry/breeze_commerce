@@ -45,7 +45,7 @@ module Breeze
       scope :not_discounted, where(:discounted.in => [false, nil])
       scope :ordered, order_by(:position.asc)
 
-      before_validation :set_initial_position
+      before_validation :set_initial_position, :set_standard_sku_code
 
       validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
       validates_uniqueness_of :sku_code
@@ -112,12 +112,20 @@ module Breeze
         count
       end
 
-      private
-
       def set_initial_position
         self.position = product.variants.count if product
       end
-      
+
+      def set_standard_sku_code
+        if sku_code.blank?
+          name = product.name 
+          if options.any?
+            name = name + " " + options.map{ |option| option.name}.join(" ")
+          end
+          self.sku_code = name.downcase.gsub(" ", "_")
+        end
+      end
+
     end
     
     
