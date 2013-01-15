@@ -19,21 +19,21 @@
             %fieldset.address-shipping.address
               %legend Shipping Address
               %ol#customer_shipping_address.form
-                = ship_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'
-                = ship_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                = ship_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
+                = ship_form.text_field :name, :required => :true, :value => @customer.name, :placeholder => 'Jane Doe'
+                = ship_form.text_area :address, :required => :true, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
+                = ship_form.text_field :city, :required => :true, :placeholder => 'Christchurch', :class => 'input-medium'
                 = ship_form.text_field :state, :placeholder => 'Canterbury', label: 'State, Province or Region', :class => 'input-medium'
                 = ship_form.text_field :postcode, :class => 'input-small'
-                = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
+                = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :required => :true
                 = ship_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
           = form.fields_for :billing_address, @customer.billing_address do |bill_form|
             %fieldset.address-billing.address
               %legend Billing Address
               %ol#customer_billing_address.form
-                = bill_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'
-                = bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                = bill_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
+                = bill_form.text_field :name, :required => :true, :value => @customer.name, :placeholder => 'Jane Doe'
+                = bill_form.text_area :address, :required => :true, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
+                = bill_form.text_field :city, :required => :true, :placeholder => 'Christchurch', :class => 'input-medium'
                 = bill_form.text_field :state, :placeholder => 'Canterbury', label: 'State, Province or Region', :class => 'input-medium'
                 = bill_form.text_field :postcode, :class => 'input-small'
-                = bill_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
+                = bill_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :required => :true
                 = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
