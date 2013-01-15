@@ -15,5 +15,6 @@
     - else
       %tr
         %td.empty{:colspan => "4"} No line items yet.
+%table#totals.table-striped.order
   %tfoot
     = render :partial => "breeze/commerce/line_items/totals", :locals => { :form => form }
