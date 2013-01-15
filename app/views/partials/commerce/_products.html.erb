@@ -1,6 +1,5 @@
-<div class="products hfeed #{product_list_class(@product_list)}">
+<div class="products hfeed" data-product-list-id="<%= @product_list.id %>">
   <h3><%= @product_list.title || "Product list" %></h3>
-
 	<% if @products.any? %>
     <%= paginate_products( @products, {class: 'pagination-top'} ) if @product_list.show_pagination? %>
 	  <%= content_tag :ul, :class => "products hfeed" do %>

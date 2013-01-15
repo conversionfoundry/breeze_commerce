@@ -13,7 +13,7 @@ module Breeze
         end
         
         def create
-          @customer = Breeze::Commerce::Customer.build params[:customer]
+          @customer = Breeze::Commerce::Customer.new params[:customer]
           if @customer.save
             redirect_to admin_store_customers_path
           else
