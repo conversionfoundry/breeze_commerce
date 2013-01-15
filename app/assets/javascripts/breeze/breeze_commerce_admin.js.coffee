@@ -248,5 +248,12 @@ $("div#order-notes #note-save").live "click", (e) ->
     error: (result) ->
       eval result
 
+# Update slug for new products
+$("#new_product #product_title").live "input", ->
+  slug_field = $("#product_slug", $(this).closest("form"))
+  slug_field.val $(this).val().toLowerCase().replace(/[^a-z0-9\-\_]+/g, "-").replace(/(^\-+|\-+$)/g, "")  if slug_field.length > 0 and not slug_field[0].modified
+
+$("#new_product #product_slug").live "input", ->
+  @modified = true
 
 
