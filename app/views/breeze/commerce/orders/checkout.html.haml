@@ -91,7 +91,7 @@
             %h3.heading
               %span Step
               %span.number 2
-              %span.description Shipping
+              %span.description Shipping Address
           .checkout-body
             = order_form.hidden_field :email, :class => :required, :value => @customer.email
             = order_form.fields_for :shipping_address do |ship_form|
@@ -161,7 +161,7 @@
             %h3.heading
               %span Step
               %span.number 3
-              %span.description Payment
+              %span.description Billing Address
           .checkout-body
             / TODO: Payment options to go here (e.g. Paypal / Payment Express)
             = order_form.fields_for :billing_address do |bill_form|
@@ -242,7 +242,7 @@
                 %legend Save my details
                 %ol.form
                   %li
-                    = order_form.label :create_new_account do |label|
+                    = label_tag :create_new_account do |label|
                       = check_box_tag :create_new_account, :create_new_account, false
                       I'd like my contact information saved for future visits
                       %span.optional (optional)
@@ -255,7 +255,7 @@
               %legend Terms and Conditions
               %ol.form
                 %li
-                  = order_form.label :read_terms do |label|
+                  = label_tag :read_terms do |label|
                     .control-group
                       = check_box_tag :read_terms, :read_terms, false, :class => :required
                       I accept the
