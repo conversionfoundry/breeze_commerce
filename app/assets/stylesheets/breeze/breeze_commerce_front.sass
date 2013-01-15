@@ -42,8 +42,10 @@ a.customer-card:hover
 /* Shopping Cart
 
 .cart-container
-  .form-actions .btn-group
-    float: right
+  .form-actions 
+    box-sizing: border-box
+    .btn-group
+      float: right
   table.summary
     width: 100%
     margin-bottom: 1em
@@ -75,6 +77,8 @@ table#cart tr th.quantity
 table#cart tr th.total
   width: 20%
 table#cart
+  width: 100%
+  margin-bottom: 1em
   tr.line_item
     td
       padding: 1em
@@ -93,6 +97,9 @@ table#cart
     vertical-align: top
   td.total
     text-align: right
+table#totals
+  float: right
+  margin-bottom: 1em
 
 #checkout-container
   .form-actions .btn
