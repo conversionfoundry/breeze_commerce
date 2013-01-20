@@ -129,6 +129,9 @@ module Breeze
         @order = Order.find params[:id]
         flash[:error] = '<h4>Payment failed</h4><p>Unfortunately, your order didn\'t go through.</p>'.html_safe
         @customer = current_store_customer || Breeze::Commerce::Customer.new
+        @customer.shipping_address ||= Breeze::Commerce::Address.new
+        @customer.billing_address ||= Breeze::Commerce::Address.new
+        @allow_returning_customer_login = store.allow_returning_customer_login
         render :action => "checkout"
       end
 
