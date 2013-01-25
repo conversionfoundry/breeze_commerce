@@ -410,11 +410,13 @@ abbr[title]
       text-transform: uppercase
       font-size: 130%
       vertical-align: middle
-  .actions
-    margin: 0px
-    padding: 0px
+  .store-actions
+    border-top: none
+    margin: 0
+    padding: 0
     li
       display: inline
+      line-height: inherit
       list-style: none
       a
         border: 1px solid #AAA
@@ -570,57 +572,6 @@ table.products
 
 #product-edit img.feature
   float: left
-
-/* Common elements
-table.fancy 
-  thead
-    th
-      background: #eeeeee
-      padding: 0 1em
-      text-align: left  
-  tbody 
-    tr
-      width: 100%
-      .actions .button
-        visibility: hidden
-        opacity: 0
-        -webkit-transition: opacity 0.25s ease-in
-      &:hover
-        td
-          background: $colour-highlight
-        .actions .button, td.published .field
-          visibility: visible
-          opacity: 1.0
-      td.published .text
-        visibility: visible
-        opacity: 1.0
-      &.disabled:hover .actions .button
-        visibility: hidden
-        opacity: 0
-      &.active
-        td
-          border-bottom: 0px
-          background-color: #ffffc0
-        &:hover td
-          background-color: #ffffc0
-      &.edit td
-        background-color: #ffffc0
-      .actions
-        text-align: right
-      &.active .actions .button
-        visibility: visible
-        opacity: 1.0
-      td
-        border-bottom: 1px solid #eeeeee
-        padding: 1em
-      &.last
-        td
-          border-bottom: none
-  tfoot
-    td
-      background: transparent
-      text-align: right
-      padding: 1em
 
 /* Tags Page
 table.tags 

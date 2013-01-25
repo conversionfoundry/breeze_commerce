@@ -6,8 +6,8 @@
   %td.first
     = check_box_tag "product_ids[]", product.id
   %td.product
-    .image-container
-      - unless product.images.empty?
+    - unless product.images.empty?
+      .image-container
         = image_tag product.images.ordered.first.file.url(:thumbnail)
     %h4
       = link_to product.title, edit_admin_store_product_path(product), :class => "name-link"

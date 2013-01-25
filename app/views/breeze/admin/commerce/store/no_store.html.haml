@@ -7,13 +7,6 @@
     = form_tag admin_store_setup_default_path do
       %p
         = submit_tag "Click here", :class => :button
-        to set up a new store at
+        to start a new store
         = succeed "." do
           %tt /store
-- content_for :left do
-  = pane_layout do |left|
-    - left.header do
-      %h2
-    - left.inner do
-- content_for :right do
-  = pane_layout do |right|

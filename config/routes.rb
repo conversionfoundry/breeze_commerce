@@ -2,7 +2,7 @@ Breeze::Engine.routes.draw do
 
   namespace "admin" do  
     namespace "store", module: "commerce", name_prefix: "admin_store" do
-      root to: "store#index"
+      root to: "orders#index"
       
       controller :store do
         post  :setup_default
