@@ -7,7 +7,6 @@ module Breeze
         # TODO: This is really duplicating the install generator. It should all be in seeds. Likewise for breeze_blog
         def setup_default
           store = Breeze::Commerce::Store.first || Breeze::Commerce::Store.create
-
           redirect_to admin_store_root_path
         end
       

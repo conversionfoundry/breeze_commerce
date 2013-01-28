@@ -6,6 +6,7 @@ require "breeze/account"
 require "breeze/pay_online"
 
 require "kaminari"
+require "twitter-bootstrap-rails"
 
 module Breeze
   module Commerce
