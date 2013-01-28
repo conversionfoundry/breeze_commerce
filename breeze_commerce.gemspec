@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
   # s.add_dependency "jquery-rails"
-  s.add_dependency "breeze", ">= 1.1.1"
+  s.add_dependency "breeze", ">= 1.0.0"
   s.add_dependency "breeze_account", ">= 1.0.0"
   s.add_dependency "breeze_pay_online", ">= 0.1.0"
   s.add_dependency "carrierwave"
