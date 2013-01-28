@@ -11,7 +11,7 @@ module Breeze
           commerce_menu_item("Tags", breeze.admin_store_tags_path, badge( Breeze::Commerce::Tag.count )),
           commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
           commerce_menu_item("Settings", breeze.admin_store_settings_path)
-        ].join.html_safe, :class => :actions
+        ].join.html_safe, :class => 'store-actions'
       end
 
       def badge text

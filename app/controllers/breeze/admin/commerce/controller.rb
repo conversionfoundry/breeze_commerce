@@ -10,7 +10,7 @@ module Breeze
   
         def check_for_stores
           unless store
-            render :action => "no_store"
+            render '/breeze/admin/commerce/store/no_store'
           end
         end
 
