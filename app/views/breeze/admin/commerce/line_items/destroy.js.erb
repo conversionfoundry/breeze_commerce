@@ -1,1 +1,1 @@
-alert('remove item');
+$('.order-edit#order_<%= @order.id %>').html('<%= escape_javascript render("breeze/admin/commerce/orders/form", :url => admin_store_order_path(@order)) %>');

@@ -73,7 +73,27 @@ $(document).ready ->
         eval result
 
 
+# Copy the shipping address to the billing address
+duplicateAddress = ->
+  $("#order_billing_address_name").val $("#order_shipping_address_name").val()
+  $("#order_billing_address_address").val $("#order_shipping_address_address").val()
+  $("#order_billing_address_city").val $("#order_shipping_address_city").val()
+  $("#order_billing_address_state").val $("#order_shipping_address_state").val()
+  $("#order_billing_address_postcode").val $("#order_shipping_address_postcode").val()
+  selected = $("#order_shipping_address_country option:selected").val()
+  $("#order_billing_address_country option[value='" + selected + "']").attr "selected", "selected"
+  $("#order_billing_address_phone").val $("#order_shipping_address_phone").val()
+  false
 
+clearBillingAddress = ->
+  $("#order_billing_address_name").val ""
+  $("#order_billing_address_address").val ""
+  $("#order_billing_address_city").val ""
+  $("#order_billing_address_state").val ""
+  $("#order_billing_address_postcode").val ""
+  $ "#order_billing_address_country option[value=\"\"]"
+  $("#order_billing_address_phone").val ""
+  false
 
 # Checkout Form
 $(document).ready ->
@@ -140,18 +160,6 @@ $(document).ready ->
     address += $("#order_" + addressType + "_address_country").val() + "<br />"
     address += "Contact Phone " + $("#order_" + addressType + "_address_phone").val()
     address
-  
-  # Copy the shipping address to the billing address
-  duplicateAddress = ->
-    $("#order_billing_address_name").val $("#order_shipping_address_name").val()
-    $("#order_billing_address_address").val $("#order_shipping_address_address").val()
-    $("#order_billing_address_city").val $("#order_shipping_address_city").val()
-    $("#order_billing_address_state").val $("#order_shipping_address_state").val()
-    $("#order_billing_address_postcode").val $("#order_shipping_address_postcode").val()
-    selected = $("#order_shipping_address_country option:selected").val()
-    $("#order_billing_address_country option[value='" + selected + "']").attr "selected", "selected"
-    $("#order_billing_address_phone").val $("#order_shipping_address_phone").val()
-    false
 
   change = (from, to, summaryHtml) ->
     $(panels[from]).children(".checkout-body").slideUp()
@@ -218,18 +226,12 @@ $(document).ready ->
       return change(1, 2)
     false
 
-  $("#same").change ->
+  $("#checkout-form #same").change ->
     if $(this).attr("checked")
       duplicateAddress()
       $("#order_billing_address").slideUp()
     else
-      $("#order_billing_address_name").val ""
-      $("#order_billing_address_address").val ""
-      $("#order_billing_address_city").val ""
-      $("#order_billing_address_state").val ""
-      $("#order_billing_address_postcode").val ""
-      $ "#order_billing_address_country option[value=\"\"]"
-      $("#order_billing_address_phone").val ""
+      clearBillingAddress()
       $("#order_billing_address").slideDown()
 
   $("#continue-3").click (event) ->
