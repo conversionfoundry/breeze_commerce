@@ -91,6 +91,12 @@ $(".tags .tag-actions .edit.button").live "click", (e) ->
     dialogForm "tag-details", "Edit Tag", data, 'PUT'
   e.preventDefault()
 
+# Line Items
+$(".new.line_item.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "line_item-details", "New Line Item", data, 'POST'
+  e.preventDefault()
+
 # Product Images
 # n.b. We can't upload images through javascript, so we have to do a normal form.submit
 $(".new.product_image.button").live "click", (e) ->
@@ -256,4 +262,38 @@ $("#new_product #product_title").live "input", ->
 $("#new_product #product_slug").live "input", ->
   @modified = true
 
+# Copy the shipping address to the billing address
+duplicateAddress = ->
+  $("#order_billing_address_name").val $("#order_shipping_address_name").val()
+  $("#order_billing_address_address").val $("#order_shipping_address_address").val()
+  $("#order_billing_address_city").val $("#order_shipping_address_city").val()
+  $("#order_billing_address_state").val $("#order_shipping_address_state").val()
+  $("#order_billing_address_postcode").val $("#order_shipping_address_postcode").val()
+  selected = $("#order_shipping_address_country option:selected").val()
+  $("#order_billing_address_country option[value='" + selected + "']").attr "selected", "selected"
+  $("#order_billing_address_phone").val $("#order_shipping_address_phone").val()
+  false
+
+clearBillingAddress = ->
+  $("#order_billing_address_name").val ""
+  $("#order_billing_address_address").val ""
+  $("#order_billing_address_city").val ""
+  $("#order_billing_address_state").val ""
+  $("#order_billing_address_postcode").val ""
+  $ "#order_billing_address_country option[value=\"\"]"
+  $("#order_billing_address_phone").val ""
+  false
+
+$("#new_order #same").live "change", (e) ->
+  if $(this).attr("checked")
+    duplicateAddress()
+  else
+    clearBillingAddress()
+
+$("#order_shipping_address input, #order_shipping_address textarea, #order_shipping_address select").live "change", (e) ->
+  if $("#new_order #same").attr("checked")
+    duplicateAddress()
+
+$("#order_billing_address input[type=text], #order_billing_address textarea, #order_billing_address select").live "change", (e) ->
+  $("#new_order #same").attr("checked", null)
 

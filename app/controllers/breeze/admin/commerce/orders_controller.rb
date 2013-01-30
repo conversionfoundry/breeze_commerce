@@ -27,12 +27,13 @@ module Breeze
           @order.billing_address ||= Breeze::Commerce::Address.new
           @billing_statuses = Breeze::Commerce::OrderStatus.billing
           @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
+          @order.billing_status = @billing_statuses.where(name: "Payment Received").first
         end
         
         def create
-          @order = Breeze::Commerce::Order.build params[:order]
+          @order = Breeze::Commerce::Order.new params[:order]
           if @order.save
-            redirect_to admin_store_orders_path
+            redirect_to edit_admin_store_order_path(@order)
           else
             @billing_statuses = Breeze::Commerce::OrderStatus.billing
             @shipping_statuses = Breeze::Commerce::OrderStatus.shipping

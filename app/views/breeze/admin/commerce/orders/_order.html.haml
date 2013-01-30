@@ -20,7 +20,7 @@
     = order.shipping_address.to_html if order.shipping_address
   %td.line_items
     %ul.line_items
-      - order.line_items.each do |line_item|
+      - order.line_items.unarchived.each do |line_item|
         %li.line_item
           = line_item.quantity
           &times;

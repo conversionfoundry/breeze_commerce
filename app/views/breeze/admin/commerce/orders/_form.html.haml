@@ -1,5 +1,4 @@
 #order-edit
-
   = breeze_form_for @order, :as => :order, :url => url do |form|
     .actions
       = submit_tag "Save", :class => "large green save button"
@@ -27,14 +26,17 @@
         %h3#order-number
           Order number:
           \#{@order.order_number}
-        #order-customer_comment
-          = @order.comment
-        #order-notes
-          = render :partial => "breeze/admin/commerce/notes/notes", :object => @order.notes
+
+        - unless @order.new_record?
+          #order-customer_comment
+            = @order.comment
+          #order-notes
+            = render :partial => "breeze/admin/commerce/notes/notes", :object => @order.notes
         - unless @order.new_record?
           = form.fieldset class: 'line_items' do
             #order-line_items.section
               = render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
+              = link_to "New line item", new_admin_store_order_line_item_path(@order), :class => "large green button new line_item"
         #order-shipping_billing.section
           #order-shipping
             %ol.form.status
@@ -57,6 +59,9 @@
               %fieldset.address-billing.address
                 %legend Billing Address
                 %ol#order_billing_address.form
+                  = bill_form.label :same do |label|
+                    = check_box_tag :same, :same, true
+                    Same as my Shipping Address
                   = bill_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'
                   = bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
                   = bill_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
