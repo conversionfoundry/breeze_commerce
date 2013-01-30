@@ -1,0 +1,7 @@
+<% if @line_item.errors.empty? %>
+	$('.order-edit#order_<%= @order.id %>').html('<%= escape_javascript render("breeze/admin/commerce/orders/form", :url => admin_store_order_path(@order)) %>');
+  $('#line_item-details').dialog('close');
+<% else %>
+  $('#line_item-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/line_items/new") %>');
+<% end %>
+

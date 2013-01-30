@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails"
   s.add_dependency 'csv_shaper'
   s.add_dependency 'jquery-rails'
+  s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'will_paginate', "3.0.pre4"
   s.add_dependency "twitter-bootstrap-rails"
   s.add_development_dependency "capybara"

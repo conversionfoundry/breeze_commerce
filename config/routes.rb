@@ -28,7 +28,7 @@ Breeze::Engine.routes.draw do
       resource :variant_factory, only: [:new, :create], controller: "variant_factory"
 
       resources :orders, except: [:show] do
-        resources :line_items, only: [:create, :destroy]
+        resources :line_items, only: [:new, :create, :destroy]
         resources :notes, only: [:create, :destroy]
         resources :payments, only: [:create, :destroy]
       end

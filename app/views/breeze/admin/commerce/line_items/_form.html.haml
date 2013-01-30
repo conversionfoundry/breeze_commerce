@@ -1,0 +1,9 @@
+= breeze_form_for @line_item, :as => :line_item, :url => url, :remote => true do |form|
+  = render "/breeze/admin/shared/error_messages", :target => @line_item, :object_name => :line_item
+  %fieldset
+    %ol.form
+      // = form.hidden_field :order_id
+      = form.number_field :quantity
+      = form.select :variant_id, option_groups_from_collection_for_select(@products, :variants, :name, :id, :name, 3) 
+
+
