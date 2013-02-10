@@ -18,7 +18,7 @@ module Breeze
       field :country
       field :phone
 
-      validates_presence_of :name, :address, :city, :country
+      validates_presence_of :name, :address, :city
       
       def to_html
         result = '<p class="address">'

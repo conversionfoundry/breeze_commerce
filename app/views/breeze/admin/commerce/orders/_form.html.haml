@@ -50,7 +50,7 @@
                   = ship_form.text_field :city, :class => :required, :class => 'input-medium'
                   = ship_form.text_field :state, :class => 'input-medium', :label => 'State, Province or Region'
                   = ship_form.text_field :postcode, :class => 'input-small'
-                  = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
+                  = ship_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.shipping_address.country || store.default_country.name), :class => :required
                   = ship_form.text_field :phone, :class => 'input-medium', :label => 'Contact Phone Number'
           #order-billing
             %ol.form.status
@@ -67,7 +67,7 @@
                   = bill_form.text_field :city, :class => :required, :class => 'input-medium'
                   = bill_form.text_field :state, :class => 'input-medium', :label => 'State, Province or Region'
                   = bill_form.text_field :postcode, :class => 'input-small'
-                  = bill_form.select :country, Breeze::Commerce::COUNTRIES, :selected => 'New Zealand', :class => :required
+                  = bill_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.billing_address.country || store.default_country.name), :class => :required
                   = bill_form.text_field :phone, :class => 'input-medium', :label => 'Contact Phone Number'
 
         .clearer
