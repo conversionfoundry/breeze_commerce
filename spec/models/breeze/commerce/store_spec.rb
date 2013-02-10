@@ -12,4 +12,19 @@ describe Breeze::Commerce::Store do
 		store.default_shipping_method.should eq second_shipping_method
 		store.default_shipping_method.should_not eq first_shipping_method
 	end
+
+	it "sets a default country if none is set and one is available" do
+		store = Breeze::Commerce::Store.first
+		first_country = create(:country)
+		store.default_country.should eq first_country
+	end
+
+	it "can set a default country" do
+		store = Breeze::Commerce::Store.first
+		first_country = create(:country)
+		second_country = create(:country)
+		store.default_country = second_country
+		store.default_country.should eq second_country
+		store.default_country.should_not eq first_country
+	end
 end
