@@ -6,15 +6,27 @@
     %span.amount
       = number_to_currency @order.item_total
     %span.currency= currency
-
-= render :partial => "breeze/commerce/shipping_methods/shipping_methods", :object => Breeze::Commerce::ShippingMethod.unarchived, :locals => { :form => form }
+%tr.shipping#shipping_methods
+  = render :partial => "breeze/commerce/shipping_methods/shipping_methods", :object => store.default_country.shipping_methods, locals: { order: @order }
+%tr.countries
+  %td
+  %td
+    #countries
+      - if @countries.count == 0
+        No countries available for shipping
+      - elsif @countries.count == 1
+        We ship to 
+        = @countries.first.name
+      - else
+        = label_tag :country, 'Change Country'
+        = select_tag :country, options_for_select(@countries.map{|country| [country.name, country.id]}, store.default_country.id) , class: :required, data: {order_id: @order.id.to_s}
 
 %tr.total
   %td
   %td Total cost:
   %td
   %td.total
-    %span.amount
+    %span.amount#order_total
       = number_to_currency @order.total
     %span.currency
       = store.currency

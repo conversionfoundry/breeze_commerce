@@ -1,3 +1,21 @@
+# Country selection
+$('#edit_order #country').live 'change', (event) ->
+  console.log $(this).val()
+  $.ajax
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+    url: "/shipping_methods/"
+    dataType: "html"
+    type: "GET"
+    data:
+      country_id: $(this).val()
+      order_id: $(this).data('order-id')
+    success: (result) ->
+      eval result
+    error: (result) ->
+      eval result
+
+
 # Product Pagination
 $(document).ready ->
   $(".product_pagination a").live "click", (event) ->
