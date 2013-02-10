@@ -28,6 +28,7 @@ module Breeze
           @billing_statuses = Breeze::Commerce::OrderStatus.billing
           @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
           @order.billing_status = @billing_statuses.where(name: "Payment Received").first
+          @countries = Breeze::Commerce::Country.order_by(:name.asc)
         end
         
         def create
@@ -37,6 +38,7 @@ module Breeze
           else
             @billing_statuses = Breeze::Commerce::OrderStatus.billing
             @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
+            @countries = Breeze::Commerce::Country.order_by(:name.asc)
             render :action => "new"
           end
         end
@@ -48,6 +50,7 @@ module Breeze
           @billing_statuses = Breeze::Commerce::OrderStatus.billing
           @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
           @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:title.desc)
+          @countries = Breeze::Commerce::Country.order_by(:name.asc)
         end
 
         def update
@@ -66,6 +69,9 @@ module Breeze
               format.js
             end
           else
+            @billing_statuses = Breeze::Commerce::OrderStatus.billing
+            @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
+            @countries = Breeze::Commerce::Country.order_by(:name.asc)
             render :action => "edit"
           end
         end
