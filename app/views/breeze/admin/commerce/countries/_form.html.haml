@@ -1,0 +1,12 @@
+= breeze_form_for @country, :as => :country, :url => url do |form|
+  = render "/breeze/admin/shared/error_messages", :target => @country, :object_name => :country
+
+  #country-details
+    = form.fieldset do
+      = form.select :name, Breeze::Commerce::COUNTRIES, label: "Country"
+    = form.fieldset do
+      %p Select the shipping methods which can be used to send products to this country
+      - @shipping_methods.each do |shipping_method|
+        = label_tag shipping_method.name do |label|
+          = check_box_tag :shipping_method_ids, shipping_method.id, @country.shipping_methods.include?(shipping_method), :name => 'country[shipping_method_ids][]'
+          = shipping_method.name

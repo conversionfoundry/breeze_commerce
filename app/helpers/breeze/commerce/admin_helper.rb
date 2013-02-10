@@ -9,8 +9,8 @@ module Breeze
           commerce_menu_item("Registered Customers", breeze.admin_store_customers_path, badge( Breeze::Commerce::Customer.unarchived.count )),
           commerce_menu_item("Products", breeze.admin_store_products_path, badge( Breeze::Commerce::Product.unarchived.count )),
           commerce_menu_item("Tags", breeze.admin_store_tags_path, badge( Breeze::Commerce::Tag.count )),
-          commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
-          commerce_menu_item("Settings", breeze.admin_store_settings_path)
+          commerce_menu_item("Shipping", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
+          commerce_menu_item("Settings", breeze.edit_admin_store_store_path)
         ].join.html_safe, :class => 'store-actions'
       end
 

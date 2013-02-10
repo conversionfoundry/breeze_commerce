@@ -3,6 +3,7 @@ module Breeze
     module Commerce
       class ShippingMethodsController < Breeze::Admin::Commerce::Controller
         def index
+          @countries = Breeze::Commerce::Country.order_by(:name.asc)
           @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived.order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
         end
         
