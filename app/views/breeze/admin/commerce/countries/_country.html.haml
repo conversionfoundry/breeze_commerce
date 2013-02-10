@@ -1,0 +1,20 @@
+- classes = 'country'
+- classes += ' first' if country_counter == 0
+- classes += ' last' if country_counter + 1 == count
+
+= content_tag :tr, class: classes, id: "country_#{country.id}", data: {:id => "#{country.id}"} do
+  %td.name
+    %h4
+      = country.name
+    %p.default
+      = 'Default country for new orders.' if country == store.default_country
+  %td.shipping_methods
+    %ul.shipping_methods
+    - country.shipping_methods.each do |shipping_method|
+      %li
+        = shipping_method.name
+  %td.actions.country-actions
+    = link_to "Make Default", admin_store_store_path(store, 'store[default_country_id]' => country.id), :method => :put, :class => 'small black button'
+    = link_to "Edit", edit_admin_store_country_path(country.id), :class => "small black edit button", remote: true
+    - if count > 1
+      = button_to "Remove", admin_store_country_path(country.id), :method=>:delete, :remote => true, :class=>'small red button remove'

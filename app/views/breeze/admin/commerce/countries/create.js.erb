@@ -1,0 +1,10 @@
+<% if @country.errors.empty? %>
+  $('.countries tbody tr.empty').remove();
+  $('.countries tbody tr:last').removeClass('last');
+  $('.countries tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/countries/country", locals: {country: @country, country_counter: @countries.count - 1, count: @countries.count} ) %>');
+  $('#menu-item-countries .item-count').html(<%= @country_count %>);
+  $('#country-details').dialog('close');
+<% else %>
+  $('#country-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/countries/new") %>');
+<% end %>
+

@@ -81,6 +81,16 @@ jQuery.fn.serializeObject = ->
       objectData[@name] = value
   return objectData
 
+# Countries
+$(".new.country.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "country-details", "New Country", data, 'POST'
+  e.preventDefault()
+$(".countries .country-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "country-details", "Edit Country", data, 'PUT'
+  e.preventDefault()
+
 # Tags
 $(".new.tag.button").live "click", (e) ->
   $.get @href, (data) ->

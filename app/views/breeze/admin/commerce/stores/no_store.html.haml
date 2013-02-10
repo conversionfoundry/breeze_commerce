@@ -4,7 +4,7 @@
     %h2
   - main.inner do
     %h1 You have no stores set up.
-    = form_tag admin_store_setup_default_path do
+    = form_tag admin_store_store_path, method: post do
       %p
         = submit_tag "Click here", :class => :button
         to start a new store
