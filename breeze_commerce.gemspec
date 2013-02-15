@@ -11,15 +11,11 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = "Online Store for the Breeze CMS"
   s.description = "Breeze Commerce adds product management and a checkout funnel to Breeze."
-
-  # Manifest
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  # s.test_files = Dir["test/**/*"]
   
+  s.files         = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"] 
+  s.require_paths = ['lib']
+  s.required_ruby_version = '>= 1.9.0'
+  s.required_rubygems_version = '>= 1.3.6'
   
   # Dependencies
   # specify any dependencies here; for example:
@@ -29,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "breeze", ">= 1.0.0"
   s.add_dependency "breeze_account", ">= 1.0.0"
   s.add_dependency "breeze_pay_online", ">= 0.1.0"
+  s.add_dependency "breeze_apply_online", ">= 0.1.0"
   s.add_dependency "carrierwave"
   s.add_dependency "carrierwave-mongoid", "~> 0.1.0"
   s.add_dependency "haml"
