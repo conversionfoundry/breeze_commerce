@@ -41,23 +41,6 @@ module Breeze
         end
       end 
 
-      # Add items to the order (i.e. the shopping cart)
-      def populate
-        @order = current_order(session)
-        variant_id = params[:variant_id]
-                
-        new_line_item =  Breeze::Commerce::LineItem.new(:variant_id => variant_id, :quantity => params[:quantity] || 1)
-        existing_line_item = @order.line_items.unarchived.where(:variant_id => variant_id).first 
-        if existing_line_item
-          existing_line_item.quantity += new_line_item.quantity
-          existing_line_item.save
-        else
-          @order.line_items << new_line_item
-        end
-
-        @order.save
-      end
-
       def checkout
         @order = current_order(session)
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Started Checkout").first

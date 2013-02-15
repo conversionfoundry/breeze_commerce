@@ -54,6 +54,7 @@ $(document).ready ->
           data:
             line_item:
               quantity: 1
+            update_order_total: true
           success: (result) ->
             eval result
           error: (result) ->
@@ -69,10 +70,27 @@ $(document).ready ->
         data:
           line_item:
             quantity: $(this).val()
+          update_order_total: false
         success: (result) ->
           eval result
         error: (result) ->
           eval result
+
+  $(".line_item-customer_message").change ->
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      url: "/orders/" + $(this).data("order-id") + "/line_items/" + $(this).data("line-item-id")
+      dataType: "html"
+      type: "PUT"
+      data:
+        line_item:
+          customer_message: $(this).val()
+      success: (result) ->
+        eval result
+      error: (result) ->
+        eval result
+
 
   # Update the order immediately when shipping method changes in the cart
   $(".radio-shipping_method").change ->

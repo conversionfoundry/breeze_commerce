@@ -1,7 +1,9 @@
-// Refresh line item
-$('table#cart tr#<%= @line_item.id %>').children('td.total').html('<%= number_to_currency @line_item.amount%> <span class="currency"><%= currency %></span>').effect("highlight", { color: "#ffffc0" }, 3000);
+<% if @update_order_total %>
+	// Refresh line item total
+	$('table#cart tr#<%= @line_item.id %>').children('td.total').html('<%= number_to_currency @line_item.amount%> <span class="currency"><%= currency %></span>').effect("highlight", { color: "#ffffc0" }, 3000);
 
-// Update order totals
-$('table#totals tfoot tr.subtotal td.total span.amount').html('<%= number_to_currency @order.item_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
-$('table#totals tfoot tr.shipping td.total span.amount').html('<%= number_to_currency @order.shipping_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
-$('table#totals tfoot tr.total td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+	// Update order totals
+	$('table#totals tfoot tr.subtotal td.total span.amount').html('<%= number_to_currency @order.item_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+	$('table#totals tfoot tr.shipping td.total span.amount').html('<%= number_to_currency @order.shipping_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+	$('table#totals tfoot tr.total td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+<% end %>

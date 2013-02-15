@@ -4,7 +4,6 @@ ruby "1.9.3"
 gem "breeze", :github => "leftclick/breeze", :branch => '1.0.x' 
 gem "breeze_account", :github => "leftclick/breeze_account", :branch => 'master' 
 gem "breeze_pay_online", :github => "leftclick/breeze_pay_online", :branch => 'master' 
-gem "breeze_apply_online", :github => "leftclick/breeze_apply_online", :branch => 'master' 
 
 gemspec # Dependencies are defined in the .gemspec file
 

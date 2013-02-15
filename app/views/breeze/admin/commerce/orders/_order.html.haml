@@ -28,6 +28,10 @@
           (
           = line_item.sku_code
           )
+          - if line_item.customer_message
+            %p.customer_message
+              = line_item.customer_message
+
   %td.shipping_status
     .status
       = form_for order, :as => :order, :url => admin_store_order_path(order), :remote => true do |form|
