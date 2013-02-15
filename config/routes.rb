@@ -56,9 +56,8 @@ Breeze::Engine.routes.draw do
     resources :products, only: [:index]
 
     resources :orders do
-      resources :line_items, only: [:update, :destroy]
+      resources :line_items, only: [:update, :destroy, :create]
       get :checkout, on: :collection
-      post :populate, on: :collection
       get :thankyou, on: :member
       get :payment_failed, on: :member
     end

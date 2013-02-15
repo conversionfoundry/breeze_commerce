@@ -20,7 +20,7 @@ module Breeze
       include Mixins::Archivable
       include Mixins::Publishable
 
-      attr_accessible :product, :product_id, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price, :position
+      attr_accessible :product, :product_id, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price, :position, :requires_customer_message, :customer_message_limit
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
@@ -37,6 +37,8 @@ module Breeze
       field :sell_price_cents, :type => Integer
       field :sku_code
       field :position, :type => Integer
+      field :requires_customer_message, type: Boolean, default: false
+      field :customer_message_limit, type: Integer, default: 140
 
       mount_uploader :image, Breeze::Commerce::VariantImageUploader
 
@@ -48,6 +50,7 @@ module Breeze
       before_validation :set_initial_position, :set_standard_sku_code
 
       validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
+      validates :customer_message_limit, presence: true, numericality: { only_integer: true, greater_than: 0 }, if: :requires_customer_message
       validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator
 
