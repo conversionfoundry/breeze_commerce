@@ -187,7 +187,18 @@ $(document).ready ->
     $(panels[to]).children(".checkout-body").slideDown()
     $(panels[to]).children(".checkout-header").addClass "active"
     $(panels[to]).children(".checkout-summary").slideUp()
+    setTimeout (->
+      alignCartWith( $(panels[to]) )
+    ), 500
     false
+
+  alignCartWith = (element) ->
+    cart = $("#checkout-form .cart-container")
+    startOffset = cart.offset()
+    endOffset = cart.offset()
+    endOffset.top = element.offset().top
+
+    $("#checkout-form .cart-container").css({position: 'absolute', margin: 0, top: startOffset.top, left: cart.offset().left}).animate({left: endOffset.left, top: endOffset.top}, 400)
 
   currentStepIndex = ->
     element = $(panels.join()).children(".checkout-body").filter(":visible").first().parent().attr("id")
@@ -289,7 +300,6 @@ post = (path, parameters) ->
     field.attr "name", key
     field.attr "value", value
     form.append field
-  console.log form
   # The form needs to be a part of the document in
   # order for us to be able to submit it.
   $(document.body).append form
