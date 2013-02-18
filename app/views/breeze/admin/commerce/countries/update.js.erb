@@ -1,0 +1,7 @@
+<% if @country.errors.empty? %>
+  $('#countries').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/countries/countries", :object => @countries) %>');
+  $('#country-details').dialog('close');
+<% else %>
+  $('#country-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/countries/edit") %>');
+<% end %>
+

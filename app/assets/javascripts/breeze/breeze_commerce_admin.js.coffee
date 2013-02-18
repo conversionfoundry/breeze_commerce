@@ -81,6 +81,16 @@ jQuery.fn.serializeObject = ->
       objectData[@name] = value
   return objectData
 
+# Countries
+$(".new.country.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "country-details", "New Country", data, 'POST'
+  e.preventDefault()
+$(".countries .country-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "country-details", "Edit Country", data, 'PUT'
+  e.preventDefault()
+
 # Tags
 $(".new.tag.button").live "click", (e) ->
   $.get @href, (data) ->
@@ -284,16 +294,16 @@ clearBillingAddress = ->
   $("#order_billing_address_phone").val ""
   false
 
-$("#new_order #same").live "change", (e) ->
+$("#new_order #same, #edit_order #same").live "change", (e) ->
   if $(this).attr("checked")
     duplicateAddress()
   else
     clearBillingAddress()
 
 $("#order_shipping_address input, #order_shipping_address textarea, #order_shipping_address select").live "change", (e) ->
-  if $("#new_order #same").attr("checked")
+  if $("#new_order #same, #edit_order #same").attr("checked")
     duplicateAddress()
 
 $("#order_billing_address input[type=text], #order_billing_address textarea, #order_billing_address select").live "change", (e) ->
-  $("#new_order #same").attr("checked", null)
+  $("#new_order #same, #edit_order #same").attr("checked", null)
 
