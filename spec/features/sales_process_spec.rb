@@ -25,11 +25,11 @@ describe "customer", :type => :request, :js => true do
 
     find('h1').should have_content("Ventriloquist Dummy")
     page.should have_content 'Scary but compelling'
-    page.should have_css('table.variants tr.variant')
-    find('table.variants tr.variant td.name').should have_content 'Freddie'
-    page.should have_css ('table.variants tr.variant td.actions input.btn.btn-add_to_cart')
+    page.should have_css('ul.variants li.variant')
+    find('ul.variants li.variant .name').should have_content 'Freddie'
+    page.should have_css ('ul.variants li.variant .actions input.btn.btn-add_to_cart')
     
-    find('table.variants tr.variant td.actions').should have_button('Add to Cart')
+    find('ul.variants li.variant .actions').should have_button('Add to Cart')
 
     # click_on 'Add to Cart'
 

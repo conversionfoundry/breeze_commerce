@@ -9,8 +9,8 @@
     = hidden_field_tag "line_item[quantity]", 1
     .image
       = image_tag variant.image.url(:thumbnail) unless variant.image.blank?
-    %h4= variant.name
-    %p= variant.blurb
+    %h4.name= variant.name
+    %p.blurb= variant.blurb
     .price
       - if variant.discounted
         %span.old_price= number_to_currency(variant.sell_price, :locale => :nz)
