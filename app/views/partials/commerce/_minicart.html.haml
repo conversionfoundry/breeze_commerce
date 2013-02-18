@@ -1,0 +1,40 @@
+- order = current_order(session) || create_order(session)
+- title ||= 'My Cart'
+.breeze-minicart.well
+  - if order
+    %h3= link_to(title, breeze.cart_path)
+    - if order.line_items.unarchived.count > 0
+      %table
+        - order.line_items.unarchived.each do |line_item|
+          %tr.line_line_item
+            %td.line_item
+              %span.quantity
+                = line_item.quantity
+                %span.times
+                  \&times;
+                  \#{link_to line_item.variant.name, line_item.variant.product.permalink, class: 'variant_name'}
+              - if line_item.customer_message
+                %p.customer_message
+                  = line_item.customer_message
+            %td.amount
+              = number_to_currency(line_item.amount, :locale => :nz)
+              %span.currency= currency
+        %tr.shipping
+          %td Shipping
+          %td.amount
+            = number_to_currency(order.shipping_total, :locale => :nz)
+            %span.currency= currency
+        %tr.total
+          %td Total
+          %td.amount
+            = number_to_currency(order.total, :locale => :nz)
+            %span.currency= currency
+    - else
+      %span.empty_cart Your cart is empty.
+    .actions
+      = link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary'
+      - if order.line_items.unarchived.count > 0
+        = link_to "Checkout", breeze.checkout_path, :class=> 'btn'
+  - else
+    %h3 My Cart
+    No order.

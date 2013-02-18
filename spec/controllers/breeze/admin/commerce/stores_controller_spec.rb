@@ -36,9 +36,9 @@ describe Breeze::Admin::Commerce::StoresController do
 			end
 
 			it "shows the settings page" do
-				get :settings, use_route: 'breeze_commerce'
+				get :edit, use_route: 'breeze_commerce'
 	      response.should be_success
-	      response.should render_template("settings")
+	      response.should render_template("edit")
 			end
 		end
   end

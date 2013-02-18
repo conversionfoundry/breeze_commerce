@@ -18,13 +18,50 @@ describe Breeze::Commerce::Variant do
 				@variant.sku_code.should eq 'widget'
 			end
 			it "creates a SKU for a variant with options" do
+				@product = create(:product, name: 'Widget')
 				@option = create(:option, name: 'foo')
-				@variant = create(:variant, product_id: @product.id, sku_code: nil, options: [@option])
+				@variant = create(:variant, product_id: @product.id, options: [@option], sku_code: nil)
 				@variant.sku_code.should eq 'widget_foo'
 			end
 		end
 		it "adds -2 to the end if given a SKU that already exists"
 		it "increments final SKU digit until it finds one that doesn't exist"
+	end
+
+	describe "requires_customer_message" do
+		it "is false by default" do
+			@variant = create(:variant)
+			@variant.requires_customer_message.should eq false
+		end
+	end
+
+	describe "customer_message_limit" do
+		it "is 140 by default" do
+			@variant = create(:variant)
+			@variant.customer_message_limit.should eq 140
+		end
+		context "requires_customer_message is true" do
+			before :each do
+				@variant = build(:variant, requires_customer_message: true)
+			end
+			it "is invalid without a customer_message_limit" do
+				@variant.customer_message_limit = nil
+				@variant.should_not be_valid
+			end
+			it "is invalid with a customer_message_limit of zero" do
+				@variant.customer_message_limit = 0
+				@variant.should_not be_valid
+			end
+		end
+		context "requires_customer_message is false" do
+			before :each do
+				@variant = build(:variant, requires_customer_message: false)
+			end
+			it "is valid without a customer_message_limit" do
+				@variant.customer_message_limit = nil
+				@variant.should be_valid
+			end
+		end
 	end
 
 	describe "archive scopes" do

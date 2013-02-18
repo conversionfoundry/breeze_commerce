@@ -34,6 +34,10 @@
     - else
       %td.missing_value
         Missing value
+  %td.requires_customer_message
+    - if variant.requires_customer_message
+      = variant.customer_message_limit
+      characters
   %td.published
     .field
       = check_box_tag "variant_#{variant.id}_published", "1", variant.published, :class => "variant-published", style: 'display: none;'
