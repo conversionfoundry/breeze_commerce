@@ -1,28 +1,15 @@
 - content_for :head do
   %title Checkout
     
-.row
-  #checkout-header.span12
-    %h1 Secure Checkout
 - flash.each do |key, msg|
   %div{:class => "alert-#{key} alert-block alert"}
     %button.close{"data-dismiss" => "alert", :type => "button"} ×
     %p= msg
     .clear
 = form_for @order, :url => breeze.submit_order_path, :html => {:method => :put, :id => "checkout-form"} do |order_form|
-  .row.cart-container
-    .span12
-      = render :partial => "breeze/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => order_form }
-      .form-actions
-        .btn-group
-          = link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do
-            %i.icon-arrow-left
-            %span.title Continue Shopping
-          = link_to breeze.cart_path, :class => "btn", :id => "edit-items" do
-            %i.icon-shopping-cart
-            %span.title Edit Cart
-  #checkout-container.row
-    .span12
+  .row
+    #checkout-container.span8
+      %h1 Checkout
       #sign-in{"data-customer_signed_in" => customer_signed_in? ? 'true' : 'false', "data-foo" => "bar"}
         .checkout-header.active
           %h3.heading
@@ -278,3 +265,9 @@
             .form-actions
               = link_to '#', :class => "btn", :id => "changed-my-mind" do
                 %span.title Edit Confirmation
+    .cart-container.span4
+      = link_to breeze.cart_path, :class => "btn", :id => "edit-items" do
+        %i.icon-shopping-cart
+        %span.title Edit Cart
+      %h1 Your Order
+      = render :partial => "breeze/commerce/line_items/line_items_show", locals: { line_items: @order.line_items.unarchived }
