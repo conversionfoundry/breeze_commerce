@@ -2,7 +2,11 @@
   %td
   %td.icon
     = image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image
-  %td= line_item.variant.name
+  %td
+    = line_item.variant.name
+    - if line_item.customer_message
+      %p.customer_message
+        = line_item.customer_message
   %td
   %td.price
     - if line_item.variant.discounted

@@ -1,0 +1,30 @@
+- classes = 'variant'
+- classes += ' ' + variant.options.map{|c| c.name.downcase.underscore}.join(' ')
+- classes += ' variant-discounted' if variant.discounted?
+= content_tag :li, :class => classes, :id => "variant_#{variant.id}", :"data-id" => variant.id do
+  %hr/
+  = form_tag order_line_items_path( current_order(session) ), :remote => true do |form|
+    .error_messages
+    = hidden_field_tag "line_item[variant_id]", variant.id
+    = hidden_field_tag "line_item[quantity]", 1
+    .image
+      = image_tag variant.image.url(:thumbnail) unless variant.image.blank?
+    %h4.name= variant.name
+    %p.blurb= variant.blurb
+    .price
+      - if variant.discounted
+        %span.old_price= number_to_currency(variant.sell_price, :locale => :nz)
+        %span.currency= currency
+        %span.discounted_price.current_price= number_to_currency(variant.discounted_sell_price, :locale => :nz)
+        %span.currency= currency
+      - else
+        %span.current_price= number_to_currency(variant.sell_price, :locale => :nz)
+        %span.currency= currency
+    - if variant.requires_customer_message
+      .customer_message
+        = label_tag :line_item_customer_message, "Your message"
+        = text_field_tag "line_item[customer_message]"
+    .actions
+      %p.variant-actions
+        = submit_tag "Add to Cart", :class => "btn btn-add_to_cart", :remote => true
+
