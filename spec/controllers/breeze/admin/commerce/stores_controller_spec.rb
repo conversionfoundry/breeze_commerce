@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Breeze::Admin::Commerce::StoreController do
+describe Breeze::Admin::Commerce::StoresController do
 
   describe "authorization" do
 
   	before :each do
-    	@actions = Breeze::Admin::Commerce::StoreController.public_instance_methods(false).reject{ |action| ['rescue_action'].include?(action) }
+    	@actions = Breeze::Admin::Commerce::StoresController.public_instance_methods(false).reject{ |action| ['rescue_action'].include?(action) }
   	end
 
     context "no user logged in" do

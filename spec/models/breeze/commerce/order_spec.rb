@@ -10,6 +10,9 @@ describe Breeze::Commerce::Order do
 			create(:order, email: "foo@example.com")
 			build(:order, email: "foo@example.com").should be_valid
 		end
+		it "is invalid without a shipping method"
+		it "gives an appropriate warning message if there are no shipping methods"
+		it "gives an appropriate warning message if there are no countries"
 	end
 
 	context "when first created" do
@@ -24,6 +27,9 @@ describe Breeze::Commerce::Order do
 				@order.shipping_status.name.should eq 'Not Shipped Yet'
 			end
 		end
+
+		it "has the default shipping method for the default country"
+
 	end
 
 	describe "line item methods" do	
