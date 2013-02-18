@@ -3,7 +3,16 @@
   = panes.inner do
     = scrollable_layout do
       .actions.horizontal
-        = link_to "New shipping method", new_admin_store_shipping_method_path, :class => "large green button new shipping_method"
+        = link_to "New shipping country", new_admin_store_country_path, class: "large green button new country", remote: true
+      %h1 Countries
+      .box
+        %p
+          We ship to these countries&hellip;
+        #countries
+          = render :partial => "breeze/admin/commerce/countries/countries", :object => @countries
+      .clearer
+      .actions.horizontal
+        = link_to "New shipping method", new_admin_store_shipping_method_path, class: "large green button new shipping_method"
       %h1
         Shipping Methods
       .box

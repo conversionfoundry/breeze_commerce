@@ -10,8 +10,10 @@ describe Breeze::Commerce::Variant do
 
 	describe "sku_code" do
 		context "missing SKU" do
-			it "creates a SKU for a variant with no options" do
+			before :each do
 				@product = create(:product, name: 'Widget')
+			end
+			it "creates a SKU for a variant with no options" do
 				@variant = create(:variant, product_id: @product.id, sku_code: nil)
 				@variant.sku_code.should eq 'widget'
 			end
@@ -19,6 +21,7 @@ describe Breeze::Commerce::Variant do
 				@product = create(:product, name: 'Widget')
 				@option = create(:option, name: 'foo')
 				@variant = create(:variant, product_id: @product.id, options: [@option], sku_code: nil)
+				@variant = create(:variant, product_id: @product.id, sku_code: nil, options: [@option])
 				@variant.sku_code.should eq 'widget_foo'
 			end
 		end

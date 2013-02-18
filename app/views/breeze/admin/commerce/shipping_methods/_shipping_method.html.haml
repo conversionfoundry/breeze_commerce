@@ -15,7 +15,7 @@
   %td.price
     = shipping_method.price_explanation
   %td.actions
-    = link_to "Make Default", admin_store_set_default_shipping_method_path(store, shipping_method: shipping_method), :method => :post, :remote => true, :class => 'small black button'
+    = link_to "Make Default", admin_store_store_path(store, 'store[default_shipping_method_id]' => shipping_method.id), :method => :put, :class => 'small black button'
     = link_to "Edit", edit_admin_store_shipping_method_path(shipping_method.id), :class => "small black edit button"
     - if count > 1
       = button_to "Remove", admin_store_shipping_method_path(shipping_method.id), :method=>:delete, :remote => true, :class=>'small red button remove'

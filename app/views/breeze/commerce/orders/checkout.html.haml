@@ -126,7 +126,7 @@
                         Country
                         %span.required *
                       .controls
-                        = ship_form.select :country, Breeze::Commerce::COUNTRIES, :selected => (@customer.shipping_address.country ||'New Zealand'), :class => :required
+                        = ship_form.select :country, @countries.map{|country| country.name}, :selected => (@customer.shipping_address.country ||'New Zealand'), :class => :required
                   %li.phone
                     .control-group
                       = ship_form.label :phone do |label|
@@ -200,7 +200,7 @@
                         Country
                         %span.required *
                       .controls
-                        = bill_form.select :country, Breeze::Commerce::COUNTRIES, :class => :required
+                        = bill_form.select :country, @countries.map{|country| country.name}, :class => :required
                   %li.phone
                     .control-group
                       = bill_form.label :phone do |label|

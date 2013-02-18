@@ -17,8 +17,9 @@ module Breeze
       # Displays the current cart
       def edit
         @order = current_order(session) || create_order(session)
+        @countries = Breeze::Commerce::Country.order_by(:name.asc)
         shipping_methods = Breeze::Commerce::ShippingMethod.unarchived
-        unless @order.shipping_method && shipping_methods.include?(@order.shipping_method)
+        unless @order.shipping_method && shipping_methods.unarchived.include?(@order.shipping_method)
           if Breeze::Commerce::ShippingMethod.count > 1
             @order.shipping_method = shipping_methods.unarchived.where(:is_default => true).first
           else
@@ -48,6 +49,7 @@ module Breeze
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login
+        @countries = Breeze::Commerce::Country.order_by(:name.asc)
       end
 
       # Checkout completed, ready to process order
