@@ -1,8 +1,9 @@
 require "capybara/rails"
 require 'capybara/rspec'
+require 'capybara-webkit'
 
 # Setup capybara webkit as the driver for javascript-enabled tests.
-# Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :webkit
 # Capybara.current_driver = :selenium
 
 # In our setup, for some reason the browsers capybara was driving were

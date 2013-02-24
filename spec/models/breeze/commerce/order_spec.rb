@@ -162,4 +162,68 @@ describe Breeze::Commerce::Order do
 		end
 	end
 
+	describe "can_resend?" do
+		before :each do
+			@customer = create(:customer)
+			@order = create(:order, customer: @customer)
+			@variant1 = create(:variant, sell_price_cents: 2000)
+			@variant2 = create(:variant, sell_price_cents: 1234)
+			@order.line_items << create(:line_item, quantity: 2, variant: @variant1)
+			@order.line_items << create(:line_item, quantity: 1, variant: @variant2)
+		end
+		it "is false if there's no customer" do
+			@order.customer = nil
+			@order.can_resend?.should eq false
+		end
+		it "is true if all line_items are for variants that are still available" do
+			@order.can_resend?.should eq true
+		end
+		it "is false if a line_item's variant is archived" do
+			@variant1.update_attribute(:archived, true)
+			@order.can_resend?.should eq false
+		end
+		it "is false if a line_item's variant doesn't exist" do
+			@variant1.destroy
+			@order.can_resend?.should eq false
+		end
+	end
+
+	describe "duplicate_for_resend" do
+		context "original order has can_resend? == true" do
+			before :each do
+				@customer = create(:customer)
+				@original_order = create(:order, customer: @customer)
+				@variant1 = create(:variant, sell_price_cents: 2000)
+				@variant2 = create(:variant, sell_price_cents: 1234)
+				@original_order.line_items << create(:line_item, quantity: 2, variant: @variant1)
+				@original_order.line_items << create(:line_item, quantity: 1, variant: @variant2)		
+				@new_order = @original_order.duplicate_for_resend	
+			end
+			it "has line items with matching fields" do
+				original_line_item = @original_order.line_items.first
+				new_line_item = @new_order.line_items.first
+				new_line_item.variant.should eq original_line_item.variant
+				new_line_item.quantity.should eq original_line_item.quantity
+			end
+			it "has line items with new ids" do
+				@new_order.line_items.first.should_not eq @original_order.line_items.first
+			end
+			it "has the same customer" do
+				@new_order.customer.should eq @original_order.customer
+			end
+			it "has billing_status reset" do
+				@new_order.billing_status.should eq Breeze::Commerce::OrderStatus.billing_default
+			end
+			it "has shipping_status reset" do
+				@new_order.shipping_status.should eq Breeze::Commerce::OrderStatus.shipping_default
+			end
+		end
+		it "fails if can_resend? is false" do
+			@customer = create(:customer)
+			@original_order = create(:order, customer: @customer)
+			@original_order.stub(:can_resend?){false} 
+			@original_order.duplicate_for_resend.should eq false
+		end
+	end
+
 end

@@ -20,19 +20,6 @@ module Breeze
 
       validates_presence_of :name, :address, :city
       
-      def to_html
-        result = '<p class="address">'
-        result += '<span class="name">' + (name || 'Unknown Name') + '</span><br />'
-        result += '<span class="address">' + (address || '') + '</span><br />'
-        result += '<span class="city">' + (city || '') + '</span><br />' unless city.blank?
-        result += '<span class="state">' + (state || '') + '</span><br />' unless state.blank?
-        result += '<span class="postcode">' + (postcode || '') + '</span><br />' unless postcode.blank?
-        result += '<span class="country">' + (country || '') + '</span><br />'
-        (result += '<span class="phone">' + 'Contact Phone:' + phone + '</span>') unless phone.blank?
-        result += '</p>'
-        result.html_safe
-      end
-
       def to_s
         result = ''
         result += (name || 'Unknown Name') + "\n"

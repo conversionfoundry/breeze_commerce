@@ -101,7 +101,6 @@ describe Breeze::Commerce::LineItem do
 			@line_item.customer_message = "My Sports Team is vastly superior to your Sports Team"
 			@line_item.should_not be_valid
 		end
-
 	end
 
 

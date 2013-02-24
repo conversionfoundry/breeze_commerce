@@ -14,6 +14,6 @@
             %i.icon-arrow-left
             %span.title Continue Shopping
           - if @order.line_items.count > 0 && Breeze::Commerce::ShippingMethod.unarchived.count > 0
-            = link_to breeze.checkout_path, :class => "btn btn-primary" do
+            = link_to breeze.checkout_order_path(@order), method: :put, :class => "btn btn-primary" do
               %i.icon-arrow-right
               %span.title Go to Checkout
