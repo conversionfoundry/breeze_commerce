@@ -17,7 +17,7 @@
       %span.currency
         = store.currency
   %td.shipping
-    = order.shipping_address.to_html if order.shipping_address
+    = html_address(order.shipping_address) if order.shipping_address
   %td.line_items
     %ul.line_items
       - order.line_items.unarchived.each do |line_item|

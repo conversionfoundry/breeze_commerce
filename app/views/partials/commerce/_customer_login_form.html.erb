@@ -8,7 +8,7 @@
 
         <div class="form-actions">
           <div class='btn-group'>
-            <%= link_to "Edit Profile", breeze.edit_customer_path(current_store_customer), :class => "btn" %>
+            <%= link_to "My Profile", breeze.customer_path(current_store_customer), :class => "btn" %>
             <%= link_to 'Sign Out', breeze.destroy_store_customer_session_path, :class => 'btn' %>
           </div>
         </div>

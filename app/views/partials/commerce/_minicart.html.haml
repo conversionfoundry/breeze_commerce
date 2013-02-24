@@ -2,7 +2,7 @@
 - title ||= 'My Cart'
 .breeze-minicart.well
   - if order
-    %h3= link_to(title, breeze.cart_path)
+    %h3= link_to title, breeze.edit_order_path(order), method: :put
     - if order.line_items.unarchived.count > 0
       %table
         - order.line_items.unarchived.each do |line_item|
@@ -32,9 +32,9 @@
     - else
       %span.empty_cart Your cart is empty.
     .actions
-      = link_to "Show Cart", breeze.cart_path, :class=> 'btn btn-primary'
+      = link_to "Show Cart", breeze.edit_order_path(order), :class=> 'btn btn-primary'
       - if order.line_items.unarchived.count > 0
-        = link_to "Checkout", breeze.checkout_path, :class=> 'btn'
+        = link_to "Checkout", breeze.checkout_order_path(order), method: :put, :class=> 'btn'
   - else
     %h3 My Cart
     No order.

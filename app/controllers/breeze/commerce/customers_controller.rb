@@ -20,18 +20,28 @@ module Breeze
         end
       end
 
+      def show
+        @customer = Breeze::Commerce::Customer.find params[:id]
+        @customer.shipping_address ||= Breeze::Commerce::Address.new
+        @customer.billing_address ||= Breeze::Commerce::Address.new
+        @billing_statuses = Breeze::Commerce::OrderStatus.billing
+        @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
+        @new_order = Breeze::Commerce::Order.new
+      end
+
       def edit
         @customer = Breeze::Commerce::Customer.find params[:id]
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @billing_statuses = Breeze::Commerce::OrderStatus.billing
         @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
+        @new_order = Breeze::Commerce::Order.new
      end
 
       def update
         @customer = Breeze::Commerce::Customer.find params[:id]
         if @customer.update_attributes(params[:customer])
-          redirect_to breeze.edit_customer_path(@customer)
+          redirect_to breeze.customer_path(@customer)
         else
           render :action => "edit"
         end

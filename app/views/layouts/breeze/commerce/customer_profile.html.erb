@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%= javascript_include_tag "breeze/breeze" %>
-    <%= javascript_include_tag "breeze/breeze_commerce" %>
     <%= stylesheet_link_tag "breeze/breeze" %>
     <%= stylesheet_link_tag "breeze/breeze_commerce" %>
     <%= csrf_meta_tag %>
@@ -32,6 +30,8 @@
     <div class="container">
       <%= yield %>
     </div>
+    <%= javascript_include_tag "breeze/breeze" %>
+    <%= javascript_include_tag "breeze/breeze_commerce" %>
 
   </body>
 </html>

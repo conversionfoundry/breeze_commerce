@@ -133,10 +133,10 @@
             %tr
               %td{:valign => "top", :width => "300"}
                 %h2 Shipping
-                = @order.shipping_address.to_html
+                = html_address(@order.shipping_address)
               %td{:valign => "top", :width => "300"}
                 %h2 Billing
-                = @order.billing_address.to_html
+                = html_address(@order.billing_address)
             %tr
               %td{colspan: 2, valign: "top", width: "600"}
                 %h2

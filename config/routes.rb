@@ -55,19 +55,16 @@ Breeze::Engine.routes.draw do
 
     resources :orders do
       resources :line_items, only: [:update, :destroy, :create]
-      get :checkout, on: :collection
+      put :checkout, on: :member
+      put :submit, on: :member
       get :thankyou, on: :member
       get :payment_failed, on: :member
     end
 
-    resources :customers, except: [:index, :show]
+    resources :customers, except: [:index]
     
     get 'variants/filter', to: 'variants#filter', as: :filter_variants
      
-    get 'cart', to: 'orders#edit', as: :cart
-    get 'checkout', to: 'orders#checkout', as: :checkout
-    put 'submit_order', to: 'orders#submit_order', as: :submit_order
-
   end
 
 end
