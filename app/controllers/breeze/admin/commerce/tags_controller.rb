@@ -2,8 +2,10 @@ module Breeze
   module Admin
     module Commerce
       class TagsController < Breeze::Admin::Commerce::Controller
+        helper_method :sort_method, :sort_direction
+
         def index
-          @tags = Breeze::Commerce::Tag.includes(:products)
+          @tags = Breeze::Commerce::Tag.unscoped.includes(:products).order_by(sort_method + " " + sort_direction)
           respond_to do |format|
             format.html
             format.json { render :json => @tags.map{|c| { :id => c.id, :name => c.name } } }
@@ -41,6 +43,17 @@ module Breeze
           @tag.try :destroy
           @tag_count = Breeze::Commerce::Tag.count
         end
+
+      private
+
+        def sort_method
+          %w[name].include?(params[:sort]) ? params[:sort] : "name"
+        end
+        
+        def sort_direction
+          %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
+        end
+
       end
     end
   end

@@ -1,27 +1,14 @@
-%tr.subtotal
-  %td{:colspan => "4"}
-  %td Subtotal:
-  %td
-  %td.total
-    = number_to_currency @order.item_total
-    %span.currency
-      = currency
 %tr.shipping
-  %td{:colspan => "4"}
-  %td
-    Shipping:
   %td
     %h4
-      = @order.shipping_method.name
+      = order.shipping_method.name
     %p.description
-      = @order.shipping_method.description
+      = order.shipping_method.description
   %td.total
-    = number_to_currency @order.shipping_total
+    = number_to_currency order.shipping_total
     %span.currency= currency
 %tr.total
-  %td{:colspan => "4"}
   %td Total cost:
-  %td
   %td.total
-    = number_to_currency @order.total
+    = number_to_currency order.total
     %span.currency= currency

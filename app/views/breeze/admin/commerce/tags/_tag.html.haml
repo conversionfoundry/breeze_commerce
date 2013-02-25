@@ -1,8 +1,4 @@
-- classes = 'tag'
-- classes += ' first' if tag_counter == 0
-- classes += ' last' if tag_counter + 1 == count
-
-= content_tag :tr, class: classes, id: "tag_#{tag.id}", data: {:id => "#{tag.id}", :position => "#{tag.position}"} do
+= content_tag :tr, class: "tag", id: "tag_#{tag.id}", data: {:id => "#{tag.id}", :position => "#{tag.position}"} do
   %td.name
     = "#{tag.name}" 
     - products_count = tag.products.unarchived.count

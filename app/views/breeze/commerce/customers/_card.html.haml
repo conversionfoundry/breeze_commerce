@@ -7,3 +7,6 @@
       = customer.phone
     %li.email
       = customer.email
+    %li.billing_address
+      = html_address(customer.billing_address, false) if customer.billing_address
+

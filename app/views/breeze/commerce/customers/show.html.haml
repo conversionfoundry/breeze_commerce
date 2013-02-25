@@ -1,0 +1,11 @@
+.row
+  .span8
+    %h2 Previous Orders
+    = render :partial => "breeze/commerce/orders/orders", :object => @customer.orders.unarchived.not_browsing
+  .span4
+    .customer-show{:id => "customer_#{@customer.id}"}
+      = render :partial => "partials/commerce/minicart"
+      = render :partial => "breeze/commerce/customers/card", :locals => {:customer => @customer}
+
+      = link_to "Edit Profile", breeze.edit_customer_path(current_store_customer), :class => "btn"
+

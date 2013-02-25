@@ -15,8 +15,6 @@ module Breeze::Commerce
     def product_class(product, product_counter, product_count)
       classes = 'product'
       classes += ' ' + product.tags.map{|c| c.slug}.join(' ')
-      classes += ' first' if product_counter == 0
-      classes += ' last' if product_counter == product_count - 1
       classes += ' product-some_variants_discounted' if product.any_variants_discounted? 
       classes += ' product-all_variants_discounted' if product.all_variants_discounted?
       classes += ' product-single_display_price' if product.single_display_price?

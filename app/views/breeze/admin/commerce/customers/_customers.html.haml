@@ -10,13 +10,20 @@
         %tr
           %th.first{:style => "width:2em;"}
             %input.checkbox.select-all{:type => "checkbox"}/
-          %th{:style => ""} Title
-          %th{:style => ""} First Name
-          %th{:style => ""} Last Name
-          %th{:style => ""} Phone
-          %th{:style => ""} Email
-          %th{:style => ""} Last Order
-          %th.last{:style => "width:20%;"} Actions
+          %th.total
+            = sortable "total", "Total"
+          %th.first_name
+            = sortable "first_name", "First Name"
+          %th.last_name
+            = sortable "last_name", "Last Name"
+          %th.phone
+            Phone
+          %th.email
+            = sortable "email", "Email"
+          %th.last_order
+            Last Order
+          %th.last
+            Actions
       %tbody
         - if customers.any?
           = render :partial => "breeze/admin/commerce/customers/customer", :collection => customers, locals: {count: customers.count}

@@ -1,9 +1,14 @@
-%tr{:id => line_item.id}
-  %td
+%tr.line_item{:id => line_item.id}
   %td.icon
     = image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image
-  %td= line_item.variant.name
   %td
+    = line_item.quantity
+    &times;
+  %td.item
+    = line_item.variant.name
+    - if line_item.customer_message
+      %p.customer_message
+        = line_item.customer_message
   %td.price
     - if line_item.variant.discounted
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
@@ -12,8 +17,7 @@
     - else
       %span.current_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
       %span.currency= currency
-  %td
-    = line_item.quantity
+    each
   %td.total
     = number_to_currency line_item.amount
     %span.currency= currency

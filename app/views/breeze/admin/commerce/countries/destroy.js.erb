@@ -1,0 +1,9 @@
+if (<%= @country_count %> == 1) {
+	$('.country .actions .remove').remove();
+}
+$('#menu-item-countries .item-count').html(<%= @country_count %>);
+$('#country_<%= @country.id %>').fadeOut(function() { 
+	$(this).remove(); 
+	$('.countries tbody tr:last').addClass('last');
+});
+

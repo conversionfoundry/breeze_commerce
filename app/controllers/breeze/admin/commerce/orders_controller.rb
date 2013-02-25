@@ -7,10 +7,15 @@ module Breeze
         respond_to :html, :js, :csv
         before_filter :get_order, except: [:index, :new]
         before_filter :get_order_statuses, only: [ :index, :new, :create, :edit ]
+        helper_method :sort_method, :sort_direction
 
         def index
           @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items)
-          @orders = @orders.to_a.sort_by{ |o| params[:sort] ? o.send(params[:sort]) : - o.created_at.to_i }.paginate(:page => params[:page], :per_page => 10)
+          @orders = @orders.to_a.sort_by{ |o| o.send(sort_method) }
+          if sort_direction == "desc"
+            @orders = @orders.reverse
+          end
+          @orders = @orders.paginate(:page => params[:page], :per_page => 10)
         end
         
         def new
@@ -18,12 +23,14 @@ module Breeze
           @order.shipping_address ||= Breeze::Commerce::Address.new
           @order.billing_address ||= Breeze::Commerce::Address.new
           @order.billing_status = @billing_statuses.where(name: "Payment Received").first
+          @countries = Breeze::Commerce::Country.order_by(:name.asc)
         end
         
         def create
           if @order.save
             redirect_to edit_admin_store_order_path(@order)
           else
+            @countries = Breeze::Commerce::Country.order_by(:name.asc)
             render :action => "new"
           end
         end
@@ -32,6 +39,7 @@ module Breeze
           @order.shipping_address ||= Breeze::Commerce::Address.new
           @order.billing_address ||= Breeze::Commerce::Address.new
           @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:title.desc)
+          @countries = Breeze::Commerce::Country.order_by(:name.asc)
         end
 
         def update
@@ -49,6 +57,9 @@ module Breeze
               format.js
             end
           else
+            @billing_statuses = Breeze::Commerce::OrderStatus.billing
+            @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
+            @countries = Breeze::Commerce::Country.order_by(:name.asc)
             render :action => "edit"
           end
         end
@@ -69,6 +80,15 @@ module Breeze
           @shipping_statuses = Breeze::Commerce::OrderStatus.shipping.order_by(:sort_order.asc)
         end
         
+      private
+        def sort_method
+          %w[transaction_completed_at total email shipping_status billing_status].include?(params[:sort]) ? params[:sort] : "transaction_completed_at"
+        end
+        
+        def sort_direction
+          %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
+        end
+
       end
     end
   end

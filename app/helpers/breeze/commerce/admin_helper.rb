@@ -9,8 +9,8 @@ module Breeze
           commerce_menu_item("Registered Customers", breeze.admin_store_customers_path, badge( Breeze::Commerce::Customer.unarchived.count )),
           commerce_menu_item("Products", breeze.admin_store_products_path, badge( Breeze::Commerce::Product.unarchived.count )),
           commerce_menu_item("Tags", breeze.admin_store_tags_path, badge( Breeze::Commerce::Tag.count )),
-          commerce_menu_item("Shipping Methods", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
-          commerce_menu_item("Settings", breeze.admin_store_settings_path)
+          commerce_menu_item("Shipping", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
+          commerce_menu_item("Settings", breeze.edit_admin_store_store_path)
         ].join.html_safe, :class => 'store-actions'
       end
 
@@ -71,6 +71,20 @@ module Breeze
           _html << %{</option>}
         end
         _html << %{</select>}
+      end
+
+      # Sortable table columns
+      # http://railscasts.com/episodes/228-sortable-table-columns?view=asciicast
+      def sortable(column, title = nil)
+        title ||= column.titleize
+        css_class = (column == sort_method) ? "current #{sort_direction}" : nil
+        direction = (column == sort_method && sort_direction == "asc") ? "desc" : "asc"
+        link_to( {sort: column, direction: direction}, {:class => css_class} ) do
+          html = title
+          triangle = sort_direction == "asc" ? "&#9650;" : "&#9660;"
+          html += ("&nbsp;<i class='icon-sort_order_#{sort_direction}'>#{triangle}</i>") if (column == sort_method)
+          html.html_safe
+        end
       end
 
     end

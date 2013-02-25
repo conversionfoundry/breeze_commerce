@@ -4,7 +4,7 @@ module Breeze
       include Breeze::Commerce::CurrentOrder
       layout "breeze/commerce/checkout_funnel"
       respond_to :html, :js
-      before_filter :require_nonempty_order, except: [:edit, :print, :update, :populate]
+      before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate]
 
       def print
         @order = Order.find params[:id]
@@ -16,9 +16,10 @@ module Breeze
 
       # Displays the current cart
       def edit
-        @order = current_order(session) || create_order(session)
+        @order = Breeze::Commerce::Order.find(params[:id])
+        @countries = Breeze::Commerce::Country.order_by(:name.asc)
         shipping_methods = Breeze::Commerce::ShippingMethod.unarchived
-        unless @order.shipping_method && shipping_methods.include?(@order.shipping_method)
+        unless @order.shipping_method && shipping_methods.unarchived.include?(@order.shipping_method)
           if Breeze::Commerce::ShippingMethod.count > 1
             @order.shipping_method = shipping_methods.unarchived.where(:is_default => true).first
           else
@@ -29,9 +30,14 @@ module Breeze
       end
 
       def create
+        if params[:old_order_id]
+          @old_order = Breeze::Commerce::Order.find params[:old_order_id]
+          @new_order = @old_order.duplicate_for_resend
+          @new_order.save
+          redirect_to breeze.checkout_order_path(@new_order)
+        end
       end
 
-      # Currently only need to update shipping method from shopping cart
       def update
         @order = current_order(session)
         @order.update_attributes params[:order]
@@ -40,37 +46,19 @@ module Breeze
         end
       end 
 
-      # Add items to the order (i.e. the shopping cart)
-      def populate
-        @order = current_order(session)
-        variant_id = params[:variant_id]
-                
-        new_line_item =  Breeze::Commerce::LineItem.new(:variant_id => variant_id, :quantity => params[:quantity] || 1)
-        existing_line_item = @order.line_items.unarchived.where(:variant_id => variant_id).first 
-        if existing_line_item
-          existing_line_item.quantity += new_line_item.quantity
-          existing_line_item.save
-        else
-          @order.line_items << new_line_item
-        end
-
-        @order.save
-      end
-
       def checkout
-        @order = current_order(session)
+        @order = Breeze::Commerce::Order.find(params[:id])
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Started Checkout").first
         @order.save
         @customer = current_store_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login
+        @countries = Breeze::Commerce::Country.order_by(:name.asc)
       end
 
-      # Checkout completed, ready to process order
-      def submit_order
-        @order = current_order(session)
-
+      def submit
+        @order = Breeze::Commerce::Order.find(params[:id])
         # Set customer, if any
         if customer_signed_in?
           @order.customer = current_store_customer

@@ -10,7 +10,7 @@ module Breeze
       field :personal_message
       field :comment
       field :payment_completed
-      
+
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -53,6 +53,14 @@ module Breeze
 
       def payment_completed?
         payment_completed
+      end
+
+      def transaction_completed_at
+        if self.payments.any?
+          self.payments.last.updated_at || nil
+        else
+          nil
+        end
       end
 
       def name

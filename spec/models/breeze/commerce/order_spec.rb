@@ -116,6 +116,11 @@ describe Breeze::Commerce::Order do
 		end
 	end
 
+	describe "transaction_completed_at" do
+		it "is updated when a payment fails"
+		it "is updated when a payment succeeds"
+	end
+
 	describe "name method" do
 		before :each do
 			@order = create(:order)

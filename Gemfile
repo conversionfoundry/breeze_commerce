@@ -1,4 +1,4 @@
-source :rubygems 
+source 'https://rubygems.org' 
 ruby "1.9.3"
 
 gem "breeze", :github => "leftclick/breeze", :branch => '1.0.x' 
@@ -30,4 +30,5 @@ group :test do
 	gem 'faker'
 	gem 'database_cleaner'
 	gem 'launchy'
+  gem 'capybara-webkit'
 end

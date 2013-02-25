@@ -63,5 +63,46 @@ describe Breeze::Commerce::LineItem do
 	end
 
 
+	describe "customer_message" do
+		before :each do
+			@order = create(:order)
+		end
+		context "variant.requires_customer_message is true" do
+			before :each do
+				@variant = create(:variant, requires_customer_message: true, customer_message_limit: 20)
+				@line_item = build(:line_item, variant: @variant, order: @order)
+			end
+			it "is invalid without a customer_message" do
+				@line_item.customer_message = ""
+				@line_item.should_not be_valid
+			end
+			it "is valid with a customer_message" do
+				@line_item.customer_message = "My Sports Team Rules"
+				@line_item.should be_valid
+			end
+		end
+		context "variant.requires_customer_message is false" do
+			before :each do
+				@variant = create(:variant, requires_customer_message: false)
+				@line_item = create(:line_item, variant: @variant, order: @order)
+			end
+			it "is valid without a customer_message" do
+				@line_item.customer_message = ""
+				@line_item.should be_valid
+			end
+			it "is valid with a customer_message" do
+				@line_item.customer_message = "My Sports Team Rules"
+				@line_item.should be_valid
+			end
+		end
+		it "is invalid if customer_message is longer than customer_message_limit" do
+			@variant = create(:variant, requires_customer_message: true, customer_message_limit: 20)
+			@line_item = build(:line_item, variant: @variant, order: @order)
+			@line_item.customer_message = "My Sports Team is vastly superior to your Sports Team"
+			@line_item.should_not be_valid
+		end
+	end
+
+
 
 end

@@ -1,3 +1,21 @@
+# Country selection
+$('#edit_order #country').live 'change', (event) ->
+  console.log $(this).val()
+  $.ajax
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+    url: "/shipping_methods/"
+    dataType: "html"
+    type: "GET"
+    data:
+      country_id: $(this).val()
+      order_id: $(this).data('order-id')
+    success: (result) ->
+      eval result
+    error: (result) ->
+      eval result
+
+
 # Product Pagination
 $(document).ready ->
   $(".product_pagination a").live "click", (event) ->
@@ -36,6 +54,7 @@ $(document).ready ->
           data:
             line_item:
               quantity: 1
+            update_order_total: true
           success: (result) ->
             eval result
           error: (result) ->
@@ -51,10 +70,27 @@ $(document).ready ->
         data:
           line_item:
             quantity: $(this).val()
+          update_order_total: false
         success: (result) ->
           eval result
         error: (result) ->
           eval result
+
+  $(".line_item-customer_message").change ->
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      url: "/orders/" + $(this).data("order-id") + "/line_items/" + $(this).data("line-item-id")
+      dataType: "html"
+      type: "PUT"
+      data:
+        line_item:
+          customer_message: $(this).val()
+      success: (result) ->
+        eval result
+      error: (result) ->
+        eval result
+
 
   # Update the order immediately when shipping method changes in the cart
   $(".radio-shipping_method").change ->
@@ -169,7 +205,18 @@ $(document).ready ->
     $(panels[to]).children(".checkout-body").slideDown()
     $(panels[to]).children(".checkout-header").addClass "active"
     $(panels[to]).children(".checkout-summary").slideUp()
+    setTimeout (->
+      alignCartWith( $(panels[to]) )
+    ), 500
     false
+
+  alignCartWith = (element) ->
+    cart = $("#checkout-form .cart-container")
+    startOffset = cart.offset()
+    endOffset = cart.offset()
+    endOffset.top = element.offset().top
+
+    $("#checkout-form .cart-container").css({position: 'absolute', margin: 0, top: startOffset.top, left: cart.offset().left}).animate({left: endOffset.left, top: endOffset.top}, 400)
 
   currentStepIndex = ->
     element = $(panels.join()).children(".checkout-body").filter(":visible").first().parent().attr("id")
@@ -271,7 +318,6 @@ post = (path, parameters) ->
     field.attr "name", key
     field.attr "value", value
     form.append field
-  console.log form
   # The form needs to be a part of the document in
   # order for us to be able to submit it.
   $(document.body).append form

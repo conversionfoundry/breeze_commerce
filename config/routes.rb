@@ -4,12 +4,7 @@ Breeze::Engine.routes.draw do
     namespace "store", module: "commerce", name_prefix: "admin_store" do
       root to: "orders#index"
       
-      controller :store do
-        post  :setup_default
-        post  :set_default_shipping_method
-        get   :settings
-        put   :settings     
-      end
+      resource :store, only: [ :create, :edit, :update]
   
       resources :products, except: [:show] do
         resources :variants, except: [:index, :show] do
@@ -37,6 +32,8 @@ Breeze::Engine.routes.draw do
         put :reorder, on: :collection
       end
 
+      resources :countries, except: [:index, :show]
+
       resources :customers, except: [:show]
 
       resources :shipping_methods, except: [:show] do
@@ -54,23 +51,20 @@ Breeze::Engine.routes.draw do
   scope module: :commerce do        
 
     resources :products, only: [:index]
+    resources :shipping_methods, only: [:index]
 
     resources :orders do
-      resources :line_items, only: [:update, :destroy]
-      get :checkout, on: :collection
-      post :populate, on: :collection
+      resources :line_items, only: [:update, :destroy, :create]
+      put :checkout, on: :member
+      put :submit, on: :member
       get :thankyou, on: :member
       get :payment_failed, on: :member
     end
 
-    resources :customers, except: [:index, :show]
+    resources :customers, except: [:index]
     
     get 'variants/filter', to: 'variants#filter', as: :filter_variants
      
-    get 'cart', to: 'orders#edit', as: :cart
-    get 'checkout', to: 'orders#checkout', as: :checkout
-    put 'submit_order', to: 'orders#submit_order', as: :submit_order
-
   end
 
 end
