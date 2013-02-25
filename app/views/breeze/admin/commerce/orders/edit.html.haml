@@ -8,7 +8,7 @@
   - main.inner do
     = scrollable_layout do
       .order-edit{:id => "order_#{@order.id}"}
-        = render "breeze/admin/commerce/orders/form", :url => admin_store_order_path(@order)
+        = render "breeze/admin/commerce/orders/form", url: breeze.edit_admin_store_order_path(@order)
       #order-payments
         %h2 Payments
         = render :partial => "breeze/admin/commerce/payments/payments", :object => @order.payments

@@ -2,11 +2,13 @@
   %table.fancy.contextual.orders
     %thead
       %tr
-        %th.order.first= link_to "Order", :sort => "order_number"
+        %th.date.first= link_to "Date", :sort => "updated_at"
+        %th.total= link_to "Total", :sort => "total"
+        %th.customer= link_to "Customer", :sort => "email"
         %th.shipping Shipping Address
         %th.line_items Line Items
-        %th.shipping_status Shipping Status
-        %th.billing_status Billing Status
+        %th.shipping_status= link_to "Shipping Status", :sort => "shipping_status"
+        %th.billing_status= link_to "Billing Status", :sort => "billing_status"
         %th.actions.last Actions
     %tbody
       - if orders.any?

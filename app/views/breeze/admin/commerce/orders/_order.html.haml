@@ -4,18 +4,18 @@
 - classes += ' last' if order_counter + 1 == count
 
 = content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
-  %td.order.first
-    %p.number
-      %span.order_number
-        = order.order_number
-    %p.customer
-      - if order.customer
-        = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
-      = order.email
+  %td.date.first
+    = order.updated_at
+  %td.total
     %p.total
       = number_to_currency(order.total, :locale => :nz)
       %span.currency
         = store.currency
+  %td.customer
+    %p.customer
+      - if order.customer
+        = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
+      = order.email
   %td.shipping
     = html_address(order.shipping_address) if order.shipping_address
   %td.line_items
