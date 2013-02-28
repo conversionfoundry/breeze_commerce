@@ -15,7 +15,7 @@ describe "Personalised Message Flow", :js => true, :type => :request do
   end
 
   context "Guest buying a product" do
-	  it "allows visitor to add a personalised line item and take it through checkout" do
+	  it "allos customer to create a personalised message, and shows it in the cart and checkout" do
 
 			visit @product.permalink
 
@@ -41,15 +41,23 @@ describe "Personalised Message Flow", :js => true, :type => :request do
 			within ".line_item##{@order.line_items.first.id}" do
 				find("p.customer_message input.line_item-customer_message").value.should eq "Happy Birthday to the World's Best Mum"
 			end
-			# save_and_open_page
-			click_link "Go to Checkout"
-			page.body.should include "foobarbaz"
 
-			# Checkout should show line item with message
+			click_link "Go to Checkout"
+
+			within ".cart-container .line_item##{@order.line_items.first.id}" do
+				find("p.customer_message").should have_content "Happy Birthday to the World's Best Mum"
+			end
+
+
+
 			# Complete checkout and payment
 			# Arrive at confirmation page
 
 	  end
+	end
+
+	context "Confirmation Page" do
+		it "shows a personalised message"
 	end
 
 	context "Admin reviewing product" do
