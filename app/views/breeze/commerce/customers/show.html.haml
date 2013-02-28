@@ -7,5 +7,5 @@
       = render :partial => "partials/commerce/minicart"
       = render :partial => "breeze/commerce/customers/card", :locals => {:customer => @customer}
 
-      = link_to "Edit Profile", breeze.edit_customer_path(current_store_customer), :class => "btn"
+      = link_to "Edit Profile", breeze.edit_customer_path(current_commerce_customer), :class => "btn"
 

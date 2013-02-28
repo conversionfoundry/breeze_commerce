@@ -123,7 +123,7 @@ module Breeze
       def set_initial_order_statuses 
         self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
         self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
-        self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(is_default: true).first        
+        self.shipping_method ||= Breeze::Commerce::Store.first.default_shipping_method       
       end
 
     end

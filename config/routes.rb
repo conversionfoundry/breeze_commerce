@@ -44,8 +44,8 @@ Breeze::Engine.routes.draw do
 
   end
 
-  namespace "store", module: "commerce", name_prefix: "admin_store" do
-    devise_for :customer, class_name: "Breeze::Commerce::Customer", module: :devise, controllers: {sessions: "breeze/commerce/sessions"}
+  namespace "commerce", module: "commerce" do
+    devise_for :customers, class_name: "Breeze::Commerce::Customer"#, module: :devise, controllers: {sessions: "breeze/commerce/sessions"}
   end
 
   scope module: :commerce do        

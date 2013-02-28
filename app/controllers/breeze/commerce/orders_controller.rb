@@ -10,8 +10,8 @@ module Breeze
         @order = Order.find params[:id]
       end
 
-      # This is currently here to make the checkout form work
       def show
+        @order = Breeze::Commerce::Order.find(params[:id])
       end
 
       # Displays the current cart
@@ -111,6 +111,8 @@ module Breeze
 
         # Empty the cart
         session[:cart_id] = nil
+
+        render action: :show
       end
 
       def payment_failed
@@ -126,7 +128,7 @@ module Breeze
     private
 
       def require_nonempty_order
-        @order = current_order(session) || create_order(session)
+        @order = Order.find params[:id]
         if @order.line_items.empty?
           redirect_to breeze.cart_path
         end
