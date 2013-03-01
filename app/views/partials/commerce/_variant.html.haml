@@ -1,8 +1,4 @@
-- classes = 'variant'
-- classes += ' ' + variant.options.map{|c| c.name.downcase.underscore}.join(' ')
-- classes += ' variant-discounted' if variant.discounted?
-= content_tag :li, :class => classes, :id => "variant_#{variant.id}", :"data-id" => variant.id do
-  %hr/
+%li.variant
   = form_tag order_line_items_path( current_order(session) ), :remote => true do |form|
     .error_messages
     = hidden_field_tag "line_item[variant_id]", variant.id
@@ -10,7 +6,7 @@
     .image
       = image_tag variant.image.url(:thumbnail) unless variant.image.blank?
     %h4.name= variant.name
-    %p.blurb= variant.blurb
+    %p.description= variant.description
     .price
       - if variant.discounted
         %span.old_price= number_to_currency(variant.sell_price, :locale => :nz)

@@ -6,7 +6,7 @@
     %button.close{"data-dismiss" => "alert", :type => "button"} ×
     %p= msg
     .clear
-= form_for @order, :url => breeze.submit_order_path, :html => {:method => :put, :id => "checkout-form"} do |order_form|
+= form_for @order, :url => breeze.submit_order_path(@order), :html => {:method => :put, :id => "checkout-form"} do |order_form|
   .row
     #checkout-container.span8
       %h1 Checkout
@@ -22,8 +22,8 @@
                 Contact Email Address
         .checkout-body
           - if customer_signed_in?
-            Signed in as #{current_store_customer.name}
-            \#{link_to 'Sign Out', breeze.destroy_store_customer_session_path, :class => 'btn'}
+            Signed in as #{current_commerce_customer.name}
+            \#{link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, :class => 'btn'}
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-1a" do
                 %i.icon-arrow-down.icon-white
@@ -51,7 +51,7 @@
                         Password
                         %span.required *
                       = form.password_field :password
-                      = link_to 'Sign in', breeze.store_customer_session_path, :class => 'btn btn-primary', :id => 'button-sign_in'
+                      = link_to 'Sign in', breeze.commerce_customer_session_path, :class => 'btn btn-primary', :id => 'button-sign_in'
 
             .form-actions
               = link_to '#', :class => "btn btn-primary", :id => "continue-1b" do
@@ -60,15 +60,15 @@
         .checkout-summary
           .form-actions
             - if customer_signed_in?
-              = link_to 'Sign Out', breeze.destroy_store_customer_session_path, id: 'sign-out', :class => 'btn'
+              = link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, id: 'sign-out', :class => 'btn'
             - else
               = link_to 'Edit Sign In', '#', :class => "btn", :id => "edit-sign-in"
           .summary
             - if customer_signed_in?
               %p
-                Signed in as #{current_store_customer.name}
+                Signed in as #{current_commerce_customer.name}
               %p
-                Email: #{current_store_customer.email}
+                Email: #{current_commerce_customer.email}
             - else
               %p
                 Email:
@@ -266,8 +266,20 @@
               = link_to '#', :class => "btn", :id => "changed-my-mind" do
                 %span.title Edit Confirmation
     .cart-container.span4
-      = link_to breeze.cart_path, :class => "btn", :id => "edit-items" do
+      = link_to breeze.edit_order_path, :class => "btn", :id => "edit-items" do
         %i.icon-shopping-cart
         %span.title Edit Cart
       %h1 Your Order
-      = render :partial => "breeze/commerce/line_items/line_items_show", locals: { line_items: @order.line_items.unarchived }
+      %table#cart.table-striped.order
+        %thead
+          %tr
+            %th{:colspan => "3"} Item
+            %th Description
+            %th Price
+            %th Quantity
+            %th TOTAL
+        %tbody
+          = render :partial => "breeze/commerce/line_items/line_items_show", :locals => {line_items: @order.line_items.unarchived}
+        %tfoot
+          = render :partial => "breeze/commerce/line_items/totals_show", locals: { order: @order }
+

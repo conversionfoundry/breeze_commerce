@@ -1,23 +1,33 @@
 - classes = ' status-shipping-' + order.shipping_status.name.parameterize.underscore
 - classes += ' status-billing-' + order.billing_status.name.parameterize.underscore
-- classes += ' first' if order_counter == 0
-- classes += ' last' if order_counter + 1 == count
 
 = content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
-  %td.order.first
-    %p.number
-      %span.order_number
-        = order.order_number
-    %p.customer
-      - if order.customer
-        = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
-      = order.email
+  - date = order.transaction_completed_at
+  %td.date.first
+    - if date
+      %p.date
+        %span.day
+          = date.strftime("%d")
+        %span.month
+          = date.strftime("%B")
+        %span.year
+          = date.strftime("%Y")
+      %p.time
+        = date.strftime("%H:%M")
+    - else
+      Transaction not completed
+  %td.total
     %p.total
       = number_to_currency(order.total, :locale => :nz)
       %span.currency
         = store.currency
+  %td.customer
+    %p.customer
+      - if order.customer
+        = link_to order.customer.name, edit_admin_store_customer_path(order.customer)
+      = order.email
   %td.shipping
-    = order.shipping_address.to_html if order.shipping_address
+    = html_address(order.shipping_address) if order.shipping_address
   %td.line_items
     %ul.line_items
       - order.line_items.unarchived.each do |line_item|

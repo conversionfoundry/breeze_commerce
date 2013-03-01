@@ -1,8 +1,4 @@
-- classes = 'shipping_method'
-- classes += ' first' if shipping_method_counter == 0
-- classes += ' last' if shipping_method_counter + 1 == count
-
-= content_tag :tr, class: classes, id: "shipping_method_#{shipping_method.id}", data: {:id => "#{shipping_method.id}", :position => "#{shipping_method.position}"} do
+= content_tag :tr, class: "shipping_method", id: "shipping_method_#{shipping_method.id}", data: {:id => "#{shipping_method.id}", :position => "#{shipping_method.position}"} do
   %td.name
     %h4
       = shipping_method.name

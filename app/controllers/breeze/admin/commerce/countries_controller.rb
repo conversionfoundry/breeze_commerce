@@ -2,7 +2,8 @@ module Breeze
   module Admin
     module Commerce
       class CountriesController < Breeze::Admin::Commerce::Controller
-        
+        helper_method :sort_method, :sort_direction
+       
         def index
           @countries = Breeze::Commerce::Country.order_by(:name.asc)
         end
@@ -33,6 +34,16 @@ module Breeze
           @country = Breeze::Commerce::Country.find params[:id]
           @country.try :destroy
           @country_count = Breeze::Commerce::Country.count
+        end
+
+      private
+
+        def sort_method
+          %w[name].include?(params[:sort]) ? params[:sort] : "name"
+        end
+        
+        def sort_direction
+          %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
         end
 
       end

@@ -7,5 +7,6 @@
  *= require ./textboxlist/TextboxList.Autocomplete
 
  *= require ./breeze_commerce_front
+ *= require ./breeze_commerce_front_customer_message
  *= require ./breeze_commerce_admin
 */

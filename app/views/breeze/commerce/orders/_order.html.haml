@@ -1,29 +1,26 @@
 - classes = ' status-shipping-' + order.shipping_status.name.parameterize.underscore
 - classes += ' status-billing-' + order.billing_status.name.parameterize.underscore
-= content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
-  %td.order.first
-    %p.number
-      %span.order_number
-        = order.order_number
-    %p.total
-      = number_to_currency(order.total, :locale => :nz)
-      %span.currency
-        = store.currency
-  %td.shipping
-    = order.shipping_address.to_html if order.shipping_address
-  %td.line_items
-    %ul.line_items
-      - order.line_items.each do |line_item|
-        %li.line_item
-          = line_item.quantity
-          &times;
-          = line_item.name
-          (
-          = line_item.sku_code
-          )
-  %td.shipping_status
+= content_tag :li, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
+  %table.table-striped.cart
+    %tbody
+      = render :partial => "breeze/commerce/line_items/line_items_show", :locals => { line_items: order.line_items.unarchived }
+  %table.totals
+    %tfoot
+      = render :partial => "breeze/commerce/line_items/totals_show", locals: { order: order }
+  .shipping
+    = html_address(order.shipping_address) if order.shipping_address
+
+  .shipping_status
     .status
       = order.shipping_status.name
-  %td.billing_status
+  .billing_status
     .status
       = order.billing_status.name
+  
+  .actions
+    - if order.can_resend?
+      = form_tag breeze.orders_path(order), method: :post do |form|
+        = hidden_field_tag :old_order_id, order.id
+        = submit_tag "Order Again"
+    - else
+      This order can't be made again, as our product line has changed.
