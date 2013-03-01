@@ -3,7 +3,7 @@
     = image_tag line_item.variant.image.url(:thumbnail), class: 'thumbnail' if line_item.variant.image
     %p.product_name= line_item.product.title
     %h4.variant_name= line_item.variant.name
-    %p.variant_blurb= line_item.variant.blurb
+    %p.variant_description= line_item.variant.description
     - if line_item.customer_message
       %p.customer_message
         = line_item_fields.text_field :customer_message, class: 'line_item-customer_message', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }

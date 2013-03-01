@@ -15,7 +15,7 @@ describe "Personalised Message Flow", :js => true, :type => :request do
   end
 
   context "Guest buying a product" do
-	  it "allos customer to create a personalised message, and shows it in the cart and checkout" do
+	  it "allows customer to create a personalised message, and shows it in the cart and checkout" do
 
 			visit @product.permalink
 
@@ -55,33 +55,4 @@ describe "Personalised Message Flow", :js => true, :type => :request do
 
 	  end
 	end
-
-	context "Confirmation Page" do
-		it "shows a personalised message"
-	end
-
-	context "Admin reviewing product" do
-		it "shows message to admin so order can be fulfilled"
-	end
-
- #  context "User logged in" do
-	# 	before :each do
-	#     user = Fabricate :user
-	# 		page.driver.header("USER_AGENT", "capybara")
- #      visit "/admin"
- #      within "#sign_in #new_admin" do
-	#       fill_in 'Email', :with => user.email
-	# 	    fill_in 'Password', :with => user.password
-	# 		  click_button 'Sign in'
-	# 		end
-	# 	end
-
-	#   it "Inserts editing controls into the page" do
-	#     home_page = Fabricate :page
-
-	# 		visit "/"
-	# 		page.body.should include('<body>')
-	# 		page.body.should include("<div class='editor-panel'>")
-	#   end
-	# end
 end

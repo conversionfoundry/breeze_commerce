@@ -28,7 +28,7 @@ FactoryGirl.define do
   factory :freddie_dummy, class: Breeze::Commerce::Variant do |fd|
     name "Freddie"
     sku_code 'ventr-freddy'
-    blurb 'Scary but compelling'
+    description 'Scary but compelling'
     cost_price_cents 5000
     sell_price_cents 10000
     published true
