@@ -30,4 +30,14 @@ FactoryGirl.define do
     password_confirmation 'logmein'
     roles [:admin, :editor]
   end
+
+  factory :emergency_user, class: Breeze::Admin::User do
+    first_name "Emergency"
+    last_name "User"
+    email "emergency@example.com"
+    password "logmein"
+    password_confirmation "logmein"
+    roles [ :admin ]
+  end
+
 end

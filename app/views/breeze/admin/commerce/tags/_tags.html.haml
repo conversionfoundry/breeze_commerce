@@ -2,8 +2,10 @@
   %table.fancy.sortable.tags
     %thead
       %tr
-        %th.first{:style => ""} Name
-        %th.last{:style => "width: 160px;"} Actions
+        %th.first
+          = sortable "name", "Name"
+        %th.last
+          Actions
     %tbody
       - if tags.any?
         = render :partial => "breeze/admin/commerce/tags/tag", :collection => tags, locals: {count: tags.count}

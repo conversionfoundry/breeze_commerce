@@ -2,9 +2,12 @@
   %table.fancy.sortable.countries
     %thead
       %tr
-        %th.name.first Name
-        %th.shipping_methods.first Shipping Methods
-        %th.actions.last Actions
+        %th.name.first
+          Name
+        %th.shipping_methods
+          Shipping Methods
+        %th.actions.last
+          Actions
     %tbody
       - if countries.any?
         = render :partial => "breeze/admin/commerce/countries/country", :collection => countries, locals: {count: countries.count}

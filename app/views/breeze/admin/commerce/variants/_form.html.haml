@@ -9,7 +9,7 @@
     = form.text_field :name, :required => true
     %span.help-block This name will appear in the shopping cart and on invoices.
     = form.text_field :sku_code, :required => true, :label => "SKU Code"
-    = form.text_field :blurb, :required => false
+    = form.text_field :description, :required => false
     = form.number_field :cost_price, :required => false, :label => "Cost Price", before: '$', step: 0.01
     = form.number_field :sell_price, :required => true, :label => "Sell Price", before: '$', step: 0.01
     = form.check_box :discounted, :label => "Temporary discount price"

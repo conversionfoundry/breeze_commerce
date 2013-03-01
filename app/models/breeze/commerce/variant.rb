@@ -20,7 +20,7 @@ module Breeze
       include Mixins::Archivable
       include Mixins::Publishable
 
-      attr_accessible :product, :product_id, :blurb, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price, :position, :requires_customer_message, :customer_message_limit
+      attr_accessible :product, :product_id, :description, :cost_price_cents, :discounted, :discounted_sell_price_cents, :image, :name, :sell_price_cents, :sku_code, :cost_price, :sell_price, :discounted_sell_price, :position, :requires_customer_message, :customer_message_limit
 
       belongs_to :product, :class_name => "Breeze::Commerce::Product"
       has_and_belongs_to_many :options, :class_name => "Breeze::Commerce::Option"
@@ -28,9 +28,9 @@ module Breeze
       
       index({ product_id: 1 })
 
-      field :blurb
+      field :description
       field :cost_price_cents, :type => Integer
-      field :discounted, type: Boolean
+      field :discounted, type: Boolean, default: false
       field :discounted_sell_price_cents, :type => Integer
       field :image
       field :name
@@ -44,12 +44,14 @@ module Breeze
 
       scope :with_option, lambda { |option| where(option_ids: option.id) }
       scope :discounted, where(discounted: true)
-      scope :not_discounted, where(:discounted.in => [false, nil])
+      scope :not_discounted, where(discounted: false)
       scope :ordered, order_by(:position.asc)
+      scope :message_required, where(requires_customer_message: true)
+      scope :no_message_required, where(requires_customer_message: false)
 
       before_validation :set_initial_position, :set_standard_sku_code
 
-      validates_presence_of :product_id, :name, :sku_code, :sell_price_cents
+      validates_presence_of :product_id, :name, :sku_code, :sell_price_cents, :discounted, :requires_customer_message
       validates :customer_message_limit, presence: true, numericality: { only_integer: true, greater_than: 0 }, if: :requires_customer_message
       validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator

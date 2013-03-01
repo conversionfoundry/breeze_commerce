@@ -6,10 +6,8 @@ module Breeze
       # If login fails, return to the page you came from
       def new
         redirect_to request.referrer
-        # TODO: Show error message
       end
 
-      # TODO: This is kludgey. We should really be using breeze_account for customer login.
       def create
         # resource = warden.authenticate!(auth_options)
         resource = warden.authenticate!({:scope => :customer})

@@ -76,38 +76,50 @@ a.customer-card:hover
 /* Checkout Funnel
 
 /* Cart table
-table#cart tr th.item
-  width: 40%
-table#cart tr th.price
-  width: 10%
-table#cart tr th.quantity
-  width: 30%
-table#cart tr th.total
-  width: 20%
-table#cart
+table.cart 
   width: 100%
   margin-bottom: 1em
   tr.line_item
     td
-      padding: 1em
+      padding: 0
+      vertical-align: middle
       p
         margin: 0
+    td.item
+      width: 60%
       img.thumbnail
         float: left
         margin-right: 1em
+    td.quantity
+      width: 10%
+    td.price
+      width: 10%
     td.total
+      width: 20%
       font-size: 125%
+      text-align: right
+table.totals
+  float: right
+  margin-bottom: 1em
   tr.total
     td.total
       font-size: 150%
-  th,
-  td
-    vertical-align: top
   td.total
     text-align: right
-table#totals
-  float: right
-  margin-bottom: 1em
+
+/* Orders
+ul.orders
+  float: left
+  margin: 0
+  padding: 0
+  width: 100%
+  li.order
+    clear: both
+    display: block
+    float: left
+    list-style: none
+    margin-bottom: 1em
+    width: 100%
 
 #checkout-container
   .form-actions .btn

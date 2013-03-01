@@ -1,7 +1,5 @@
 <% classes = 'property' %>
 <% classes += ' property-' + property.name.downcase.underscore %>
-<% classes += ' first' if property_counter == 0 %>
-<% classes += ' last' if property_counter == property_count - 1 %>
 <%= content_tag :li, :class => classes, :id => "property_#{property.id}", :"data-id" => property.id do %>
   <h3><%= property.name %></h3>
   <ul class="options">

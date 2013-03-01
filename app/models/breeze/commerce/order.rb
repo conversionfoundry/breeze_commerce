@@ -10,7 +10,7 @@ module Breeze
       field :personal_message
       field :comment
       field :payment_completed
-      
+
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
       belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -55,6 +55,14 @@ module Breeze
         payment_completed
       end
 
+      def transaction_completed_at
+        if self.payments.any?
+          self.payments.last.updated_at || nil
+        else
+          nil
+        end
+      end
+
       def name
         if billing_address && billing_address.name
           billing_address.name
@@ -91,19 +99,37 @@ module Breeze
         '$' + total.to_s + store.currency + ' ' + created_at.to_s
       end
 
-      # def show_in_admin?
-      #   if billing_status.name == 'Browsing' or billing_status.name == 'Started Checkout'
-      #     return false
-      #   end
-      #   true
-      # end
+      def can_resend?
+        if customer == nil
+          return false
+        end
+        line_items.each do |line_item|
+          if Breeze::Commerce::Variant.unarchived.where(id: line_item.variant_id).count == 0
+            return false
+          end
+        end
+        true
+      end
+
+      def duplicate_for_resend
+        if can_resend?
+          new_order = Breeze::Commerce::Order.new customer_id: customer.id
+          line_items.each do |line_item|
+            new_order.line_items << line_item.dup
+          end
+          new_order.save
+          new_order
+        else
+          false
+        end
+      end
 
       protected
 
       def set_initial_order_statuses 
         self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
         self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
-        self.shipping_method ||= Breeze::Commerce::ShippingMethod.where(is_default: true).first        
+        self.shipping_method ||= Breeze::Commerce::Store.first.default_shipping_method       
       end
 
     end

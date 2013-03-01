@@ -1,0 +1,60 @@
+- content_for :head do
+  %title Order Confirmation
+  %link{:href => "http://fonts.googleapis.com/css?family=Just+Another+Hand", :rel => "stylesheet", :type => "text/css"}
+
+  
+.row
+  .span12.order_confirmation
+    .thank_you
+      Thank you for shopping with us.
+    .order_status
+      %h3
+        = @order.billing_status.name
+      = @order.billing_status.description
+    
+    #order-customer.section
+      - if @order.customer
+        = render :partial => "breeze/commerce/customers/card", :locals => {:customer => @order.customer}
+      - else
+        .customer-card
+          %p.customer-name
+            %span.name
+              Guest
+          %ul.customer-contact
+            %li.phone
+              = @order.billing_address.phone
+            %li.email
+              = @order.email
+    
+    #order-details
+      #order-number
+        %span Order Number:
+        %span= @order.order_number
+      #order-customer_comment
+        = @order.comment
+      #order-line_items.section
+        = render :partial => "breeze/commerce/orders/order", locals: {order: @order}
+      #order-billing
+        #order-billing_address.section.address
+          %h3 Billing Address
+          - if @order.billing_address
+            = render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address
+          - else
+            Enter a billing address
+      #order-shipping
+        #order-shipping_address.section.address
+          %h3 Shipping Address
+          - if @order.shipping_address
+            = render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address
+          - else
+            Enter a shipping address
+      .clearer
+  
+    #order-payments
+      = render :partial => "breeze/commerce/payments/payments", :object => @order.payments
+    .row
+      .span12
+        .form-actions
+          .btn-group
+            = link_to store.home_page.permalink, :class => "btn btn-primary", :id => "continue-shopping" do
+              %span.title Continue Shopping

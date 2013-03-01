@@ -1,13 +1,2 @@
-%table#cart.table-striped.order
-  %thead
-    %tr
-      %th{:colspan => "3"} Item
-      %th Description
-      %th Price
-      %th Quantity
-      %th TOTAL
-  %tbody
-    - line_items.unarchived.each do |line_item|
-      = render :partial => "breeze/commerce/line_items/line_item_show", :locals => {:line_item => line_item}
-  %tfoot
-    = render :partial => "breeze/commerce/line_items/totals_show"
+- line_items.unarchived.each do |line_item|
+  = render :partial => "breeze/commerce/line_items/line_item_show", :locals => {:line_item => line_item}

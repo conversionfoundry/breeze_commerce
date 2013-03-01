@@ -2,8 +2,10 @@ module Breeze
   module Admin
     module Commerce
       class ProductsController < Breeze::Admin::Commerce::Controller
+        helper_method :sort_method, :sort_direction
+
         def index
-          @products = Breeze::Commerce::Product.includes(:variants).unarchived.order_by(:created_at.desc)
+          @products = Breeze::Commerce::Product.unscoped.includes(:variants).unarchived.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
         end
         
         def new
@@ -65,6 +67,16 @@ module Breeze
             product.update_attributes(:archived => true)
           end
           @product_count = Breeze::Commerce::Product.unarchived.count
+        end
+
+      private
+
+        def sort_method
+          %w[title published updated_at].include?(params[:sort]) ? params[:sort] : "title"
+        end
+        
+        def sort_direction
+          %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
         end
 
       end

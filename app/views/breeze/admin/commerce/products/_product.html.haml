@@ -1,8 +1,4 @@
-- classes = 'product'
-- classes += ' first' if product_counter == 0
-- classes += ' last' if product_counter + 1 == count
-
-= content_tag :tr, class: classes, :id => "product_#{product.id}" do
+= content_tag :tr, class: "product", :id => "product_#{product.id}" do
   %td.first
     = check_box_tag "product_ids[]", product.id
   %td.product

@@ -1,6 +1,5 @@
 # Country selection
 $('#edit_order #country').live 'change', (event) ->
-  console.log $(this).val()
   $.ajax
     beforeSend: (xhr) ->
       xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
