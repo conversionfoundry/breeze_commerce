@@ -19,7 +19,7 @@
   
   .actions
     - if order.can_resend?
-      = form_tag breeze.orders_path, method: :post do |form|
+      = form_tag breeze.orders_path(order), method: :post do |form|
         = hidden_field_tag :old_order_id, order.id
         = submit_tag "Order Again"
     - else

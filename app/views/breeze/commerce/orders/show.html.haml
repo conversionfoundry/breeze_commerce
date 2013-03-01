@@ -34,19 +34,6 @@
         = @order.comment
       #order-line_items.section
         = render :partial => "breeze/commerce/orders/order", locals: {order: @order}
-
-        %table#cart.table-striped.order
-          %thead
-            %tr
-              %th{:colspan => "3"} Item
-              %th Description
-              %th Price
-              %th Quantity
-              %th TOTAL
-          %tbody
-            = render :partial => "breeze/commerce/line_items/line_items_show", :locals => { line_items: @order.line_items.unarchived }
-          %tfoot
-            = render :partial => "breeze/commerce/line_items/totals_show", locals: { order: @order }
       #order-billing
         #order-billing_address.section.address
           %h3 Billing Address

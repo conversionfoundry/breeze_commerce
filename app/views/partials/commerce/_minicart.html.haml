@@ -1,4 +1,4 @@
-- order = current_order(session) || create_order(session)
+- order = current_order(session)
 - title ||= 'My Cart'
 .breeze-minicart.well
   - if order
@@ -34,7 +34,7 @@
     .actions
       = link_to "Show Cart", breeze.edit_order_path(order), :class=> 'btn btn-primary'
       - if order.line_items.unarchived.count > 0
-        = link_to "Checkout", breeze.checkout_order_path(order), method: :put, :class=> 'btn'
+        = link_to "Checkout", breeze.checkout_order_path(order), method: :get, :class=> 'btn'
   - else
     %h3 My Cart
     No order.

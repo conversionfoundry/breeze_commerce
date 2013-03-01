@@ -50,7 +50,7 @@ module Breeze
         @order = Breeze::Commerce::Order.find(params[:id])
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Started Checkout").first
         @order.save
-        @customer = current_store_customer || Breeze::Commerce::Customer.new
+        @customer = current_commerce_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login
