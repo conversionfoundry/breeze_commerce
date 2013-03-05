@@ -3,7 +3,7 @@ module Breeze
     class CustomersController < Breeze::Commerce::Controller
       helper Breeze::ContentsHelper
       layout "breeze/commerce/customer_profile"
-      before_filter :check_permissions
+      before_filter :check_permissions, except: [:new, :create]
 
       def new
         @customer = Breeze::Commerce::Customer.new
@@ -12,11 +12,15 @@ module Breeze
       end
       
       def create
-        @customer = Breeze::Commerce::Customer.build params[:customer]
+        @customer = Breeze::Commerce::Customer.new params[:customer]
         if @customer.save
-          redirect_to breeze.customers_path
+          # set_flash_message(:notice, :customer_account_created)
+          redirect_to store.home_page.permalink
         else
-          render :action => "new"
+          if params[:customer][:order_id]
+            @order = Breeze::Commerce::Order.find(params[:customer][:order_id])
+            render "layouts/breeze/commerce/checkout_funnel/confirmation_page", layout: "breeze/commerce/checkout_funnel/checkout_funnel_layout"
+          end
         end
       end
 
