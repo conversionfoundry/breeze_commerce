@@ -1,4 +1,7 @@
 - if @order.payments.any?
-  = render :partial => "breeze/commerce/payments/payment", :collection => @order.payments
+  %h3
+    = "Payment".pluralize(@order.payments.count)
+  %ul.payments
+    = render :partial => "breeze/commerce/payments/payment", :collection => @order.payments
 - else
   There are no payments for this order.

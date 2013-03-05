@@ -1,12 +1,49 @@
-%span.customer-card
-  %p.customer-name
-    %span.name
-      = customer.name
-  %ul.customer-contact
-    %li.phone
-      = customer.phone
-    %li.email
-      = customer.email
-    %li.billing_address
-      = html_address(customer.billing_address, false) if customer.billing_address
-
+- if customer
+  .customer-card
+    .details
+      %p.customer-name
+        %span.name
+          = customer.name
+      %ul.customer-contact
+        %li.phone
+          = customer.phone
+        %li.email
+          = customer.email
+        %li.billing_address
+          = html_address(customer.billing_address, false) if customer.billing_address
+    = link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, :class => 'btn'
+    = link_to "Edit Profile", breeze.edit_customer_path(current_commerce_customer), :class => "btn"
+- else
+  .customer-card
+    %h3 Save your details
+    .details
+      %p.customer-name
+        %span.name
+          = @order.billing_address.name
+      %ul.customer-contact
+        %li.phone
+          = @order.billing_address.phone
+        %li.email
+          = @order.email
+    - if store.allow_returning_customer_login
+      = form_for @customer, as: :customer, url: breeze.customers_path do |form|
+        .information
+          %p
+            We can save your details for next time and create a handy record of what you have ordered from us.
+          %p
+            We'll need a password to protect your account.
+        = render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer
+        = form.hidden_field :order_id, value: @order.id
+        = form.hidden_field :email, value: @order.email
+        = form.hidden_field :first_name, value: @order.billing_address.name.split(' ').first
+        = form.hidden_field :last_name, value: @order.billing_address.name.split(' ').last
+        .control-group
+          = form.label :password, class: "control-label"
+          .controls
+            = form.password_field :password, placeholder: "Password"
+        .control-group
+          = form.label :password_confirmation, class: "control-label"
+          .controls
+            = form.password_field :password_confirmation, placeholder: "Same password again"
+        .form-actions
+          = form.submit "Save my details", class: "btn"

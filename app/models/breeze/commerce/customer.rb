@@ -12,6 +12,7 @@ module Breeze
       accepts_nested_attributes_for :billing_address
       accepts_nested_attributes_for :shipping_address
 
+      validates_presence_of :email
       validates_uniqueness_of :email
       
       def last_order
