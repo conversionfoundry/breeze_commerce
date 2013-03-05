@@ -5,9 +5,9 @@
     %span.currency
       = store.currency
   - if payment.succeeded
-    made 
+    received 
   - else
     declined
   on
-  %span.date= payment.created_at
-  .gateway Payment Express
+  %span.date= payment.created_at.strftime('%A %d %B %Y, %l:%M %p')
+  .gateway.payment_express Payment Express

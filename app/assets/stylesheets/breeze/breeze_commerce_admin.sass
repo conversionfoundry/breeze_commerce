@@ -76,780 +76,781 @@ $colour-highlight: rgba(141, 198, 63, 0.15)
   -moz-box-sizing: $value
   -webkit-box-sizing: $value
 
-/* Bulk actions
-.container .with-selected
-  position: absolute
-  left: 0px
-  top: -32px
-  background: #ffc
-  padding: 4px 8px
-  @include box-shadow
-  &:after
-    content: "."
-    text-indent: -2em
+.breeze-admin
+  /* Bulk actions
+  .container .with-selected
     position: absolute
-    left: 16px
-    bottom: -8px
-    width: 0px
-    height: 0px
-    overflow: hidden
-    border-left: 8px solid #ffc
-    border-bottom: 8px solid transparent
-
-/* Typography
-.old_price
-  text-decoration: line-through
-.discounted_price
-  color: red
-
-/* Customer Card
-.customer-card
-  background: white
-  border: solid 1px #eeeeee
-  @include box-shadow
-  color: #444444
-  display: block
-  float: left
-  clear: right
-  margin: 0
-  padding: 1em 2em
-  width: 20em
-  text-decoration: none
-  .customer-name
-    font-size: 200%
-    margin-top: 1em
-  .customer-contact
-    li
-      list-style: none
-      text-align: right
-  .change_customer
-    font-size: 80%
-    margin: 1em 0
-    text-align: right
-    select,
-    label
-      font-size: 10px
-      margin: 0
-      width: auto
-a.customer-card:hover
-  background: #cccccc
-
-/* Addresses
-.address
-  float: left
-  padding: 0
-  width: 100%
-  .form
-    padding: 2em
-  legend
-    padding: 0 2em
-
-/* Orders Index Page
-table.orders
-  thead
-    tr
-      th.date,
-      th.shipping,
-      th.line_items
-        text-align: left
-  tr.order
-    td
-      .total
-        font-size: 1.5em
-      p.address
-        font-size: 0.8em
-      ul
-        margin: 0
-        padding: 0
-
-
-/* Order Page
-
-#order-edit
-  #order-customer
-    float: right
-    clear: right
-    margin: 1em 0 2em 2em
-    width: 24em
-    li
-      list-style: none
-  #order-details
-    background: white url(image-path("breeze/paper_bg.jpg")) 0 0 repeat
+    left: 0px
+    top: -32px
+    background: #ffc
+    padding: 4px 8px
     @include box-shadow
-    margin: 2em
-    .section
-      float: left
-      margin: 0 2em 0 0
-      width: 100%
-    ol
+    &:after
+      content: "."
+      text-indent: -2em
+      position: absolute
+      left: 16px
+      bottom: -8px
+      width: 0px
+      height: 0px
+      overflow: hidden
+      border-left: 8px solid #ffc
+      border-bottom: 8px solid transparent
+
+  /* Typography
+  .old_price
+    text-decoration: line-through
+  .discounted_price
+    color: red
+
+  /* Customer Card
+  .customer-card
+    background: white
+    border: solid 1px #eeeeee
+    @include box-shadow
+    color: #444444
+    display: block
+    float: left
+    clear: right
+    margin: 0
+    padding: 1em 2em
+    width: 20em
+    text-decoration: none
+    .customer-name
+      font-size: 200%
+      margin-top: 1em
+    .customer-contact
       li
         list-style: none
-    h3
-      font-size: 24px
-      font-weight: normal
-      float: left
-      margin: 1em
-    #order-customer_comment
-      color: #619cc1
-      float: left
-      clear: left
-      font: 400 24px/36px 'Shadows Into Light', cursive
-      margin: 0 2em 2em 4em
-      transform: rotate(-10deg)
-      -ms-transform: rotate(-10deg) /* IE 9 */
-      -webkit-transform: rotate(-10deg) /* Safari and Chrome */
-      -o-transform: rotate(-10deg) /* Opera */
-      -moz-transform: rotate(-10deg) /* Firefox */
+        text-align: right
+    .change_customer
+      font-size: 80%
+      margin: 1em 0
+      text-align: right
+      select,
+      label
+        font-size: 10px
+        margin: 0
+        width: auto
+  a.customer-card:hover
+    background: #cccccc
+
+  /* Addresses
+  .address
+    float: left
+    padding: 0
+    width: 100%
+    .form
+      padding: 2em
+    legend
+      padding: 0 2em
+
+  /* Orders Index Page
+  table.orders
+    thead
+      tr
+        th.date,
+        th.shipping,
+        th.line_items
+          text-align: left
+    tr.order
+      td
+        .total
+          font-size: 1.5em
+        p.address
+          font-size: 0.8em
+        ul
+          margin: 0
+          padding: 0
+
+
+  /* Order Page
+
+  #order-edit
+    #order-customer
+      float: right
+      clear: right
+      margin: 1em 0 2em 2em
       width: 24em
-    fieldset
+      li
+        list-style: none
+    #order-details
+      background: white url(image-path("breeze/paper_bg.jpg")) 0 0 repeat
+      @include box-shadow
+      margin: 2em
+      .section
+        float: left
+        margin: 0 2em 0 0
+        width: 100%
+      ol
+        li
+          list-style: none
+      h3
+        font-size: 24px
+        font-weight: normal
+        float: left
+        margin: 1em
+      #order-customer_comment
+        color: #619cc1
+        float: left
+        clear: left
+        font: 400 24px/36px 'Shadows Into Light', cursive
+        margin: 0 2em 2em 4em
+        transform: rotate(-10deg)
+        -ms-transform: rotate(-10deg) /* IE 9 */
+        -webkit-transform: rotate(-10deg) /* Safari and Chrome */
+        -o-transform: rotate(-10deg) /* Opera */
+        -moz-transform: rotate(-10deg) /* Firefox */
+        width: 24em
+      fieldset
+        float: left
+        margin: 0
+        padding: 0
+        &.line_items
+          width: 100%
+          ol.form
+            float: left
+            width: 100%
+            margin: 0
+            padding: 0
+      table#cart
+        border-spacing: 0
+        border-collapse: collapse
+        width: 100%
+        th,
+        td
+          vertical-align: top
+        thead
+          tr
+            background: $colour-highlight
+            font-size: 18px
+            th
+              font-weight: normal
+              padding: 0.5em 0
+        tr.even
+          td
+            background-color: rgba(128,128,128,0.15)
+        th.total,
+        td.total
+          text-align: right
+        tr.line_item
+          td
+            vertical-align: middle
+            h4
+              font-size: 16px
+              margin: 0.5em 0 0 0
+            img
+              float: left
+              margin-right: 1em
+          td.price
+            text-align: right
+            font-size: 16px
+          td.quantity
+            text-align: center
+            input.line_item-quantity
+              text-align: right
+          td.total
+            font-size: 16px
+            text-align: right
+          td.actions
+            padding-right: 1em
+            text-align: right
+        tfoot
+          tr.subtotal
+            td.label_text,
+            td.total
+              border-bottom: solid 1px #cccccc
+              font-size: 16px
+              padding: 0.5em 0
+          tr.shipping
+            td
+              font-size: 16px
+              padding: 0.5em 0
+          tr.total
+            background: rgba(129,130,133,0.65)
+            td
+              color: white
+              font-size: 18px
+              font-weight: normal
+              padding: 0.5em 0
+              vertical-align: middle
+            td.total
+              font-size: 24px
+        .currency
+          font-size: 80%
+
+      #order-shipping_billing
+        #order-shipping,
+        #order-billing
+          width: 50%
+          float: left
+          ol.status
+            border: dashed 4px #cccccc
+            @include border-radius(1em)
+            margin: 2em
+            padding: 1em 2em 2em 2em
+            .description
+              color: #cccccc
+              float: right
+              margin: 2em 0 0 2em
+              width: 40%
+      #order-notes
+        float: right
+        margin-bottom: 2em
+        margin-right: 25em
+        ul.notes
+          color: red
+          font: 400 18px/27px 'Shadows Into Light', cursive
+          margin: 0
+          padding: 0
+          li.note
+            list-style: none
+            position: relative
+            float: left
+            margin: 0 2em 1em 0
+            max-width: 20em
+            padding: 1em
+
+            .remove
+              display: none
+              font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif
+              position: absolute
+              top: 1em
+              right: 1em
+            &:hover
+              .remove
+                display: block
+        #note-new
+          float: right
+          margin-bottom: 1em
+          width: 20em
+          padding: 1em
+          textarea
+            font-size: 13px
+            padding: 1em
+          #note-save
+            float: right
+
+  #order-payments,
+    float: left
+    margin: 2em
+    width: 40%
+    .payments
       float: left
       margin: 0
       padding: 0
-      &.line_items
-        width: 100%
-        ol.form
-          float: left
-          width: 100%
-          margin: 0
-          padding: 0
-    table#cart
-      border-spacing: 0
-      border-collapse: collapse
-      width: 100%
-      th,
-      td
-        vertical-align: top
-      thead
-        tr
-          background: $colour-highlight
-          font-size: 18px
-          th
-            font-weight: normal
-            padding: 0.5em 0
-      tr.even
-        td
-          background-color: rgba(128,128,128,0.15)
-      th.total,
-      td.total
-        text-align: right
-      tr.line_item
-        td
-          vertical-align: middle
-          h4
-            font-size: 16px
-            margin: 0.5em 0 0 0
-          img
-            float: left
-            margin-right: 1em
-        td.price
-          text-align: right
-          font-size: 16px
-        td.quantity
-          text-align: center
-          input.line_item-quantity
-            text-align: right
-        td.total
-          font-size: 16px
-          text-align: right
-        td.actions
-          padding-right: 1em
-          text-align: right
-      tfoot
-        tr.subtotal
-          td.label_text,
-          td.total
-            border-bottom: solid 1px #cccccc
-            font-size: 16px
-            padding: 0.5em 0
-        tr.shipping
-          td
-            font-size: 16px
-            padding: 0.5em 0
-        tr.total
-          background: rgba(129,130,133,0.65)
-          td
-            color: white
-            font-size: 18px
-            font-weight: normal
-            padding: 0.5em 0
-            vertical-align: middle
-          td.total
-            font-size: 24px
-      .currency
-        font-size: 80%
-
-    #order-shipping_billing
-      #order-shipping,
-      #order-billing
-        width: 50%
+      li.payment
+        background: white
+        border: solid 1px #eeeeee
+        @include border-radius(4px)
+        @include box-shadow
         float: left
-        ol.status
-          border: dashed 4px #cccccc
-          @include border-radius(1em)
-          margin: 2em
-          padding: 1em 2em 2em 2em
-          .description
-            color: #cccccc
-            float: right
-            margin: 2em 0 0 2em
-            width: 40%
-    #order-notes
-      float: right
-      margin-bottom: 2em
-      margin-right: 25em
-      ul.notes
-        color: red
-        font: 400 18px/27px 'Shadows Into Light', cursive
-        margin: 0
-        padding: 0
-        li.note
-          list-style: none
-          position: relative
-          float: left
-          margin: 0 2em 1em 0
-          max-width: 20em
-          padding: 1em
-
-          .remove
-            display: none
-            font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif
-            position: absolute
-            top: 1em
-            right: 1em
-          &:hover
-            .remove
-              display: block
-      #note-new
-        float: right
+        list-style: none
         margin-bottom: 1em
-        width: 20em
         padding: 1em
-        textarea
-          font-size: 13px
-          padding: 1em
-        #note-save
-          float: right
-
-#order-payments,
-  float: left
-  margin: 2em
-  width: 40%
-  .payments
-    float: left
-    margin: 0
-    padding: 0
-    li.payment
-      background: white
-      border: solid 1px #eeeeee
-      @include border-radius(4px)
-      @include box-shadow
+        width: 100%
+        &.declined
+          color: #b94a48
+          background-color: #f2dede
+          border-color: #eed3d7
+        &.approved
+          color: #468847
+          background-color: #dff0d8
+          border-color: #d6e9c6
+    .payment
+      border: solid 1px #cccccc
       float: left
-      list-style: none
       margin-bottom: 1em
       padding: 1em
       width: 100%
-      &.declined
-        color: #b94a48
-        background-color: #f2dede
-        border-color: #eed3d7
-      &.approved
-        color: #468847
-        background-color: #dff0d8
-        border-color: #d6e9c6
-  .payment
-    border: solid 1px #cccccc
-    float: left
-    margin-bottom: 1em
-    padding: 1em
-    width: 100%
 
-/* Customer Page
-.customer-edit,
-.customer-new
-  margin-right: 1em
-  width: 90%
-  #customer-details 
-    li.text_field,
-    li.text_area
-      input,
-      textarea
-        width: 50%
-      label
-        float: left
-        width: 25%
-    .customer_addresses 
-      width: 100%
-      legend
-        border-bottom: none
-        margin-bottom: none
-      .address
-        margin-right: 0
-        width: 50%
-
-
-
-
-
-.clearer
-  clear: both
-
-abbr[title]
-  border: none
-  cursor: default
-
-
-
-/* Left Panel 
-#left
-  #store-switcher
-    padding: 8px
-    text-shadow: rgba(255, 255, 255, 0.5) 0px 1px
-    label
-      float: left
-      font-weight: bold
-      text-transform: uppercase
-      font-size: 130%
-      vertical-align: middle
-  .store-actions
-    border-top: none
-    margin: 0
-    padding: 0
-    li
-      display: inline
-      line-height: inherit
-      list-style: none
-      a
-        border: 1px solid #AAA
-        border-right: none
-        position: relative
-        display: block
-        background: #ccc
-        margin: 0px -9px 8px 8px
-        padding: 8px
-        color: #222
-        text-decoration: none
-        @include border-left-radius(4px)
-        strong
-          display: block
-          font-size: 125%
-        &:hover
-          background: #bbb
-        .badge
-          float: right
-      &.active a
-        background: #f2f2f2
-        @include box-shadow
-      small
-        position: absolute
-        right: 0.5em
-        top: 50%
-        min-width: 1.5em
-        height: 1.5em
-        line-height: 1.5em
-        margin: -0.75em 0em 0em
-        text-align: center
-        vertical-align: middle
-        background: #ec008c
-        color: white
-        font-size: 1.0em
-        @include border-radius(0.75em)
-      &.active small
-        margin-right: 8px
-
-/* Products
-.products-container
-  position: relative
-
-#edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
-  background: none
-  position: relative
-
-#edit_product #main-tabs-content, #product_new #main-tabs-content
-  position: relative
-
-
-form#edit_product
-  margin: 0 2em 1em 1em
-  .container
-    @include box-sizing(border-box)
-    width: 100%
-    .new.button
-      float: right
-      margin: 12px
-    table
-      background: white
-  #product-details
-    position: relative
-    width: 100%
-    fieldset
-      input#product_title
-        width: 20em
-      input#product_teaser
-        width: 40em
-      input#product_slug
-        margin-left: 0.5em
-        width: 10em
-    .actions
-      #product-published
-        margin: 0px
-        padding: 0px
+  /* Customer Page
+  .customer-edit,
+  .customer-new
+    margin-right: 1em
+    width: 90%
+    #customer-details 
+      li.text_field,
+      li.text_area
+        input,
+        textarea
+          width: 50%
         label
-          padding-top: 6px
           float: left
-          width: 60px
-          font-weight: bold
-        li.check_box
-          padding-left: 0
-  #product-images
-    ul#product_images
-      clear: both
-      margin: 1em
-      padding: 0
-      li
-        list-style: none
-      li.empty
-        text-align: center
-        vertical-align: middle
-        color: #999
-      li.product_image
-        cursor: move
-        float: left
-        margin-right: 1em
-        .icon,
-        .meta
-          margin-bottom: 0.5em
-          min-width: 10em
-  #product-variants
-    td.missing_value
-      background: yellow
-
-
-table.products
-  .product-actions
-    visibility: hidden
-  tbody 
-    tr:hover .product-actions
-      visibility: visible
-    td
-      padding: 0.5em
-    .image-container
-      float: left
-      height: 50px
-      margin-right: 1em
-      width: 50px
-    td.variants
-      .badge
-        margin-right: 1em
-
-/* Product Relationships
-.product_relationship_fields 
-  li
-    display: inline
-    select
-      width: auto
+          width: 25%
+      .customer_addresses 
+        width: 100%
+        legend
+          border-bottom: none
+          margin-bottom: none
+        .address
+          margin-right: 0
+          width: 50%
 
 
 
 
 
-.published-toggle
-  background-image: url(image-path("breeze/yes-no-toggle.png"))
-  background-repeat: no-repeat
-  @include border-radius(4px)
-  width: 114px
-  height: 28px
-  // margin: 0px 0px 8px
-  cursor: pointer
+  .clearer
+    clear: both
 
-#product-published .published-toggle
-  float: right
-
-
-
-.product-edit .tab-pane, .product-new .tab-pane
-  /*  top: 0px !important
-
-
-#product-edit img.feature
-  float: left
-
-/* Tags Page
-table.tags 
-  .published-toggle, &.variants .published-toggle
-    display: inline-block
-  input.tag-published
-    display: none
-  tr.tag
-    td
-      &.name
-        font-size: 125%
-        font-weight: bold
-      ul.products
-        color: #aaaaaa
-        font-size: 80%
-        margin: 0
-        padding: 0
-        li.product
-          display: inline
-          font-weight: normal
-          list-style: none
-
-/* Product Tags
-fieldset.product-tags
-  margin: 8px 0px
-  padding: 8px 0px 0px
-  legend
-    position: relative
-    top: 4px
-  ol.form
-    margin: 0px
-    width: 184px
-    overflow-y: auto
-    li
-      margin: 0px 0px 1px
-      background: #ccc
-      padding: 4px
-      @include border-radius(4px)
-
-/* Variants
-
-table.fancy.variants
-  clear: left
-  .actions
-    padding: 1em 0 0 0
-
-/** CONTEXTUAL *********************************
-
-.edit-context
-  position: relative
-  margin-top: -12px
-
-.new-context
-  position: relative
-  margin-top: -12px
-  h3
-    margin: 0
-    padding-left: 8px
-    padding-top: 8px
-    font-size: 125%
-
-.edit-context
-  img
-    display: block
-    margin: 10px auto
-  label
-    float: none !important
-
-.new-context label
-  float: none !important
-
-.edit-context input, .new-context input
-  width: 240px !important
-
-.buttons
-  position: relative
-  img
-    position: absolute
-    margin: 0
-    bottom: -12px
-    left: -40px
-
-.new-context
-  background-color: #ffffc0
-  img
-    display: block
-    margin: 0px auto
-    padding-top: 10px
-  .buttons
-    position: absolute
-    right: 8px
-    bottom: 8px
-
-table
-  &.contextual tbody tr.edit .buttons
-    position: absolute
-    right: 0px
-    bottom: 8px
-  &.fancy tbody tr.edit .table-actions button
-    margin-left: 8px
-
-
-#coupon-details #coupon_type li.radio_button
-  width: 140px
-  display: inline-block
-  label
-    float: none
-    display: inline
-
-h1 .new
-  float: right
-
-.new.contextual.disabled
-  background-color: #6A952F
-
-/* Properties
-table.properties 
-  tr.property 
-    td
-      padding: 0.5em
-      .option
-        background: #999999
-        color: white
-        float: left
-        @include border-radius(0.5em)
-        line-height: 1.5
-        margin: 0 0.5em 0.5em 0
-        padding: 0.25em 0.5em
-
-/* Post tags 
-.textboxlist 
-  font-size: 11px
-  cursor: text
- 
-.textboxlist-bits 
-  zoom: 1
-  overflow: hidden
-  margin: 0
-  padding: 3px 4px 0 !important
-  border: 1px solid #999
-  *padding-bottom: 3px !important
- 
-.textboxlist-bit 
-  list-style-type: none
-  float: left
-  display: block
-  padding: 0
-  margin: 0 5px 3px 0 !important
-  cursor: default
- 
-.textboxlist-bit-editable 
-  border: 1px solid #fff
- 
-.textboxlist-bit-editable-input 
-  border: 0
-  padding: 2px 0 !important
-  *padding-bottom: 0
-  height: 14px
-  font-size: 11px
- 
-.textboxlist-bit-editable-input:focus 
-  outline: 0
- 
-.textboxlist-bit-box 
-  position: relative
-  line-height: 18px
-  padding: 0 5px !important
-  @include border-radius(3px)
-  border: 1px solid #CAD8F3
-  background: #DEE7F8
-  cursor: default
- 
-.textboxlist-bit-box-deletable 
-  padding-right: 15px !important
- 
-.textboxlist-bit-box-deletebutton 
-  position: absolute
-  right: 4px
-  top: 6px
-  display: block
-  width: 7px
-  height: 7px
-  font-size: 1px
-  background: url('close.gif')
- 
-.textboxlist-bit-box-deletebutton:hover 
-  border: none
-  background-position: 7px
-  text-decoration: none
- 
-.textboxlist-bit-box-hover 
-  background: #BBCEF1
-  border: 1px solid #6D95E0
- 
-.textboxlist-bit-box-focus 
-  border-color: #598BEC
-  background: #598BEC
-  color: #fff
- 
-.textboxlist-bit-box-focus .textboxlist-bit-box-deletebutton 
-  background-position: bottom
- 
-
-.textboxlist-autocomplete 
-  position: absolute
- 
-.textboxlist-autocomplete-placeholder, .textboxlist-autocomplete-results 
-  opacity: 0.9
-  filter: alpha(opacity=90)
-  background: #eee
-  @include box-shadow
-  border: 1px solid #999
-  border-top: none
-  display: none
- 
-.textboxlist-autocomplete-placeholder 
-  padding: 5px 7px
-
-.textboxlist-autocomplete-results 
-  margin: 0
-  padding: 0
-
-.textboxlist-autocomplete-result 
-  margin: 0
-  padding: 5px
-  list-style-type: none
-  background: #eee
-
-.textboxlist-autocomplete-result-focus 
-  background: #C6D9E4
-
-.textboxlist-autocomplete-highlight 
-  background: #EEF0C4
-  font-weight: bold
- 
-/* Forms
-/* TODO: Merge with Breeze Core admin design
-#main 
-  div.actions
-    background: #cccccc
-    border: 1px solid #aaaaaa
-    @include border-radius(4px)
-    float: right
-    width: 223px 
-    padding: 8px 8px 0 8px
-    &.horizontal
-      width: auto
-      padding: 8px 0 8px 8px
-      .large.button
-        margin: 0 8px 0 0
-    .large.button 
-      display: block
-      float: left
-      width: 223px
-      margin: 0 0 8px 0
-      padding: 8px 0px 9px
-      text-align: center
-
-table.shipping_methods
-  .default
-    font-style: italic
-    color: #aaaaaa
-table.sortable
-  tr
-    cursor: move
-  tr.empty
+  abbr[title]
+    border: none
     cursor: default
 
 
-form
-  margin: 0
 
-/* Countries
-#countries_box
-  clear: both
+  /* Left Panel 
+  #left
+    #store-switcher
+      padding: 8px
+      text-shadow: rgba(255, 255, 255, 0.5) 0px 1px
+      label
+        float: left
+        font-weight: bold
+        text-transform: uppercase
+        font-size: 130%
+        vertical-align: middle
+    .store-actions
+      border-top: none
+      margin: 0
+      padding: 0
+      li
+        display: inline
+        line-height: inherit
+        list-style: none
+        a
+          border: 1px solid #AAA
+          border-right: none
+          position: relative
+          display: block
+          background: #ccc
+          margin: 0px -9px 8px 8px
+          padding: 8px
+          color: #222
+          text-decoration: none
+          @include border-left-radius(4px)
+          strong
+            display: block
+            font-size: 125%
+          &:hover
+            background: #bbb
+          .badge
+            float: right
+        &.active a
+          background: #f2f2f2
+          @include box-shadow
+        small
+          position: absolute
+          right: 0.5em
+          top: 50%
+          min-width: 1.5em
+          height: 1.5em
+          line-height: 1.5em
+          margin: -0.75em 0em 0em
+          text-align: center
+          vertical-align: middle
+          background: #ec008c
+          color: white
+          font-size: 1.0em
+          @include border-radius(0.75em)
+        &.active small
+          margin-right: 8px
 
-/* Orders Index
-i.icon-sort_order_asc,
-i.icon-sort_order_desc
-  color: #999999
-  background-repeat: no-repeat
+  /* Products
+  .products-container
+    position: relative
+
+  #edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
+    background: none
+    position: relative
+
+  #edit_product #main-tabs-content, #product_new #main-tabs-content
+    position: relative
+
+
+  form#edit_product
+    margin: 0 2em 1em 1em
+    .container
+      @include box-sizing(border-box)
+      width: 100%
+      .new.button
+        float: right
+        margin: 12px
+      table
+        background: white
+    #product-details
+      position: relative
+      width: 100%
+      fieldset
+        input#product_title
+          width: 20em
+        input#product_teaser
+          width: 40em
+        input#product_slug
+          margin-left: 0.5em
+          width: 10em
+      .actions
+        #product-published
+          margin: 0px
+          padding: 0px
+          label
+            padding-top: 6px
+            float: left
+            width: 60px
+            font-weight: bold
+          li.check_box
+            padding-left: 0
+    #product-images
+      ul#product_images
+        clear: both
+        margin: 1em
+        padding: 0
+        li
+          list-style: none
+        li.empty
+          text-align: center
+          vertical-align: middle
+          color: #999
+        li.product_image
+          cursor: move
+          float: left
+          margin-right: 1em
+          .icon,
+          .meta
+            margin-bottom: 0.5em
+            min-width: 10em
+    #product-variants
+      td.missing_value
+        background: yellow
+
+
+  table.products
+    .product-actions
+      visibility: hidden
+    tbody 
+      tr:hover .product-actions
+        visibility: visible
+      td
+        padding: 0.5em
+      .image-container
+        float: left
+        height: 50px
+        margin-right: 1em
+        width: 50px
+      td.variants
+        .badge
+          margin-right: 1em
+
+  /* Product Relationships
+  .product_relationship_fields 
+    li
+      display: inline
+      select
+        width: auto
+
+
+
+
+
+  .published-toggle
+    background-image: url(image-path("breeze/yes-no-toggle.png"))
+    background-repeat: no-repeat
+    @include border-radius(4px)
+    width: 114px
+    height: 28px
+    // margin: 0px 0px 8px
+    cursor: pointer
+
+  #product-published .published-toggle
+    float: right
+
+
+
+  .product-edit .tab-pane, .product-new .tab-pane
+    /*  top: 0px !important
+
+
+  #product-edit img.feature
+    float: left
+
+  /* Tags Page
+  table.tags 
+    .published-toggle, &.variants .published-toggle
+      display: inline-block
+    input.tag-published
+      display: none
+    tr.tag
+      td
+        &.name
+          font-size: 125%
+          font-weight: bold
+        ul.products
+          color: #aaaaaa
+          font-size: 80%
+          margin: 0
+          padding: 0
+          li.product
+            display: inline
+            font-weight: normal
+            list-style: none
+
+  /* Product Tags
+  fieldset.product-tags
+    margin: 8px 0px
+    padding: 8px 0px 0px
+    legend
+      position: relative
+      top: 4px
+    ol.form
+      margin: 0px
+      width: 184px
+      overflow-y: auto
+      li
+        margin: 0px 0px 1px
+        background: #ccc
+        padding: 4px
+        @include border-radius(4px)
+
+  /* Variants
+
+  table.fancy.variants
+    clear: left
+    .actions
+      padding: 1em 0 0 0
+
+  /** CONTEXTUAL *********************************
+
+  .edit-context
+    position: relative
+    margin-top: -12px
+
+  .new-context
+    position: relative
+    margin-top: -12px
+    h3
+      margin: 0
+      padding-left: 8px
+      padding-top: 8px
+      font-size: 125%
+
+  .edit-context
+    img
+      display: block
+      margin: 10px auto
+    label
+      float: none !important
+
+  .new-context label
+    float: none !important
+
+  .edit-context input, .new-context input
+    width: 240px !important
+
+  .buttons
+    position: relative
+    img
+      position: absolute
+      margin: 0
+      bottom: -12px
+      left: -40px
+
+  .new-context
+    background-color: #ffffc0
+    img
+      display: block
+      margin: 0px auto
+      padding-top: 10px
+    .buttons
+      position: absolute
+      right: 8px
+      bottom: 8px
+
+  table
+    &.contextual tbody tr.edit .buttons
+      position: absolute
+      right: 0px
+      bottom: 8px
+    &.fancy tbody tr.edit .table-actions button
+      margin-left: 8px
+
+
+  #coupon-details #coupon_type li.radio_button
+    width: 140px
+    display: inline-block
+    label
+      float: none
+      display: inline
+
+  h1 .new
+    float: right
+
+  .new.contextual.disabled
+    background-color: #6A952F
+
+  /* Properties
+  table.properties 
+    tr.property 
+      td
+        padding: 0.5em
+        .option
+          background: #999999
+          color: white
+          float: left
+          @include border-radius(0.5em)
+          line-height: 1.5
+          margin: 0 0.5em 0.5em 0
+          padding: 0.25em 0.5em
+
+  /* Post tags 
+  .textboxlist 
+    font-size: 11px
+    cursor: text
+   
+  .textboxlist-bits 
+    zoom: 1
+    overflow: hidden
+    margin: 0
+    padding: 3px 4px 0 !important
+    border: 1px solid #999
+    *padding-bottom: 3px !important
+   
+  .textboxlist-bit 
+    list-style-type: none
+    float: left
+    display: block
+    padding: 0
+    margin: 0 5px 3px 0 !important
+    cursor: default
+   
+  .textboxlist-bit-editable 
+    border: 1px solid #fff
+   
+  .textboxlist-bit-editable-input 
+    border: 0
+    padding: 2px 0 !important
+    *padding-bottom: 0
+    height: 14px
+    font-size: 11px
+   
+  .textboxlist-bit-editable-input:focus 
+    outline: 0
+   
+  .textboxlist-bit-box 
+    position: relative
+    line-height: 18px
+    padding: 0 5px !important
+    @include border-radius(3px)
+    border: 1px solid #CAD8F3
+    background: #DEE7F8
+    cursor: default
+   
+  .textboxlist-bit-box-deletable 
+    padding-right: 15px !important
+   
+  .textboxlist-bit-box-deletebutton 
+    position: absolute
+    right: 4px
+    top: 6px
+    display: block
+    width: 7px
+    height: 7px
+    font-size: 1px
+    background: url('close.gif')
+   
+  .textboxlist-bit-box-deletebutton:hover 
+    border: none
+    background-position: 7px
+    text-decoration: none
+   
+  .textboxlist-bit-box-hover 
+    background: #BBCEF1
+    border: 1px solid #6D95E0
+   
+  .textboxlist-bit-box-focus 
+    border-color: #598BEC
+    background: #598BEC
+    color: #fff
+   
+  .textboxlist-bit-box-focus .textboxlist-bit-box-deletebutton 
+    background-position: bottom
+   
+
+  .textboxlist-autocomplete 
+    position: absolute
+   
+  .textboxlist-autocomplete-placeholder, .textboxlist-autocomplete-results 
+    opacity: 0.9
+    filter: alpha(opacity=90)
+    background: #eee
+    @include box-shadow
+    border: 1px solid #999
+    border-top: none
+    display: none
+   
+  .textboxlist-autocomplete-placeholder 
+    padding: 5px 7px
+
+  .textboxlist-autocomplete-results 
+    margin: 0
+    padding: 0
+
+  .textboxlist-autocomplete-result 
+    margin: 0
+    padding: 5px
+    list-style-type: none
+    background: #eee
+
+  .textboxlist-autocomplete-result-focus 
+    background: #C6D9E4
+
+  .textboxlist-autocomplete-highlight 
+    background: #EEF0C4
+    font-weight: bold
+   
+  /* Forms
+  /* TODO: Merge with Breeze Core admin design
+  #main 
+    div.actions
+      background: #cccccc
+      border: 1px solid #aaaaaa
+      @include border-radius(4px)
+      float: right
+      width: 223px 
+      padding: 8px 8px 0 8px
+      &.horizontal
+        width: auto
+        padding: 8px 0 8px 8px
+        .large.button
+          margin: 0 8px 0 0
+      .large.button 
+        display: block
+        float: left
+        width: 223px
+        margin: 0 0 8px 0
+        padding: 8px 0px 9px
+        text-align: center
+
+  table.shipping_methods
+    .default
+      font-style: italic
+      color: #aaaaaa
+  table.sortable
+    tr
+      cursor: move
+    tr.empty
+      cursor: default
+
+
+  form
+    margin: 0
+
+  /* Countries
+  #countries_box
+    clear: both
+
+  /* Orders Index
+  i.icon-sort_order_asc,
+  i.icon-sort_order_desc
+    color: #999999
+    background-repeat: no-repeat
