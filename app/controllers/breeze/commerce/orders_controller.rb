@@ -2,7 +2,7 @@ module Breeze
   module Commerce
     class OrdersController < Breeze::Commerce::Controller
       include Breeze::Commerce::CurrentOrder
-      layout "breeze/commerce/checkout_funnel"
+      layout "breeze/commerce/checkout_funnel/checkout_funnel_layout"
       respond_to :html, :js
       before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate]
 
@@ -12,6 +12,9 @@ module Breeze
 
       def show
         @order = Breeze::Commerce::Order.find(params[:id])
+        @customer = Breeze::Commerce::Customer.new
+        @allow_returning_customer_login = store.allow_returning_customer_login
+        render "layouts/breeze/commerce/checkout_funnel/confirmation_page"
       end
 
       # Displays the current cart
@@ -68,7 +71,7 @@ module Breeze
           end
         end
 
-        @order.update_attributes params[:order] # SHouldn't need this as well as save below
+        @order.update_attributes params[:order]
         @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
 
 
@@ -112,7 +115,7 @@ module Breeze
         # Empty the cart
         session[:cart_id] = nil
 
-        render action: :show
+        render "layouts/breeze/commerce/checkout_funnel/confirmation_page"
       end
 
       def payment_failed

@@ -8,7 +8,7 @@ module Breeze
 
         def new
           @customer = Breeze::Commerce::Customer.new
-          @customer.shipping_address ||= Breeze::Commerce::Address.new # Move to model
+          @customer.shipping_address ||= Breeze::Commerce::Address.new
           @customer.billing_address ||= Breeze::Commerce::Address.new
         end
         
