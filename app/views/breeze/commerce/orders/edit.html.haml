@@ -7,7 +7,11 @@
       %h1 Shopping Cart
   .row.cart-container
     .span12
-      = render :partial => "breeze/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
+      #order-details.clearfix
+        %h2 Your Order
+        #order-line_items
+          = render :partial => "breeze/commerce/line_items/line_items_edit", :locals => { line_items: @order.line_items.unarchived, :form => form }
+          = render :partial => "breeze/commerce/line_items/totals_edit", locals: { order: @order }
       .form-actions
         .btn-group
           = link_to store.home_page.permalink, :class => "btn", :id => "continue-shopping" do
@@ -17,3 +21,6 @@
             = link_to breeze.checkout_order_path(@order), method: :get, :class => "btn btn-primary" do
               %i.icon-arrow-right
               %span.title Go to Checkout
+.payment_gateway
+  Payments processed by
+  .gateway.payment_express Payment Express

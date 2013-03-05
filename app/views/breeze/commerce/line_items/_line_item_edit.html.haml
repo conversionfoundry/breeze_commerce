@@ -6,7 +6,7 @@
     %p.variant_description= line_item.variant.description
     - if line_item.customer_message
       %p.customer_message
-        = line_item_fields.text_field :customer_message, class: 'line_item-customer_message', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }
+        = line_item_fields.text_field :customer_message, class: 'line_item-customer_message', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s, character_limit: line_item.variant.customer_message_limit}
   %td.price
     - if line_item.variant.discounted
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)
