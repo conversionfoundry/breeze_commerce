@@ -13,35 +13,39 @@
           = @order.billing_status.name
         = @order.billing_status.description
       
-    #order-customer.section
+    #order-customer
       = render :partial => "breeze/commerce/customers/card", :locals => {:customer => @order.customer}
     
-    #order-details
+    #order-details.clearfix
+      %h2 Your Order
+      #order-date
+        %span= @order.transaction_completed_at.strftime "%A %d %B %Y"
       #order-number
         %span Order Number:
         %span= @order.order_number
-      #order-customer_comment
-        = @order.comment
-      #order-line_items.section
-        = render :partial => "breeze/commerce/orders/order", locals: {order: @order}
+      #order-line_items.clearfix
+        = render :partial => "breeze/commerce/line_items/line_items_show", :locals => { line_items: @order.line_items.unarchived }
+        = render :partial => "breeze/commerce/line_items/totals_show", locals: { order: @order }
+        #order-customer_comment
+          = @order.comment
       #order-billing
-        #order-billing_address.section.address
+        #order-billing_address.address
           %h3 Billing Address
           - if @order.billing_address
             = render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address
           - else
             Enter a billing address
       #order-shipping
-        #order-shipping_address.section.address
+        #order-shipping_address.address
           %h3 Shipping Address
           - if @order.shipping_address
             = render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address
           - else
             Enter a shipping address
-      .clearer
-  
-    #order-payments
-      = render :partial => "breeze/commerce/payments/payments", :object => @order.payments
+      #order-payments
+        = render :partial => "breeze/commerce/payments/payments", :object => @order.payments
+
+
     .row
       .span12
         .form-actions
