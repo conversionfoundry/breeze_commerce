@@ -15,7 +15,6 @@
     = link_to "Edit Profile", breeze.edit_customer_path(current_commerce_customer), :class => "btn"
 - else
   .customer-card
-    %h3 Save your details
     .details
       %p.customer-name
         %span.name
@@ -26,6 +25,7 @@
         %li.email
           = @order.email
     - if store.allow_returning_customer_login
+      %h3 Save your details
       = form_for @customer, as: :customer, url: breeze.customers_path do |form|
         .information
           %p

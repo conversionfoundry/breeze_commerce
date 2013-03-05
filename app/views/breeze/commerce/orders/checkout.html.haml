@@ -266,20 +266,14 @@
               = link_to '#', :class => "btn", :id => "changed-my-mind" do
                 %span.title Edit Confirmation
     .cart-container.span4
-      = link_to breeze.edit_order_path, :class => "btn", :id => "edit-items" do
-        %i.icon-shopping-cart
-        %span.title Edit Cart
-      %h1 Your Order
-      %table#cart.table-striped.order
-        %thead
-          %tr
-            %th{:colspan => "3"} Item
-            %th Description
-            %th Price
-            %th Quantity
-            %th TOTAL
-        %tbody
-          = render :partial => "breeze/commerce/line_items/line_items_show", :locals => {line_items: @order.line_items.unarchived}
-        %tfoot
+      #order-details.clearfix
+        = link_to breeze.edit_order_path, :class => "btn", :id => "edit-items" do
+          %i.icon-shopping-cart
+          %span.title Edit Cart
+        %h2 Your Order
+        #order-line_items
+          = render :partial => "breeze/commerce/line_items/line_items_show", :locals => { line_items: @order.line_items.unarchived }
           = render :partial => "breeze/commerce/line_items/totals_show", locals: { order: @order }
-
+      .payment_gateway
+        Payments processed by
+        .gateway.payment_express Payment Express

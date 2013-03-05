@@ -1,0 +1,11 @@
+%table#cart.table-striped.line_items
+  %tbody
+    - if line_items.unarchived.exists?
+      = form.fields_for :line_items do |line_item_fields|
+        - if line_item_fields.object.archived?
+          = ''
+        - else
+          = render :partial => "breeze/commerce/line_items/line_item_edit", :locals => { :line_item_fields => line_item_fields, :line_item => line_item_fields.object }
+    - else
+      %tr
+        %td.empty{:colspan => "4"} No line items yet.
