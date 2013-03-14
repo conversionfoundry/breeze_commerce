@@ -5,10 +5,14 @@
     %p.default
       = 'Default country for new orders.' if country == store.default_country
   %td.shipping_methods
-    %ul.shipping_methods
-    - country.shipping_methods.each do |shipping_method|
-      %li
-        = shipping_method.name
+    - if country.shipping_methods.any?
+      %ul.shipping_methods
+      - country.shipping_methods.each do |shipping_method|
+        %li
+          = shipping_method.name
+    - else
+      .alert.alert-error
+        This country has no shipping methods assigned.
   %td.actions.country-actions
     = link_to "Make Default", admin_store_store_path(store, 'store[default_country_id]' => country.id), :method => :put, :class => 'small black button'
     = link_to "Edit", edit_admin_store_country_path(country.id), :class => "small black edit button", remote: true

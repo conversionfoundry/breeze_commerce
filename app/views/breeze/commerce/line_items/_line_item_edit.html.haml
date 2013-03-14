@@ -1,12 +1,14 @@
-%tr.line_item{:id => line_item.id}
+%tr.line_item{id: line_item.id}
   %td.item
     = image_tag line_item.variant.image.url(:thumbnail), class: 'thumbnail' if line_item.variant.image
     %p.product_name= line_item.product.title
     %h4.variant_name= line_item.variant.name
-    %p.variant_description= line_item.variant.description
     - if line_item.customer_message
-      %p.customer_message
-        = line_item_fields.text_field :customer_message, class: 'line_item-customer_message', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s, character_limit: line_item.variant.customer_message_limit}
+      .control-group.customer_message
+        .controls
+          = line_item_fields.text_field :customer_message, class: 'line_item-customer_message', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s, character_limit: line_item.variant.customer_message_limit}
+    - else
+      %p.variant_description= line_item.variant.description
   %td.price
     - if line_item.variant.discounted
       %span.old_price= number_to_currency(line_item.variant.sell_price, :locale => :nz)

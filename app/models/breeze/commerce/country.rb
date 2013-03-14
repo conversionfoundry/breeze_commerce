@@ -7,7 +7,7 @@ module Breeze
 
       attr_accessible :name, :shipping_method_ids
       field :name
-      validates_presence_of :name, :shipping_method_ids
+      validates_presence_of :name, :shipping_method_ids, message: "Please select one or more shipping methods for this country."
 
     end
   end

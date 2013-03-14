@@ -1,0 +1,31 @@
+div.customer,
+a.customer
+  background: white
+  border: solid 1px #eeeeee
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  color: #444444
+  display: block
+  float: left
+  margin: 0
+  padding: 2em
+  width: 20em
+  text-decoration: none
+  .customer-name
+    font-size: 200%
+  .customer-contact
+    li
+      list-style: none
+      text-align: right
+  .form-actions
+    margin: 0 -2em -2em -2em
+    float: none
+    width: auto
+a.customer:hover
+  background: #cccccc
+
+#edit_customer
+  &.form-horizontal
+    .control-label
+      width: 60px

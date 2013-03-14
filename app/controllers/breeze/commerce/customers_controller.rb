@@ -31,16 +31,10 @@ module Breeze
         @billing_statuses = Breeze::Commerce::OrderStatus.billing
         @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
         @new_order = Breeze::Commerce::Order.new
+        @same_address = @customer.shipping_address == @customer.billing_address
+        @shipping_countries = Breeze::Commerce::Country.order_by(:name.asc)
+        @billing_countries = Breeze::Commerce::COUNTRIES
       end
-
-      def edit
-        @customer = Breeze::Commerce::Customer.find params[:id]
-        @customer.shipping_address ||= Breeze::Commerce::Address.new
-        @customer.billing_address ||= Breeze::Commerce::Address.new
-        @billing_statuses = Breeze::Commerce::OrderStatus.billing
-        @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
-        @new_order = Breeze::Commerce::Order.new
-     end
 
       def update
         @customer = Breeze::Commerce::Customer.find params[:id]

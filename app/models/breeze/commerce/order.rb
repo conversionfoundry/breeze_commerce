@@ -5,11 +5,12 @@ module Breeze
       include Mongoid::Timestamps
       include Mixins::Archivable
       
-      attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id
+      attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id, :serialized_coupon, :coupon
       field :email
       field :personal_message
       field :comment
       field :payment_completed
+      field :serialized_coupon, type: Hash
 
       belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
       belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
@@ -91,8 +92,16 @@ module Breeze
         end
       end
 
+      def coupon_total
+        if self.coupon
+          discount = coupon.calculate_discount(self)
+        else
+          0
+        end
+      end
+
       def total
-        item_total + shipping_total
+        [ (item_total - coupon_total), 0].max + shipping_total
       end
 
       def to_s
@@ -121,6 +130,18 @@ module Breeze
           new_order
         else
           false
+        end
+      end
+
+      def serialize_coupon coupon
+        self.update_attribute(:serialized_coupon, coupon.attributes.dup)
+      end
+
+      def coupon
+        if serialized_coupon
+          Breeze::Commerce::Coupons::Coupon.new serialized_coupon
+        else
+          nil
         end
       end
 

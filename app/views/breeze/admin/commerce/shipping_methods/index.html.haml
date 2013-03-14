@@ -3,7 +3,11 @@
   = panes.inner do
     = scrollable_layout do
       .actions.horizontal
-        = link_to "New shipping country", new_admin_store_country_path, class: "large green button new country", remote: true
+        - if Breeze::Commerce::ShippingMethod.exists?
+          = link_to "New shipping country", new_admin_store_country_path, class: "large green button new country", remote: true
+        - else
+          .alert
+            You'll need to create at least one shipping method before you can add countries
       %h1 Countries
       .box
         %p

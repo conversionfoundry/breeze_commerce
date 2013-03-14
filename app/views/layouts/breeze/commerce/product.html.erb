@@ -8,38 +8,6 @@
     <%= stylesheet_link_tag "breeze/breeze" %>
     <%= stylesheet_link_tag "breeze/breeze_commerce" %>
     <%= csrf_meta_tag %>
-
-    <script type="text/javascript">
-      $(document).ready(function() {
-
-        // Image gallery, if product has more than one image
-        if ( $('#gallery').length > 0 ) {
-          Galleria.loadTheme("<%= asset_path 'breeze/galleria/themes/classic/galleria.classic.min' %>");
-          $('#gallery').galleria({
-            width: 500,
-            height: 500,
-            transitionInitial: 'fade'  
-          });
-        };
-          
-        // Animate variants flying to the minicart
-        $('input.btn-add_to_cart').live('click', function(event) {
-          variant = $(this).closest('.variant');
-          cart = $('.breeze-minicart').first(); // Note that there could be more than one minicart on the page
-          startOffset = variant.offset();
-          endOffset = cart.offset();
-          endOffset.top += cart.height() / 2 - variant.height() / 2;
-          endOffset.left += cart.width() / 2 - variant.width() / 2;
-          variant.clone()
-            .prependTo($('.variant .name').first())
-            .css({'position' : 'absolute', 'top' : startOffset.top, 'left' : startOffset.left})
-            .animate({opacity: 0.1, left: endOffset.left, top: endOffset.top}, 1000, "easeInOutCirc", function() {
-              // When animation is finished...
-              $(this).remove();
-              })
-        });
-      });
-    </script>
   </head>
 
   <body>    
@@ -109,7 +77,39 @@
 
 
     </div>
-    
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+
+        // Image gallery, if product has more than one image
+        if ( $('#gallery').length > 0 ) {
+          Galleria.loadTheme("<%= asset_path 'breeze/galleria/themes/classic/galleria.classic.min' %>");
+          $('#gallery').galleria({
+            width: 500,
+            height: 500,
+            transitionInitial: 'fade'  
+          });
+        };
+          
+        // Animate variants flying to the minicart
+        $('input.btn-add_to_cart').live('click', function(event) {
+          variant = $(this).closest('.variant');
+          cart = $('.breeze-minicart').first(); // Note that there could be more than one minicart on the page
+          startOffset = variant.offset();
+          endOffset = cart.offset();
+          endOffset.top += cart.height() / 2 - variant.height() / 2;
+          endOffset.left += cart.width() / 2 - variant.width() / 2;
+          variant.clone()
+            .prependTo($('.variant .name').first())
+            .css({'position' : 'absolute', 'top' : startOffset.top, 'left' : startOffset.left})
+            .animate({opacity: 0.1, left: endOffset.left, top: endOffset.top}, 1000, "easeInOutCirc", function() {
+              // When animation is finished...
+              $(this).remove();
+              })
+        });
+      });
+    </script>
+        
   </body>
 </html>
 
