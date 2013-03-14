@@ -3,6 +3,11 @@
     %h2 Previous Orders
     = render :partial => "breeze/commerce/orders/orders", :object => @customer.orders.unarchived.not_browsing
   .span4
-    .customer-show{:id => "customer_#{@customer.id}"}
-      = render :partial => "partials/commerce/minicart"
-      = render :partial => "breeze/commerce/customers/card", :locals => {:customer => @customer}
+    %h2 Customer Profile
+    .customer{:id => "customer_#{@customer.id}"}
+      .customer-show
+        = render :partial => "breeze/commerce/customers/customer_show", :locals => {:customer => @customer}
+      .clearer
+      .customer-edit{style: "display: none"}
+        = render :partial => "breeze/commerce/customers/customer_edit", :locals => {:customer => @customer}
+      .clearer

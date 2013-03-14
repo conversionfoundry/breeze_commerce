@@ -11,7 +11,7 @@ module RSpec::Rails
     include ActionDispatch::Integration::Runner
     include RSpec::Rails::TestUnitAssertionAdapter
     include ActionDispatch::Assertions
-    include Capybara
+    include Capybara::DSL
     include RSpec::Matchers
  
     module InstanceMethods

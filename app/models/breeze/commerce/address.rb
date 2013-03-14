@@ -20,6 +20,17 @@ module Breeze
 
       validates_presence_of :name, :address, :city
       
+      def ==(other_address)
+        self.class.equal?(other_address.class) && 
+        name     == other_address.name && 
+        address  == other_address.address && 
+        city     == other_address.city && 
+        state    == other_address.state && 
+        postcode == other_address.postcode && 
+        country  == other_address.country && 
+        phone    == other_address.phone
+      end
+
       def to_s
         result = ''
         result += (name || 'Unknown Name') + "\n"

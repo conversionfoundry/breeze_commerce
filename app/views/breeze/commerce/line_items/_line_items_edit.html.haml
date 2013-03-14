@@ -1,4 +1,4 @@
-%table#cart.table-striped.line_items
+%table.cart.table-striped.line_items
   %tbody
     - if line_items.unarchived.exists?
       = form.fields_for :line_items do |line_item_fields|
