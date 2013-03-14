@@ -12,24 +12,31 @@
     = form.text_field :description, :required => false
     = form.number_field :cost_price, :required => false, :label => "Cost Price", before: '$', step: 0.01
     = form.number_field :sell_price, :required => true, :label => "Sell Price", before: '$', step: 0.01
+
+  = form.fieldset do 
     = form.check_box :discounted, :label => "Temporary discount price"
   = form.fieldset id: 'container-discounted_sell_price', style:('display: none' unless @variant.discounted) do
     = form.number_field :discounted_sell_price, :label => "Discounted Sell Price", before: '$', step: 0.01
+
+  = form.fieldset do 
+    = form.check_box :requires_customer_message, label: "This variant requires a message from the customer"
+  = form.fieldset id: 'container-requires_customer_message', style:('display: none' unless @variant.requires_customer_message) do
+    = form.number_field :customer_message_limit, :required => true, :label => "Character limit for customer message", step: 1
+
   = form.fieldset 'options' do
     - @variant.product.properties.each do |property|
       - if property.options.count > 0
         %h4= property.name
         - selected_option_id = @variant.option_for_property(property)? @variant.option_for_property(property).id : nil
         = select_tag "options[#{property.name}]", options_for_select(property.options.collect { |o| [ o.name, o.id ] }, selected_option_id)
-  = form.fieldset 'Personalisation' do
-    = form.check_box :requires_customer_message, label: "This variant requires a message from the customer"
-    = form.number_field :customer_message_limit, :required => true, :label => "Character limit for customer message", step: 1
 
 :javascript
   // Show or hide the discounted sell price box depending on discounted checkbox state
   $('#variant_discounted').live('change', function() {
     $('#container-discounted_sell_price').toggle();
   });
-
+  $('#variant_requires_customer_message').live('change', function() {
+    $('#container-requires_customer_message').toggle();
+  });
 
 

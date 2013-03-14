@@ -13,8 +13,4 @@ describe Breeze::Commerce::Country do
 			build(:country, shipping_methods: []).should_not be_valid
 		end
 	end
-
-	it "sets the first shipping method as default if not given a default"
-	it "gives an appropriate warning message if there are no shipping methods"
-
 end

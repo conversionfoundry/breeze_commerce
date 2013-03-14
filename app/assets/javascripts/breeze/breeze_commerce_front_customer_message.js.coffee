@@ -1,5 +1,5 @@
 $(document).ready ->
-  $(".new_line_item").validate
+  $(".new_line_item.requires_customer_message").validate
     rules:
       "line_item[customer_message]": 
         required: true

@@ -7,7 +7,7 @@
       %h1= @order.new_record? ? 'New Order' : "Editing Order "
       = render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order
       #order-customer.section
-        .customer-card
+        .customer
           - if @order.customer
             = render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer}
           - else

@@ -1,81 +1,7 @@
-/* CSS for Breeze Commerce Admin
+@import "variables"
+@import "mixins"
 
-/* Variables
-$colour-highlight: rgba(141, 198, 63, 0.15)
-
-/* Mixins
-@mixin border-radius ($radii) 
-  -webkit-border-radius: $radii
-  -khtml-border-radius: $radii
-  -moz-border-radius: $radii
-  border-radius: $radii
-
-@mixin border-top-left-radius($radii) 
-  -webkit-border-top-left-radius: $radii
-  -khtml-border-radius-topleft: $radii
-  -moz-border-top-left-radius: $radii
-  -moz-border-radius-topleft: $radii
-  border-top-left-radius: $radii
-
-
-@mixin border-top-right-radius($radii) 
-  -webkit-border-top-right-radius: $radii
-  -khtml-border-radius-topright: $radii
-  -moz-border-top-right-radius: $radii
-  -moz-border-radius-topright: $radii
-  border-top-right-radius: $radii
-
-
-@mixin border-bottom-left-radius($radii) 
-  -webkit-border-bottom-left-radius: $radii
-  -khtml-border-radius-bottomleft: $radii
-  -moz-border-bottom-left-radius: $radii
-  -moz-border-radius-bottomleft: $radii
-  border-bottom-left-radius: $radii
-
-
-@mixin border-bottom-right-radius($radii) 
-  -webkit-border-bottom-right-radius: $radii
-  -khtml-border-radius-bottomright: $radii
-  -moz-border-bottom-right-radius: $radii
-  -moz-border-radius-bottomright: $radii
-  border-bottom-right-radius: $radii
-
-
-@mixin border-top-radius($radii) 
-  @include border-top-left-radius($radii)
-  @include border-top-right-radius($radii)
-
-
-@mixin border-right-radius($radii) 
-  @include border-top-right-radius($radii)
-  @include border-bottom-right-radius($radii)
-
-
-@mixin border-bottom-radius($radii) 
-  @include border-bottom-left-radius($radii)
-  @include border-bottom-right-radius($radii)
-
-
-@mixin border-left-radius($radii) 
-  @include border-top-left-radius($radii)
-  @include border-bottom-left-radius($radii)
-
-@mixin box-shadow
-  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
-  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
-  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
-
-@mixin box-shadow-a
-  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
-  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
-  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
-
-@mixin box-sizing($value)
-  box-sizing: $value
-  -moz-box-sizing: $value
-  -webkit-box-sizing: $value
-
+<<<<<<< HEAD
 @mixin input-placeholder($colour)
   &::-webkit-input-placeholder
     color: $colour
@@ -94,6 +20,14 @@ body.breeze-admin
   input
     @include input-placeholder(#eeeeee)
 
+=======
+.breeze-admin
+  /* Bootstrap overrides
+  .alert
+    margin: 0
+    box-sizing: border-box
+  
+>>>>>>> Another commit that's much too big.
   /* Bulk actions
   .container .with-selected
     position: absolute
@@ -120,8 +54,8 @@ body.breeze-admin
   .discounted_price
     color: red
 
-  /* Customer Card
-  .customer-card
+  /* Customer
+  div.customer
     background: white
     border: solid 1px #eeeeee
     @include box-shadow
@@ -149,7 +83,7 @@ body.breeze-admin
         font-size: 10px
         margin: 0
         width: auto
-  a.customer-card:hover
+  a.customer:hover
     background: #cccccc
 
   /* Addresses
@@ -474,98 +408,6 @@ body.breeze-admin
         &.active small
           margin-right: 8px
 
-  /* Products
-  .products-container
-    position: relative
-
-  #edit_product #main-tabs-tabs, #product_new #main-tabs-tabs
-    background: none
-    position: relative
-
-  #edit_product #main-tabs-content, #product_new #main-tabs-content
-    position: relative
-
-
-  form#edit_product
-    margin: 0 2em 1em 1em
-    .container
-      @include box-sizing(border-box)
-      width: 100%
-      .new.button
-        float: right
-        margin: 12px
-      table
-        background: white
-    #product-details
-      position: relative
-      width: 100%
-      fieldset
-        input#product_title
-          width: 20em
-        input#product_teaser
-          width: 40em
-        input#product_slug
-          margin-left: 0.5em
-          width: 10em
-      .actions
-        #product-published
-          margin: 0px
-          padding: 0px
-          label
-            padding-top: 6px
-            float: left
-            width: 60px
-            font-weight: bold
-          li.check_box
-            padding-left: 0
-    #product-images
-      ul#product_images
-        clear: both
-        margin: 1em
-        padding: 0
-        li
-          list-style: none
-        li.empty
-          text-align: center
-          vertical-align: middle
-          color: #999
-        li.product_image
-          cursor: move
-          float: left
-          margin-right: 1em
-          .icon,
-          .meta
-            margin-bottom: 0.5em
-            min-width: 10em
-    #product-variants
-      td.missing_value
-        background: yellow
-
-
-  table.products
-    .product-actions
-      visibility: hidden
-    tbody 
-      tr:hover .product-actions
-        visibility: visible
-      td
-        padding: 0.5em
-      .image-container
-        float: left
-        height: 50px
-        margin-right: 1em
-        width: 50px
-      td.variants
-        .badge
-          margin-right: 1em
-
-  /* Product Relationships
-  .product_relationship_fields 
-    li
-      display: inline
-      select
-        width: auto
-
 
 
 
@@ -578,18 +420,6 @@ body.breeze-admin
     height: 28px
     // margin: 0px 0px 8px
     cursor: pointer
-
-  #product-published .published-toggle
-    float: right
-
-
-
-  .product-edit .tab-pane, .product-new .tab-pane
-    /*  top: 0px !important
-
-
-  #product-edit img.feature
-    float: left
 
   /* Tags Page
   table.tags 
@@ -837,9 +667,11 @@ body.breeze-admin
       padding: 8px 8px 0 8px
       &.horizontal
         width: auto
-        padding: 8px 0 8px 8px
+        padding: 0.5em
         .large.button
-          margin: 0 8px 0 0
+          margin: 0 0.5em 0 0
+        .large.button:last-child
+          margin: 0
       .large.button 
         display: block
         float: left
@@ -848,16 +680,11 @@ body.breeze-admin
         padding: 8px 0px 9px
         text-align: center
 
-  table.shipping_methods
-    .default
-      font-style: italic
-      color: #aaaaaa
   table.sortable
     tr
       cursor: move
     tr.empty
       cursor: default
-
 
   form
     margin: 0

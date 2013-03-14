@@ -16,6 +16,7 @@ module Breeze
           @countries = Breeze::Commerce::Country.order_by(:name.asc)
           @country_count = @countries.count
           @country = Breeze::Commerce::Country.create params[:country].merge({ position: @country_count })
+          @shipping_methods = Breeze::Commerce::ShippingMethod.unarchived.order_by(:created_at.desc)
         end
 
         def edit

@@ -4,7 +4,7 @@ module Breeze
       include Breeze::Commerce::CurrentOrder
       layout "breeze/commerce/checkout_funnel/checkout_funnel_layout"
       respond_to :html, :js
-      before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate]
+      before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate, :thankyou]
 
       def print
         @order = Order.find params[:id]
@@ -57,14 +57,15 @@ module Breeze
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login
-        @countries = Breeze::Commerce::Country.order_by(:name.asc)
+        @shipping_countries = Breeze::Commerce::Country.order_by(:name.asc)
+        @billing_countries = Breeze::Commerce::COUNTRIES
       end
 
       def submit
         @order = Breeze::Commerce::Order.find(params[:id])
         # Set customer, if any
         if customer_signed_in?
-          @order.customer = current_store_customer
+          @order.customer = current_commerce_customer
         else
           if params[:create_new_account]
             @order.customer = create_customer(@order, params[:new_account_password], store)
@@ -73,7 +74,6 @@ module Breeze
 
         @order.update_attributes params[:order]
         @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
-
 
         if @order.save          
           # Process payment with PxPay
@@ -87,7 +87,7 @@ module Breeze
             redirect_to breeze.checkout_path and return
           end
         else
-          @customer = current_store_customer || Breeze::Commerce::Customer.new
+          @customer = current_commerce_customer || Breeze::Commerce::Customer.new
           render :action => "checkout"
         end
       end
@@ -101,12 +101,13 @@ module Breeze
         @order.payment_completed = true
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
         @order.save
+        @customer = current_commerce_customer || Breeze::Commerce::Customer.new
 
         # Send notification emails
         Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order).deliver
         Breeze::Commerce::OrderMailer.new_order_customer_notification(@order).deliver
 
-        unless store_customer_signed_in?
+        unless commerce_customer_signed_in?
           if @order.customer
             sign_in @order.customer
           end
@@ -121,7 +122,7 @@ module Breeze
       def payment_failed
         @order = Order.find params[:id]
         flash[:error] = '<h4>Payment failed</h4><p>Unfortunately, your order didn\'t go through.</p>'.html_safe
-        @customer = current_store_customer || Breeze::Commerce::Customer.new
+        @customer = current_commerce_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login

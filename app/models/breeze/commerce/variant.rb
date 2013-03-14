@@ -57,14 +57,18 @@ module Breeze
       validates_with AllOptionsFilledValidator
 
       # If there's no variant image, try to find an image for the parent product
-      def image
-        if read_attribute(:image) 
-          read_attribute(:image) 
-        elsif product && product.images.first
-          product.images.first.file
+      def display_image
+        if not image.blank?
+          image
+        elsif product && product.default_image
+          product.default_image.file
         else
           nil
         end
+      end
+
+      def has_own_image?
+        image_filename
       end
 
       def cost_price
