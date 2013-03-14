@@ -1,0 +1,151 @@
+/* Orders
+ul.orders
+  float: left
+  margin: 0
+  padding: 0
+  width: 100%
+  li.order
+    clear: both
+    display: block
+    float: left
+    list-style: none
+    margin: 0 0 1em 0
+    width: 100%
+
+.order
+  background: white
+  border: solid 1px #eeeeee
+  -webkit-box-shadow: 1px 1px 5px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow:    1px 1px 5px rgba(50, 50, 50, 0.75)
+  box-shadow:         1px 1px 5px rgba(50, 50, 50, 0.75)
+  ol.form
+    li
+      list-style: none
+  .order-identification
+    margin: 2em
+  .order-customer_comment
+    color: #383787
+    font: 400 40px/1.0 'Just Another Hand', Helvetica, sans-serif
+    margin: 1.5em 2em 2em 1em
+    transform: rotate(-15deg)
+    -ms-transform: rotate(-15deg) /* IE 9 */
+    -webkit-transform: rotate(-15deg) /* Safari and Chrome */
+    -o-transform: rotate(-15deg) /* Opera */
+    -moz-transform: rotate(-15deg) /* Firefox */
+    width: 10em
+  .order-shipping,
+  .order-billing
+    width: 50%
+    float: left
+    ol.status
+      border: dashed 4px #cccccc
+      -webkit-border-radius: 1em
+      -moz-border-radius: 1em
+      border-radius: 1em
+      padding: 1em 2em 2em 2em
+      .description
+        color: #cccccc
+        float: right
+        margin: 2em 0 0 2em
+        width: 40%
+
+/* Shopping Cart
+
+.cart-container
+  .form-actions 
+    box-sizing: border-box
+    .btn-group
+      float: right
+  table.summary
+    width: 100%
+    margin-bottom: 1em
+    thead th
+      text-align: left
+      &.total
+        text-align: right
+    tfoot
+      border-top: solid 1px #d7d7d7
+      border-bottom: solid 1px #d7d7d7
+      tr.total td.total
+        font-size: 2em
+    input[type=text]
+      width: 2em
+      text-align: center
+    td.total
+      font-weight: bold
+      text-align: right
+#checkout-form
+  .cart-container
+    position: relative
+    a#edit-items
+      float: right
+
+
+/* Cart table
+table.cart 
+  width: 100%
+  margin-bottom: 1em
+  tr.line_item
+    td
+      padding: 0
+      vertical-align: middle
+      p
+        margin: 0
+    td.item
+      width: 60%
+      img.thumbnail
+        float: left
+        margin-right: 1em
+    td.quantity
+      width: 10%
+    td.price
+      width: 10%
+    td.total
+      width: 20%
+      font-size: 125%
+      text-align: right
+    td.actions
+      min-width: 15em
+table.totals
+  float: right
+  margin-bottom: 1em
+  tr.total
+    td.total
+      font-size: 150%
+  td.total
+    text-align: right
+
+#checkout-container
+  .form-actions .btn
+    float: right
+
+.checkout-header
+  background: #f5f5f5
+  clear: both
+  -webkit-border-radius: 1em
+  -moz-border-radius: 1em
+  border-radius: 1em
+  margin-bottom: 1em
+  padding: 1em
+
+.checkout-summary,
+.checkout-body
+  clear: both
+  margin-left: 5em
+  margin-right: 5em
+  padding: 1em
+  .form-actions
+    background: transparent
+    border: none
+    float: right
+    margin: 0 0 1em 0
+    padding: 0
+  fieldset
+    ol
+      margin: 0
+      padding: 0
+      float: left
+    li
+      list-style: none
+      padding: 0
+      margin: 0

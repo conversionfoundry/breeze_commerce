@@ -14,35 +14,39 @@
         = @order.billing_status.description
       
     #order-customer
-      = render :partial => "breeze/commerce/customers/card", :locals => {:customer => @order.customer}
-    
-    #order-details.clearfix
-      %h2 Your Order
-      #order-date
-        %span= @order.transaction_completed_at.strftime "%A %d %B %Y"
-      #order-number
-        %span Order Number:
-        %span= @order.order_number
-      #order-line_items.clearfix
+      = render :partial => "breeze/commerce/customers/customer_show", :locals => {:customer => @order.customer}
+      - if store.allow_returning_customer_login
+        .customer-new
+          = render :partial => "breeze/commerce/customers/customer_new", :locals => {:customer => @order.customer}
+
+    .order.clearfix
+      .order-identification
+        %h2 Your Order
+        .order-date
+          %span= @order.transaction_completed_at.strftime "%A %d %B %Y"
+        .order-number
+          %span Order Number:
+          %span= @order.order_number
+      .order-line_items.clearfix
         = render :partial => "breeze/commerce/line_items/line_items_show", :locals => { line_items: @order.line_items.unarchived }
         = render :partial => "breeze/commerce/line_items/totals_show", locals: { order: @order }
         #order-customer_comment
           = @order.comment
-      #order-billing
-        #order-billing_address.address
+      .order-billing
+        .order-billing_address.address
           %h3 Billing Address
           - if @order.billing_address
             = render :partial => "breeze/admin/commerce/addresses/address", :object => @order.billing_address
           - else
             Enter a billing address
-      #order-shipping
-        #order-shipping_address.address
+      .order-shipping
+        .order-shipping_address.address
           %h3 Shipping Address
           - if @order.shipping_address
             = render :partial => "breeze/admin/commerce/addresses/address", :object => @order.shipping_address
           - else
             Enter a shipping address
-      #order-payments
+      .order-payments
         = render :partial => "breeze/commerce/payments/payments", :object => @order.payments
 
 

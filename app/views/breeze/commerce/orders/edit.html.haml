@@ -7,9 +7,10 @@
       %h1 Shopping Cart
   .row.cart-container
     .span12
-      #order-details.clearfix
-        %h2 Your Order
-        #order-line_items
+      .order.clearfix
+        .order-identification
+          %h2 Your Order
+        .order-line_items
           = render :partial => "breeze/commerce/line_items/line_items_edit", :locals => { line_items: @order.line_items.unarchived, :form => form }
           = render :partial => "breeze/commerce/line_items/totals_edit", locals: { order: @order }
       .form-actions

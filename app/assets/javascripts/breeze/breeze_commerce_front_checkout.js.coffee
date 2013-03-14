@@ -26,7 +26,6 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
   validateStep = (stepName) ->
     stepValid = true
     $(stepName + " input").add(stepName + " textarea").add(stepName + " select").each (index) ->
-      # alert( $(this).attr('id') )
       if $(this)[0].form == null
         # IE9 gets a null form.
         # Temporary shim to bypass client-side validation on IE9

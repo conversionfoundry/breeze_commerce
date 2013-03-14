@@ -39,7 +39,17 @@ $(".line_item-quantity").live 'change', (event) ->
       error: (result) ->
         eval result
 
-$(".line_item-customer_message").live 'change', (event) ->
+$(document).ready ->
+  $("#edit_order").validate
+    highlight: (label) ->
+      $(label).closest(".control-group").removeClass("success").addClass "error"
+    success: (label) ->
+      label.append("").closest(".control-group").removeClass("error").addClass "success"
+  $("#edit_order").find("input.line_item-customer_message").each (index) ->
+    $(this).rules("add", {required: true})
+    $(this).rules("add", {maxlength: $(this).data("character-limit")})
+
+$(".line_item-customer_message").on 'change', (event) ->
   $.ajax
     beforeSend: (xhr) ->
       xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")

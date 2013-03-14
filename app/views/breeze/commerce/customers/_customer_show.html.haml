@@ -1,0 +1,26 @@
+- if customer
+  %p.customer-name
+    %span.name
+      = customer.name
+  %ul.customer-contact
+    %li.phone
+      = customer.phone
+    %li.email
+      = customer.email
+    %li.billing_address
+      = html_address(customer.billing_address, false) if customer.billing_address
+  .form-actions
+    .btn-group
+      = link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, class: 'btn'
+      = link_to "Edit Profile", breeze.edit_customer_path(current_commerce_customer), class: "btn", id: "btn-edit_customer_profile"
+    = link_to "Delete", breeze.customer_path(@customer, format: :js), method: :delete, remote: true, confirm: "Are you sure?", class: "btn pull-right"
+- else
+  %p.customer-name
+    %span.name
+      = @order.billing_address.name
+  %ul.customer-contact
+    %li.phone
+      = @order.billing_address.phone
+    %li.email
+      = @order.email
+

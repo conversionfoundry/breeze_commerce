@@ -1,0 +1,22 @@
+%h3 Save your details
+= form_for @customer, as: :customer, url: breeze.customers_path do |form|
+  .information
+    %p
+      We can save your details for next time and create a handy record of what you have ordered from us.
+    %p
+      We'll need a password to protect your account.
+  = render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer
+  = form.hidden_field :order_id, value: @order.id
+  = form.hidden_field :email, value: @order.email
+  = form.hidden_field :first_name, value: @order.billing_address.name.split(' ').first
+  = form.hidden_field :last_name, value: @order.billing_address.name.split(' ').last
+  .control-group
+    = form.label :password, class: "control-label"
+    .controls
+      = form.password_field :password, placeholder: "Password"
+  .control-group
+    = form.label :password_confirmation, class: "control-label"
+    .controls
+      = form.password_field :password_confirmation, placeholder: "Same password again"
+  .form-actions
+    = form.submit "Save my details", class: "btn", id: "btn-edit_customer_profile"

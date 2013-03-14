@@ -9,7 +9,7 @@
     <%= yield :head %>
   </head>
 
-  <body>
+  <body class="checkout">
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
@@ -20,7 +20,7 @@
           </a>
           <a class="brand" href="#">Project name</a>
           <div class="nav-collapse">
-            <%= bootstrap_nav(Breeze::Commerce::Store.first.home_page, :recurse => true) %>
+            <%= bootstrap_nav(Breeze::Commerce::Store.first.home_page, recurse: true) %>
           </div><!-- /.nav-collapse -->
         </div>
       </div><!-- /navbar-inner -->

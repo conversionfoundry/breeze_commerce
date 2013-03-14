@@ -1,6 +1,10 @@
 /*
  *= require breeze/multi-select.css
  *= require ./breeze_commerce_front.css
+ *= require ./breeze_commerce_front_orders
+ *= require ./breeze_commerce_front_customers
  *= require ./breeze_commerce_admin.css
+ *= require ./breeze_commerce_admin_shipping_methods.css
+ *= require ./breeze_commerce_admin_products.css
  *= require ./galleria.classic.css
 */
