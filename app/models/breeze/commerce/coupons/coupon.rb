@@ -3,8 +3,9 @@ module Breeze
     module Coupons
       class Coupon
         include Mongoid::Document
+        include Mongoid::MultiParameterAttributes
 
-        attr_accessible :name, :start_time, :end_time, :discount_value, :discount_type, :couponable_type
+        attr_accessible :name, :start_time, :end_time, :discount_value, :discount_type, :couponable_type, :coupon_codes_attributes
 
         field :name
         field :start_time, type: Date
@@ -13,7 +14,8 @@ module Breeze
         field :discount_type, default: :fixed #fixed or percentage
         field :couponable_type, default: "Breeze::Commerce::Order" #order, line_item, line_item_group, or shipping_method
 
-        has_many :coupon_codes
+        has_many :coupon_codes, class_name: "Breeze::Commerce::Coupons::CouponCode", dependent: :destroy
+        accepts_nested_attributes_for :coupon_codes, allow_destroy: true, reject_if: lambda { |cc| cc[:code].blank? }
         
         validates_presence_of :name, :start_time, :discount_value, :discount_type, :couponable_type
 
@@ -24,7 +26,7 @@ module Breeze
         end
 
         def days_left
-          self.end_time.to_date - Time.now.to_date + 1
+          (self.end_time.to_date - Time.now.to_date + 1).to_i
         end
 
         def calculate_discount(order)

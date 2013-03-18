@@ -1,0 +1,7 @@
+$('#menu-item-coupons .item-count').html(<%= @coupon_count %>);
+$('#coupon_<%= @coupon.id %>').fadeOut(function() { 
+  $(this).remove(); 
+  $('table.coupons tbody tr:first').addClass('first');
+  $('table.coupons tbody tr:last').addClass('last');
+});
+
