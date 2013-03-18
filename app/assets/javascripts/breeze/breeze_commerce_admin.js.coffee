@@ -101,6 +101,16 @@ $(".tags .tag-actions .edit.button").live "click", (e) ->
     dialogForm "tag-details", "Edit Tag", data, 'PUT'
   e.preventDefault()
 
+# Coupons
+$(".new.coupon.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "coupon-details", "New Coupon", data, 'POST', coupon_forms_setup
+  e.preventDefault()
+$(".coupons .coupon-actions .edit.button").live "click", (e) ->
+  $.get @href, (data) ->
+    dialogForm "coupon-details", "Edit Coupon", data, 'PUT', coupon_forms_setup
+  e.preventDefault()
+
 # Line Items
 $(".new.line_item.button").live "click", (e) ->
   $.get @href, (data) ->
@@ -307,3 +317,44 @@ $("#order_shipping_address input, #order_shipping_address textarea, #order_shipp
 $("#order_billing_address input[type=text], #order_billing_address textarea, #order_billing_address select").live "change", (e) ->
   $("#new_order #same, #edit_order #same").attr("checked", null)
 
+# Coupons
+coupon_forms_setup = ->
+  $('#coupon-details #start_date').datepicker({
+    dateFormat: 'D d M, yy'
+  }).on "change", (e) ->
+    new_date = $.datepicker.parseDate('D d M, yy', $(this).val())
+    $('#coupon_start_time_1i').val(new_date.getFullYear())
+    $('#coupon_start_time_2i').val(new_date.getMonth() + 1)
+    $('#coupon_start_time_3i').val(new_date.getDate())
+  
+  $('#coupon-details #end_date').datepicker({
+    dateFormat: 'D d M, yy'
+  }).on "change", (e) ->
+    new_date = $.datepicker.parseDate('D d M, yy', $(this).val())
+    $('#coupon_end_time_1i').val(new_date.getFullYear())
+    $('#coupon_end_time_2i').val(new_date.getMonth() + 1)
+    $('#coupon_end_time_3i').val(new_date.getDate())
+  
+  $("#coupon-details fieldset#coupon_start_time input[type=radio]").on "change", ->
+    $("#coupon-details #start_date_selector").toggleClass("in")
+    if $(this).val() == true
+      new_date = new Date()
+      $('#coupon_start_time_1i').val(new_date.getFullYear())
+      $('#coupon_start_time_2i').val(new_date.getMonth() + 1)
+      $('#coupon_start_time_3i').val(new_date.getDate())
+      $('#coupon_start_time_4i').val(new_date.getHours())
+      $('#coupon_start_time_5i').val(new_date.getMinutes())
+  
+  $("#coupon-details fieldset#coupon_end_time input[type=radio]").on "change", ->
+    $("#coupon-details #end_date_selector").toggleClass("in")
+    if $(this).val() == true
+      new_date = new Date()
+      $('#coupon_end_time_1i').val(new_date.getFullYear())
+      $('#coupon_end_time_2i').val(new_date.getMonth() + 2)
+      $('#coupon_end_time_3i').val(new_date.getDate())
+      $('#coupon_end_time_4i').val(new_date.getHours())
+      $('#coupon_end_time_5i').val(new_date.getMinutes())
+
+  $("#coupon-details fieldset#customer_codes input[type=radio]").on "change", ->
+    $("#coupon-details fieldset#customer_codes .collapse").removeClass("in")
+    $("#" + $(this).data("target")).addClass("in")

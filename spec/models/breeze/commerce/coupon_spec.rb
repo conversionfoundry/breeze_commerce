@@ -27,6 +27,7 @@ describe Breeze::Commerce::Coupons::Coupon do
       build(:coupon, discount_type: nil).should_not be_valid
     end
     it "is invalid if discount_type is something other than :fixed or :percentage"
+    it "is invalid if end_time is before start_time"
     it "is invalid without a couponable_type" do
       build(:coupon, couponable_type: nil).should_not be_valid
     end

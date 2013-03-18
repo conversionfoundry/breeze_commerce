@@ -32,6 +32,8 @@ Breeze::Engine.routes.draw do
         put :reorder, on: :collection
       end
 
+      resources :coupons, except: [:show]
+
       resources :countries, except: [:index, :show]
 
       resources :customers, except: [:show]
