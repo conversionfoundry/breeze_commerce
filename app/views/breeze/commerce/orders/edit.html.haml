@@ -12,7 +12,9 @@
           %h2 Your Order
         .order-line_items
           = render :partial => "breeze/commerce/line_items/line_items_edit", :locals => { line_items: @order.line_items.unarchived, :form => form }
-          = render :partial => "breeze/commerce/line_items/totals_edit", locals: { order: @order }
+          = render :partial => "breeze/commerce/coupons/coupon_edit", locals: { order: @order }
+          = render :partial => "breeze/commerce/shipping_methods/shipping_methods_edit", locals: { order: @order }
+          = render :partial => "breeze/commerce/orders/total", locals: { order: @order }
       .form-actions
         .btn-group
           = link_to store.home_page.permalink, class: "btn", id: "continue-shopping" do

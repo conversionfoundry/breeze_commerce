@@ -168,10 +168,15 @@ describe Breeze::Commerce::Order do
       end
     end
     context "serialized_coupon is present" do
-      it "returns the total calculated by the coupon" do
+      before :each do
         coupon = create(:coupon)
         subject.serialize_coupon coupon
+      end
+      it "returns the total calculated by the coupon" do
         subject.coupon_total.should eq coupon.calculate_discount(subject)
+      end
+      it "returns the total in dollars (not cents)" do
+        subject.coupon_total.should eq 1
       end
     end
   end

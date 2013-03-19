@@ -8,4 +8,12 @@
           = render :partial => "breeze/commerce/line_items/line_item_edit", :locals => { :line_item_fields => line_item_fields, :line_item => line_item_fields.object }
     - else
       %tr
-        %td.empty{:colspan => "4"} No line items yet.
+        %td.empty{colspan: "4"} No line items yet.
+%table.line_items_subtotal
+  %tbody
+    %tr.subtotal
+      %td{colspan: "3"} Subtotal:
+      %td.total
+        %span.amount
+          = number_to_currency @order.item_total
+        %span.currency= currency

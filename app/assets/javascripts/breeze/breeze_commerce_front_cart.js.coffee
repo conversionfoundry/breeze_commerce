@@ -91,3 +91,19 @@ $(document).ready ->
       $(label).closest(".control-group").removeClass("success").addClass "error"
     success: (label) ->
       label.append("").closest(".control-group").removeClass("error").addClass "success"
+
+# Update the order immediately when shipping method changes in the cart
+$("#order_coupon_code").on 'change', (event) ->
+  alert "coupon code changed"
+  $.ajax
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+    url: "/orders/" + $(this).data("order-id") + "/redeem_coupon"
+    dataType: "html"
+    type: "PUT"
+    data:
+      code: $(this).val()
+    success: (result) ->
+      eval result
+    error: (result) ->
+      eval result

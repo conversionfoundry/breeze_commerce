@@ -1,0 +1,13 @@
+%table.coupon
+  %tr
+    %td
+      Coupon:
+    %td
+      - if @order.coupon
+        \- 
+        %span.amount#order_coupon_total
+          = number_to_currency @order.coupon_total
+        %span.currency
+          = store.currency
+      - else
+        = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: @order.id.to_s }

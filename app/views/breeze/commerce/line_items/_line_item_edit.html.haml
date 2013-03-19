@@ -1,6 +1,6 @@
 %tr.line_item{id: line_item.id}
   %td.item
-    = image_tag line_item.variant.image.url(:thumbnail), class: 'thumbnail' if line_item.variant.image
+    = image_tag line_item.variant.display_image.url(:thumbnail), class: 'thumbnail' if line_item.variant.display_image
     %p.product_name= line_item.product.title
     %h4.variant_name= line_item.variant.name
     - if line_item.customer_message
@@ -22,5 +22,6 @@
     = line_item_fields.number_field :quantity, class: 'input-mini line_item-quantity', data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }, min: 1
     = link_to 'Remove', breeze.order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "btn btn-mini remove"
   %td.total
-    = number_to_currency line_item.amount
+    %span.amount
+      = number_to_currency line_item.amount
     %span.currency= currency
