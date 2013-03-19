@@ -100,6 +100,10 @@ describe Breeze::Commerce::Coupons::Coupon do
       coupon = build(:coupon, start_time: Time.now - 1.year, end_time: Time.now + 1.year)
       coupon.can_redeem?.should eq true
     end
+    it "can be redeemed if there's no end_time" do
+      coupon = build(:coupon, start_time: Time.now - 1.year, end_time: nil)
+      coupon.can_redeem?.should eq true
+    end
     it "can't be redeemed if it's inactive"
   end
 

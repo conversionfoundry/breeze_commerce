@@ -86,9 +86,17 @@ module Breeze
         end
       end
 
+      def coupon_total_cents
+        if self.coupon
+          discount = coupon.discount_cents(self)
+        else
+          0
+        end
+      end
+
       def coupon_total
         if self.coupon
-          discount = coupon.calculate_discount(self)
+          discount = coupon.discount(self)
         else
           0
         end

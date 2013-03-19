@@ -19,7 +19,6 @@ module Breeze
         def create
           @coupons = Breeze::Commerce::Coupons::Coupon.includes(:coupon_codes)
           @coupon_count = @coupons.count
-
           params[:coupon][:discount_type] = params[:coupon][:discount_type].to_sym
 
           if params[:end_never] == "true"

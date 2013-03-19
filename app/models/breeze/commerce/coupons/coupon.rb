@@ -10,7 +10,7 @@ module Breeze
         field :name
         field :start_time, type: Date
         field :end_time, type: Date
-        field :discount_value, type: Integer #amount in cents or percentage
+        field :discount_value, type: Integer #amount in dollars or percentage
         field :discount_type, default: :fixed #fixed or percentage
         field :couponable_type, default: "Breeze::Commerce::Order" #order, line_item, line_item_group, or shipping_method
 
@@ -29,18 +29,26 @@ module Breeze
           (self.end_time.to_date - Time.now.to_date + 1).to_i
         end
 
-        def calculate_discount(order)
+        def discount_cents(order)
           discount_cents = case discount_type
           when :fixed
-            discount_value
+            discount_value.to_f * 100
           when :percentage
             order.item_total_cents * (discount_value) / 100.0
           end
-          (discount_cents) / 100.0
+          discount_cents
+        end
+
+        def discount(order)
+          ( discount_cents(order) ) / 100.0
         end
 
         def can_redeem?
-          (self.start_time..self.end_time).include? Time.now.to_date
+          if self.end_time
+            (self.start_time..self.end_time).include? Time.now.to_date
+          else
+            self.start_time < Time.now.to_date
+          end
         end
 
         def redemption_count

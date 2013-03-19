@@ -57,6 +57,7 @@ Breeze::Engine.routes.draw do
 
     resources :orders do
       resources :line_items, only: [:update, :destroy, :create]
+      put :redeem_coupon, on: :member
       get :checkout, on: :member
       put :submit, on: :member
       get :thankyou, on: :member

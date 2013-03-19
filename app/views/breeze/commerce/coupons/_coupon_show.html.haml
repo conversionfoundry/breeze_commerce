@@ -1,0 +1,11 @@
+- if @order.coupon
+  %table.coupon
+    %tr
+      %td
+        Coupon:
+      %td
+        \- 
+        %span.amount#order_coupon_total
+          = number_to_currency @order.coupon_total
+        %span.currency
+          = store.currency
