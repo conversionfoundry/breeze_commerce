@@ -33,9 +33,8 @@ Breeze::Engine.routes.draw do
       end
 
       resources :coupons, except: [:show]
-
+      resources :coupon_codes, only: [:index]
       resources :countries, except: [:index, :show]
-
       resources :customers, except: [:show]
 
       resources :shipping_methods, except: [:show] do

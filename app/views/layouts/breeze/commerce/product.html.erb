@@ -81,12 +81,15 @@
     <script type="text/javascript">
       $(document).ready(function() {
 
-        // Image gallery, if product has more than one image
-        if ( $('#gallery').length > 0 ) {
+        // Image gallery, if product has images
+        numberOfImages = $('#gallery').length;
+        if ( numberOfImages > 0 ) {
           Galleria.loadTheme("<%= asset_path 'breeze/galleria/themes/classic/galleria.classic.min' %>");
           $('#gallery').galleria({
             width: 500,
             height: 500,
+            showInfo: false,
+            thumbnails: numberOfImages > 1,
             transitionInitial: 'fade'  
           });
         };

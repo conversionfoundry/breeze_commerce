@@ -3,11 +3,24 @@
     %td
       Coupon:
     %td
-      - if @order.coupon
+      - if order.coupon
+        %span.coupon_details
+          - if order.coupon.discount_type == :fixed
+            %span.amount
+              = number_to_currency order.coupon.discount_value
+            %span.currency
+              = store.currency
+          - elsif order.coupon.discount_type == :percentage
+            = order.coupon.discount_value.to_s + "%"
+          off total order
+
         \- 
         %span.amount#order_coupon_total
-          = number_to_currency @order.coupon_total
+          = number_to_currency order.coupon_total
         %span.currency
           = store.currency
       - else
-        = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: @order.id.to_s }
+        .control-group#enter_coupon
+          .controls
+            = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: order.id.to_s }, placeholder: "SWORDFISH"
+            = label_tag 'order[coupon_code]', "", class: 'error', generated: true

@@ -19,5 +19,6 @@
   %td.published
   %td.actions
     %p.coupon-actions
+      = link_to "Download CSV file", admin_store_coupon_codes_path(format: :csv, coupon_id: coupon.id), :class => "small black show button"
       = link_to "Edit", edit_admin_store_coupon_path(coupon), :class => "small black edit button"
       = link_to "Delete", admin_store_coupon_path(coupon), :remote => true, :method => :delete, :class => "small red delete button"

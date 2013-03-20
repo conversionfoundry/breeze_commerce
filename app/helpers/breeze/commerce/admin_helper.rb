@@ -74,6 +74,34 @@ module Breeze
         _html << %{</select>}
       end
 
+      # Sortable table columns
+      # http://railscasts.com/episodes/228-sortable-table-columns?view=asciicast
+      def sortable(column, title = nil)
+        title ||= column.titleize
+        css_class = (column == sort_method) ? "current #{sort_direction}" : nil
+        direction = (column == sort_method && sort_direction == "asc") ? "desc" : "asc"
+        link_to( {sort: column, direction: direction}, {:class => css_class} ) do
+          html = title
+          triangle = sort_direction == "asc" ? "&#9650;" : "&#9660;"
+          html += ("&nbsp;<i class='icon-sort_order_#{sort_direction}'>#{triangle}</i>") if (column == sort_method)
+          html.html_safe
+        end
+      end
+
+      def line_item_string(line_item)
+        content_tag :li, class: "line_item" do
+          "".tap do |html|
+            html << line_item.quantity.to_s
+            html << " &times; "
+            html << line_item.name
+            html << " ( #{line_item.sku_code} )"
+            if line_item.customer_message
+              html << "<p class='customer_message'>#{line_item.customer_message}</p>"
+            end
+        end.html_safe
+        end
+      end
+
     end
   end
 end

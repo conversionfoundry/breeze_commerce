@@ -1,0 +1,13 @@
+<% updated_order = Breeze::Commerce::Order.find(@order.id) %>
+<% if @coupon_code %>
+  <% if @code_redeemed %>
+    $('table.coupon').replaceWith('<%= escape_javascript render :partial => "breeze/commerce/coupons/coupon_edit", locals: { order: updated_order } %>');
+    $('table.coupon').effect("highlight", { color: "#ffffc0" }, 3000);
+  <% else %>
+    $("#enter_coupon").addClass("error");
+    $("label[for=order_coupon_code]").html("Sorry, that code is no longer available").show();
+  <% end %>
+<% else %>
+  $("#enter_coupon").addClass("error");
+  $("label[for=order_coupon_code]").html("Unknown coupon code").show();
+<% end %>

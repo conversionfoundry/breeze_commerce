@@ -51,9 +51,9 @@ module Breeze
 
       def redeem_coupon
         order = Breeze::Commerce::Order.find(params[:id])
-        coupon_code = Breeze::Commerce::Coupons::CouponCode.where(code: params[:code]).first
-        if coupon_code
-          coupon_code.redeem(order)
+        @coupon_code = Breeze::Commerce::Coupons::CouponCode.where(code: params[:code]).first
+        if @coupon_code
+          @code_redeemed = @coupon_code.redeem(order)
         end
       end
 

@@ -94,7 +94,6 @@ $(document).ready ->
 
 # Update the order immediately when shipping method changes in the cart
 $("#order_coupon_code").on 'change', (event) ->
-  alert "coupon code changed"
   $.ajax
     beforeSend: (xhr) ->
       xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")

@@ -4,13 +4,14 @@
   = pane.inner do
     = scrollable_layout do
       .actions.horizontal
-        = link_to "New coupon", new_admin_store_coupon_path, :class => "large new green coupon button"
+        = link_to "Download CSV file", admin_store_coupon_codes_path(format: :csv), :class => "large button download_csv"
+        = link_to "New coupon", new_admin_store_coupon_path, class: "large new green coupon button"
       %h1
         Coupons
       .box
         // .filters
         //   = link_to "All (#{Breeze::Commerce::Coupons::Coupon.count})", admin_store_coupons_path(:js), :class => "active"
-        = render :partial => "breeze/admin/commerce/coupons/coupons", :object => @coupons
+        = render partial: "breeze/admin/commerce/coupons/coupons", object: @coupons
 
 - content_for :left do
-  = render :partial => "breeze/admin/commerce/shared/left"
+  = render partial: "breeze/admin/commerce/shared/left"

@@ -75,7 +75,7 @@
 
     - else
       - @coupon.coupon_codes.build if @coupon.coupon_codes.empty?
-      = form.check_box :generate_10_codes, { checked: false }, true, false
+      =# form.check_box :generate_10_codes, { checked: false }, true, false
       .container-coupon_codes
         %table
           %thead
@@ -99,8 +99,6 @@
                   = coupon_code_form.number_field :redemption_count, label: false
                 %td.actions
                   - unless coupon_code_form.object.new_record?
-                    // = coupon_code_form.label :_destroy, 'Remove' do
-                    //   = coupon_code_form.check_box :_destroy, { checked: false }, true, false
                     = coupon_code_form.hidden_field :_destroy
                     = link_to_function "remove", "remove_coupon_code_fields(this)", class: "btn"
 

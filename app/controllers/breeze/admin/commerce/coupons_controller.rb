@@ -2,6 +2,7 @@ module Breeze
   module Admin
     module Commerce
       class CouponsController < Breeze::Admin::Commerce::Controller
+        respond_to :html, :js
         helper_method :sort_method, :sort_direction
 
         def index
