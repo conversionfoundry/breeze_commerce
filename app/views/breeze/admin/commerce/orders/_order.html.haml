@@ -1,11 +1,21 @@
 - classes = ' status-shipping-' + order.shipping_status.name.parameterize.underscore
 - classes += ' status-billing-' + order.billing_status.name.parameterize.underscore
-- classes += ' first' if order_counter == 0
-- classes += ' last' if order_counter + 1 == count
 
 = content_tag :tr, :class => "order" + classes, :id => "order_#{order.id}", :"data-id" => order.id do
+  - date = order.transaction_completed_at
   %td.date.first
-    = order.updated_at
+    - if date
+      %p.date
+        %span.day
+          = date.strftime("%d")
+        %span.month
+          = date.strftime("%B")
+        %span.year
+          = date.strftime("%Y")
+      %p.time
+        = date.strftime("%H:%M")
+    - else
+      Transaction not completed
   %td.total
     %p.total
       = number_to_currency(order.total, :locale => :nz)

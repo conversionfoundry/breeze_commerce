@@ -139,6 +139,7 @@ describe Breeze::Commerce::Order do
 		end
 	end
 
+
   describe "scopes" do
     before :each do
       @order1 = create(:order)

@@ -69,5 +69,4 @@
                   = bill_form.text_field :postcode, :class => 'input-small'
                   = bill_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.billing_address.country || store.default_country.name), :class => :required
                   = bill_form.text_field :phone, :class => 'input-medium', :label => 'Contact Phone Number'
-
         .clearer

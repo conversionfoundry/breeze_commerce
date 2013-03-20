@@ -2,8 +2,10 @@ module Breeze
   module Admin
     module Commerce
       class CustomersController < Breeze::Admin::Commerce::Controller
+        helper_method :sort_method, :sort_direction
+
         def index
-          @customers = Breeze::Commerce::Customer.unarchived.order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
+          @customers = Breeze::Commerce::Customer.unscoped.unarchived.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
         end
 
         def new
@@ -43,6 +45,16 @@ module Breeze
          @customer = Breeze::Commerce::Customer.find(params[:id])
          @customer.update_attributes(:archived => true)
          @customer_count = Breeze::Commerce::Customer.unarchived.count
+        end
+
+      private
+
+        def sort_method
+          %w[total first_name last_name email].include?(params[:sort]) ? params[:sort] : "last_name"
+        end
+        
+        def sort_direction
+          %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
         end
 
       end

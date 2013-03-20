@@ -8,9 +8,15 @@ module Breeze
         before_filter :get_order, except: [:index, :new]
         before_filter :get_order_statuses, only: [ :index, :new, :create, :edit ]
 
+        helper_method :sort_method, :sort_direction
+
         def index
           @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items)
-          @orders = @orders.to_a.sort_by{ |o| params[:sort] ? o.send(params[:sort]) : - o.created_at.to_i }.paginate(:page => params[:page], :per_page => 10)
+          @orders = @orders.to_a.sort_by{ |o| o.send(sort_method) }
+          if sort_direction == "desc"
+            @orders = @orders.reverse
+          end
+          @orders = @orders.paginate(:page => params[:page], :per_page => 10)
         end
         
         def new
@@ -77,6 +83,15 @@ module Breeze
           @shipping_statuses = Breeze::Commerce::OrderStatus.shipping.order_by(:sort_order.asc)
         end
         
+      private
+        def sort_method
+          %w[transaction_completed_at total email shipping_status billing_status].include?(params[:sort]) ? params[:sort] : "transaction_completed_at"
+        end
+        
+        def sort_direction
+          %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
+        end
+
       end
     end
   end

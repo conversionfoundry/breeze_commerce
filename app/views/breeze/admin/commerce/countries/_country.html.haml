@@ -1,8 +1,4 @@
-- classes = 'country'
-- classes += ' first' if country_counter == 0
-- classes += ' last' if country_counter + 1 == count
-
-= content_tag :tr, class: classes, id: "country_#{country.id}", data: {:id => "#{country.id}"} do
+= content_tag :tr, class: "country", id: "country_#{country.id}", data: {:id => "#{country.id}"} do
   %td.name
     %h4
       = country.name

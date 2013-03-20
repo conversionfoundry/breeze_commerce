@@ -9,8 +9,6 @@
       %h1
         Coupons
       .box
-        // .filters
-        //   = link_to "All (#{Breeze::Commerce::Coupons::Coupon.count})", admin_store_coupons_path(:js), :class => "active"
         = render partial: "breeze/admin/commerce/coupons/coupons", object: @coupons
 
 - content_for :left do
