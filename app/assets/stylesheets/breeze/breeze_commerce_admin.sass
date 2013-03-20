@@ -76,7 +76,24 @@ $colour-highlight: rgba(141, 198, 63, 0.15)
   -moz-box-sizing: $value
   -webkit-box-sizing: $value
 
+@mixin input-placeholder($colour)
+  &::-webkit-input-placeholder
+    color: $colour
+  /* Firefox 18- */
+  &:-moz-placeholder 
+    color: $colour
+  /* Firefox 19+ */
+  &::-moz-placeholder
+    color: $colour
+  &:-ms-input-placeholder  
+    color: $colour
+  &:-input-placeholder  
+    color: $colour
+
 body.breeze-admin
+  input
+    @include input-placeholder(#eeeeee)
+
   /* Bulk actions
   .container .with-selected
     position: absolute
