@@ -9,6 +9,7 @@ module Breeze
           commerce_menu_item("Registered Customers", breeze.admin_store_customers_path, badge( Breeze::Commerce::Customer.unarchived.count )),
           commerce_menu_item("Products", breeze.admin_store_products_path, badge( Breeze::Commerce::Product.unarchived.count )),
           commerce_menu_item("Tags", breeze.admin_store_tags_path, badge( Breeze::Commerce::Tag.count )),
+          commerce_menu_item("Coupons", breeze.admin_store_coupons_path, badge( Breeze::Commerce::Coupons::Coupon.count )),
           commerce_menu_item("Shipping", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
           commerce_menu_item("Settings", breeze.edit_admin_store_store_path)
         ].join.html_safe, :class => 'store-actions'
@@ -84,6 +85,20 @@ module Breeze
           triangle = sort_direction == "asc" ? "&#9650;" : "&#9660;"
           html += ("&nbsp;<i class='icon-sort_order_#{sort_direction}'>#{triangle}</i>") if (column == sort_method)
           html.html_safe
+        end
+      end
+
+      def line_item_string(line_item)
+        content_tag :li, class: "line_item" do
+          "".tap do |html|
+            html << line_item.quantity.to_s
+            html << " &times; "
+            html << line_item.name
+            html << " ( #{line_item.sku_code} )"
+            if line_item.customer_message
+              html << "<p class='customer_message'>#{line_item.customer_message}</p>"
+            end
+        end.html_safe
         end
       end
 

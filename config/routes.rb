@@ -32,8 +32,9 @@ Breeze::Engine.routes.draw do
         put :reorder, on: :collection
       end
 
+      resources :coupons, except: [:show]
+      resources :coupon_codes, only: [:index]
       resources :countries, except: [:index, :show]
-
       resources :customers, except: [:show]
 
       resources :shipping_methods, except: [:show] do
@@ -55,6 +56,7 @@ Breeze::Engine.routes.draw do
 
     resources :orders do
       resources :line_items, only: [:update, :destroy, :create]
+      put :redeem_coupon, on: :member
       get :checkout, on: :member
       put :submit, on: :member
       get :thankyou, on: :member

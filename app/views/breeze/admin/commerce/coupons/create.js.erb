@@ -1,7 +1,9 @@
 <% if @coupon.errors.empty? %>
-  closeContextualNew();
-  $('<%= escape_javascript render(:partial => "/breeze/commerce/coupons/coupon", :object => @coupon) %>').appendTo('.coupons tbody');
+  $('table.coupons tbody tr.empty').remove();
+  $('table.coupons tbody tr:last').removeClass('last');
+  $('table.coupons tbody').append('<%= escape_javascript render(:partial => "breeze/admin/commerce/coupons/coupon", locals: {coupon: @coupon, coupon_counter: @coupons.count - 1, count: @coupons.count} ) %>');
+  $('#menu-item-coupons .item-count').html(<%= @coupon_count %>);
+  $('#coupon-details').dialog('close');
 <% else %>
-  $('.new-context').html('<%= escape_javascript render(:file => "/breeze/commerce/coupons/new") %>');
+  $('#coupon-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/coupons/new") %>');
 <% end %>
-

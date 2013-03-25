@@ -31,16 +31,7 @@
   %td.line_items
     %ul.line_items
       - order.line_items.unarchived.each do |line_item|
-        %li.line_item
-          = line_item.quantity
-          &times;
-          = line_item.name
-          (
-          = line_item.sku_code
-          )
-          - if line_item.customer_message
-            %p.customer_message
-              = line_item.customer_message
+        = line_item_string(line_item)
 
   %td.shipping_status
     .status

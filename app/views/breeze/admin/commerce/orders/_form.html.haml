@@ -45,13 +45,13 @@
               %fieldset.address-shipping.address
                 %legend Shipping Address
                 %ol#order_shipping_address.form
-                  = ship_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'
-                  = ship_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                  = ship_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
-                  = ship_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium', :label => 'State, Province or Region'
+                  = ship_form.text_field :name, :class => :required
+                  = ship_form.text_area :address, :class => :required, :rows => 2
+                  = ship_form.text_field :city, :class => :required, :class => 'input-medium'
+                  = ship_form.text_field :state, :class => 'input-medium', :label => 'State, Province or Region'
                   = ship_form.text_field :postcode, :class => 'input-small'
-                  = ship_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.shipping_address.country || store.default_country.name), :class => :required                
-                  = ship_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium', :label => 'Contact Phone Number'
+                  = ship_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.shipping_address.country || store.default_country.name), :class => :required
+                  = ship_form.text_field :phone, :class => 'input-medium', :label => 'Contact Phone Number'
           #order-billing
             %ol.form.status
               = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => @order.id, :class => 'billing_status status', :label => false}
@@ -62,12 +62,11 @@
                   = bill_form.label :same do |label|
                     = check_box_tag :same, :same, true
                     Same as my Shipping Address
-                  = bill_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'
-                  = bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                  = bill_form.text_field :city, :class => :required, :placeholder => 'Christchurch', :class => 'input-medium'
-                  = bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium', :label => 'State, Province or Region'
+                  = bill_form.text_field :name, :class => :required
+                  = bill_form.text_area :address, :class => :required, :rows => 2
+                  = bill_form.text_field :city, :class => :required, :class => 'input-medium'
+                  = bill_form.text_field :state, :class => 'input-medium', :label => 'State, Province or Region'
                   = bill_form.text_field :postcode, :class => 'input-small'
-                  = bill_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.billing_address.country || store.default_country.name), :class => :required                
-                  = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium', :label => 'Contact Phone Number'
-
+                  = bill_form.select :country, options_for_select(@countries.map{|country| country.name}, @order.billing_address.country || store.default_country.name), :class => :required
+                  = bill_form.text_field :phone, :class => 'input-medium', :label => 'Contact Phone Number'
         .clearer

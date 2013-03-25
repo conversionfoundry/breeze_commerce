@@ -1,11 +1,11 @@
-<div class="products hfeed" data-product-list-id="<%= @product_list.id %>">
-  <h3><%= @product_list.title || "Product list" %></h3>
+<div class="products hfeed" data-product-list-id="<%= @product_list.id if @product_list %>">
+  <h3><%= @product_list.title || "Product list" if @product_list %></h3>
 	<% if @products.any? %>
-    <%= paginate_products( @products, {class: 'pagination-top'} ) if @product_list.show_pagination? %>
+    <%= paginate_products( @products, {class: 'pagination-top'} ) if @product_list && @product_list.show_pagination? %>
 	  <%= content_tag :ul, :class => "products hfeed" do %>
 	    <%= render :partial => "/partials/commerce/product", :collection => @products, :locals => {:product_count => @products.count} %>
 	  <% end %>
-    <%= paginate_products( @products, {class: 'pagination-bottom'} ) if @product_list.show_pagination? %>
+    <%= paginate_products( @products, {class: 'pagination-bottom'} ) if @product_list && @product_list.show_pagination? %>
 	<% else %>
 	  <p>There are no products to display.</p>
 	<% end %>

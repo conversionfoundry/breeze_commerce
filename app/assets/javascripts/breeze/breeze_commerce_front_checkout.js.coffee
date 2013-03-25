@@ -50,11 +50,10 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
 
   change = (from, to, summaryHtml) ->
     $(panels[from]).children(".checkout-body").slideUp()
-    $(panels[from]).children(".checkout-header").removeClass "active"
-    $(panels[from]).children(".checkout-header").addClass "visited"
+    $(panels[from]).removeClass("active").addClass("visited")
     $(panels[from]).children(".checkout-summary").slideDown()
     $(panels[to]).children(".checkout-body").slideDown()
-    $(panels[to]).children(".checkout-header").addClass "active"
+    $(panels[to]).addClass("active")
     $(panels[to]).children(".checkout-summary").slideUp()
     setTimeout (->
       alignCartWith( $(panels[to]) )
@@ -166,7 +165,7 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
 
   $(document).ready ->
     # Starting status
-    alignCartWith $(".checkout-header.active")
+    alignCartWith $(".panel.active")
 
     # ... depends on whether we have a customer already signed in
     if $("#sign-in").attr("data-customer_signed_in") is "true"

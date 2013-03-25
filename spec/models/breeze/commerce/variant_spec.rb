@@ -20,7 +20,7 @@ describe Breeze::Commerce::Variant do
 			it "creates a SKU for a variant with options" do
 				@product = create(:product, name: 'Widget')
 				@option = create(:option, name: 'foo')
-				@variant = create(:variant, product_id: @product.id, options: [@option], sku_code: nil)
+				@variant = create(:variant, product_id: @product.id, sku_code: nil, options: [@option])
 				@variant.sku_code.should eq 'widget_foo'
 			end
 		end
