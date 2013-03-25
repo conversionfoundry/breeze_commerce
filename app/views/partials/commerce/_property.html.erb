@@ -1,10 +1,8 @@
-<% classes = 'property' %>
-<% classes += ' property-' + property.name.downcase.underscore %>
-<%= content_tag :li, :class => classes, :id => "property_#{property.id}", :"data-id" => property.id do %>
+<li class="property property<%= property.name.downcase.gsub(" ", "_").gsub(/[^0-9A-Za-z_]/, '') %>" id="property_<%= property.id %>" data-id="<%= property.id %>">
   <h3><%= property.name %></h3>
   <ul class="options">
     <% property.options.each do |option| %>
-      <li class="radio option-<%= option.name.downcase.gsub(" ", "_") %>">
+      <li class="radio option-<%= option.name.downcase.gsub(" ", "_").gsub(/[^0-9A-Za-z_]/, '') %>">
         <%#= link_to option.name, filter_variants_path(option_id: option.id), class: 'btn option', remote: true %>
         <label class="radio">
           <%= radio_button_tag property.name, option.id, class: 'option' %>
@@ -12,4 +10,4 @@
       </li>
     <% end %>
   </ul>
-<% end %>
+</li>

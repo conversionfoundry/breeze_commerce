@@ -1,3 +1,6 @@
+@import "mixins"
+$colour-highlight: #ffffc0
+
 /* Orders
 ul.orders
   float: left
@@ -48,10 +51,64 @@ ul.orders
         float: right
         margin: 2em 0 0 2em
         width: 40%
+  table
+    clear: right
+    float: right
+    margin-bottom: 1em
+    tr
+      td
+        vertical-align: top
+        text-align: right
+      td:last-child
+        width: 30em
+  table.line_items 
+    clear: both
+    float: none
+    width: 100%
+    tr
+      td
+        text-align: left
+      td:last-child
+        width: auto
+    tr.line_item
+      td
+        padding: 0
+        vertical-align: middle
+        p
+          margin: 0
+      td.item
+        width: 60%
+        img.thumbnail
+          float: left
+          margin-right: 1em
+      td.quantity
+        width: 10%
+      td.price
+        width: 10%
+      td.total
+        width: 20%
+        text-align: right
+        .amount
+          font-size: 125%
+      td.actions
+        min-width: 15em
+  table.line_items_subtotal
+  table.totals
+    tr.total
+      td.total
+        .amount
+          font-size: 200%
+  table.coupon
+    .coupon_details
+      margin-right: 2em
+  table.shipping_methods
 
-/* Shopping Cart
 
+/* Default Shopping Cart appearance
 .cart-container
+  position: relative
+  a#edit-items
+    float: right
   .form-actions 
     box-sizing: border-box
     .btn-group
@@ -74,78 +131,45 @@ ul.orders
     td.total
       font-weight: bold
       text-align: right
+
+/* Checkout Page      
 #checkout-form
-  .cart-container
-    position: relative
-    a#edit-items
-      float: right
-
-
-/* Cart table
-table.cart 
-  width: 100%
-  margin-bottom: 1em
-  tr.line_item
-    td
-      padding: 0
-      vertical-align: middle
-      p
-        margin: 0
-    td.item
-      width: 60%
-      img.thumbnail
-        float: left
-        margin-right: 1em
-    td.quantity
-      width: 10%
-    td.price
-      width: 10%
-    td.total
-      width: 20%
-      font-size: 125%
-      text-align: right
-    td.actions
-      min-width: 15em
-table.totals
-  float: right
-  margin-bottom: 1em
-  tr.total
-    td.total
-      font-size: 150%
-  td.total
-    text-align: right
-
-#checkout-container
-  .form-actions .btn
-    float: right
-
-.checkout-header
-  background: #f5f5f5
-  clear: both
-  -webkit-border-radius: 1em
-  -moz-border-radius: 1em
-  border-radius: 1em
-  margin-bottom: 1em
-  padding: 1em
-
-.checkout-summary,
-.checkout-body
-  clear: both
-  margin-left: 5em
-  margin-right: 5em
-  padding: 1em
-  .form-actions
-    background: transparent
-    border: none
-    float: right
-    margin: 0 0 1em 0
-    padding: 0
-  fieldset
-    ol
-      margin: 0
-      padding: 0
-      float: left
-    li
-      list-style: none
-      padding: 0
-      margin: 0
+  #checkout-container
+    .panel
+      margin-bottom: 1em
+      .checkout-header
+        clear: both
+        padding: 0 1em
+      .checkout-summary,
+      .checkout-body
+        clear: both
+        padding: 0 1em
+        .form-actions
+          background: transparent
+          border: none
+          float: right
+          width: auto
+          margin: 0
+          padding: 0 0 1em 0
+          text-align: right
+        fieldset
+          ol
+            margin: 0
+            padding: 0
+            float: left
+          li
+            list-style: none
+            padding: 0
+            margin: 0
+    .panel.active
+      background: $colour-highlight
+      .checkout-body
+        .form-actions
+          *zoom: 1
+          float: none
+          &:before,
+          &:after
+            display: table
+            content: ""
+          &:after
+            clear: both

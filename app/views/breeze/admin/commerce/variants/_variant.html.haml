@@ -1,9 +1,13 @@
 = content_tag :tr, :class => :variant, :id => "variant_#{variant.id}", :"data-id" => variant.id, :"data-product-id" => variant.product.id do
   %td.image
-    = image_tag variant.display_image.url(:thumbnail)
-    - unless variant.has_own_image?
+    - if variant.display_image
+      = image_tag variant.display_image.url(:thumbnail)
+      - unless variant.has_own_image?
+        .alert
+          No variant image. Using default product image.
+    - else
       .alert
-        No variant image. Using default product image.
+        No variant or product image
   %td.name
     %h4
       = variant.name
@@ -29,17 +33,19 @@
   - variant.product.properties.each do |property|
     - if variant.option_for_property(property)
       %td
-        = variant.option_for_property(property).name
+        .option
+          = variant.option_for_property(property).name
     - else
       %td.missing_value
-        Missing value
+        .alert
+          Missing value
   %td.requires_customer_message
     - if variant.requires_customer_message
       = variant.customer_message_limit
       characters
   %td.published
     .field
-      = check_box_tag "variant_#{variant.id}_published", "1", variant.published, :class => "variant-published", style: 'display: none;'
+      = check_box_tag "variant_#{variant.id}_published", "1", variant.published, :class => "published variant-published", style: 'display: none;'
   %td.actions
     %p.variant-actions
       = link_to "Delete", admin_store_product_variant_path(variant.product, variant), :remote => true, :method => :delete, :class => "small red delete button"

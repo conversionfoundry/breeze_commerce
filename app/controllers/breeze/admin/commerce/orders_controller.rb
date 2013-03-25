@@ -7,6 +7,7 @@ module Breeze
         respond_to :html, :js, :csv
         before_filter :get_order, except: [:index, :new]
         before_filter :get_order_statuses, only: [ :index, :new, :create, :edit ]
+
         helper_method :sort_method, :sort_direction
 
         def index
@@ -30,6 +31,8 @@ module Breeze
           if @order.save
             redirect_to edit_admin_store_order_path(@order)
           else
+            @billing_statuses = Breeze::Commerce::OrderStatus.billing
+            @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
             @countries = Breeze::Commerce::Country.order_by(:name.asc)
             render :action => "new"
           end

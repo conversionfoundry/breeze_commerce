@@ -1,17 +1,24 @@
 = content_tag :tr, :class => :coupon, :id => "coupon_#{coupon.id}", :"data-id" => coupon.id do
-  %td.code
-    = coupon.code
   %td.name
     = coupon.name
-  %td.start
-    = coupon.start
-  %td.end
-    = coupon.end
-  %td.days
-    = coupon.days_remaining
-    %td.Active
-      = coupon.active ? "Yes" : "No"
-    %td.actions
-      %p.coupon-actions
-        = link_to "Edit", edit_admin_store_coupon_path(coupon), :class => "small black edit button"
-        = link_to "Delete", admin_store_coupon_path(coupon), :remote => true, :method => :delete, :class => "small red delete button"
+  %td.start_time
+    = coupon.start_time
+  %td.end_time
+    - if coupon.end_time
+      = coupon.end_time
+      (
+      = coupon.days_left
+      days left )
+    - else
+      No end time
+  %td.codes
+    = coupon.coupon_codes.count
+    total, 
+    = coupon.redemption_count
+    redeemed
+  %td.published
+  %td.actions
+    %p.coupon-actions
+      = link_to "Download CSV file", admin_store_coupon_codes_path(format: :csv, coupon_id: coupon.id), :class => "small black show button"
+      = link_to "Edit", edit_admin_store_coupon_path(coupon), :class => "small black edit button"
+      = link_to "Delete", admin_store_coupon_path(coupon), :remote => true, :method => :delete, :class => "small red delete button"

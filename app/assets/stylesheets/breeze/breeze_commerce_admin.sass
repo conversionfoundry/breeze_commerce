@@ -1,7 +1,24 @@
 @import "variables"
 @import "mixins"
 
-.breeze-admin
+@mixin input-placeholder($colour)
+  &::-webkit-input-placeholder
+    color: $colour
+  /* Firefox 18- */
+  &:-moz-placeholder 
+    color: $colour
+  /* Firefox 19+ */
+  &::-moz-placeholder
+    color: $colour
+  &:-ms-input-placeholder  
+    color: $colour
+  &:-input-placeholder  
+    color: $colour
+
+body.breeze-admin
+  input
+    @include input-placeholder(#eeeeee)
+
   /* Bootstrap overrides
   .alert
     margin: 0
@@ -33,38 +50,6 @@
   .discounted_price
     color: red
 
-  /* Customer
-  div.customer
-    background: white
-    border: solid 1px #eeeeee
-    @include box-shadow
-    color: #444444
-    display: block
-    float: left
-    clear: right
-    margin: 0
-    padding: 1em 2em
-    width: 20em
-    text-decoration: none
-    .customer-name
-      font-size: 200%
-      margin-top: 1em
-    .customer-contact
-      li
-        list-style: none
-        text-align: right
-    .change_customer
-      font-size: 80%
-      margin: 1em 0
-      text-align: right
-      select,
-      label
-        font-size: 10px
-        margin: 0
-        width: auto
-  a.customer:hover
-    background: #cccccc
-
   /* Addresses
   .address
     float: left
@@ -79,6 +64,7 @@
   table.orders
     thead
       tr
+        th.order,
         th.date,
         th.shipping,
         th.line_items
@@ -294,29 +280,6 @@
       padding: 1em
       width: 100%
 
-  /* Customer Page
-  .customer-edit,
-  .customer-new
-    margin-right: 1em
-    width: 90%
-    #customer-details 
-      li.text_field,
-      li.text_area
-        input,
-        textarea
-          width: 50%
-        label
-          float: left
-          width: 25%
-      .customer_addresses 
-        width: 100%
-        legend
-          border-bottom: none
-          margin-bottom: none
-        .address
-          margin-right: 0
-          width: 50%
-
 
 
 
@@ -437,6 +400,47 @@
         background: #ccc
         padding: 4px
         @include border-radius(4px)
+      li
+        display: inline
+        line-height: inherit
+        list-style: none
+        a
+          border: 1px solid #AAA
+          border-right: none
+          position: relative
+          display: block
+          background: #ccc
+          margin: 0px -9px 8px 8px
+          padding: 8px
+          color: #222
+          text-decoration: none
+          @include border-left-radius(4px)
+          strong
+            display: block
+            font-size: 125%
+          &:hover
+            background: #bbb
+          .badge
+            float: right
+        &.active a
+          background: #f2f2f2
+          @include box-shadow
+        small
+          position: absolute
+          right: 0.5em
+          top: 50%
+          min-width: 1.5em
+          height: 1.5em
+          line-height: 1.5em
+          margin: -0.75em 0em 0em
+          text-align: center
+          vertical-align: middle
+          background: #ec008c
+          color: white
+          font-size: 1.0em
+          @include border-radius(0.75em)
+        &.active small
+          margin-right: 8px
 
   /* Variants
 
@@ -519,14 +523,16 @@
     tr.property 
       td
         padding: 0.5em
-        .option
-          background: #999999
-          color: white
-          float: left
-          @include border-radius(0.5em)
-          line-height: 1.5
-          margin: 0 0.5em 0.5em 0
-          padding: 0.25em 0.5em
+
+  /* Options
+  .option
+    background: #999999
+    color: white
+    float: left
+    @include border-radius(0.5em)
+    line-height: 1.5
+    margin: 0 0.5em 0.5em 0
+    padding: 0.25em 0.5em
 
   /* Post tags 
   .textboxlist 
@@ -659,11 +665,98 @@
         padding: 8px 0px 9px
         text-align: center
 
-  form
-    margin: 0
-
   table.sortable
     tr
       cursor: move
     tr.empty
       cursor: default
+
+  form
+    margin: 0
+
+  /* Countries
+  #countries_box
+    clear: both
+
+  /* Orders Index
+  i.icon-sort_order_asc,
+  i.icon-sort_order_desc
+    color: #999999
+    background-repeat: no-repeat
+
+  /* Help
+  .help
+    margin: 0px 0px 8px
+    padding: 8px
+    background: rgba(255, 255, 192, 0.75)
+    text-shadow: #ffc 0px 1px
+    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px
+    -webkit-border-radius: 8px
+    code
+      background: none
+      padding: 0
+      color: inherit
+      white-space: inherit
+      border: none
+    h3
+      margin: 0px 0px 8px
+      padding-bottom: 4px
+      border-bottom: 1px solid rgba(0, 0, 0, 0.5)
+      font-weight: bold
+
+
+  /* Coupons
+  #coupon-details
+    .inline
+      display: inline-block
+      vertical-align: middle
+      margin: 0
+    input[type="radio"]
+      margin-right: 0.5em
+      vertical-align: baseline
+    fieldset#name
+      input, .field
+        display: block
+        width: 472px
+        margin: 0
+        max-width: 100%
+    fieldset#amount
+      input#coupon_discount_value
+        width: 5em
+        text-align: right
+        margin-left: 2em
+      select#coupon_discount_type
+        width: 8em
+    fieldset.datetime
+      li
+        list-style: none
+      label
+        margin-right: 2em
+      .collapse
+        margin: 1em 2em 0 2em
+        input
+          width: 213px
+        select
+          width: 5em
+        li
+          display: inline-block
+    fieldset#customer_codes
+      label
+        clear: left
+        h4
+          display: inline
+      .help
+        margin: 0.5em 2em
+      .collapse
+        margin: 1em 2em 0 2em
+    #customer_codes
+      .container-coupon_codes
+        overflow: auto
+      li
+        list-style: none
+      td.code input
+        width: 10em
+      td.max_redemptions,
+      td.redemption_count
+        input
+          width: 5em

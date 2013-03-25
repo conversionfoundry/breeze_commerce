@@ -4,7 +4,8 @@
   %table.fancy.sortable.variants
     %thead
       %tr
-        %th.first{:colspan => "2", :style => ""} Name
+        %th Image
+        %th Name
         %th SKU Code
         %th Price
         - @product.properties.each do |property|
@@ -12,13 +13,13 @@
             = property.name
         %th Customer Message
         %th Published
-        %th.last{:style => ""} Actions
+        %th Actions
     %tbody
       - if @product.variants.unarchived.exists?
         = render :partial => "breeze/admin/commerce/variants/variant", :collection => @product.variants.unarchived.ordered
       - else
         %tr
-          %td.empty{:colspan => "5"} 
+          %td.empty{:colspan => "9"} 
             There are no variants for this product yet.
             = link_to "Bulk create variants from properties", new_admin_store_variant_factory_path(product_id: @product.id), class: "large new variant_factory button"
     %tfoot

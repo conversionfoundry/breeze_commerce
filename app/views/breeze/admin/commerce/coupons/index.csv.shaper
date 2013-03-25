@@ -1,0 +1,8 @@
+csv.headers :name, :start_time, :end_time, :published
+
+csv.rows @coupons do |csv, coupon|
+  csv.cell :name, coupon.name
+  csv.cell :start_time, coupon.start_time
+  csv.cell :end_time, coupon.end_time || "No end time"
+  csv.cell :published, ""
+end

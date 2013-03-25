@@ -1,4 +1,4 @@
-  csv.headers :date, :customer, :billing_address, :shipping_address, :amount, :email, :comment
+  csv.headers :date, :customer, :billing_address, :shipping_address, :amount, :email, :comment, :line_items
 
   csv.rows @orders do |csv, order|
     csv.cell :date, order.created_at.to_s
@@ -7,4 +7,5 @@
     csv.cell :shipping_address.to_s
     csv.cell :amount, number_to_currency(order.total, :locale => :nz)
     csv.cells :email, :comment
+    csv.cell :line_items, order.line_items.unarchived.to_a.each{ |line_item| line_item_string(line_item) }
   end

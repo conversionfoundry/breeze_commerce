@@ -27,6 +27,7 @@ describe Breeze::Commerce::Coupons::Coupon do
       build(:coupon, discount_type: nil).should_not be_valid
     end
     it "is invalid if discount_type is something other than :fixed or :percentage"
+    it "is invalid if end_time is before start_time"
     it "is invalid without a couponable_type" do
       build(:coupon, couponable_type: nil).should_not be_valid
     end
@@ -97,6 +98,10 @@ describe Breeze::Commerce::Coupons::Coupon do
     end
     it "can be redeemed if within the coupon period" do
       coupon = build(:coupon, start_time: Time.now - 1.year, end_time: Time.now + 1.year)
+      coupon.can_redeem?.should eq true
+    end
+    it "can be redeemed if there's no end_time" do
+      coupon = build(:coupon, start_time: Time.now - 1.year, end_time: nil)
       coupon.can_redeem?.should eq true
     end
     it "can't be redeemed if it's inactive"

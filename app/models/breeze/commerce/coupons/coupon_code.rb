@@ -10,7 +10,7 @@ module Breeze
         field :redemption_count, :type => Integer, default: 0
         field :max_redemptions, :type => Integer, default: 1
 
-        belongs_to :coupon
+        belongs_to :coupon, class_name: "Breeze::Commerce::Coupons::Coupon"
 
         validates :code, presence: true
         validates :redemption_count, presence: true, numericality: true
