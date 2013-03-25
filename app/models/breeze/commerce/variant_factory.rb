@@ -12,9 +12,13 @@ module Breeze
         option_arrays = product.properties.map{ |property| property.options }
         variants_array = combine_arrays( *option_arrays ) do | *args |
           name = product.name + " " + args.map{ |option| option.name}.join(" ")
-          sku_code = name.downcase.gsub(" ", "_")
+
+          base_sku = variant_fields[:base_sku] || product.slug
+          sku_code = base_sku + "_" + args.map{ |option| option.name}.join(" ").downcase.gsub(" ", "_")
+          
           variant_fields.merge!(product_id: product.id, name: name, sku_code: sku_code)
           variant = Breeze::Commerce::Variant.new variant_fields
+          
           args.each do |option|
             variant.options << option
           end

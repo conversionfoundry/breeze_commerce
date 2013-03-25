@@ -1,22 +1,30 @@
-/ = breeze_form_for @variant_factory, :as => :variant_factory, :url => url, :remote => true do |form|
-= form_tag(url, remote: true) do |form|
-  - if @errors and @errors.any?
-    - @errors.each do |error|
-      = error
-  = hidden_field_tag :product_id, @product.id
-  = label_tag :cost_price, 'Cost Price'
-  = number_field :variant_form_fields, :cost_price, before: '$', step: 0.01
-  = label_tag :sell_price, 'Sell Price'
-  = number_field :variant_form_fields, :sell_price, before: '$', step: 0.01
+- if @product.properties.any?
+  = form_tag(url, remote: true) do |form|
+    = hidden_field_tag :product_id, @product.id
+    - if @errors and @errors.any?
+      - @errors.each do |error|
+        = error
+    .help
+      This will create
+      = @product.variants_count_to_cover_all_options
+      variants: one for each combination of options.
+      %br
+      Note that you'll still be able to edit the variants after they're created.
 
-  / = render "/breeze/admin/shared/error_messages", :target => @variant_factory, :object_name => :variant_factory
-  / = form.fieldset do
-  / = form.number_field :cost_price, :required => false, :label => "Cost Price", before: '$', step: 0.01
+    %fieldgroup
+      %legend SKU format
+      = label_tag :base_sku, "SKU base text"
+      = text_field :variant_factory_fields, :base_sku, value: @product.slug.downcase.gsub(" ", "_"), class: "span2"
+      = "_" + @product.properties.map{ |property| property.options.first.name}.join(" ").downcase.gsub(" ", "_")
+      .help
+        Enter the initial text for variant SKUs. The first variant will have SKU as shown above, with other variants using different option names.
 
-/ :javascript
-/   // Show or hide the discounted sell price box depending on discounted checkbox state
-/   $('#variant_discounted').live('change', function() {
-/     $('#container-discounted_sell_price').toggle();
-/   });
-
-
+    %fieldgroup
+      %legend Prices
+      = label_tag :cost_price, 'Cost Price'
+      = number_field :variant_factory_fields, :cost_price, before: '$', step: 0.01
+      = label_tag :sell_price, 'Sell Price'
+      = number_field :variant_factory_fields, :sell_price, before: '$', step: 0.01
+- else
+  .help
+    You'll need to make a property for this product before you can bulk create variants.

@@ -1,7 +1,6 @@
 @import "variables"
 @import "mixins"
 
-<<<<<<< HEAD
 @mixin input-placeholder($colour)
   &::-webkit-input-placeholder
     color: $colour
@@ -20,10 +19,7 @@ body.breeze-admin
   input
     @include input-placeholder(#eeeeee)
 
-=======
-.breeze-admin
   /* Bootstrap overrides
->>>>>>> e27faa0184a1b70270794c60b70e91399958e928
   .alert
     margin: 0
     box-sizing: border-box
@@ -54,38 +50,6 @@ body.breeze-admin
   .discounted_price
     color: red
 
-  /* Customer
-  div.customer
-    background: white
-    border: solid 1px #eeeeee
-    @include box-shadow
-    color: #444444
-    display: block
-    float: left
-    clear: right
-    margin: 0
-    padding: 1em 2em
-    width: 20em
-    text-decoration: none
-    .customer-name
-      font-size: 200%
-      margin-top: 1em
-    .customer-contact
-      li
-        list-style: none
-        text-align: right
-    .change_customer
-      font-size: 80%
-      margin: 1em 0
-      text-align: right
-      select,
-      label
-        font-size: 10px
-        margin: 0
-        width: auto
-  a.customer:hover
-    background: #cccccc
-
   /* Addresses
   .address
     float: left
@@ -100,11 +64,8 @@ body.breeze-admin
   table.orders
     thead
       tr
-<<<<<<< HEAD
         th.order,
-=======
         th.date,
->>>>>>> e27faa0184a1b70270794c60b70e91399958e928
         th.shipping,
         th.line_items
           text-align: left
@@ -319,29 +280,6 @@ body.breeze-admin
       padding: 1em
       width: 100%
 
-  /* Customer Page
-  .customer-edit,
-  .customer-new
-    margin-right: 1em
-    width: 90%
-    #customer-details 
-      li.text_field,
-      li.text_area
-        input,
-        textarea
-          width: 50%
-        label
-          float: left
-          width: 25%
-      .customer_addresses 
-        width: 100%
-        legend
-          border-bottom: none
-          margin-bottom: none
-        .address
-          margin-right: 0
-          width: 50%
-
 
 
 
@@ -370,7 +308,6 @@ body.breeze-admin
       border-top: none
       margin: 0
       padding: 0
-<<<<<<< HEAD
       li
         display: inline
         line-height: inherit
@@ -463,7 +400,6 @@ body.breeze-admin
         background: #ccc
         padding: 4px
         @include border-radius(4px)
-=======
       li
         display: inline
         line-height: inherit
@@ -506,8 +442,6 @@ body.breeze-admin
         &.active small
           margin-right: 8px
 
->>>>>>> e27faa0184a1b70270794c60b70e91399958e928
-
   /* Variants
 
   table.fancy.variants
@@ -517,7 +451,6 @@ body.breeze-admin
 
   /** CONTEXTUAL *********************************
 
-<<<<<<< HEAD
   .edit-context
     position: relative
     margin-top: -12px
@@ -590,14 +523,16 @@ body.breeze-admin
     tr.property 
       td
         padding: 0.5em
-        .option
-          background: #999999
-          color: white
-          float: left
-          @include border-radius(0.5em)
-          line-height: 1.5
-          margin: 0 0.5em 0.5em 0
-          padding: 0.25em 0.5em
+
+  /* Options
+  .option
+    background: #999999
+    color: white
+    float: left
+    @include border-radius(0.5em)
+    line-height: 1.5
+    margin: 0 0.5em 0.5em 0
+    padding: 0.25em 0.5em
 
   /* Post tags 
   .textboxlist 
@@ -749,7 +684,7 @@ body.breeze-admin
     color: #999999
     background-repeat: no-repeat
 
-.breeze-form
+  /* Help
   .help
     margin: 0px 0px 8px
     padding: 8px
@@ -770,415 +705,58 @@ body.breeze-admin
       font-weight: bold
 
 
-/* Coupons
-#coupon-details
-  .inline
-    display: inline-block
-    vertical-align: middle
-    margin: 0
-  input[type="radio"]
-    margin-right: 0.5em
-    vertical-align: baseline
-  fieldset#name
-    input, .field
-      display: block
-      width: 472px
-      margin: 0
-      max-width: 100%
-  fieldset#amount
-    input#coupon_discount_value
-      width: 5em
-      text-align: right
-      margin-left: 2em
-    select#coupon_discount_type
-      width: 8em
-  fieldset.datetime
-    li
-      list-style: none
-    label
-      margin-right: 2em
-    .collapse
-      margin: 1em 2em 0 2em
-      input
-        width: 213px
-      select
-        width: 5em
-      li
-        display: inline-block
-  fieldset#customer_codes
-    label
-      clear: left
-      h4
-        display: inline
-    .help
-      margin: 0.5em 2em
-    .collapse
-      margin: 1em 2em 0 2em
-  #customer_codes
-    .container-coupon_codes
-      overflow: auto
-    li
-      list-style: none
-    td.code input
-      width: 10em
-    td.max_redemptions,
-    td.redemption_count
-      input
-        width: 5em
-
-=======
-  .published-toggle
-    background-image: url(image-path("breeze/yes-no-toggle.png"))
-    background-repeat: no-repeat
-    @include border-radius(4px)
-    width: 114px
-    height: 28px
-    // margin: 0px 0px 8px
-    cursor: pointer
-
-  /* Tags Page
-  table.tags 
-    .published-toggle, &.variants .published-toggle
+  /* Coupons
+  #coupon-details
+    .inline
       display: inline-block
-    input.tag-published
-      display: none
-    tr.tag
-      td
-        &.name
-          font-size: 125%
-          font-weight: bold
-        ul.products
-          color: #aaaaaa
-          font-size: 80%
-          margin: 0
-          padding: 0
-          li.product
-            display: inline
-            font-weight: normal
-            list-style: none
-
-  /* Product Tags
-  fieldset.product-tags
-    margin: 8px 0px
-    padding: 8px 0px 0px
-    legend
-      position: relative
-      top: 4px
-    ol.form
-      margin: 0px
-      width: 184px
-      overflow-y: auto
-      li
-        margin: 0px 0px 1px
-        background: #ccc
-        padding: 4px
-        @include border-radius(4px)
-
-  /* Variants
-
-  table.fancy.variants
-    clear: left
-    .actions
-      padding: 1em 0 0 0
-
-  /** CONTEXTUAL *********************************
-
-  .edit-context
-    position: relative
-    margin-top: -12px
-
-  .new-context
-    position: relative
-    margin-top: -12px
-    h3
+      vertical-align: middle
       margin: 0
-      padding-left: 8px
-      padding-top: 8px
-      font-size: 125%
-
-  .edit-context
-    img
-      display: block
-      margin: 10px auto
-    label
-      float: none !important
-
-  .new-context label
-    float: none !important
-
-  .edit-context input, .new-context input
-    width: 240px !important
-
-  .buttons
-    position: relative
-    img
-      position: absolute
-      margin: 0
-      bottom: -12px
-      left: -40px
-
-  .new-context
-    background-color: #ffffc0
-    img
-      display: block
-      margin: 0px auto
-      padding-top: 10px
-    .buttons
-      position: absolute
-      right: 8px
-      bottom: 8px
-
-  table
-    &.contextual tbody tr.edit .buttons
-      position: absolute
-      right: 0px
-      bottom: 8px
-    &.fancy tbody tr.edit .table-actions button
-      margin-left: 8px
-
-
-  #coupon-details #coupon_type li.radio_button
-    width: 140px
-    display: inline-block
-    label
-      float: none
-      display: inline
-
-  h1 .new
-    float: right
-
-  .new.contextual.disabled
-    background-color: #6A952F
-
-  /* Properties
-  table.properties 
-    tr.property 
-      td
-        padding: 0.5em
-        .option
-          background: #999999
-          color: white
-          float: left
-          @include border-radius(0.5em)
-          line-height: 1.5
-          margin: 0 0.5em 0.5em 0
-          padding: 0.25em 0.5em
-
-  /* Post tags 
-  .textboxlist 
-    font-size: 11px
-    cursor: text
-   
-  .textboxlist-bits 
-    zoom: 1
-    overflow: hidden
-    margin: 0
-    padding: 3px 4px 0 !important
-    border: 1px solid #999
-    *padding-bottom: 3px !important
-   
-  .textboxlist-bit 
-    list-style-type: none
-    float: left
-    display: block
-    padding: 0
-    margin: 0 5px 3px 0 !important
-    cursor: default
-   
-  .textboxlist-bit-editable 
-    border: 1px solid #fff
-   
-  .textboxlist-bit-editable-input 
-    border: 0
-    padding: 2px 0 !important
-    *padding-bottom: 0
-    height: 14px
-    font-size: 11px
-   
-  .textboxlist-bit-editable-input:focus 
-    outline: 0
-   
-  .textboxlist-bit-box 
-    position: relative
-    line-height: 18px
-    padding: 0 5px !important
-    @include border-radius(3px)
-    border: 1px solid #CAD8F3
-    background: #DEE7F8
-    cursor: default
-   
-  .textboxlist-bit-box-deletable 
-    padding-right: 15px !important
-   
-  .textboxlist-bit-box-deletebutton 
-    position: absolute
-    right: 4px
-    top: 6px
-    display: block
-    width: 7px
-    height: 7px
-    font-size: 1px
-    background: url('close.gif')
-   
-  .textboxlist-bit-box-deletebutton:hover 
-    border: none
-    background-position: 7px
-    text-decoration: none
-   
-  .textboxlist-bit-box-hover 
-    background: #BBCEF1
-    border: 1px solid #6D95E0
-   
-  .textboxlist-bit-box-focus 
-    border-color: #598BEC
-    background: #598BEC
-    color: #fff
-   
-  .textboxlist-bit-box-focus .textboxlist-bit-box-deletebutton 
-    background-position: bottom
-   
-
-  .textboxlist-autocomplete 
-    position: absolute
-   
-  .textboxlist-autocomplete-placeholder, .textboxlist-autocomplete-results 
-    opacity: 0.9
-    filter: alpha(opacity=90)
-    background: #eee
-    @include box-shadow
-    border: 1px solid #999
-    border-top: none
-    display: none
-   
-  .textboxlist-autocomplete-placeholder 
-    padding: 5px 7px
-
-  .textboxlist-autocomplete-results 
-    margin: 0
-    padding: 0
-
-  .textboxlist-autocomplete-result 
-    margin: 0
-    padding: 5px
-    list-style-type: none
-    background: #eee
-
-  .textboxlist-autocomplete-result-focus 
-    background: #C6D9E4
-
-  .textboxlist-autocomplete-highlight 
-    background: #EEF0C4
-    font-weight: bold
-   
-  /* Forms
-  /* TODO: Merge with Breeze Core admin design
-  #main 
-    div.actions
-      background: #cccccc
-      border: 1px solid #aaaaaa
-      @include border-radius(4px)
-      float: right
-      width: 223px 
-      padding: 8px 8px 0 8px
-      &.horizontal
-        width: auto
-        padding: 0.5em
-        .large.button
-          margin: 0 0.5em 0 0
-        .large.button:last-child
-          margin: 0
-      .large.button 
+    input[type="radio"]
+      margin-right: 0.5em
+      vertical-align: baseline
+    fieldset#name
+      input, .field
         display: block
-        float: left
-        width: 223px
-        margin: 0 0 8px 0
-        padding: 8px 0px 9px
-        text-align: center
-
-  form
-    margin: 0
-
-  table.sortable
-    tr
-      cursor: move
-    tr.empty
-      cursor: default
-
-.breeze-form
-  .help
-    margin: 0px 0px 8px
-    padding: 8px
-    background: rgba(255, 255, 192, 0.75)
-    text-shadow: #ffc 0px 1px
-    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px
-    -webkit-border-radius: 8px
-    code
-      background: none
-      padding: 0
-      color: inherit
-      white-space: inherit
-      border: none
-    h3
-      margin: 0px 0px 8px
-      padding-bottom: 4px
-      border-bottom: 1px solid rgba(0, 0, 0, 0.5)
-      font-weight: bold
-
-
-/* Coupons
-#coupon-details
-  .inline
-    display: inline-block
-    vertical-align: middle
-    margin: 0
-  input[type="radio"]
-    margin-right: 0.5em
-    vertical-align: baseline
-  fieldset#name
-    input, .field
-      display: block
-      width: 472px
-      margin: 0
-      max-width: 100%
-  fieldset#amount
-    input#coupon_discount_value
-      width: 5em
-      text-align: right
-      margin-left: 2em
-    select#coupon_discount_type
-      width: 8em
-  fieldset.datetime
-    li
-      list-style: none
-    label
-      margin-right: 2em
-    .collapse
-      margin: 1em 2em 0 2em
-      input
-        width: 213px
-      select
+        width: 472px
+        margin: 0
+        max-width: 100%
+    fieldset#amount
+      input#coupon_discount_value
         width: 5em
+        text-align: right
+        margin-left: 2em
+      select#coupon_discount_type
+        width: 8em
+    fieldset.datetime
       li
-        display: inline-block
-  fieldset#customer_codes
-    label
-      clear: left
-      h4
-        display: inline
-    .help
-      margin: 0.5em 2em
-    .collapse
-      margin: 1em 2em 0 2em
-  #customer_codes
-    .container-coupon_codes
-      overflow: auto
-    li
-      list-style: none
-    td.code input
-      width: 10em
-    td.max_redemptions,
-    td.redemption_count
-      input
-        width: 5em
-
->>>>>>> e27faa0184a1b70270794c60b70e91399958e928
+        list-style: none
+      label
+        margin-right: 2em
+      .collapse
+        margin: 1em 2em 0 2em
+        input
+          width: 213px
+        select
+          width: 5em
+        li
+          display: inline-block
+    fieldset#customer_codes
+      label
+        clear: left
+        h4
+          display: inline
+      .help
+        margin: 0.5em 2em
+      .collapse
+        margin: 1em 2em 0 2em
+    #customer_codes
+      .container-coupon_codes
+        overflow: auto
+      li
+        list-style: none
+      td.code input
+        width: 10em
+      td.max_redemptions,
+      td.redemption_count
+        input
+          width: 5em
