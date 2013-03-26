@@ -7,5 +7,5 @@
     csv.cell :shipping_address.to_s
     csv.cell :amount, number_to_currency(order.total, :locale => :nz)
     csv.cells :email, :comment
-    csv.cell :line_items, order.line_items.unarchived.to_a.each{ |line_item| line_item_string(line_item) }
+    csv.cell :line_items, order.line_items.unarchived.to_a.map{ |line_item| line_item.quantity.to_s + " x " + line_item.name + (" \"" + line_item.customer_message + "\"" unless line_item.customer_message.blank?).to_s}.join(",")
   end
