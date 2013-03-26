@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Breeze::Commerce::Country do
+describe Breeze::Commerce::Shipping::Country do
 	it "has a valid factory" do
 		create(:country).should be_valid
 	end

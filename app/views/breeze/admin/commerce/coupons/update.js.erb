@@ -2,6 +2,7 @@
   $('#coupon-details').dialog('close');
   $('#<%= "coupon_#{@coupon.id}" %>').replaceWith('<%= escape_javascript render(:partial => "/breeze/admin/commerce/coupons/coupon", :object => @coupon) %>');
   $('#<%= "coupon_#{@coupon.id}" %>').effect("highlight", { color: "#ffffc0" }, 3000);
+  // window.animatePublishSwitch($("#coupon_<%= @coupon.id %>_published_toggle"), <%= @coupon.published %>);
 <% else %>
   $('#coupon-details').html('<%= escape_javascript render(:file => "/breeze/admin/commerce/coupons/edit") %>');
 <% end %>

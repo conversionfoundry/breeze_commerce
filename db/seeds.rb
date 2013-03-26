@@ -13,4 +13,4 @@ Breeze::Commerce::OrderStatus.create(:type => :shipping, :name => "Processing", 
 Breeze::Commerce::OrderStatus.create(:type => :shipping, :name => "Shipped", :sort_order => 2, :description => "Order has been shipped")
 Breeze::Commerce::OrderStatus.create(:type => :shipping, :name => "Will Not Ship", :sort_order => 3, :description => "Shipping has been cancelled")
 
-Breeze::Commerce::ShippingMethod.create(:price => 10, :name => "Standard Shipping")
+Breeze::Commerce::Shipping::ShippingMethod.create(:price => 10, :name => "Standard Shipping")

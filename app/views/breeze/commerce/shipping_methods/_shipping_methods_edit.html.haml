@@ -30,6 +30,14 @@
           %span.amount
             = number_to_currency @order.shipping_total
           %span.currency= currency
+        - if shipping_method.can_upsell?(@order)
+          .shipping_method_upsell
+            - if shipping_method.class == Breeze::Commerce::Shipping::ThresholdShippingMethod
+              Order
+              = number_to_currency(shipping_method.threshold - @order.item_total) 
+              more and you'll qualify for 
+              = shipping_method.above_threshold_price == 0 ? "free" : number_to_currency(shipping_method.above_threshold_price)
+              shipping.
 
       - else
         %p.label.label-warning

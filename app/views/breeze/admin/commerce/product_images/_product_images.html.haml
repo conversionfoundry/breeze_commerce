@@ -6,5 +6,6 @@
       = render partial: "breeze/admin/commerce/product_images/product_image", collection: @product.images, locals: {product_images_count: @product.images.count}
     - else
       %li.empty
-        There are no images for this product yet.
+        .alert
+          There are no images for this product yet.
     .clearer
