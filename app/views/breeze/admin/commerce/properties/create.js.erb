@@ -5,6 +5,5 @@
   $('#product-variants').html('<%= escape_javascript render(:partial => "breeze/admin/commerce/variants/variants", :object => @product.variants) %>');
 <% else %>
   $('#property-details').html('<%= escape_javascript render(:file => "breeze/admin/commerce/properties/new") %>');
-  new $.TextboxList("#property_option_names");
 <% end %>
 
