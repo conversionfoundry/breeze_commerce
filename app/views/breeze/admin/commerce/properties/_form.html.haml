@@ -1,6 +1,27 @@
-= breeze_form_for @property, :as => :property, :url => url, :remote => true do |form|
+= form_for @property, as: :property, url: url, remote: true, html: {class: "breeze-form"} do |form|
   = render "/breeze/admin/shared/error_messages", :target => @property, :object_name => :property
   %fieldset
     %ol.form
-      = form.text_field :name, :required => true
-      = form.text_field :option_names, :label => 'Options', :value => form.object.options.map{|o| o.name}.join(", "), :hint => "Press <strong>Return</strong> after each new option".html_safe, :wrap => { :class => "option-list" }
+      %li.text_field
+        = form.label :name do |label|
+          Name
+          %abbr{title: "required"}
+            *
+        = form.text_field :name, :required => true, placeholder: "Colour"
+  %fieldset.nested_items
+    %legend Options
+    %ul.options.association
+      = form.fields_for :options do |option_fields|
+        = render 'breeze/admin/commerce/properties/option_fields', form: option_fields
+    = link_to_add_fields "Add Option", form, :options, 'breeze/admin/commerce/properties/option_fields'
+
+:javascript
+  function remove_option_fields(link) {
+    $(link).prev("input[type=hidden]").val(true);
+    $(link).closest(".option").hide();
+  };
+  function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).parent().find("ul").append(content.replace(regexp, new_id));
+  };
