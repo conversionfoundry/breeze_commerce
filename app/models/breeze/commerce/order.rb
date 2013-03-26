@@ -19,7 +19,7 @@ module Breeze
       embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
       embeds_many :notes, :class_name => "Breeze::Commerce::Note"
-      belongs_to :shipping_method, :class_name => "Breeze::Commerce::ShippingMethod", :inverse_of => :orders
+      belongs_to :shipping_method, :class_name => "Breeze::Commerce::Shipping::ShippingMethod", :inverse_of => :orders
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 

@@ -17,8 +17,17 @@
     = coupon.redemption_count
     redeemed
   %td.published
+    .field
+      = check_box_tag "coupon_#{coupon.id}_published", "1", coupon.published, :class => "published coupon-published", style: 'display: none;'
   %td.actions
     %p.coupon-actions
       = link_to "Download CSV file", admin_store_coupon_codes_path(format: :csv, coupon_id: coupon.id), :class => "small black show button"
       = link_to "Edit", edit_admin_store_coupon_path(coupon), :class => "small black edit button"
       = link_to "Delete", admin_store_coupon_path(coupon), :remote => true, :method => :delete, :class => "small red delete button"
+
+:javascript
+  $(function() {
+    $('<div id="#coupon_#{coupon.id}_published_toggle" class="published-toggle"></div>').insertAfter('#coupon_#{coupon.id}_published').css({
+       'background-position': ($('#coupon_#{coupon.id}_published:checked').length > 0 ? 0 : 100) + '% 0%'
+    })
+  });

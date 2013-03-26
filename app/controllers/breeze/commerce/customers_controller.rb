@@ -32,7 +32,7 @@ module Breeze
         @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
         @new_order = Breeze::Commerce::Order.new
         @same_address = @customer.shipping_address == @customer.billing_address
-        @shipping_countries = Breeze::Commerce::Country.order_by(:name.asc)
+        @shipping_countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
         @billing_countries = Breeze::Commerce::COUNTRIES
       end
 

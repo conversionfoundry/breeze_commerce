@@ -3,7 +3,7 @@
   = panes.inner do
     = scrollable_layout do
       .actions.horizontal
-        - if Breeze::Commerce::ShippingMethod.exists?
+        - if Breeze::Commerce::Shipping::ShippingMethod.exists?
           = link_to "New shipping country", new_admin_store_country_path, class: "large green button new country", remote: true
         - else
           .alert

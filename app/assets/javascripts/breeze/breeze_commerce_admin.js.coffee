@@ -145,7 +145,7 @@ $("table.shipping_methods td.actions .edit.button").live "click", (e) ->
   e.preventDefault()
 # Show/hide extra controls for shipping methods
 $('fieldset.shipping_method_types input[name=shipping_method_type]').live "click", (e) ->
-  if $(this).val() == 'breeze/commerce/threshold_shipping_method'
+  if $(this).val() == 'breeze/commerce/shipping/threshold_shipping_method'
     $('#threshold_shipping_method-details').slideDown()
   else
     $('#threshold_shipping_method-details').slideUp() 
@@ -169,15 +169,11 @@ $(".new.variant_factory.button").live "click", (e) ->
 # Properties
 $(".new.property.button").live "click", (e) ->
   $.get @href, (data) ->
-    setup_function = =>
-      new $.TextboxList("#property_option_names")
-    dialogForm "property-details", "New Property", data, 'POST', setup_function
+    dialogForm "property-details", "New Property", data, 'POST'
   e.preventDefault()
 $(".properties .property-actions .edit.button").live "click", (e) ->
   $.get @href, (data) ->
-    setup_function = =>
-      new $.TextboxList("#property_option_names")
-    dialogForm "property-details", "Edit Property", data, 'PUT', setup_function
+    dialogForm "property-details", "Edit Property", data, 'PUT'
   e.preventDefault()
 
 # Orders
@@ -220,33 +216,6 @@ $(document).ready ->
       url: "/admin/store/products/" + $(this).data('product_id') + "/variants/reorder.js"
       type: "post"
       data: "_method=put&" + $(this).sortable("serialize")
-
-
-# Published toggles
-$(document).ready ->
-  # Variants on product page
-  $("table.variants .published-toggle").live "mousedown", ->
-    $checkbox = $(this).siblings(".variant-published")
-    $checkbox.click().change()
-    checked = $(this).siblings(".variant-published:checked").length > 0
-    $(this).animate( {backgroundPosition: ((if checked then 0 else 100)) + "%"}, "slow", "easeInOutQuad" )
-    id = $(this).closest("tr.variant").attr("data-id")
-    product_id = $(this).closest("tr.variant").attr("data-product-id")
-    $.ajax
-      beforeSend: (xhr) ->
-        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
-      url: "/admin/store/products/" + product_id + "/variants/" + id + ".js"
-      type: "post"
-      dataType: "script"
-      data: "_method=put&variant[published]=" + checked
-
-  # Products on product page
-  # Insert the toggle switch for product availability
-  $('<div class="published-toggle"></div>').insertAfter("#product_published").css("background-position": ((if $("#product_published:checked").length > 0 then 0 else 100)) + "% 0%").mousedown (event) ->
-    $("#product_published").click().change()
-    $(this).animate
-      "background-position": ((if $("#product_published:checked").length > 0 then 0 else 100)) + "%"
-    , "slow", "easeInOutQuad"
 
 # List Filters
 $(".filters a").live "click", (e) ->
@@ -358,3 +327,4 @@ coupon_forms_setup = ->
   $("#coupon-details fieldset#customer_codes input[type=radio]").on "change", ->
     $("#coupon-details fieldset#customer_codes .collapse").removeClass("in")
     $("#" + $(this).data("target")).addClass("in")
+

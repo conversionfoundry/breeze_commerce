@@ -1,3 +1,7 @@
+# Event triggers
+$("input.btn-add_to_cart").live "click", (event) ->
+  $(document).trigger "breeze_commerce_add_to_cart", $(this)
+
 # Post to the provided URL with the specified parameters.
 post = (path, parameters) ->
   form = $("<form></form>")

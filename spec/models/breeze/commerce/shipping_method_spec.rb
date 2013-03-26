@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Breeze::Commerce::ShippingMethod do
+describe Breeze::Commerce::Shipping::ShippingMethod do
 	it "has a valid factory" do
 		create(:shipping_method).should be_valid
 	end
@@ -22,7 +22,7 @@ describe Breeze::Commerce::ShippingMethod do
 	end
 	it "is the default shipping method if it was the first created" do
 		store = Breeze::Commerce::Store.first
-		first_shipping_method = Breeze::Commerce::ShippingMethod.first
+		first_shipping_method = Breeze::Commerce::Shipping::ShippingMethod.first
 		second_shipping_method = create(:shipping_method)
 		store.default_shipping_method.should eq first_shipping_method
 		store.default_shipping_method.should_not eq second_shipping_method
@@ -40,14 +40,14 @@ describe Breeze::Commerce::ShippingMethod do
 		end			
 		context "unarchived scope" do
 			it "returns an array of unarchived shipping methods" do
-				Breeze::Commerce::ShippingMethod.unarchived.to_a.should include @shipping_method_1
-				Breeze::Commerce::ShippingMethod.unarchived.should_not include @shipping_method_2
+				Breeze::Commerce::Shipping::ShippingMethod.unarchived.to_a.should include @shipping_method_1
+				Breeze::Commerce::Shipping::ShippingMethod.unarchived.should_not include @shipping_method_2
 			end
 		end
 		context "archived scope" do
 			it "returns an array of archived shipping methods" do
-				Breeze::Commerce::ShippingMethod.archived.to_a.should include @shipping_method_2
-				Breeze::Commerce::ShippingMethod.archived.should_not include @shipping_method_1
+				Breeze::Commerce::Shipping::ShippingMethod.archived.to_a.should include @shipping_method_2
+				Breeze::Commerce::Shipping::ShippingMethod.archived.should_not include @shipping_method_1
 			end
 		end
 	end

@@ -4,6 +4,8 @@ module Breeze
       class Coupon
         include Mongoid::Document
         include Mongoid::MultiParameterAttributes
+        include Mixins::Archivable
+        include Mixins::Publishable
 
         attr_accessible :name, :start_time, :end_time, :discount_value, :discount_type, :couponable_type, :coupon_codes_attributes
 

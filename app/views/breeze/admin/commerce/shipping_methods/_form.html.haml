@@ -6,7 +6,9 @@
       - @shipping_method_types.each do |shipping_method_type|
         %label.radio
           = radio_button_tag :shipping_method_type, shipping_method_type.name.underscore
-          = shipping_method_type.name.demodulize.underscore.humanize
+          %h4= shipping_method_type.human_readable_name
+          .help
+            = shipping_method_type.explanation
   - else
     = hidden_field_tag :shipping_method_type, @shipping_method.class.name.underscore
 
@@ -16,7 +18,7 @@
       = form.text_field :description, :required => false, :label => "Description", :placeholder => 'e.g. $5 airmail to anywhere in the world'
       = form.number_field :price, required: true, label: 'Price', before: '$', step: 0.01
 
-  #threshold_shipping_method-details{style: 'display: none'}
+  #threshold_shipping_method-details{:style => (@shipping_method.class==Breeze::Commerce::Shipping::ThresholdShippingMethod ? "" : "display: none") }
     = form.fieldset do
       = fields_for :threshold_shipping_method do |threshold_fields|
         %li
@@ -30,6 +32,3 @@
 
 - content_for :left do
   = render :partial => "breeze/admin/commerce/shared/left"
-
-/ TODO: Show / hide threshold fields depending on radio value
-/ TODO: Move threshold fields to separate file
