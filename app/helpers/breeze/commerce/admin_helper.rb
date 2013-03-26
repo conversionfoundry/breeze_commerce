@@ -10,7 +10,7 @@ module Breeze
           commerce_menu_item("Products", breeze.admin_store_products_path, badge( Breeze::Commerce::Product.unarchived.count )),
           commerce_menu_item("Tags", breeze.admin_store_tags_path, badge( Breeze::Commerce::Tag.count )),
           commerce_menu_item("Coupons", breeze.admin_store_coupons_path, badge( Breeze::Commerce::Coupons::Coupon.count )),
-          commerce_menu_item("Shipping", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::ShippingMethod.unarchived.count )),
+          commerce_menu_item("Shipping", breeze.admin_store_shipping_methods_path, badge( Breeze::Commerce::Shipping::ShippingMethod.unarchived.count )),
           commerce_menu_item("Settings", breeze.edit_admin_store_store_path)
         ].join.html_safe, :class => 'store-actions'
       end
@@ -100,6 +100,16 @@ module Breeze
             end
         end.html_safe
         end
+      end
+
+      # Add new items to nested attribute fields
+      # Based on http://railscasts.com/episodes/197-nested-model-form-part-2?view=asciicast
+      def link_to_add_fields(name, f, association, partial)
+        new_object = f.object.class.reflect_on_association(association).klass.new
+        fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |association_fields|
+          render partial, form: association_fields
+        end
+        link_to_function name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "btn"
       end
 
     end

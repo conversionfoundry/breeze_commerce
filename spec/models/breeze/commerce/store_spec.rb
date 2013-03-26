@@ -6,7 +6,7 @@ describe Breeze::Commerce::Store do
 	end
 	it "can set a default shipping method" do
 		store = Breeze::Commerce::Store.first
-		first_shipping_method = Breeze::Commerce::ShippingMethod.first
+		first_shipping_method = Breeze::Commerce::Shipping::ShippingMethod.first
 		second_shipping_method = create(:shipping_method)
 		store.default_shipping_method = second_shipping_method
 		store.default_shipping_method.should eq second_shipping_method

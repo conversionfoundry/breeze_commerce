@@ -4,7 +4,7 @@
     = hidden_field_tag "line_item[variant_id]", variant.id
     = hidden_field_tag "line_item[quantity]", 1
     .image
-      = image_tag variant.image.url(:thumbnail) unless variant.image.blank?
+      = image_tag variant.display_image.url(:thumbnail) unless variant.display_image.blank?
     %h4.name= variant.name
     %p.description= variant.description
     .price

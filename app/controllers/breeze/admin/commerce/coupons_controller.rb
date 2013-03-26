@@ -45,7 +45,9 @@ module Breeze
         
         def update
           @coupon = Breeze::Commerce::Coupons::Coupon.find params[:id]
-          params[:coupon][:discount_type] = params[:coupon][:discount_type].to_sym
+          if params[:coupon][:discount_type]
+            params[:coupon][:discount_type] = params[:coupon][:discount_type].to_sym
+          end
 
           if params[:end_never] == "true"
             params[:coupon].delete("end_time(1i)")
@@ -79,9 +81,9 @@ module Breeze
       private
 
         def sort_method
-          %w[name].include?(params[:sort]) ? params[:sort] : "name"
+          %w[name start_time end_time].include?(params[:sort]) ? params[:sort] : "end_time"
         end
-        
+                
         def sort_direction
           %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
         end

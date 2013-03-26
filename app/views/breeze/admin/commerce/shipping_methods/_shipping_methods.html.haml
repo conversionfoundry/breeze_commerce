@@ -2,10 +2,10 @@
   %table.fancy.sortable.shipping_methods
     %thead
       %tr
-        %th.name.first Name
+        %th.name Name
         %th.type Type
         %th.price Price
-        %th.actions.last Actions
+        %th.actions Actions
     %tbody
       - if shipping_methods.any?
         = render :partial => "breeze/admin/commerce/shipping_methods/shipping_method", :collection => shipping_methods, locals: {count: shipping_methods.count}

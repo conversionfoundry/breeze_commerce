@@ -54,8 +54,8 @@ module Breeze
 	        end
 
 	        # Generate an initial shipping method
-	        if Breeze::Commerce::ShippingMethod.count == 0
-	        	Breeze::Commerce::ShippingMethod.create(:price => 10, :name => "Standard Shipping")
+	        if Breeze::Commerce::Shipping::ShippingMethod.count == 0
+	        	Breeze::Commerce::Shipping::ShippingMethod.create(:price => 10, :name => "Standard Shipping")
 	        end
 
 	        # TODO: Put a list of things to do on the dashboard: check shipping methods, create a product, etc.

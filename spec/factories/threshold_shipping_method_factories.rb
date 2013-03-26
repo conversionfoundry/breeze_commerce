@@ -1,7 +1,7 @@
 require 'faker'
 
 FactoryGirl.define do
-  factory :threshold_shipping_method, class: Breeze::Commerce::ThresholdShippingMethod do
+  factory :threshold_shipping_method, class: Breeze::Commerce::Shipping::ThresholdShippingMethod do
     sequence(:name) { |n| "Threshold Shipping Method #{n}"}
     sequence(:description) { |n| "Description for Threshold Shipping Method #{n}"}
     price_cents { Random.rand(1000) }

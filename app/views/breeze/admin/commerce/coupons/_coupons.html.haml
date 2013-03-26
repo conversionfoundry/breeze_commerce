@@ -2,12 +2,15 @@
   %table.fancy.sortable.coupons
     %thead
       %tr
-        %th.first Name
-        %th Start on
-        %th End on
+        %th
+          = sortable "name", "Name"
+        %th
+          = sortable "start_time", "Start on"
+        %th
+          = sortable "end_time", "End on"
         %th Codes
         %th Published
-        %th.last Actions
+        %th Actions
     %tbody
       - if coupons.any?
         = render :partial => "breeze/admin/commerce/coupons/coupon", collection: coupons, locals: {count: coupons.count}

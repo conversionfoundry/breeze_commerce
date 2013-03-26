@@ -20,7 +20,7 @@
           = link_to store.home_page.permalink, class: "btn", id: "continue-shopping" do
             %i.icon-arrow-left
             %span.title Continue Shopping
-          - if @order.line_items.count > 0 && Breeze::Commerce::ShippingMethod.unarchived.count > 0
+          - if @order.line_items.count > 0 && Breeze::Commerce::Shipping::ShippingMethod.unarchived.count > 0
             = link_to breeze.checkout_order_path(@order), method: :get, :class => "btn btn-primary", id: "go_to_checkout" do
               %i.icon-arrow-right
               %span.title Go to Checkout

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Breeze::Commerce::ThresholdShippingMethod do
+describe Breeze::Commerce::Shipping::ThresholdShippingMethod do
 	it "has a valid factory" do
 		create(:threshold_shipping_method).should be_valid
 	end
