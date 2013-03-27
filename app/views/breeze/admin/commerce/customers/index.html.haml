@@ -9,7 +9,7 @@
       .box
         .filter_controls
           = select_tag_for_filter("customers", @filters, params)
-          = will_paginate @orders
+          = will_paginate @customers
         = render :partial => "breeze/admin/commerce/customers/customers", :locals => { :customers => @customers }
 = content_for :left do
   - render :partial => "breeze/admin/commerce/shared/left"

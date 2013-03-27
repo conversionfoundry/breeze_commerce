@@ -4,6 +4,12 @@ module Breeze
       include Mixins::Archivable
       include Mixins::Publishable
 
+      FILTERS = [
+        {:scope => "all",         :label => "All Products"},
+        {:scope => "published", :label => "Published Products"},
+        {:scope => "unpublished", :label => "Unpublished Products"}
+      ]
+
       attr_accessible :view, :order, :template, :title, :subtitle, 
         :show_in_navigation, :ssl, :seo_title, :seo_meta_description, 
         :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, 
@@ -24,6 +30,8 @@ module Breeze
 
       default_scope order_by([:title, :asc])
       scope :with_tag, lambda { |tag| where(tag_ids: tag.id) }
+      scope :published, where(published: true)
+      scope :unpublished, where(published: false)
 
       before_validation :set_parent_id
       validates_associated :variants

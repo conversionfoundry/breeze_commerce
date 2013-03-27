@@ -5,7 +5,14 @@ module Breeze
         helper_method :sort_method, :sort_direction
 
         def index
-          @products = Breeze::Commerce::Product.unscoped.includes(:variants).unarchived.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
+          @filters = Breeze::Commerce::Product::FILTERS
+          if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
+            @products = Breeze::Commerce::Product.unscoped.includes(:variants).unarchived.send(params[:show])
+          else
+            @products = Breeze::Commerce::Product.unscoped.includes(:variants).unarchived
+          end  
+
+          @products = @products.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
         end
         
         def new
