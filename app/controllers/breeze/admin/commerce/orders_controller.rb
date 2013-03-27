@@ -11,7 +11,14 @@ module Breeze
         helper_method :sort_method, :sort_direction
 
         def index
-          @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items)
+
+          @filters = Breeze::Commerce::Order::FILTERS
+          if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
+            @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items).send(params[:show])
+          else
+            @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items)
+          end  
+
           @orders = @orders.to_a.sort_by{ |o| o.send(sort_method) }
           if sort_direction == "desc"
             @orders = @orders.reverse

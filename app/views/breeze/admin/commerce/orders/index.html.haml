@@ -7,7 +7,9 @@
         = link_to "New order", new_admin_store_order_path, :class => "large green button new order blue_monday how_does_it_feel"
       %h1 Orders
       .box
-        = will_paginate @orders
+        .filter_controls
+          = select_tag_for_filter("orders", @filters, params)
+          = will_paginate @orders
         = render :partial => "breeze/admin/commerce/orders/orders", :object => @orders
 - content_for :left do
   = render :partial => "breeze/admin/commerce/shared/left"

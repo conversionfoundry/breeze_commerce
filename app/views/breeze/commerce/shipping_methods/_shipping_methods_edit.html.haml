@@ -1,57 +1,62 @@
 %table.shipping_methods
-  %tr.shipping#shipping_methods
-    %td
-      Shipping:
-    %td
-      - shipping_methods = store.default_country.shipping_methods
-      - if shipping_methods.count > 1
-        - shipping_methods.each do |shipping_method|
-          %label.radio
-            = radio_button_tag 'order[shipping_method_id]', shipping_method.id, checked: shipping_method == order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }
-            .description
-              %h4
-                = shipping_method.name
-              = shipping_method.description
-            - if shipping_method == @order.shipping_method
-              .amount
-                +
-                %span.amount
-                  = number_to_currency @order.shipping_total
-                %span.currency= currency
-
-      - elsif shipping_methods.count == 1
-        - shipping_method = shipping_methods.first
-        .description
-          %h4
-            = shipping_method.name
-          = shipping_method.description
-        .amount
-          +
-          %span.amount
-            = number_to_currency @order.shipping_total
-          %span.currency= currency
-        - if shipping_method.can_upsell?(@order)
-          .shipping_method_upsell
-            - if shipping_method.class == Breeze::Commerce::Shipping::ThresholdShippingMethod
-              Order
-              = number_to_currency(shipping_method.threshold - @order.item_total) 
-              more and you'll qualify for 
-              = shipping_method.above_threshold_price == 0 ? "free" : number_to_currency(shipping_method.above_threshold_price)
-              shipping.
-
-      - else
+  - if store.default_country == nil
+    %tr.shipping#shipping_methods
+      %td.missing_country
         %p.label.label-warning
-          No shipping methods available
-
-  %tr.countries
-    %td
-      = label_tag :country, 'Shipping Country:'
-    %td
-      #countries
-        - if @countries.count == 0
           No countries available for shipping
-        - elsif @countries.count == 1
-          We ship to 
-          = @countries.first.name
+  - else
+    %tr.shipping#shipping_methods
+      %td
+        Shipping:
+      %td
+        - shipping_methods = store.default_country.shipping_methods
+        - if shipping_methods.count > 1
+          - shipping_methods.each do |shipping_method|
+            %label.radio
+              = radio_button_tag 'order[shipping_method_id]', shipping_method.id, checked: shipping_method == order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }
+              .description
+                %h4
+                  = shipping_method.name
+                = shipping_method.description
+              - if shipping_method == @order.shipping_method
+                .amount
+                  +
+                  %span.amount
+                    = number_to_currency @order.shipping_total
+                  %span.currency= currency
+
+        - elsif shipping_methods.count == 1
+          - shipping_method = shipping_methods.first
+          .description
+            %h4
+              = shipping_method.name
+            = shipping_method.description
+          .amount
+            +
+            %span.amount
+              = number_to_currency @order.shipping_total
+            %span.currency= currency
+          - if shipping_method.can_upsell?(@order)
+            .shipping_method_upsell
+              - if shipping_method.class == Breeze::Commerce::Shipping::ThresholdShippingMethod
+                Order
+                = number_to_currency(shipping_method.threshold - @order.item_total) 
+                more and you'll qualify for 
+                = shipping_method.above_threshold_price == 0 ? "free" : number_to_currency(shipping_method.above_threshold_price)
+                shipping.
+
         - else
-          = select_tag :country, options_for_select(@countries.map{|country| [country.name, country.id]}, store.default_country.id) , class: :required, data: {order_id: @order.id.to_s}
+          %p.label.label-warning
+            No shipping methods available
+    %tr.countries
+      %td
+        = label_tag :country, 'Shipping Country:'
+      %td
+        #countries
+          - if @countries.count == 0
+            No countries available for shipping
+          - elsif @countries.count == 1
+            We ship to 
+            = @countries.first.name
+          - else
+            = select_tag :country, options_for_select(@countries.map{|country| [country.name, country.id]}, store.default_country.id) , class: :required, data: {order_id: @order.id.to_s}

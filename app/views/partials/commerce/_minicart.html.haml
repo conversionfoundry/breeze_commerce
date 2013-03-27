@@ -2,7 +2,7 @@
 - title ||= 'My Cart'
 .breeze-minicart.well
   - if order
-    %h3= link_to title, breeze.edit_order_path(order), method: :put
+    %h3= link_to title, breeze.edit_order_path(order), method: :get
     - if order.line_items.unarchived.count > 0
       %table
         - order.line_items.unarchived.each do |line_item|

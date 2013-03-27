@@ -7,10 +7,9 @@
       %h1
         Customers
       .box
-        .filters
-          .states
-            = link_to "All (#{Breeze::Commerce::Customer.count})", admin_store_customers_path
-        = will_paginate @customers
+        .filter_controls
+          = select_tag_for_filter("customers", @filters, params)
+          = will_paginate @orders
         = render :partial => "breeze/admin/commerce/customers/customers", :locals => { :customers => @customers }
 = content_for :left do
   - render :partial => "breeze/admin/commerce/shared/left"

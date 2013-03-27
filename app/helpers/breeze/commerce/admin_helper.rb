@@ -54,26 +54,6 @@ module Breeze
         image_tag src, image_options
       end
 
-      # Filters for index pages
-      # Source: http://www.idolhands.com/ruby-on-rails/guides-tips-and-tutorials/add-filters-to-views-using-named-scopes-in-rails
-      def select_tag_for_filter(model, nvpairs, params)
-        options = { :query => params[:query] }
-        _url = url_for(eval("#{model}_url(options)"))
-        _html = %{<label for="show">Show:</label><br />}
-        _html << %{<select name="show" id="show"}
-        _html << %{onchange="window.location='#{_url}' + '?show=' + this.value">}
-        nvpairs.each do |pair|
-          _html << %{<option value="#{pair[:scope]}"}
-          if params[:show] == pair[:scope] || ((params[:show].nil? || 
-      params[:show].empty?) && pair[:scope] == "all")
-            _html << %{ selected="selected"}
-          end
-          _html << %{>#{pair[:label]}}
-          _html << %{</option>}
-        end
-        _html << %{</select>}
-      end
-
       # Sortable table columns
       # http://railscasts.com/episodes/228-sortable-table-columns?view=asciicast
       def sortable(column, title = nil)
@@ -110,6 +90,26 @@ module Breeze
           render partial, form: association_fields
         end
         link_to_function name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "btn"
+      end
+
+      # Filters for index pages
+      # Source: http://www.idolhands.com/ruby-on-rails/guides-tips-and-tutorials/add-filters-to-views-using-named-scopes-in-rails
+      def select_tag_for_filter(model, nvpairs, params)
+        options = { :query => params[:query] }
+        url = url_for(eval("admin_store_#{model}_url(options)"))
+        html = %{<label for="show">Show:</label>}
+        html << %{<select name="show" id="show"}
+        html << %{onchange="window.location='#{url}' + '?show=' + this.value">}
+        nvpairs.each do |pair|
+          html << %{<option value="#{pair[:scope]}"}
+          if params[:show] == pair[:scope] || ((params[:show].nil? || params[:show].empty?) && pair[:scope] == "all")
+            html << %{ selected="selected"}
+          end
+          html << %{>#{pair[:label]}}
+          html << %{</option>}
+        end
+        html << %{</select>}
+        html.html_safe
       end
 
     end
