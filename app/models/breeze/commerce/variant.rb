@@ -53,7 +53,6 @@ module Breeze
 
       validates_presence_of :product_id, :name, :sku_code, :sell_price_cents, :discounted, :requires_customer_message
       validates :customer_message_limit, presence: true, numericality: { only_integer: true, greater_than: 0 }, if: :requires_customer_message
-      validates_uniqueness_of :sku_code
       validates_with AllOptionsFilledValidator
 
       # If there's no variant image, try to find an image for the parent product
