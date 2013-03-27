@@ -6,7 +6,15 @@ module Breeze
         helper_method :sort_method, :sort_direction
 
         def index
-          @coupons = Breeze::Commerce::Coupons::Coupon.unscoped.includes(:coupon_codes).order_by(sort_method + " " + sort_direction)
+          @filters = Breeze::Commerce::Coupons::Coupon::FILTERS
+          if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
+            @coupons = Breeze::Commerce::Coupons::Coupon.unscoped.includes(:coupon_codes).unarchived.send(params[:show])
+          else
+            @coupons = Breeze::Commerce::Coupons::Coupon.unscoped.includes(:coupon_codes).unarchived
+          end  
+
+          @coupons = @coupons.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
+
           respond_to do |format|
             format.html
             format.json { render :json => @coupons.map{|c| { :id => c.id, :name => c.name } } }

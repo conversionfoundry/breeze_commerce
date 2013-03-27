@@ -7,6 +7,12 @@ module Breeze
         include Mixins::Archivable
         include Mixins::Publishable
 
+        FILTERS = [
+          {:scope => "all",         :label => "All Coupons"},
+          {:scope => "published", :label => "Published Coupons"},
+          {:scope => "unpublished", :label => "Unpublished Coupons"}
+        ]
+
         attr_accessible :name, :start_time, :end_time, :discount_value, :discount_type, :couponable_type, :coupon_codes_attributes
 
         field :name
