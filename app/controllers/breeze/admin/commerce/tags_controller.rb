@@ -5,7 +5,15 @@ module Breeze
         helper_method :sort_method, :sort_direction
 
         def index
-          @tags = Breeze::Commerce::Tag.unscoped.includes(:products).order_by(sort_method + " " + sort_direction)
+          @filters = Breeze::Commerce::Tag::FILTERS
+          if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
+            @tags = Breeze::Commerce::Tag.unscoped.includes(:products).send(params[:show])
+          else
+            @tags = Breeze::Commerce::Tag.unscoped.includes(:products)
+          end  
+
+          @tags = @tags.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
+
           respond_to do |format|
             format.html
             format.json { render :json => @tags.map{|c| { :id => c.id, :name => c.name } } }

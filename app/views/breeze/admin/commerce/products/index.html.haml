@@ -7,7 +7,9 @@
       %h1
         Products
       .box
-        = will_paginate @products
+        .filter_controls
+          = select_tag_for_filter("products", @filters, params)
+          = will_paginate @products
         = render :partial => "breeze/admin/commerce/products/products", :locals => { :products => @products }
 = content_for :left do
   - render :partial => "breeze/admin/commerce/shared/left"

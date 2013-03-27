@@ -9,6 +9,9 @@
       %h1
         Coupons
       .box
+        .filter_controls
+          = select_tag_for_filter("coupons", @filters, params)
+          = will_paginate @coupons
         = render partial: "breeze/admin/commerce/coupons/coupons", object: @coupons
 
 - content_for :left do
