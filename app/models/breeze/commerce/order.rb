@@ -5,6 +5,12 @@ module Breeze
       include Mongoid::Timestamps
       include Mixins::Archivable
       
+      FILTERS = [
+        {:scope => "all",         :label => "All Orders"},
+        {:scope => "unfulfilled", :label => "Unfulfilled Orders"},
+        {:scope => "fulfilled",   :label => "Fulfilled Orders"},
+      ]
+
       attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id, :serialized_coupon, :coupon
       field :email
       field :personal_message

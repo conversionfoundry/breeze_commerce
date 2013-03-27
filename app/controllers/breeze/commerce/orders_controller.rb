@@ -92,7 +92,7 @@ module Breeze
             Rails.logger.debug @payment.errors.to_s
             @payment.errors.each { |attrib, err| Rails.logger.debug attrib.to_s + ': ' + err.to_s }
             flash[:error] = "Sorry, we can't reach the payment gateway right now." # This error message might not be accurate!
-            redirect_to breeze.checkout_path and return
+            redirect_to breeze.checkout_order_path and return
           end
         else
           @customer = current_commerce_customer || Breeze::Commerce::Customer.new
