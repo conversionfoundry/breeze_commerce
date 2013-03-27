@@ -53,7 +53,7 @@
 
 :javascript
   $(function() {
-    $('<div id="#variant_#{variant.id}_published_toggle" class="published-toggle"></div>').insertAfter('#variant_#{variant.id}_published').css({
+    $('<div id="variant_#{variant.id}_published_toggle" class="published-toggle"></div>').insertAfter('#variant_#{variant.id}_published').css({
        'background-position': ($('#variant_#{variant.id}_published:checked').length > 0 ? 0 : 100) + '% 0%'
     })
   });
