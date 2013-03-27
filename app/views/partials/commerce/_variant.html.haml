@@ -1,5 +1,5 @@
 %li.variant
-  = form_tag order_line_items_path( current_order(session) ), class: "new_line_item #{'requires_customer_message' if variant.requires_customer_message}", remote: true do |form|
+  = form_tag breeze.order_line_items_path( current_order(session) ), class: "new_line_item #{'requires_customer_message' if variant.requires_customer_message}", remote: true do |form|
     .error_messages
     = hidden_field_tag "line_item[variant_id]", variant.id
     = hidden_field_tag "line_item[quantity]", 1
