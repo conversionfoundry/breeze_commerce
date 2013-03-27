@@ -1,7 +1,7 @@
 # Published toggles
 updatePublishable = (publishSwitch, publishableName, url) ->
-  $checkbox = publishSwitch.siblings("input[type=checkbox].published")
-  $checkbox.click().change()
+  checkbox = publishSwitch.siblings("input[type=checkbox].published")
+  checkbox.click().change()
   isChecked = publishSwitch.siblings("input[type=checkbox].published:checked").length > 0
   $.ajax
     beforeSend: (xhr) ->
@@ -11,12 +11,12 @@ updatePublishable = (publishSwitch, publishableName, url) ->
     dataType: "script"
     data: "_method=put&" + publishableName + "[published]=" + isChecked
 
-# window.animatePublishSwitch = (publishSwitch, isChecked) ->
-#   if isChecked
-#     switchPosition = "0"
-#   else
-#     switchPosition = "100"
-#   publishSwitch.animate( {backgroundPosition: switchPosition + "%"}, "slow", "easeInOutQuad" )
+animatePublishSwitch = (publishSwitch, isChecked) ->
+  if isChecked
+    switchPosition = "0"
+  else
+    switchPosition = "100"
+  publishSwitch.animate( {backgroundPosition: switchPosition + "%"}, "slow", "easeInOutQuad" )
 
 # Coupons on coupon page
 $("table.coupons .published-toggle").live "mousedown", ->

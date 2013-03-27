@@ -27,7 +27,7 @@
 
 :javascript
   $(function() {
-    $('<div id="#coupon_#{coupon.id}_published_toggle" class="published-toggle"></div>').insertAfter('#coupon_#{coupon.id}_published').css({
+    $('<div id="coupon_#{coupon.id}_published_toggle" class="published-toggle"></div>').insertAfter('#coupon_#{coupon.id}_published').css({
        'background-position': ($('#coupon_#{coupon.id}_published:checked').length > 0 ? 0 : 100) + '% 0%'
     })
   });
