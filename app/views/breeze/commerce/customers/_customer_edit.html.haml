@@ -2,6 +2,7 @@
   = render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer
   #customer-details
     %fieldset.identity
+      %legend Identity
       .control-group
         = form.label :first_name, class: "control-label required" do |label|
           First (Personal) Name:

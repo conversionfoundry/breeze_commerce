@@ -47,8 +47,11 @@ module Breeze
       
       def destroy
         @customer = Breeze::Commerce::Customer.find(params[:id])
-        @customer.orders.destroy_all
-        @customer.try :destroy
+        if @customer.destroy
+          redirect_to store.home_page.permalink
+        else
+          render :action => "edit"
+        end
       end
 
       protected

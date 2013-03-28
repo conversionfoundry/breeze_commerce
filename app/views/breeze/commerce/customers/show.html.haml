@@ -1,7 +1,7 @@
 .row
   .span8
     %h2 Previous Orders
-    = render :partial => "breeze/commerce/orders/orders", :object => @customer.orders.unarchived.not_browsing
+    = render :partial => "breeze/commerce/orders/orders", object: @customer.orders.unarchived.not_browsing
   .span4
     %h2 Customer Profile
     .customer{:id => "customer_#{@customer.id}"}

@@ -5,9 +5,9 @@
     %td
       .description
         %h4
-          = @order.shipping_method.name
+          = order.shipping_method.name
       .amount
         +
         %span.amount
-          = number_to_currency @order.shipping_total
+          = number_to_currency order.shipping_total
         %span.currency= currency
