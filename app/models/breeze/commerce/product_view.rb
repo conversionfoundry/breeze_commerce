@@ -10,7 +10,7 @@ module Breeze
 
       def template
         if content.template.blank?
-          "breeze/commerce/product"
+          "product"
         else
           content.template
         end
