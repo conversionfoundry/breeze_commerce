@@ -80,7 +80,7 @@ describe Breeze::Commerce::Order do
     end
   end
 
-  describe "show_in_admin scope" do
+  describe "actionable scope" do
     before :each do
       @order = create(:order)
     end
@@ -88,21 +88,21 @@ describe Breeze::Commerce::Order do
       it "doesn't appear in admin" do
         @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Browsing').first
         @order.save
-        Breeze::Commerce::Order.show_in_admin.should_not include @order
+        Breeze::Commerce::Order.actionable.should_not include @order
       end
     end
     context "billing status is 'Started Checkout'" do
       it "doesn't appear in admin" do
         @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Started Checkout').first
         @order.save
-        Breeze::Commerce::Order.show_in_admin.should_not include @order
+        Breeze::Commerce::Order.actionable.should_not include @order
       end   
     end
     context "billing_status is neither" do
       it "doesn't appear in admin" do
         @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Payment Received').first
         @order.save
-        Breeze::Commerce::Order.show_in_admin.should include @order
+        Breeze::Commerce::Order.actionable.should include @order
       end   
     end
   end
