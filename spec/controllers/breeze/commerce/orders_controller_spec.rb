@@ -18,13 +18,13 @@ describe Breeze::Commerce::OrdersController do
 					Breeze.config.pxpay_user_id = ENV["Breeze_Commerce_PxPay_User_ID"]
 					Breeze.config.pxpay_key = ENV["Breeze_Commerce_PxPay_Key"]
 
-			  	put :submit_order, order: @order.attributes, use_route: 'breeze_commerce'
+			  	put :submit, order: @order.attributes, use_route: 'breeze_commerce'
 			  	# response.redirect_url.should match /https:\/\/sec.paymentexpress.com\/pxpay\/pxpay.aspx/
 		    end
 		  end
 	    context "order is empty" do
 	    	it "redirects to cart path" do
-			  	put :submit_order, order: attributes_for(:order), use_route: 'breeze_commerce'
+			  	put :submit, order: attributes_for(:order), use_route: 'breeze_commerce'
 			  	# response.should redirect_to("/cart")
 		    end
 		  end

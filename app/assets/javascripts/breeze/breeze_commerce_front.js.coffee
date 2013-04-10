@@ -1,6 +1,7 @@
 # Event triggers
 $("input.btn-add_to_cart").live "click", (event) ->
-  $(document).trigger "breeze_commerce_add_to_cart", $(this)
+  if $($(this)[0].form).valid()
+    $(document).trigger "breeze_commerce_add_to_cart", $(this)
 
 # Post to the provided URL with the specified parameters.
 post = (path, parameters) ->
@@ -17,22 +18,6 @@ post = (path, parameters) ->
   # order for us to be able to submit it.
   $(document.body).append form
   form.submit()
-
-# Country selection
-$('#edit_order #country').live 'change', (event) ->
-  $.ajax
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
-    url: "/shipping_methods/"
-    dataType: "html"
-    type: "GET"
-    data:
-      country_id: $(this).val()
-      order_id: $(this).data('order-id')
-    success: (result) ->
-      eval result
-    error: (result) ->
-      eval result
 
 # Product Pagination
 $(document).ready ->

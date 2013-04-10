@@ -4,14 +4,15 @@ module Breeze
       class Controller < ::Breeze::Admin::AdminController
         helper ::Breeze::Commerce::AdminHelper
         helper Breeze::Commerce::AddressesHelper
-        before_filter :check_for_stores, :except => [ :setup_default ]
+        before_filter :check_for_stores
         before_filter :check_permissions
 
         protected
   
+        # if there's no store, create one
         def check_for_stores
           unless store
-            render '/breeze/admin/commerce/store/no_store'
+            Breeze::Commerce::Store.create
           end
         end
 

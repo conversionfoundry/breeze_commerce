@@ -4,7 +4,7 @@ Breeze::Engine.routes.draw do
     namespace "store", module: "commerce", name_prefix: "admin_store" do
       root to: "orders#index"
       
-      resource :store, only: [ :create, :edit, :update]
+      resource :store, only: [ :edit, :update]
   
       resources :products, except: [:show] do
         resources :variants, except: [:index, :show] do

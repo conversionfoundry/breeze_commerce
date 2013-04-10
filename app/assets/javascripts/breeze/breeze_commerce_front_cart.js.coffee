@@ -1,10 +1,10 @@
-cartAjaxUpdate = (url, data) ->
+cartAjax = (url, data, method="PUT") ->
   $.ajax
     beforeSend: (xhr) ->
       xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
     url: url
     dataType: "html"
-    type: "PUT"
+    type: method
     data: data
     success: (result) ->
       eval result
@@ -25,7 +25,7 @@ $(".line_item-quantity").live 'change', (event) ->
         line_item:
           quantity: 1
         update_order_total: true
-      cartAjaxUpdate(url, data)
+      cartAjax(url, data)
   else
     # Update the line item
     url = "/orders/" + $(this).data("order-id") + "/line_items/" + $(this).data("line-item-id")
@@ -33,29 +33,41 @@ $(".line_item-quantity").live 'change', (event) ->
       line_item:
         quantity: $(this).val()
       update_order_total: false
-    cartAjaxUpdate(url, data)
+    cartAjax(url, data)
 
 $(".line_item-customer_message").on 'change', (event) ->
   url =  "/orders/" + $(this).data("order-id") + "/line_items/" + $(this).data("line-item-id")
   data = 
     line_item:
       customer_message: $(this).val() 
-  cartAjaxUpdate(url, data)
+  cartAjax(url, data)
 
 # Update the order immediately when shipping method changes in the cart
-$(".radio-shipping_method").live 'change', (event) ->
+$('input[name="order[shipping_method_id]"]').on 'change', (event) ->
   url = "/orders/" + $(this).data("order-id")
   data =
     order:
       shipping_method_id: $(this).val()
-  cartAjaxUpdate(url, data)
+  cartAjax(url, data)
 
 # Update the order immediately when shipping method changes in the cart
 $("#order_coupon_code").on 'change', (event) ->
   url = "/orders/" + $(this).data("order-id") + "/redeem_coupon"
   data =
     code: $(this).val()
-  cartAjaxUpdate(url, data)
+  cartAjax(url, data)
+
+# Country selection
+$('#edit_order #country').live 'change', (event) ->
+  # url = "/shipping_methods"
+  url = "/orders/" + $(this).data("order-id")
+  # data =
+  #   country_id: $(this).val()
+  #   order_id: $(this).data('order-id')
+  data =
+    order:
+      country_id: $(this).val()
+  cartAjax(url, data)
 
 $(document).ready ->
   $("#edit_order").find("input.line_item-customer_message").each (index) ->

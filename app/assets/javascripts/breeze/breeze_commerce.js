@@ -1,5 +1,4 @@
 /*
- *= require ./galleria/galleria-1.2.7.min
  *= require ./jquery.multi-select
  *= require ./jquery.validate
 

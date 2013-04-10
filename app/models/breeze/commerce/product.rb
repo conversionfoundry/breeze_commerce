@@ -30,8 +30,6 @@ module Breeze
 
       default_scope order_by([:title, :asc])
       scope :with_tag, lambda { |tag| where(tag_ids: tag.id) }
-      scope :published, where(published: true)
-      scope :unpublished, where(published: false)
 
       before_validation :set_parent_id
       validates_associated :variants
