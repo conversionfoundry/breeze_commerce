@@ -89,7 +89,7 @@ module Breeze
         fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |association_fields|
           render partial, form: association_fields
         end
-        link_to_function name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "btn"
+        link_to_function name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "btn add"
       end
 
       # Filters for index pages
