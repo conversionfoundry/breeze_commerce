@@ -11,7 +11,7 @@ module Breeze
         {:scope => "fulfilled",   :label => "Fulfilled Orders"},
       ]
 
-      attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id, :serialized_coupon, :coupon
+      attr_accessible :email, :personal_message, :comment, :shipping_address, :shipping_address_id, :billing_address, :billing_address_id, :shipping_method, :shipping_status_id, :billing_status_id, :customer_id, :shipping_method_id, :serialized_coupon, :coupon, :country_id
       field :email
       field :personal_message
       field :comment
@@ -26,6 +26,7 @@ module Breeze
       embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
       embeds_many :notes, :class_name => "Breeze::Commerce::Note"
       belongs_to :shipping_method, :class_name => "Breeze::Commerce::Shipping::ShippingMethod", :inverse_of => :orders
+      belongs_to :country, class_name: "Breeze::Commerce::Shipping::Country"
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
@@ -37,7 +38,7 @@ module Breeze
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
 
-      before_validation :set_initial_order_statuses
+      before_validation :set_initial_state
       validates_presence_of :billing_status, :shipping_status
 
 
@@ -161,9 +162,10 @@ module Breeze
 
       protected
 
-      def set_initial_order_statuses 
+      def set_initial_state 
         self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
         self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
+        self.country ||= Breeze::Commerce::Store.first.default_country
         self.shipping_method ||= Breeze::Commerce::Store.first.default_shipping_method       
       end
 

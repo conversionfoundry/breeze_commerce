@@ -9,11 +9,10 @@
       %td
         Shipping:
       %td
-        - shipping_methods = store.default_country.shipping_methods
-        - if shipping_methods.count > 1
-          - shipping_methods.each do |shipping_method|
+        - if @shipping_methods.count > 1
+          - @shipping_methods.each do |shipping_method|
             %label.radio
-              = radio_button_tag 'order[shipping_method_id]', shipping_method.id, checked: shipping_method == order.shipping_method, class: 'radio-shipping_method', data: { order_id: @order.id.to_s }
+              = radio_button_tag 'order[shipping_method_id]', shipping_method.id, shipping_method == order.shipping_method, class: 'radio-shipping_method', data: {order_id: @order.id.to_s}
               .description
                 %h4
                   = shipping_method.name
@@ -25,8 +24,8 @@
                     = number_to_currency @order.shipping_total
                   %span.currency= currency
 
-        - elsif shipping_methods.count == 1
-          - shipping_method = shipping_methods.first
+        - elsif @shipping_methods.count == 1
+          - shipping_method = @shipping_methods.first
           .description
             %h4
               = shipping_method.name
@@ -59,4 +58,5 @@
             We ship to 
             = @countries.first.name
           - else
-            = select_tag :country, options_for_select(@countries.map{|country| [country.name, country.id]}, store.default_country.id) , class: :required, data: {order_id: @order.id.to_s}
+            - country = order.country || store.default_country
+            = select_tag :country, options_for_select(@countries.map{|country| [country.name, country.id]}, country.id) , class: :required, data: {order_id: @order.id.to_s}

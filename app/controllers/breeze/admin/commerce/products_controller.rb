@@ -46,7 +46,6 @@ module Breeze
         end
         
         # Products are never destroyed, only archived.
-        # TODO: Rename this method? It will make the routes a little mroe complicated
         def destroy
           @product = Breeze::Commerce::Product.find params[:id]
           @product.update_attributes(:archived => true)

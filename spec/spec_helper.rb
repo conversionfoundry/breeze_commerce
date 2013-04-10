@@ -6,7 +6,6 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
 
   require File.expand_path("../dummy/config/environment", __FILE__)
-  # require Rails.root.join('db','seeds')
 
   require 'rspec/rails'
   require 'capybara/rspec'
@@ -38,18 +37,18 @@ Spork.prefork do
 
     config.include Devise::TestHelpers, :type => :controller
 
-    config.before(:suite) do
-      DatabaseCleaner.strategy = :truncation
-      DatabaseCleaner.clean_with(:truncation)
-    end
+    # config.before(:suite) do
+    #   DatabaseCleaner.strategy = :truncation
+    # end
 
-    config.before(:each) do
-      DatabaseCleaner.start
-    end
+    # config.before(:each) do
+    #   DatabaseCleaner.start
+    #   DatabaseCleaner.clean_with(:truncation)
+    # end
 
-    config.after(:each) do
-      DatabaseCleaner.clean
-    end
+    # config.after(:each) do
+    #   DatabaseCleaner.clean
+    # end
 
   end
 

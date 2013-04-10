@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= product.name if product %></title>
+    <title><%= product.name if defined? product %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag "breeze/breeze" %>
     <%= javascript_include_tag "breeze/breeze_commerce" %>
@@ -32,39 +32,37 @@
 
       <%= breadcrumb %>
 
-      <div class="row product-header">
-        <div class="span12">
-          <%= render :partial => "partials/commerce/minicart", :locals => {title: 'Minicart', order: current_order(session)} %>
+      <% if defined? product %>
 
-          <h1><%= product.name %></h1>
-          <%= region :header %>
-        </div>
-      </div>
-      
-      <% if product %>
-            
-          <!-- Single image, or slideshow if there are multiple images -->
-          <div class="images">
-            <% if product.images.count == 1 %>
-              <%= image_tag product.images.last.file.url(:full) %>
-            <% elsif product.images.count > 1 %>
-              <div id="gallery">                
-                  <% product.images.each do |image| %>
-                    <a href="<%= image.file %>">
-                      <img data-title="title goes here"
-                           data-description="description goes here"
-                           src="<%= image.file.url(:breeze_thumb) %>">
-                    </a>
-                  <% end %>
-              </div>
-         
-            <% else %>
-              No images yet.
-            <% end %>
+        <div class="row product-header">
+          <div class="span12">
+            <%= render :partial => "partials/commerce/minicart", :locals => {title: 'Minicart', order: current_order(session)} %>
+
+            <h1><%= product.name %></h1>
+            <%= region :header %>
           </div>
-          
-          
-        <%# This region is intended for placeable elements that describe the product. Note that the short product description is not used on this page, only on lists and checkout. %>
+        </div>
+            
+        <!-- Single image, or slideshow if there are multiple images -->
+        <div class="images">
+          <% if product.images.count == 1 %>
+            <%= image_tag product.images.last.file.url(:full) %>
+          <% elsif product.images.count > 1 %>
+            <div id="gallery">                
+                <% product.images.each do |image| %>
+                  <a href="<%= image.file %>">
+                    <img data-title="title goes here"
+                         data-description="description goes here"
+                         src="<%= image.file.url(:breeze_thumb) %>">
+                  </a>
+                <% end %>
+            </div>
+       
+          <% else %>
+            No images yet.
+          <% end %>
+        </div>
+        
         <%= region :product_info %>
 
         <div id="variants">
@@ -75,27 +73,7 @@
         <p>The product you are looking for was not found.<p>
       <% end %>
 
-
     </div>
-
-    <script type="text/javascript">
-      $(document).ready(function() {
-
-        // Image gallery, if product has images
-        numberOfImages = $('#gallery').length;
-        if ( numberOfImages > 0 ) {
-          Galleria.loadTheme("<%= asset_path 'breeze/galleria/themes/classic/galleria.classic.min' %>");
-          $('#gallery').galleria({
-            width: 500,
-            height: 500,
-            showInfo: false,
-            thumbnails: numberOfImages > 1,
-            transitionInitial: 'fade'  
-          });
-        };
-          
-      });
-    </script>
         
   </body>
 </html>

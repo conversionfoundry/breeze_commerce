@@ -5,10 +5,6 @@ module Breeze
       respond_to :html, :js
       before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate, :thankyou]
 
-      # def print
-      #   @order = Order.find params[:id]
-      # end
-
       def show
         @order = Breeze::Commerce::Order.find(params[:id])
         @customer = Breeze::Commerce::Customer.new
@@ -20,12 +16,12 @@ module Breeze
       def edit
         @order = Breeze::Commerce::Order.find(params[:id])
         @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
-        shipping_methods = Breeze::Commerce::Shipping::ShippingMethod.unarchived
-        unless @order.shipping_method && shipping_methods.unarchived.include?(@order.shipping_method)
+        @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
+        unless @order.shipping_method && @shipping_methods.unarchived.include?(@order.shipping_method)
           if Breeze::Commerce::Shipping::ShippingMethod.count > 1
-            @order.shipping_method = shipping_methods.unarchived.where(:is_default => true).first
+            @order.shipping_method = @shipping_methods.unarchived.where(:is_default => true).first
           else
-            @order.shipping_method = shipping_methods.unarchived.first
+            @order.shipping_method = @shipping_methods.unarchived.first
           end
           @order.save
         end
@@ -43,6 +39,8 @@ module Breeze
       def update
         @order = Breeze::Commerce::Order.find params[:id]
         @order.update_attributes params[:order]
+        @shipping_methods = @order.country.shipping_methods || Breeze::Commerce::Shipping::ShippingMethod.unarchived
+        @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
         respond_to do |format|
           format.js
         end

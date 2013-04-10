@@ -2,6 +2,6 @@
   <% if variants.any? %>
     <%= render :partial => "/partials/commerce/variant", :collection => variants, :locals => {:variant_count => variants.count} %>
   <% else %>
-    <li>There are no variants available for this product.</li>
+    <li>There are no variants available to buy.</li>
   <% end %>
 </ul>
