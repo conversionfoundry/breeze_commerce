@@ -1,6 +1,6 @@
 .orders-container
   %ul.orders
     - if orders.any?
-      = render :partial => "breeze/commerce/orders/order", :collection => orders
+      = render partial: "breeze/commerce/orders/order", collection: orders
     - else
       %li.empty{:colspan => "6"} There are no orders to show here yet.

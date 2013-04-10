@@ -32,7 +32,7 @@ module Breeze
         @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
         @new_order = Breeze::Commerce::Order.new
         @same_address = @customer.shipping_address == @customer.billing_address
-        @shipping_countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
+        @shipping_countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc).map{|country| country.name}
         @billing_countries = Breeze::Commerce::COUNTRIES
       end
 
@@ -47,8 +47,11 @@ module Breeze
       
       def destroy
         @customer = Breeze::Commerce::Customer.find(params[:id])
-        @customer.orders.destroy_all
-        @customer.try :destroy
+        if @customer.destroy
+          redirect_to store.home_page.permalink
+        else
+          render :action => "edit"
+        end
       end
 
       protected

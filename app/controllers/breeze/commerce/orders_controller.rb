@@ -1,14 +1,13 @@
 module Breeze
   module Commerce
     class OrdersController < Breeze::Commerce::Controller
-      include Breeze::Commerce::CurrentOrder
       layout "breeze/commerce/checkout_funnel/checkout_funnel_layout"
       respond_to :html, :js
       before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate, :thankyou]
 
-      def print
-        @order = Order.find params[:id]
-      end
+      # def print
+      #   @order = Order.find params[:id]
+      # end
 
       def show
         @order = Breeze::Commerce::Order.find(params[:id])
@@ -42,7 +41,7 @@ module Breeze
       end
 
       def update
-        @order = current_order(session)
+        @order = Breeze::Commerce::Order.find params[:id]
         @order.update_attributes params[:order]
         respond_to do |format|
           format.js
@@ -65,8 +64,9 @@ module Breeze
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login
-        @shipping_countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
+        @shipping_countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc).map{|country| country.name}
         @billing_countries = Breeze::Commerce::COUNTRIES
+        render "layouts/breeze/commerce/checkout_funnel/checkout_page"
       end
 
       def submit
@@ -190,7 +190,7 @@ module Breeze
       def pxpay_urls
         {
           :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( @payment.id ) ),
-          :url_failure => request.protocol + request.host_with_port + url_for( breeze.payment_failed_order_path( current_order(session) ) ),
+          :url_failure => request.protocol + request.host_with_port + url_for( breeze.payment_failed_order_path( @order.id ) ),
         }
       end
     end

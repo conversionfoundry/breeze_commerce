@@ -14,9 +14,9 @@ module Breeze
 
           @filters = Breeze::Commerce::Order::FILTERS
           if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
-            @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items).send(params[:show])
+            @orders = Breeze::Commerce::Order.unarchived.actionable.includes(:line_items).send(params[:show])
           else
-            @orders = Breeze::Commerce::Order.unarchived.show_in_admin.includes(:line_items)
+            @orders = Breeze::Commerce::Order.unarchived.actionable.includes(:line_items)
           end  
 
           @orders = @orders.to_a.sort_by{ |o| o.send(sort_method) }
@@ -24,6 +24,13 @@ module Breeze
             @orders = @orders.reverse
           end
           @orders = @orders.paginate(:page => params[:page], :per_page => 10)
+
+          respond_to do |format|
+            format.html
+            format.js
+            format.csv { @filename = "#{application_name} - Orders - #{Date.today.to_formatted_s(:db)}.csv" }
+          end
+
         end
         
         def new

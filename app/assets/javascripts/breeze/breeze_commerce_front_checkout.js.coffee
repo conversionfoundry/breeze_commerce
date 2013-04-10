@@ -132,10 +132,10 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
   $("#checkout-form #same").change ->
     if $(this).attr("checked")
       duplicateAddress()
-      $("#order_billing_address").slideUp()
+      $("#billing fieldset.address-billing ol.form").slideUp()
     else
       clearBillingAddress()
-      $("#order_billing_address").slideDown()
+      $("#billing fieldset.address-billing ol.form").slideDown()
 
   $("#continue-3").click (event) ->
     if validateStep("#billing")
