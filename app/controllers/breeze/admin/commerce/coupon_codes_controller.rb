@@ -13,7 +13,7 @@ module Breeze
             @coupon_codes = Breeze::Commerce::Coupons::CouponCode.unscoped.includes(:coupon)
           end
           respond_to do |format|
-            format.csv 
+            format.csv { @filename = "#{application_name} - Coupon Codes - #{Date.today.to_formatted_s(:db)}.csv" }
           end
         end
 

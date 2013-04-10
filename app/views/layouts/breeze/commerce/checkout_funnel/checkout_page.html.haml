@@ -2,15 +2,17 @@
   %title Checkout
     
 - flash.each do |key, msg|
-  %div{:class => "alert-#{key} alert-block alert"}
+  %div{class: "alert-#{key} alert-block alert"}
     %button.close{"data-dismiss" => "alert", :type => "button"} ×
     %p= msg
     .clear
-= form_for @order, :url => breeze.submit_order_path(@order), :html => {:method => :put, :id => "checkout-form"} do |order_form|
+    
+= form_for @order, url: breeze.submit_order_path(@order), html: {method: :put, id: "checkout-form"} do |order_form|
   .row
     #checkout-container.span8
       %h1 Checkout
-      .panel#sign-in.active{"data-customer_signed_in" => customer_signed_in? ? 'true' : 'false', "data-foo" => "bar"}
+
+      .panel#sign-in{class: ("active" unless customer_signed_in?), "data-customer_signed_in" => customer_signed_in? ? 'true' : 'false', "data-foo" => "bar"}
         .checkout-header
           %h3.heading
             %span Step
@@ -72,7 +74,8 @@
               %p
                 Email:
                 %span#guest_email
-      .panel#shipping
+
+      .panel#shipping{class: ("active" if customer_signed_in?)}
         .checkout-header
           %h3.heading
             %span Step
@@ -83,55 +86,7 @@
           = order_form.fields_for :shipping_address do |ship_form|
             %fieldset.address-shipping.address
               %ol#order_shipping_address.form
-                %li.name
-                  .control-group
-                    = ship_form.label :name do |label|
-                      Name:
-                      %span.required *
-                    .controls
-                      = ship_form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'
-                %li.address
-                  .control-group
-                    = ship_form.label :address do |label|
-                      Address
-                      %span.required *
-                    .controls
-                      = ship_form.text_area :address, :class => :required, :value => @customer.shipping_address.address, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                %li
-                  .control-group
-                    = ship_form.label :city do |label|
-                      City
-                      %span.required *
-                    .controls
-                      = ship_form.text_field :city, :value => @customer.shipping_address.city, :placeholder => 'Christchurch', :class => 'required input-medium'
-                %li.state
-                  .control-group
-                    = ship_form.label :state do |label|
-                      State, Province or Region
-                      %span.optional (optional)
-                    .controls
-                      = ship_form.text_field :state, :value => @customer.shipping_address.state, :placeholder => 'Canterbury', :class => 'input-medium'
-                %li.state
-                  .control-group
-                    = ship_form.label :postcode do |label|
-                      Postcode
-                      %span.optional (optional)
-                    .controls
-                      = ship_form.text_field :postcode, :value => @customer.shipping_address.postcode, :class => 'input-small'
-                %li.country
-                  .control-group
-                    = ship_form.label :country do |label|
-                      Country
-                      %span.required *
-                    .controls
-                      = ship_form.select :country, @shipping_countries.map{|country| country.name}, :selected => (@customer.shipping_address.country ||'New Zealand'), :class => :required
-                %li.phone
-                  .control-group
-                    = ship_form.label :phone do |label|
-                      Contact Phone Number
-                      %span.optional (optional)
-                    .controls
-                      = ship_form.text_field :phone, type: 'tel', :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+                = render :partial => "breeze/commerce/addresses/address_fields", locals: { form: ship_form, countries: @shipping_countries, address: @customer.shipping_address }
           .form-actions
             = link_to '#', :class => "btn btn-primary", :id => "continue-2" do
               %i.icon-arrow-down.icon-white
@@ -139,8 +94,9 @@
         .checkout-summary
           .form-actions
             = link_to '#', :class => "btn", :id => "edit-shipping" do
-              %span.title Edit Shipping
+              %span.title Edit Shipping Address
           .summary
+
       .panel#billing
         .checkout-header
           %h3.heading
@@ -148,7 +104,6 @@
             %span.number 3
             %span.description Billing Address
         .checkout-body
-          / TODO: Payment options to go here (e.g. Paypal / Payment Express)
           = order_form.fields_for :billing_address do |bill_form|
             %fieldset.address-billing.same
               = bill_form.label :same do |label|
@@ -156,55 +111,7 @@
                 Same as my Shipping Address
             %fieldset.address-billing.address
               %ol#order_billing_address.form{:style => "display: none;"}
-                %li.name
-                  .control-group
-                    = bill_form.label :name do |label|
-                      Name:
-                      %span.required *
-                    .controls
-                      = bill_form.text_field :name, :class => :required, :placeholder => 'Jane Doe'
-                %li.address
-                  .control-group
-                    = bill_form.label :address do |label|
-                      Address
-                      %span.required *
-                    .controls
-                      = bill_form.text_area :address, :class => :required, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-                %li
-                  .control-group
-                    = bill_form.label :city do |label|
-                      City
-                      %span.required *
-                    .controls
-                      = bill_form.text_field :city, :placeholder => 'Christchurch', :class => 'required input-medium'
-                %li.state
-                  .control-group
-                    = bill_form.label :state do |label|
-                      State, Province or Region
-                      %span.optional (optional)
-                    .controls
-                      = bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
-                %li.state
-                  .control-group
-                    = bill_form.label :postcode do |label|
-                      Postcode
-                      %span.optional (optional)
-                    .controls
-                      = bill_form.text_field :postcode, :class => 'input-small'
-                %li.country
-                  .control-group
-                    = bill_form.label :country do |label|
-                      Country
-                      %span.required *
-                    .controls
-                      = bill_form.select :country, @billing_countries, :class => :required
-                %li.phone
-                  .control-group
-                    = bill_form.label :phone do |label|
-                      Contact Phone Number
-                      %span.optional (optional)
-                    .controls
-                      = bill_form.text_field :phone, type: 'tel', :placeholder => '64 3 1234567', :class => 'input-medium'
+                = render :partial => "breeze/commerce/addresses/address_fields", locals: { form: bill_form, countries: @billing_countries, address: @customer.billing_address }
           .form-actions
             = link_to '#', :class => "btn btn-primary", :id => "continue-3" do
               %i.icon-arrow-down.icon-white
@@ -212,8 +119,9 @@
         .checkout-summary
           .form-actions
             = link_to '#', :class => "btn", :id => "edit-payment" do
-              %span.title Edit Payment
+              %span.title Edit Billing Address
           .summary
+
       .panel#confirmation
         .checkout-header
           %h3.heading

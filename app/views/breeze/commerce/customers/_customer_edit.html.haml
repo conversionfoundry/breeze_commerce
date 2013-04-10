@@ -2,6 +2,7 @@
   = render "/breeze/admin/shared/error_messages", :target => @customer, :object_name => :customer
   #customer-details
     %fieldset.identity
+      %legend Identity
       .control-group
         = form.label :first_name, class: "control-label required" do |label|
           First (Personal) Name:
@@ -32,51 +33,12 @@
           Password Confirmation:
         .control
           = form.password_field :password_confirmation
+
     = form.fields_for :billing_address, @customer.billing_address do |bill_form|
       %fieldset.address-billing.address
         %legend Billing Address
-        .control-group
-          = bill_form.label :name, class: "control-label required" do |label|
-            Name:
-            %span.required *
-          .control
-            = bill_form.text_field :name, required: true, placeholder: 'Jane Doe'
-        .control-group
-          = bill_form.label :address, class: "control-label required" do |label|
-            Address
-            %span.required *
-          .control
-            = bill_form.text_area :address, required: true, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-        .control-group
-          = bill_form.label :city, class: "control-label required" do |label|
-            City
-            %span.required *
-          .control
-            = bill_form.text_field :city, required: true, :placeholder => 'Christchurch', :class => 'input-medium'
-        .control-group
-          = bill_form.label :state, class: "control-label" do |label|
-            State, Province or Region
-            %span.optional (optional)
-          .control
-            = bill_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
-        .control-group
-          = bill_form.label :postcode, class: "control-label" do |label|
-            Postcode
-            %span.optional (optional)
-          .control
-            = bill_form.text_field :postcode, class: 'input-small'
-        .control-group
-          = bill_form.label :country, class: "control-label required" do |label|
-            Country
-            %span.required *
-          .control
-            = bill_form.select :country, @billing_countries, :class => :required
-        .control-group
-          = bill_form.label :phone, class: "control-label" do |label|
-            Contact Phone Number
-            %span.optional (optional)
-          .control
-            = bill_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+        %ol#customer_billing_address.form
+          = render :partial => "breeze/commerce/addresses/address_fields", locals: { form: bill_form, countries: @billing_countries, address: @customer.billing_address }
 
     = form.fields_for :shipping_address, @customer.shipping_address do |ship_form|
       %fieldset.address-shipping.same
@@ -85,48 +47,9 @@
           = check_box_tag :same, :same, @same_address
           Same as my Billing Address
       %fieldset.address-shipping.address{style: ("display: none;" if @same_address)}
-        .control-group
-          = ship_form.label :name, class: "control-label required" do |label|
-            Name:
-            %span.required *
-          .control
-            = ship_form.text_field :name, required: true, placeholder: 'Jane Doe'
-        .control-group
-          = ship_form.label :address, class: "control-label required" do |label|
-            Address
-            %span.required *
-          .control
-            = ship_form.text_area :address, required: true, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
-        .control-group
-          = ship_form.label :city, class: "control-label required" do |label|
-            City
-            %span.required *
-          .control
-            = ship_form.text_field :city, required: true, :placeholder => 'Christchurch', :class => 'input-medium'
-        .control-group
-          = ship_form.label :state, class: "control-label" do |label|
-            State, Province or Region
-            %span.optional (optional)
-          .control
-            = ship_form.text_field :state, :placeholder => 'Canterbury', :class => 'input-medium'
-        .control-group
-          = ship_form.label :postcode, class: "control-label" do |label|
-            Postcode
-            %span.optional (optional)
-          .control
-            = ship_form.text_field :postcode, class: 'input-small'
-        .control-group
-          = ship_form.label :country, class: "control-label required" do |label|
-            Country
-            %span.required *
-          .control
-            = ship_form.select :country, @shipping_countries.map{|country| country.name}, :class => :required
-        .control-group
-          = ship_form.label :phone, class: "control-label" do |label|
-            Contact Phone Number
-            %span.optional (optional)
-          .control
-            = ship_form.text_field :phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+        %ol#customer_billing_address.form
+          = render :partial => "breeze/commerce/addresses/address_fields", locals: { form: ship_form, countries: @shipping_countries, address: @customer.shipping_address }
+
   .form-actions
     .btn-group
       = submit_tag "Save", :class => "btn btn-primary"

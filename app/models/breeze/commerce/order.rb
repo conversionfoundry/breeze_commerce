@@ -32,7 +32,7 @@ module Breeze
       scope :not_browsing, -> { ne( :billing_status => Breeze::Commerce::OrderStatus.where(name: 'Browsing').first ) }
       scope :unfulfilled, -> { where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").first ) }
       scope :fulfilled, -> { where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").first ) }
-      scope :show_in_admin, -> { nin( :billing_status => [ Breeze::Commerce::OrderStatus.where(name: 'Browsing').first, Breeze::Commerce::OrderStatus.where(name: 'Started Checkout').first ] ) }
+      scope :actionable, -> { nin( :billing_status => [ Breeze::Commerce::OrderStatus.where(name: 'Browsing').first, Breeze::Commerce::OrderStatus.where(name: 'Started Checkout').first ] ) }
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
