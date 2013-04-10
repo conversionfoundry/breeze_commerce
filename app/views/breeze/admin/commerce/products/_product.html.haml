@@ -13,6 +13,7 @@
     - unarchived_variants = product.variants.unarchived
     %span.badge
       = unarchived_variants.count
+
     - if unarchived_variants.exists?
       - if unarchived_variants.published.count == 0
         No published variants
@@ -26,6 +27,16 @@
         to
         = number_to_currency(product.display_price_max, :locale => :nz)
         %span.currency= currency
+
+    - message_variants = product.variants.unarchived.message_required
+    - if message_variants.exists?
+      %p.message_variants
+        = message_variants.count
+        - if message_variants.count == 1
+          variant requires a customer message
+        - else
+          variants require a customer message
+
 
   %td.published
     = product.published ? 'Published' : 'Not Published'
