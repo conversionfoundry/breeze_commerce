@@ -4,4 +4,8 @@ FactoryGirl.define do
   factory :order, class: Breeze::Commerce::Order do
     email { Faker::Internet.email }
   end
+
+  factory :empty_order, class: Breeze::Commerce::Order do
+  end
+
 end

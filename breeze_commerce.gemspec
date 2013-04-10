@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = "Online Store for the Breeze CMS"
   s.description = "Breeze Commerce adds product management and a checkout funnel to Breeze."
   
-  s.files         = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"] 
+  s.files         = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"] 
   s.require_paths = ['lib']
   s.required_ruby_version = '>= 1.9.0'
   s.required_rubygems_version = '>= 1.3.6'

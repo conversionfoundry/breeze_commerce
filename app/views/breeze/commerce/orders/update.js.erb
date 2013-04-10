@@ -2,3 +2,8 @@
 // $('table.totals tr.shipping td.total span.amount').html('<%= number_to_currency @order.shipping_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
 $('table.totals tr.subtotal td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000);
 $('table.totals tr.total td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+
+
+$('table.shipping_methods').replaceWith('<%= escape_javascript render :partial => "breeze/commerce/shipping_methods/shipping_methods_edit", :object => @shipping_methods, locals: { order: @order } %>')
+$('table.shipping_methods').effect("highlight", { color: "#ffffc0" }, 3000);
+$('#order_total').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000);
