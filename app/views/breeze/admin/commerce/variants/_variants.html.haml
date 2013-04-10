@@ -21,6 +21,7 @@
         %tr
           %td.empty{:colspan => "9"} 
             There are no variants for this product yet.
-            = link_to "Bulk create variants from properties", new_admin_store_variant_factory_path(product_id: @product.id), class: "large new variant_factory button"
+            - if @product.properties.exists?
+              = link_to "Bulk create variants from properties", new_admin_store_variant_factory_path(product_id: @product.id), class: "large new variant_factory button"
     %tfoot
       %tr
