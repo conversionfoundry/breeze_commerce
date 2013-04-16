@@ -3,11 +3,11 @@ module Breeze
     class OrdersController < Breeze::Commerce::Controller
       layout "breeze/commerce/checkout_funnel/checkout_funnel_layout"
       respond_to :html, :js
-      before_filter :require_nonempty_order, except: [:create, :edit, :update, :populate, :thankyou]
+      before_filter :require_nonempty_order, except: [:create, :edit, :update]
 
       def show
         @order = Breeze::Commerce::Order.find(params[:id])
-        @customer = Breeze::Commerce::Customer.new
+        @customer = @order.customer || Breeze::Commerce::Customer.new
         @allow_returning_customer_login = store.allow_returning_customer_login
         render "layouts/breeze/commerce/checkout_funnel/confirmation_page"
       end
@@ -90,7 +90,7 @@ module Breeze
             Rails.logger.debug @payment.errors.to_s
             @payment.errors.each { |attrib, err| Rails.logger.debug attrib.to_s + ': ' + err.to_s }
             flash[:error] = "Sorry, we can't reach the payment gateway right now." # This error message might not be accurate!
-            redirect_to breeze.checkout_order_path and return
+            redirect_to breeze.checkout_order_path(@order) and return
           end
         else
           @customer = current_commerce_customer || Breeze::Commerce::Customer.new
@@ -98,7 +98,7 @@ module Breeze
         end
       end
 
-      def thankyou 
+      def confirm_payment 
         @payment = Payment.find params[:id]
         @payment.succeeded = true
         @payment.save
@@ -107,7 +107,6 @@ module Breeze
         @order.payment_completed = true
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
         @order.save
-        @customer = current_commerce_customer || Breeze::Commerce::Customer.new
 
         # Send notification emails
         Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order).deliver
@@ -122,7 +121,8 @@ module Breeze
         # Empty the cart
         session[:cart_id] = nil
 
-        render "layouts/breeze/commerce/checkout_funnel/confirmation_page"
+        # Show the order
+        redirect_to breeze.order_path(@order)
       end
 
       def payment_failed
@@ -140,7 +140,7 @@ module Breeze
       def require_nonempty_order
         @order = Order.find params[:id]
         if @order.line_items.empty?
-          redirect_to breeze.cart_path
+          redirect_to breeze.edit_order_path(@order)
         end
       end
 
@@ -187,7 +187,7 @@ module Breeze
 
       def pxpay_urls
         {
-          :url_success => request.protocol + request.host_with_port + url_for( breeze.thankyou_order_path( @payment.id ) ),
+          :url_success => request.protocol + request.host_with_port + url_for( breeze.confirm_payment_order_path( @payment.id ) ),
           :url_failure => request.protocol + request.host_with_port + url_for( breeze.payment_failed_order_path( @order.id ) ),
         }
       end
