@@ -21,7 +21,7 @@ describe "Customer Login/Out", :js => true, :type => :request do
       within ".breeze-customer_login" do
         fill_in 'Email', with: "test@example.com"
         fill_in 'Password', with: "logmein"
-        click_button "Sign in"     
+        click_button "Sign in"
       end
     end
 
@@ -31,9 +31,8 @@ describe "Customer Login/Out", :js => true, :type => :request do
 
     it "allows the customer to log out" do
       within ".breeze-customer_login" do
-        click_link "Sign Out"     
+        click_link "Sign Out"
       end
-      save_and_open_page
       find(".breeze-customer_login").should_not have_content "Signed in as #{@customer.name}"
     end
   end
@@ -42,7 +41,7 @@ describe "Customer Login/Out", :js => true, :type => :request do
     within ".breeze-customer_login" do
       fill_in 'Email', with: "test@example.com"
       fill_in 'Password', with: "incorrect_password"
-      click_button "Sign in"     
+      click_button "Sign in"
     end
     find(".breeze-customer_login").should_not have_content "Signed in as #{@customer.name}"
   end

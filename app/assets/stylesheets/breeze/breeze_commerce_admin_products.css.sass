@@ -86,6 +86,9 @@
       td.variants
         .badge
           margin-right: 1em
+        .message_variants
+          font-style: italic
+          padding-top: 0.5em
 
   /* Product Relationships
   .product_relationship_fields 
@@ -105,3 +108,44 @@
   #product-edit img.feature
     float: left
 
+
+  /* Options
+  .option
+    background: #999999
+    color: white
+    float: left
+    @include border-radius(0.5em)
+    line-height: 1.5
+    margin: 0 0.5em 0.5em 0
+    padding: 0.25em 0.5em
+    input
+      margin: 0
+  ul.options
+    margin: 0
+    li.option
+      list-style: none
+  fieldset.options
+    ul.options
+      margin: 0
+      li.option
+        list-style: none
+        input
+          background: transparent
+          color: white
+          width: 7em
+        .btn.delete
+          line-height: 20px
+          vertical-align: middle
+          margin: 0px 2px 2px 0
+          padding: 0px 4px 0px 24px
+          vertical-align: middle
+          background-color: rgba(255, 255, 255, 0.75)
+          background-repeat: no-repeat
+          background-position: 4px 50%
+          color: #222
+          text-decoration: none
+          @include border-radius(4px)
+          -webkit-transition: background-color 0.15s ease-in
+          background-image: url(image-path("icons/delete.png"))
+    .btn.add
+      float: left

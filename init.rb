@@ -4,7 +4,7 @@ require 'breeze_pay_online'
 
 Breeze.hook :define_abilities do |abilities_array, user, abilities|
   abilities.instance_eval do
-    can :manage, Breeze::Commerce::Store if user.respond_to?(:roles) && user.roles.include?(:merchant)
+    can :manage, Breeze::Commerce::Store if user.respond_to?(:roles) && ( user.roles.include?(:merchant) || user.roles.include?(:admin) )
     can :manage, Breeze::Commerce::Customer do |customer|
       customer.id == user.id
     end

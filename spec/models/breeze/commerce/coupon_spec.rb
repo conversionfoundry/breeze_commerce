@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Breeze::Commerce::Coupons::Coupon do
 
-  subject do 
+  subject do
     create(:coupon)
   end
 
@@ -67,12 +67,12 @@ describe Breeze::Commerce::Coupons::Coupon do
     end
     it "can calculate a fixed discount for a given order" do
       coupon = create(:coupon_20_dollars_off_order)
-      coupon.calculate_discount(@order).should eq 20
+      coupon.discount(@order).should eq 20
     end
     it "can calculate a percentage discount for a given order" do
       coupon = create(:coupon_15_percent_off_order)
-      @order.stub(:item_total_cents){10000} 
-      coupon.calculate_discount(@order).should eq 15
+      @order.stub(:item_total_cents){10000}
+      coupon.discount(@order).should eq 15
     end
   end
 
