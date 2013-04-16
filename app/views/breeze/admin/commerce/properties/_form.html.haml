@@ -8,7 +8,7 @@
           %abbr{title: "required"}
             *
         = form.text_field :name, :required => true, placeholder: "Colour"
-  %fieldset.nested_items
+  %fieldset.options
     %legend Options
     %ul.options.association
       = form.fields_for :options do |option_fields|

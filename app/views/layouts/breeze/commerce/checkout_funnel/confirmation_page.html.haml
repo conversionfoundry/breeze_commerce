@@ -14,8 +14,9 @@
         = @order.billing_status.description
       
     #order-customer
-      = render :partial => "breeze/commerce/customers/customer_show", :locals => {:customer => @order.customer}
-      - if store.allow_returning_customer_login
+      - if @order.customer
+        = render :partial => "breeze/commerce/customers/customer_show", :locals => {:customer => @order.customer}
+      - elsif store.allow_returning_customer_login
         .customer-new
           = render :partial => "breeze/commerce/customers/customer_new", :locals => {:customer => @order.customer}
 

@@ -59,7 +59,7 @@ Breeze::Engine.routes.draw do
       put :redeem_coupon, on: :member
       get :checkout, on: :member
       put :submit, on: :member
-      get :thankyou, on: :member
+      get :confirm_payment, on: :member
       get :payment_failed, on: :member
     end
 

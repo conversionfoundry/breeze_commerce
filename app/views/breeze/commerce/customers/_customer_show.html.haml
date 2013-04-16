@@ -13,7 +13,7 @@
   .form-actions
     .btn-group
     =# link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, class: 'btn'
-    = link_to "Edit Profile", breeze.edit_customer_path(current_commerce_customer), class: "btn btn-customer-edit pull-right", id: "btn-edit_customer_profile"
+    = link_to "Edit Profile", breeze.edit_customer_path(customer), class: "btn btn-customer-edit pull-right", id: "btn-edit_customer_profile"
 - else
   %p.customer-name
     %span.name
