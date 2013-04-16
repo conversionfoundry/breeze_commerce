@@ -1,21 +1,22 @@
 require 'spec_helper'
+include RSpec::Matchers
 
 # For the successful path to pass, you'll need to set a couple of environment variables for your PxPay account:
-# $Breeze_Commerce_PxPay_User_ID
-# $Breezxe_Commerce_PxPay_Key
+# $PXPAY_USER_ID
+# $PXPAY_KEY
 
 describe Breeze::Commerce::OrdersController do
 
   describe "Environment variables set up" do
-    ENV["Breeze_Commerce_PxPay_User_ID"].should_not eq(nil)
-    ENV["Breeze_Commerce_PxPay_Key"].should_not eq(nil)
+    ENV["PXPAY_USER_ID"].should_not be_nil
+    ENV["PXPAY_KEY"].should_not be_nil
   end
 
   describe "PUT #submit" do
     context "visitor (not logged in)" do
       context "order is valid" do
         it "sends the order to the payment gateway" do
-          
+
           @order = create(:order)
           @order.line_items << create(:line_item)
           session[:cart_id] = @order.id

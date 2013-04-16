@@ -3,7 +3,7 @@ module Breeze
     class OrdersController < Breeze::Commerce::Controller
       layout "breeze/commerce/checkout_funnel/checkout_funnel_layout"
       respond_to :html, :js
-      before_filter :require_nonempty_order, except: [:create, :edit, :update]
+      before_filter :require_nonempty_order, except: [:create, :edit, :update, :confirm_payment]
 
       def show
         @order = Breeze::Commerce::Order.find(params[:id])
@@ -44,7 +44,7 @@ module Breeze
         respond_to do |format|
           format.js
         end
-      end 
+      end
 
       def redeem_coupon
         order = Breeze::Commerce::Order.find(params[:id])
@@ -81,7 +81,7 @@ module Breeze
         @order.update_attributes params[:order]
         @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
 
-        if @order.save          
+        if @order.save
           # Process payment with PxPay
           @payment = create_payment(@order, store)
           if @payment.save and redirectable?
@@ -98,7 +98,7 @@ module Breeze
         end
       end
 
-      def confirm_payment 
+      def confirm_payment
         @payment = Payment.find params[:id]
         @payment.succeeded = true
         @payment.save
@@ -109,7 +109,7 @@ module Breeze
         @order.save
 
         # Send notification emails
-        Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order).deliver
+        Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order).deliver if Breeze::Admin::User.all.select{|user| user.roles.include? :merchant}.any?
         Breeze::Commerce::OrderMailer.new_order_customer_notification(@order).deliver
 
         unless commerce_customer_signed_in?
@@ -160,11 +160,11 @@ module Breeze
 
       def create_payment(order, store)
         Breeze::Commerce::Payment.new(
-            name:       order.name, 
-            email:      order.email, 
-            amount:     order.total, 
-            order:      order, 
-            currency:   store.currency 
+            name:       order.name,
+            email:      order.email,
+            amount:     order.total,
+            order:      order,
+            currency:   store.currency
           )
       end
 

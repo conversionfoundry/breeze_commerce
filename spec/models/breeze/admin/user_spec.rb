@@ -18,10 +18,18 @@ describe "Breeze::Admin::User" do
       end
     end
 
-    context "when user isn't a merchant" do
+    context "when user is an admin" do
+      it "can manage store" do
+        admin = FactoryGirl.create :admin
+        ability = Breeze::Admin::Ability.new(admin)
+        ability.should be_able_to :manage, @store
+      end
+    end
+
+    context "when user is an editor" do
       it "can't manage store" do
-        nonmerchant = FactoryGirl.create :nonmerchant 
-        ability = Breeze::Admin::Ability.new(nonmerchant)
+        editor = FactoryGirl.create :editor
+        ability = Breeze::Admin::Ability.new(editor)
         ability.should_not be_able_to :manage, @store
       end
     end
