@@ -1,6 +1,7 @@
 // Update all shopping carts (there may be more than one per page)
 <% if @line_item.errors.empty? %>
 	$('.breeze-minicart').replaceWith('<%= escape_javascript render(:partial => "partials/commerce/minicart", :layout => false, :locals => {title: @title, order: @order}) %>');
+  $(document).trigger("breeze_commerce_add_to_cart_completed", "#variant_<%= @line_item.variant.id %> .btn-add_to_cart" );
 <% else %>
   $("#variant_<%= @line_item.variant.id %> .error_messages").html('<ul><%= @line_item.errors.to_a.map{|error| content_tag :li, error}.join.html_safe %></ul>')
 <% end %>

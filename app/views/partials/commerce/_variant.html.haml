@@ -27,4 +27,4 @@
             = text_field_tag "line_item[customer_message]", "Your message.", class: "line_item_customer_message", data: {character_limit: variant.customer_message_limit}
     .actions
       %p.variant-actions
-        = submit_tag "Add to Cart", :class => "btn btn-add_to_cart", :remote => true
+        = submit_tag "Add to Cart", class: "btn btn-add_to_cart", remote: true, data: {loading_text: "Adding..."}
