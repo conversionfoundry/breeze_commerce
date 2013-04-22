@@ -55,18 +55,8 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
     $(panels[to]).children(".checkout-body").slideDown()
     $(panels[to]).addClass("active")
     $(panels[to]).children(".checkout-summary").slideUp()
-    setTimeout (->
-      alignCartWith( $(panels[to]) )
-    ), 500
+    $(document).trigger "breezeCommerceCheckoutPanelChange", $(panels[to])
     false
-
-  alignCartWith = (element) ->
-    cart = $("#checkout-form .cart-container")
-    if cart
-      startOffset = cart.offset()
-      endOffset = cart.offset()
-      endOffset.top = element.offset().top
-      $("#checkout-form .cart-container").css({position: 'absolute', margin: 0, top: startOffset.top, left: cart.offset().left}).animate({left: endOffset.left, top: endOffset.top}, 400)
 
   currentStepIndex = ->
     element = $(panels.join()).children(".checkout-body").filter(":visible").first().parent().attr("id")
@@ -169,7 +159,6 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
 
   $(document).ready ->
     # Starting status
-    alignCartWith $(".panel.active")
 
     # ... depends on whether we have a customer already signed in
     if $("#sign-in").attr("data-customer_signed_in") is "true"
