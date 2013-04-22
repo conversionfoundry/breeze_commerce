@@ -48,7 +48,7 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
     address += "Contact Phone " + $("#order_" + addressType + "_address_phone").val()
     address
 
-  change = (from, to, summaryHtml) ->
+  changePanel = (from, to, summaryHtml) ->
     $(panels[from]).children(".checkout-body").slideUp()
     $(panels[from]).removeClass("active").addClass("visited")
     $(panels[from]).children(".checkout-summary").slideDown()
@@ -95,7 +95,7 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
 
   # Show/hide password field for returning customers
   $("#returning_customer").change ->
-    if @checked 
+    if @checked
       $('#continue-1b').hide()
     else
       $('#continue-1b').show()
@@ -113,20 +113,22 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
     )
 
   $("#continue-1a").click (event) ->
-    change 0, 1
+    changePanel(0, 1)
 
   $("#continue-1b").click (event) ->
     if $("#customer_email").valid()
       $("#order_email").val $("#customer_email").val()
       $("#guest_email").html $("#customer_email").val()
-      return change(0, 1)
+      $(document).trigger "breezeCommerceCheckoutGuestEmailEnter", $(this)
+      return changePanel(0, 1)
     false
 
   $("#continue-2").live "click", (event) ->
     if validateStep("#shipping")
       duplicateAddress()
       $("#shipping .checkout-summary .summary").html formatAddress("shipping")
-      return change(1, 2)
+      $(document).trigger "breezeCommerceShippingAddressEnter", $(this)
+      return changePanel(1, 2)
     false
 
   $("#checkout-form #same").change ->
@@ -140,28 +142,30 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
   $("#continue-3").click (event) ->
     if validateStep("#billing")
       $("#billing .checkout-summary .summary").html formatAddress("billing")
-      return change(2, 3)
+      $(document).trigger "breezeCommerceBillingAddressEnter", $(this)
+      return changePanel(2, 3)
     false
 
   $("#create_new_account").change ->
     $("li#new_account_password").slideToggle @checked
 
   $("#continue-4").click (event) ->
-    # @form.submit()  if validateStep("#confirmation")
-    $('form#checkout-form').submit()  if validateStep("#confirmation")
+    if validateStep("#confirmation")
+      $(document).trigger "breezeCommerceOrderSubmit", $(this)
+      $('form#checkout-form').submit()
     false
 
   $("#edit-sign-in").click (event) ->
-    change currentStepIndex(), 0
+    changePanel currentStepIndex(), 0
 
   $("#edit-shipping").click (event) ->
-    change currentStepIndex(), 1
+    changePanel currentStepIndex(), 1
 
   $("#edit-payment").click (event) ->
-    change currentStepIndex(), 2
+    changePanel currentStepIndex(), 2
 
   $("#changed-my-mind").click (event) ->
-    change currentStepIndex(), 3
+    changePanel currentStepIndex(), 3
 
   $(document).ready ->
     # Starting status
