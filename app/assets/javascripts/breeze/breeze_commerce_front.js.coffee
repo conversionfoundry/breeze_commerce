@@ -1,7 +1,7 @@
 # Event triggers
 $("input.btn-add_to_cart").live "click", (event) ->
   if $($(this)[0].form).valid()
-    $(document).trigger "breeze_commerce_add_to_cart", $(this)
+    $(document).trigger "breezeCommerceAddToCart", $(this)
 
 # Post to the provided URL with the specified parameters.
 post = (path, parameters) ->
@@ -36,5 +36,5 @@ $(document).ready ->
     event.preventDefault()
 
 
-  
+
 
