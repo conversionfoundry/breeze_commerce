@@ -26,8 +26,12 @@ describe Breeze::Commerce::Coupons::Coupon do
     it "is invalid without a discount_type" do
       build(:coupon, discount_type: nil).should_not be_valid
     end
-    it "is invalid if discount_type is something other than :fixed or :percentage"
-    it "is invalid if end_time is before start_time"
+    it "is invalid if discount_type is something other than :fixed or :percentage" do
+      build(:coupon, discount_type: "foo").should_not be_valid
+    end
+    it "is invalid if end_time is before start_time" do
+      build(:coupon, start_time: Time.zone.now + 1.year, end_time: Time.zone.now - 1.year).should_not be_valid
+    end
     it "is invalid without a couponable_type" do
       build(:coupon, couponable_type: nil).should_not be_valid
     end
@@ -37,15 +41,15 @@ describe Breeze::Commerce::Coupons::Coupon do
 
     context "single-use coupon_codes" do
       before :each do
-        subject.generate_coupon_codes(100, nil, 1)
+        subject.generate_coupon_codes(10, nil, 1)
       end
       it "can generate a single-use coupon_code" do
-        subject.coupon_codes.length.should eq 100
+        subject.coupon_codes.length.should eq 10
       end
       it "has coupon_codes that can only be redeemed once" do
         subject.coupon_codes.first.max_redemptions.should eq 1
       end
-      it "has an eight-digit unique code"
+      # it "has an eight-digit unique code"
     end
 
     context "multi-use coupon_codes" do
@@ -67,7 +71,7 @@ describe Breeze::Commerce::Coupons::Coupon do
     end
     it "can calculate a fixed discount for a given order" do
       coupon = create(:coupon_20_dollars_off_order)
-      coupon.discount(@order).should eq 20
+      coupon.discount(@order).should eq 2000
     end
     it "can calculate a percentage discount for a given order" do
       coupon = create(:coupon_15_percent_off_order)
@@ -78,38 +82,41 @@ describe Breeze::Commerce::Coupons::Coupon do
 
   describe "days_left" do
     it "has one day left if end date is today" do
-      subject.end_time = Time.now
+      subject.end_time = Time.zone.now
       subject.days_left.should eq 1
     end
     it "has two days left if end date is tomorrow" do
-      subject.end_time = Time.now + 1.day
+      subject.end_time = Time.zone.now + 1.day
       subject.days_left.should eq 2
     end
   end
 
   describe "can_redeem?" do
     it "can't be redeemed if coupon hasn't started yet" do
-      coupon = build(:coupon, start_time: Time.now + 1.year)
+      coupon = build(:coupon, start_time: Time.zone.now + 1.year)
       coupon.can_redeem?.should eq false
     end
     it "can't be redeemed if coupon is finished" do
-      coupon = build(:coupon, end_time: Time.now - 1.year)
+      coupon = build(:coupon, end_time: Time.zone.now - 1.year)
       coupon.can_redeem?.should eq false
     end
     it "can be redeemed if within the coupon period" do
-      coupon = build(:coupon, start_time: Time.now - 1.year, end_time: Time.now + 1.year)
+      coupon = build(:coupon, start_time: Time.zone.now - 1.year, end_time: Time.zone.now + 1.year)
       coupon.can_redeem?.should eq true
     end
     it "can be redeemed if there's no end_time" do
-      coupon = build(:coupon, start_time: Time.now - 1.year, end_time: nil)
+      coupon = build(:coupon, start_time: Time.zone.now - 1.year, end_time: nil)
       coupon.can_redeem?.should eq true
     end
-    it "can't be redeemed if it's inactive"
+    it "can't be redeemed if it's not published" do
+      coupon = build(:coupon, start_time: Time.zone.now - 1.year, end_time: nil, published: false)
+      coupon.can_redeem?.should eq false
+    end
   end
 
   describe "redemption_count" do
     before :each do
-      subject.generate_coupon_codes(100, nil, 2)
+      subject.generate_coupon_codes(10, nil, 2)
       @coupon_code_1 =  subject.coupon_codes.first
       @coupon_code_2 =  subject.coupon_codes.last
     end

@@ -5,7 +5,7 @@ module Breeze
         include Mongoid::Document
 
         attr_accessible :coupon, :coupon_id, :code, :redemption_count, :max_redemptions
-  
+
         field :code
         field :redemption_count, :type => Integer, default: 0
         field :max_redemptions, :type => Integer, default: 1
@@ -15,7 +15,7 @@ module Breeze
         validates :code, presence: true
         validates :redemption_count, presence: true, numericality: true
         validates :coupon, presence: true
-  			
+
         before_validation :generate_unique_code
 
   			def redeem(order)
@@ -29,7 +29,9 @@ module Breeze
   			end
 
         def generate_unique_code
-          self.code ||= SecureRandom.base64(8).tr('+/=', '0aZ')
+          size = 8
+          charset = %w{ 2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z} # characters that are hard to mix up
+          self.code ||= (0...size).map{ charset.to_a[rand(charset.size)] }.join
         end
 
         def can_redeem?
