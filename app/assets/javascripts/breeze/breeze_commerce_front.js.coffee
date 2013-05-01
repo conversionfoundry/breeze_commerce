@@ -35,6 +35,37 @@ $(document).ready ->
       dataType: "script"
     event.preventDefault()
 
+# Look up variants for a given set of options
+$(document).ready ->
 
+  # When a property is selected, send the current set of properties to filters
+  $(".breeze-commerce-product ul.options input[type=radio]").on "click", (e) ->
+    product_div = $(this).closest(".breeze-commerce-product")
+    product_id = product_div.data("product-id")
 
+    # Get all checked options. Should be one per property.
+    option_ids = []
+    product_div.find("ul.options input[type=radio]:checked").each (index) ->
+      option_ids.push $(this).val()
 
+    $(this).closest("li").siblings().removeClass "active"
+    $(this).closest("li").addClass "active"
+
+    # Send to variants#filter
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+
+      url: "/variants/filter"
+      dataType: "html"
+      type: "GET"
+      data:
+        product_id: product_id
+        option_ids: option_ids
+
+      success: (result) ->
+        eval result
+
+      error: (result) ->
+        console.log result
+        eval result

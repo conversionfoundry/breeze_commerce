@@ -4,7 +4,8 @@ module Breeze
 
     	# Return the variants that have all of a given array of option_ids
       def filter
-        @variants = Breeze::Commerce::Variant.unarchived.published.ordered.where(:product_id => params[:product_id], :option_ids.all => params[:option_ids]) 
+        @product = Breeze::Commerce::Product.find params[:product_id]
+        @variants = Breeze::Commerce::Variant.unarchived.published.ordered.where(:product_id => params[:product_id], :option_ids.all => params[:option_ids])
       end
 
     end
