@@ -7,6 +7,11 @@ include RSpec::Matchers
 
 describe Breeze::Commerce::OrdersController do
 
+  before :each do
+    Breeze.config.pxpay_user_id = ENV["PXPAY_USER_ID"]
+    Breeze.config.pxpay_key = ENV["PXPAY_KEY"]
+  end
+
   describe "Environment variables set up" do
     ENV["PXPAY_USER_ID"].should_not be_nil
     ENV["PXPAY_KEY"].should_not be_nil
@@ -20,9 +25,6 @@ describe Breeze::Commerce::OrdersController do
           @order = create(:order)
           @order.line_items << create(:line_item)
           session[:cart_id] = @order.id
-
-          Breeze.config.pxpay_user_id = ENV["PXPAY_USER_ID"]
-          Breeze.config.pxpay_key = ENV["PXPAY_KEY"]
 
           put :submit, id: @order.id, use_route: 'breeze_commerce'
           response.redirect_url.should match /https:\/\/sec.paymentexpress.com\/pxpay\/pxpay.aspx/
@@ -38,17 +40,60 @@ describe Breeze::Commerce::OrdersController do
     end
   end
 
-  describe "Order security" do
+  describe "GET #edit" do
+    before :each do
+      create(:country)
+    end
+
     context "registered customer" do
-      it "can show own orders"
-      it "can't show other customer's orders"
-      it "can't show guest orders"
+      it "can edit own orders" do
+        sign_in FactoryGirl.create(:customer)
+
+        @order = create(:order)
+        @order.line_items << create(:line_item)
+
+        get :edit, id: @order.id, use_route: 'breeze_commerce'
+        response.should be_success
+      end
+      it "can't edit another customer's orders" do
+        sign_in FactoryGirl.create(:customer)
+
+        @order = create(:order)
+        @order.line_items << create(:line_item)
+
+        sign_in FactoryGirl.create(:different_customer)
+
+        get :edit, id: @order.id, use_route: 'breeze_commerce'
+        response.should_not be_success
+      end
+      it "can't edit guest orders" do
+        @order = create(:order)
+        @order.line_items << create(:line_item)
+
+        sign_in FactoryGirl.create(:customer)
+
+        get :edit, id: @order.id, use_route: 'breeze_commerce'
+        response.should_not be_success
+      end
+
+    end
+    context "guest customer" do
+      it "can edit order after confirmation"
+      it "can't edit customer orders"
+      it "can't edit guest orders"
+    end
+  end
+
+  describe "confirm order" do
+
+    before :each do
+      create(:country)
+    end
+
+    context "registered customer" do
       it "can't confirm same order twice"
     end
     context "guest customer" do
-      it "can show order after confirmation"
-      it "can't show customer orders"
-      it "can't show guest orders"
       it "can't confirm same order twice"
     end
   end

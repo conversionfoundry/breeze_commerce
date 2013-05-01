@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :coupon, class: Breeze::Commerce::Coupons::Coupon do
     sequence(:name) { |n| "Coupon #{n}"}
-    start_time Time.zone.now
-    end_time Time.zone.now
+    start_time Time.zone.now - 1.day
+    end_time Time.zone.now + 1.day
     discount_value 100
     discount_type :fixed
     couponable_type Breeze::Commerce::Order.name

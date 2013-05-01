@@ -30,8 +30,8 @@ module Breeze
         validate :start_must_be_before_end_time
 
         def generate_coupon_codes number, code, max_redemptions
-          number.times do |i|
-            coupon_codes << Breeze::Commerce::Coupons::CouponCode.create( code: code, max_redemptions: max_redemptions )
+          number.times do
+            coupon_codes << Breeze::Commerce::Coupons::CouponCode.new( code: code, max_redemptions: max_redemptions )
           end
         end
 
