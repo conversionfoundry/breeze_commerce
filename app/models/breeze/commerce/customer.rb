@@ -23,7 +23,21 @@ module Breeze
 
       validates_presence_of :email
       validates_uniqueness_of :email
-      
+
+      def self.new_with_information(order, password)
+        new(
+          first_name: order.billing_address.name.split(' ').first,
+          last_name: order.billing_address.name.split(' ').last,
+          email: order.email,
+          password: password,
+          password_confirmation: password,
+          shipping_address: Breeze::Commerce::Address.new(order.shipping_address.attributes),
+          billing_address: Breeze::Commerce::Address.new(order.billing_address.attributes),
+          store: Breeze::Commerce::Store.first
+        )
+      end
+
+
       def last_order
         orders.last
       end
@@ -31,7 +45,7 @@ module Breeze
       def order_total
         orders.map{|o| o.total}.sum
       end
-      
+
       def editor?
         false
       end

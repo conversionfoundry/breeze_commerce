@@ -39,19 +39,14 @@ describe "Personalised Message Flow", :js => true, :type => :request do
 			visit breeze.edit_order_path(@order)
 
 			within ".line_item##{@order.line_items.first.id}" do
-				find("p.customer_message input.line_item-customer_message").value.should eq "Happy Birthday to the World's Best Mum"
+				find(".customer_message input.line_item-customer_message").value.should eq "Happy Birthday to the World's Best Mum"
 			end
 
 			click_link "Go to Checkout"
 
 			within ".cart-container .line_item##{@order.line_items.first.id}" do
-				find("p.customer_message").should have_content "Happy Birthday to the World's Best Mum"
+				find(".customer_message").should have_content "Happy Birthday to the World's Best Mum"
 			end
-
-
-
-			# Complete checkout and payment
-			# Arrive at confirmation page
 
 	  end
 	end

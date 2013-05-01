@@ -41,10 +41,10 @@ describe Breeze::Commerce::Coupons::Coupon do
 
     context "single-use coupon_codes" do
       before :each do
-        subject.generate_coupon_codes(10, nil, 1)
+        subject.generate_coupon_codes(2, nil, 1)
       end
       it "can generate a single-use coupon_code" do
-        subject.coupon_codes.length.should eq 10
+        subject.coupon_codes.length.should eq 2
       end
       it "has coupon_codes that can only be redeemed once" do
         subject.coupon_codes.first.max_redemptions.should eq 1

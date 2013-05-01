@@ -8,7 +8,10 @@ Breeze.hook :define_abilities do |abilities_array, user, abilities|
     can :manage, Breeze::Commerce::Customer do |customer|
       customer.id == user.id
     end
-    # can :manage, Breeze::Commerce::Customer if user.roles.include? :merchant
+    # can :manage, Breeze::Commerce::Order if user.respond_to?(:roles) && ( user.roles.include?(:merchant) || user.roles.include?(:admin) )
+    # can :manage, Breeze::Commerce::Order do |order|
+    #   order.customer = current_commerce_customer
+    # end
   end
 end
 
@@ -16,7 +19,7 @@ Breeze.hook :admin_menu do |menu, user|
   if user.can? :manage, Breeze::Commerce::Store
     # Remove the menu item provided by Breeze Account, as we'll manage customers in the Store section
     menu.delete_if{|item| item[:name] == "Customers"}
-  
+
     # Add Store menu item to main Breeze admin menu
     menu << { :name => "Store", :path => "/admin/store/orders" } if user.can? :manage, Breeze::Content::Item
   else
