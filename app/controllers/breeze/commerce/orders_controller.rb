@@ -3,10 +3,11 @@ module Breeze
     class OrdersController < Breeze::Commerce::Controller
       layout "breeze/commerce/checkout_funnel/checkout_funnel_layout"
       respond_to :html, :js
+      # before_filter :check_permissions
+      before_filter :find_order, except: [:create, :confirm_payment]
       before_filter :require_nonempty_order, except: [:create, :edit, :update, :confirm_payment]
 
       def show
-        @order = Breeze::Commerce::Order.find(params[:id])
         @customer = @order.customer || Breeze::Commerce::Customer.new
         @allow_returning_customer_login = store.allow_returning_customer_login
         render "layouts/breeze/commerce/checkout_funnel/confirmation_page"
@@ -14,7 +15,6 @@ module Breeze
 
       # Displays the current cart
       def edit
-        @order = Breeze::Commerce::Order.find(params[:id])
         @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
         @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
         unless @order.shipping_method && @shipping_methods.unarchived.include?(@order.shipping_method)
@@ -37,9 +37,8 @@ module Breeze
       end
 
       def update
-        @order = Breeze::Commerce::Order.find params[:id]
         @order.update_attributes params[:order]
-        @shipping_methods = @order.country.shipping_methods || Breeze::Commerce::Shipping::ShippingMethod.unarchived
+        @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
         @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
         respond_to do |format|
           format.js
@@ -47,15 +46,13 @@ module Breeze
       end
 
       def redeem_coupon
-        order = Breeze::Commerce::Order.find(params[:id])
         @coupon_code = Breeze::Commerce::Coupons::CouponCode.where(code: params[:code]).first
         if @coupon_code
-          @code_redeemed = @coupon_code.redeem(order)
+          @code_redeemed = @coupon_code.redeem(@order)
         end
       end
 
       def checkout
-        @order = Breeze::Commerce::Order.find(params[:id])
         @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Started Checkout").first
         @order.save
         @customer = current_commerce_customer || Breeze::Commerce::Customer.new
@@ -68,18 +65,19 @@ module Breeze
       end
 
       def submit
-        @order = Breeze::Commerce::Order.find(params[:id])
+        @order.update_attributes params[:order]
+        @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
+
         # Set customer, if any
         if customer_signed_in?
           @order.customer = current_commerce_customer
         else
           if params[:create_new_account]
-            @order.customer = create_customer(@order, params[:new_account_password], store)
+            customer = Breeze::Commerce::Customer.new_with_information(@order, params[:new_account_password])
+            customer.save
+            @order.customer = customer
           end
         end
-
-        @order.update_attributes params[:order]
-        @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
 
         if @order.save
           # Process payment with PxPay
@@ -126,7 +124,6 @@ module Breeze
       end
 
       def payment_failed
-        @order = Order.find params[:id]
         flash[:error] = '<h4>Payment failed</h4><p>Unfortunately, your order didn\'t go through.</p>'.html_safe
         @customer = current_commerce_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
@@ -135,27 +132,28 @@ module Breeze
         render :action => "checkout"
       end
 
+    protected
+
+      # def check_permissions
+      #   begin
+      #     @order = Order.find params[:id]
+      #     authorize! :manage, @order
+      #   rescue
+      #     redirect_to Breeze::Commerce::Store.first.home_page.permalink
+      #   end
+      # end
+
     private
+
+      def find_order
+        @order ||= Order.find params[:id]
+      end
 
       def require_nonempty_order
         @order = Order.find params[:id]
         if @order.line_items.empty?
           redirect_to breeze.edit_order_path(@order)
         end
-      end
-
-      def create_customer(order, password, store)
-        new_customer = Breeze::Commerce::Customer.new(
-          :first_name => order[:billing_address][:name].split(' ').first,
-          :last_name => order[:billing_address][:name].split(' ').last,
-          :email => order[:email],
-          :password => password,
-          :password_confirmation => password,
-          :store => store
-        )
-        new_customer.shipping_address = Breeze::Commerce::Address.new params[:order][:shipping_address]
-        new_customer.billing_address = Breeze::Commerce::Address.new params[:order][:billing_address]
-        new_customer.save
       end
 
       def create_payment(order, store)

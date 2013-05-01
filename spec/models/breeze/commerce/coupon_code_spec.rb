@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Breeze::Commerce::Coupons::CouponCode do
 
-  subject do 
+  subject do
     create(:coupon_code)
   end
 
@@ -26,7 +26,7 @@ describe Breeze::Commerce::Coupons::CouponCode do
     it "generates a valid code if none is given" do
       coupon_code = build(:coupon_code, code: nil)
       coupon_code.should be_valid
-      coupon_code.code.should_not eq nil      
+      coupon_code.code.should_not eq nil
     end
   end
 

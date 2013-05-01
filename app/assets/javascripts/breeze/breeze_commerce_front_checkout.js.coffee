@@ -1,5 +1,21 @@
 if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
 
+  # Post to the provided URL with the specified parameters.
+  post = (path, parameters) ->
+    form = $("<form></form>")
+    form.attr "method", "post"
+    form.attr "action", path
+    $.each parameters, (key, value) ->
+      field = $("<input></input>")
+      field.attr "type", "hidden"
+      field.attr "name", key
+      field.attr "value", value
+      form.append field
+    # The form needs to be a part of the document in
+    # order for us to be able to submit it.
+    $(document.body).append form
+    form.submit()
+
   # Copy the shipping address to the billing address
   duplicateAddress = ->
     $("#order_billing_address_name").val $("#order_shipping_address_name").val()
@@ -94,7 +110,7 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
   $('#button-sign_in').click (e) ->
     e.preventDefault()
     post(
-      "/store/customer/sign_in"
+      "/commerce/customers/sign_in"
       commit: "Sign in"
       authenticity_token: $('meta[name=csrf-token]').attr('content')
       utf8: "✓"

@@ -16,7 +16,7 @@ describe Breeze::Commerce::Order do
 	end
 
 	context "when first created" do
-		before :each do 
+		before :each do
 			@order = create(:order)
 		end
 		describe "order statuses" do
@@ -32,9 +32,9 @@ describe Breeze::Commerce::Order do
 
 	end
 
-  describe "line item methods" do 
+  describe "line item methods" do
     context "when there are no line items or shipping methods" do
-      before :each do 
+      before :each do
         @order = create(:order)
       end
       it "has zero line item count" do
@@ -54,7 +54,7 @@ describe Breeze::Commerce::Order do
       end
     end
     context "when there are line items and a shipping method" do
-      before :each do 
+      before :each do
         @order = create(:order)
         @variant1 = create(:variant, sell_price_cents: 2000)
         @variant2 = create(:variant, sell_price_cents: 1234)
@@ -96,17 +96,17 @@ describe Breeze::Commerce::Order do
         @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Started Checkout').first
         @order.save
         Breeze::Commerce::Order.actionable.should_not include @order
-      end   
+      end
     end
     context "billing_status is neither" do
       it "doesn't appear in admin" do
         @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Payment Received').first
         @order.save
         Breeze::Commerce::Order.actionable.should include @order
-      end   
+      end
     end
   end
-  
+
   describe "order number" do
     context "when unsaved" do
       it "has an Xed order number" do
@@ -125,7 +125,7 @@ describe Breeze::Commerce::Order do
 	describe "name method" do
 		before :each do
 			@order = create(:order)
-		end	
+		end
 		context "when it has a billing address" do
 			it "returns the billing address name" do
 				@order = create(:order, billing_address: build(:address, name: 'foo') )
@@ -146,7 +146,7 @@ describe Breeze::Commerce::Order do
       @order2 = create(:order)
       @order3 = create(:order, archived: true)
       @order4 = create(:order, archived: true)
-    end     
+    end
     context "unarchived scope" do
       it "returns an array of unarchived orders" do
         Breeze::Commerce::Order.unarchived.to_a.should eq [@order1, @order2]
@@ -171,14 +171,14 @@ describe Breeze::Commerce::Order do
     end
     context "serialized_coupon is present" do
       before :each do
-        coupon = create(:coupon)
-        subject.serialize_coupon coupon
+        @coupon = create(:coupon)
+        subject.serialize_coupon @coupon
       end
       it "returns the total calculated by the coupon" do
-        subject.coupon_total.should eq coupon.calculate_discount(subject)
+        subject.coupon_total.should eq @coupon.discount(subject)
       end
       it "returns the total in dollars (not cents)" do
-        subject.coupon_total.should eq 1
+        subject.coupon_total.should eq 100
       end
     end
   end
@@ -232,8 +232,8 @@ describe Breeze::Commerce::Order do
 				@variant1 = create(:variant, sell_price_cents: 2000)
 				@variant2 = create(:variant, sell_price_cents: 1234)
 				@original_order.line_items << create(:line_item, quantity: 2, variant: @variant1)
-				@original_order.line_items << create(:line_item, quantity: 1, variant: @variant2)		
-				@new_order = @original_order.duplicate_for_resend	
+				@original_order.line_items << create(:line_item, quantity: 1, variant: @variant2)
+				@new_order = @original_order.duplicate_for_resend
 			end
 			it "has line items with matching fields" do
 				original_line_item = @original_order.line_items.first
@@ -257,7 +257,7 @@ describe Breeze::Commerce::Order do
 		it "fails if can_resend? is false" do
 			@customer = create(:customer)
 			@original_order = create(:order, customer: @customer)
-			@original_order.stub(:can_resend?){false} 
+			@original_order.stub(:can_resend?){false}
 			@original_order.duplicate_for_resend.should eq false
 		end
 	end

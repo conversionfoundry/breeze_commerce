@@ -3,6 +3,6 @@ FactoryGirl.define do
     sequence(:code) { |n| "XYZZY#{n}"}
     redemption_count 0
     max_redemptions 1
-    coupon {FactoryGirl.create(:coupon)}
+    coupon {FactoryGirl.create(:coupon, published: true)}
   end
 end
