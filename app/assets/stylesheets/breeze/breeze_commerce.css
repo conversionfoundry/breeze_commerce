@@ -1,6 +1,7 @@
 /*
  *= require breeze/multi-select
  *= require ./breeze_commerce_front
+ *= require ./breeze_commerce_front_products
  *= require ./breeze_commerce_front_orders
  *= require ./breeze_commerce_front_customers
  *= require ./breeze_commerce_admin

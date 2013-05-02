@@ -16,6 +16,7 @@ module Breeze
         ApplicationController.helper Breeze::Commerce::ProductsHelper
         Breeze::Content.register_class Breeze::Commerce::Store
         Breeze::Content.register_class Breeze::Commerce::ProductList
+        Breeze::Content.register_class Breeze::Commerce::ProductPlaceable
         Breeze::Content.register_class Breeze::Commerce::Minicart
         Breeze::Content.register_class Breeze::Commerce::CustomerLoginForm
       end
@@ -37,7 +38,7 @@ module Breeze
 
       config.generators do |g|
         g.test_framework :rspec, :view_specs => false
-      end      
+      end
 
     end
   end
