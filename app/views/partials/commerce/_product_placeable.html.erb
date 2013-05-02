@@ -1,0 +1,7 @@
+<div class="breeze-commerce-product" data-product-id="<%= @product.id %>">
+  <h2><%= @product.title %></h2>
+  <%= render :partial => "/partials/commerce/properties", locals: { product: @product } %>
+  <div class="variants">
+    <%= render :partial => "/partials/commerce/variants", locals: { product: @product, variants: [] } %>
+  </div>
+</div>

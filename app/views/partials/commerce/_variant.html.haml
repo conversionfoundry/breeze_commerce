@@ -16,15 +16,15 @@
       - else
         %span.current_price= number_to_currency(variant.sell_price, :locale => :nz)
         %span.currency= currency
-      .control-group.quantity-group
-        = label_tag :line_item_quantity, "Quantity", class: "control-label"
+    .control-group.quantity-group
+      = label_tag :line_item_quantity, "Quantity", class: "control-label"
+      .controls
+        = number_field_tag "line_item[quantity]", 1, class: "input-mini required number"
+    - if variant.requires_customer_message
+      .control-group.customer_message
+        = label_tag :line_item_customer_message, "Your message", class: "control-label"
         .controls
-          = number_field_tag "line_item[quantity]", 1, class: "input-mini required number"
-      - if variant.requires_customer_message
-        .control-group.customer_message
-          = label_tag :line_item_customer_message, "Your message", class: "control-label"
-          .controls
-            = text_field_tag "line_item[customer_message]", "Your message.", class: "line_item_customer_message", data: {character_limit: variant.customer_message_limit}
+          = text_field_tag "line_item[customer_message]", "Your message.", class: "line_item_customer_message", data: {character_limit: variant.customer_message_limit}
     .actions
       %p.variant-actions
         = submit_tag "Add to Cart", class: "btn btn-add_to_cart", remote: true, data: {loading_text: "Adding..."}
