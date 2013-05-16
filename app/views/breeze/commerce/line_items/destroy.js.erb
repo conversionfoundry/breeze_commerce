@@ -1,7 +1,7 @@
 // Remove deleted line item
-$('table#cart tr#<%= @line_item.id %>').fadeOut();
+$('table.cart tr#<%= @line_item.id %>').fadeOut();
 
 // Update order totals
-$('table#cart tfoot tr.subtotal td.total span.amount').html('<%= number_to_currency @order.item_total %>').effect("highlight", { color: "#ffffc0" }, 3000)
-$('table#cart tfoot tr.shipping td.total span.amount').html('<%= number_to_currency @order.shipping_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
-$('table#cart tfoot tr.total td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000)
+$('table.cart tfoot tr.subtotal td.total span.amount').html('<%= number_to_currency @order.item_total %>').effect("highlight", { color: "#ffffc0" }, 3000)
+$('table.cart tfoot tr.shipping td.total span.amount').html('<%= number_to_currency @order.shipping_total %>').effect("highlight", { color: "#ffffc0" }, 3000);
+$('table.cart tfoot tr.total td.total span.amount').html('<%= number_to_currency @order.total %>').effect("highlight", { color: "#ffffc0" }, 3000)
