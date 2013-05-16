@@ -1,8 +1,9 @@
 %tr.line_item{id: line_item.id}
   %td.item
-    = image_tag line_item.variant.display_image.url(:thumbnail), class: 'thumbnail' if line_item.variant.display_image
-    %p.product_name= line_item.product.title
-    %h4.variant_name= line_item.variant.name
+    = link_to line_item.product.permalink do
+      = image_tag line_item.variant.display_image.url(:thumbnail), class: 'thumbnail' if line_item.variant.display_image
+      %p.product_name= line_item.product.title
+      %h4.variant_name= line_item.variant.name
     - if line_item.customer_message
       .control-group.customer_message
         .controls
