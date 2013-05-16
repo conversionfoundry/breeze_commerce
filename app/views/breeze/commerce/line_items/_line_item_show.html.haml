@@ -1,6 +1,6 @@
 %tr.line_item{:id => line_item.id}
   %td.icon
-    = image_tag line_item.variant.image.url(:thumbnail) if line_item.variant.image
+    = image_tag line_item.variant.display_image.url(:thumbnail) if line_item.variant.display_image
   %td.quantity
     = line_item.quantity
     &times;
