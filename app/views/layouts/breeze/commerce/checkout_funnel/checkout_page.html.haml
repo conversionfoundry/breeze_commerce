@@ -1,17 +1,18 @@
 - content_for :head do
   %title Checkout
-    
+
 - flash.each do |key, msg|
   %div{class: "alert-#{key} alert-block alert"}
     %button.close{"data-dismiss" => "alert", :type => "button"} ×
     %p= msg
     .clear
-    
+
 = form_for @order, url: breeze.submit_order_path(@order), html: {method: :put, id: "checkout-form"} do |order_form|
   .row
-    #checkout-container.span8
+    .span12
       %h1 Checkout
-
+  .row
+    #checkout-container.span8
       .panel#sign-in{class: ("active" unless customer_signed_in?), "data-customer_signed_in" => customer_signed_in? ? 'true' : 'false', "data-foo" => "bar"}
         .checkout-header
           %h3.heading
@@ -183,6 +184,7 @@
           = render :partial => "breeze/commerce/coupons/coupon_show", locals: { order: @order }
           = render :partial => "breeze/commerce/shipping_methods/shipping_methods_show", locals: { order: @order }
           = render :partial => "breeze/commerce/orders/total", locals: { order: @order }
-      .payment_gateway
-        Payments processed by
-        .gateway.payment_express Payment Express
+        .payment_gateway
+          Payments processed by
+          .gateway.payment_express Payment Express
+
