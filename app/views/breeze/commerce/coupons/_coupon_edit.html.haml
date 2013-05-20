@@ -14,7 +14,7 @@
             = order.coupon.discount_value.to_s + "%"
           off total order
 
-        \- 
+        \-
         %span.amount#order_coupon_total
           = number_to_currency order.coupon_total
         %span.currency
@@ -22,5 +22,5 @@
       - else
         .control-group#enter_coupon
           .controls
-            = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: order.id.to_s }, placeholder: "SWORDFISH"
+            = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: order.id.to_s }
             = label_tag 'order[coupon_code]', "", class: 'error', generated: true

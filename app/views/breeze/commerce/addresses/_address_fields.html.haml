@@ -11,21 +11,21 @@
       Address
       %span.required *
     .controls
-      = form.text_area :address, :class => :required, :value => address.address, :placeholder => '123 Babbling Brook Lane                                                                          Riverton', :rows => 2
+      = form.text_area :address, :class => :required, :value => address.address, :rows => 2
 %li
   .control-group
     = form.label :city, class: "control-label required" do |label|
       City
       %span.required *
     .controls
-      = form.text_field :city, :value => address.city, :placeholder => 'Christchurch', :class => 'required input-medium'
+      = form.text_field :city, :value => address.city, :class => 'required input-medium'
 %li.state
   .control-group
     = form.label :state, class: "control-label" do |label|
       State, Province or Region
       %span.optional (optional)
     .controls
-      = form.text_field :state, :value => address.state, :placeholder => 'Canterbury', :class => 'input-medium'
+      = form.text_field :state, :value => address.state, :class => 'input-medium'
 %li.state
   .control-group
     = form.label :postcode, class: "control-label" do |label|
