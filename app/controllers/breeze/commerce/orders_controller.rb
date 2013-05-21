@@ -92,7 +92,7 @@ module Breeze
           end
         else
           @customer = current_commerce_customer || Breeze::Commerce::Customer.new
-          render :action => "checkout"
+          render"layouts/breeze/commerce/checkout_funnel/checkout_page"
         end
       end
 
@@ -129,7 +129,9 @@ module Breeze
         @customer.shipping_address ||= Breeze::Commerce::Address.new
         @customer.billing_address ||= Breeze::Commerce::Address.new
         @allow_returning_customer_login = store.allow_returning_customer_login
-        render :action => "checkout"
+        @shipping_countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc).map{|country| country.name}
+        @billing_countries = Breeze::Commerce::COUNTRIES
+        render "layouts/breeze/commerce/checkout_funnel/checkout_page"
       end
 
     protected
