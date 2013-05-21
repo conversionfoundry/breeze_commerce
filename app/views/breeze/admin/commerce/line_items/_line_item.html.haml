@@ -1,6 +1,6 @@
 %tr.line_item{class: cycle("odd", "even"), id: line_item.id}
   %td.item
-    = image_tag line_item.variant.image.url(:thumbnail), class: 'thumbnail' if line_item.variant.image
+    = image_tag line_item.variant.display_image.url(:thumbnail), class: 'thumbnail' if line_item.variant.display_image
     %p.product_name= line_item.product.title
     %h4.variant_name= line_item.variant.name
     %p.variant_description= line_item.variant.description
@@ -11,23 +11,23 @@
     - if line_item.variant.discounted
       %span.old_price
         = number_to_currency(line_item.variant.sell_price, :locale => :nz)
-        %span.currency 
+        %span.currency
           = store.currency
       %span.discounted_price.current_price
         = number_to_currency(line_item.variant.discounted_sell_price, :locale => :nz)
-        %span.currency 
+        %span.currency
           = store.currency
     - else
       %span.current_price
         = number_to_currency(line_item.variant.sell_price, :locale => :nz)
-        %span.currency 
+        %span.currency
           = store.currency
 
   %td.quantity
     = line_item_fields.text_field :quantity, class: 'input-mini line_item-quantity', size: 2, data: { order_id: @order.id.to_s, line_item_id: line_item.id.to_s }, label: false
   %td.total
     = number_to_currency line_item.amount
-    %span.currency 
+    %span.currency
       = store.currency
   %td.actions
     = link_to 'Remove', breeze.admin_store_order_line_item_path(@order, line_item), :method => :delete, :remote=> true, :class => "button small remove"
