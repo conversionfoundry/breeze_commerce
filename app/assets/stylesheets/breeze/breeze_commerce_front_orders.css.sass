@@ -61,7 +61,7 @@ ul.orders
         text-align: right
       td:last-child
         width: 30em
-  table.line_items 
+  table.line_items
     clear: both
     float: none
     width: 100%
@@ -105,11 +105,10 @@ ul.orders
 
 
 /* Default Shopping Cart appearance
+/*   Note that there are some override sbelow for the smaller version on the checkout page
 .cart-container
   position: relative
-  a#edit-items
-    float: right
-  .form-actions 
+  .form-actions
     box-sizing: border-box
     .btn-group
       float: right
@@ -132,7 +131,9 @@ ul.orders
       font-weight: bold
       text-align: right
 
-/* Checkout Page      
+
+
+/* Checkout Page
 #checkout-form
   #checkout-container
     .panel
@@ -173,3 +174,67 @@ ul.orders
             content: ""
           &:after
             clear: both
+
+
+  .cart-container
+    .order
+      position: relative
+      a#edit-items
+        position: absolute
+        top: 0.5em
+        right: 0.5em
+      .order-identification
+        margin: 0.5em
+      .order-line_items
+        table.cart
+          td
+            padding: 0.5em
+          td.price
+            min-width: 5em
+          td.total
+            min-width: 5em
+        table.coupon
+          .control-group
+            padding-right: 1em
+        table.shipping_methods
+          td
+            padding: 0.5em
+          .description
+            h4
+              margin-top: 0
+          #countries
+            padding-right: 1em
+          div.amount
+            padding-right: 2em
+        table.totals
+          border-top: #eee solid 1px
+          border-bottom: #eee solid 1px
+          width: 100%
+          td
+            padding: 0.5em
+          td.total
+            width: auto
+
+  #order-result
+    margin-bottom: 2em
+
+  #order-customer
+    ul.customer-contact
+      margin-left: 0
+    p.customer-name
+      font-size: 1.5em
+      margin-bottom: 0.2em
+
+  #order-customer_comment
+    padding: 0 1em
+
+  .new_customer
+    .form-actions
+      width: 21em
+
+  .order-billing_address
+    padding-left: 1em
+
+  .order-payments
+    padding-left: 1em
+    margin-bottom: 2em

@@ -2,8 +2,7 @@
   %td.icon
     = image_tag line_item.variant.display_image.url(:thumbnail) if line_item.variant.display_image
   %td.quantity
-    = line_item.quantity
-    &times;
+    = (line_item.quantity.to_s + "&nbsp;&times;").html_safe
   %td.item
     = line_item.variant.name
     - if line_item.customer_message
