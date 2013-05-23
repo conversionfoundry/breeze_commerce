@@ -1,4 +1,4 @@
-%table#cart.table-striped.line_items
+%table#cart.cart.table-striped.line_items
   %tbody
     - line_items.unarchived.each do |line_item|
       = render :partial => "breeze/commerce/line_items/line_item_show", :locals => {:line_item => line_item}
