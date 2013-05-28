@@ -98,17 +98,9 @@ module Breeze
 
       def confirm_payment
         @payment = Payment.find params[:id]
-        @payment.succeeded = true
-        @payment.save
-
+        @payment.update_attribute(:pxpay_response, Pxpay::Response.new(params).response.to_hash)
         @order = @payment.order
-        @order.payment_completed = true
-        @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
-        @order.save
-
-        # Send notification emails
-        Breeze::Commerce::OrderMailer.new_order_merchant_notification(@order).deliver if Breeze::Admin::User.all.select{|user| user.roles.include? :merchant}.any?
-        Breeze::Commerce::OrderMailer.new_order_customer_notification(@order).deliver
+        @order.confirm_payment(@payment)
 
         unless commerce_customer_signed_in?
           if @order.customer
