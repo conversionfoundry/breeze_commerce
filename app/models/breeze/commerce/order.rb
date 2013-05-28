@@ -4,7 +4,7 @@ module Breeze
       include Mongoid::Document
       include Mongoid::Timestamps
       include Mixins::Archivable
-      
+
       FILTERS = [
         {:scope => "all",         :label => "All Orders"},
         {:scope => "unfulfilled", :label => "Unfulfilled Orders"},
@@ -41,6 +41,23 @@ module Breeze
       before_validation :set_initial_state
       validates_presence_of :billing_status, :shipping_status
 
+      def confirm_payment(payment)
+        # txnId = payment.pxpay_response[:txn_id]
+        unless payment.succeeded # A payment can only be successful once.
+          payment.succeeded = true
+          payment.save
+          self.payment_completed = true
+          self.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
+          self.save
+
+          deliver_confirmation_emails
+        end
+      end
+
+      def deliver_confirmation_emails
+        Breeze::Commerce::OrderMailer.new_order_merchant_notification(self).deliver if Breeze::Admin::User.all.select{|user| user.roles.include? :merchant}.any?
+        Breeze::Commerce::OrderMailer.new_order_customer_notification(self).deliver
+      end
 
       # Order numbers are strings in the format "2012-07-12-60319"
       # The last section is seconds since midnight on the order date, zero-padded to always be five digits
@@ -162,11 +179,11 @@ module Breeze
 
       protected
 
-      def set_initial_state 
+      def set_initial_state
         self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
         self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
         self.country ||= Breeze::Commerce::Store.first.default_country
-        self.shipping_method ||= Breeze::Commerce::Store.first.default_shipping_method       
+        self.shipping_method ||= Breeze::Commerce::Store.first.default_shipping_method
       end
 
     end
