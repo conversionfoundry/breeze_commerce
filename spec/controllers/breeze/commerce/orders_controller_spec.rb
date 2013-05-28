@@ -84,18 +84,4 @@ describe Breeze::Commerce::OrdersController do
     end
   end
 
-  describe "confirm order" do
-
-    before :each do
-      create(:country)
-    end
-
-    context "registered customer" do
-      it "can't confirm same order twice"
-    end
-    context "guest customer" do
-      it "can't confirm same order twice"
-    end
-  end
-
 end
