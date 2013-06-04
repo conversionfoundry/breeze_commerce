@@ -4,5 +4,6 @@
   $(document).trigger("breezeCommerceAddToCartCompleted", "#variant_<%= @line_item.variant.id %> .btn-add_to_cart" );
 <% else %>
   $("#variant_<%= @line_item.variant.id %> .error_messages").html('<ul><%= @line_item.errors.to_a.map{|error| content_tag :li, error}.join.html_safe %></ul>')
+  $(document).trigger("breezeCommerceAddToCartFailed", "#variant_<%= @line_item.variant.id %> .btn-add_to_cart" );
 <% end %>
 
