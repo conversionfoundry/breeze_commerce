@@ -44,8 +44,7 @@ module Breeze
       def confirm_payment(payment)
         # txnId = payment.pxpay_response[:txn_id]
         unless payment.succeeded # A payment can only be successful once.
-          payment.succeeded = true
-          payment.save
+          payment.update_attribute(:succeeded, true)
           self.payment_completed = true
           self.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
           self.save
