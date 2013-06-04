@@ -8,3 +8,4 @@ spec/dummy/log/*
 Gemfile.lock
 .DS_Store
 tmp/
+.rvmrc
