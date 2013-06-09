@@ -13,7 +13,6 @@ module Breeze
         render "layouts/breeze/commerce/checkout_funnel/confirmation_page"
       end
 
-      # Displays the current cart
       def edit
         @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
         @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
@@ -25,6 +24,7 @@ module Breeze
           end
           @order.save
         end
+        render "layouts/breeze/commerce/checkout_funnel/cart_page"
       end
 
       def create
