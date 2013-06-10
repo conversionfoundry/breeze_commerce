@@ -4,46 +4,46 @@
       Name
       %span.required *
     .controls
-      = form.text_field :name, :class => :required, :value => @customer.name, :placeholder => 'Jane Doe'
+      = form.text_field :name, class: :required, value: @customer.name
 %li.address
   .control-group
     = form.label :address, class: "control-label required" do |label|
       Address
       %span.required *
     .controls
-      = form.text_area :address, :class => :required, :value => address.address, :rows => 2
+      = form.text_area :address, class: :required, value: address.address, rows: 2
 %li
   .control-group
     = form.label :city, class: "control-label required" do |label|
       City
       %span.required *
     .controls
-      = form.text_field :city, :value => address.city, :class => 'required input-medium'
+      = form.text_field :city, value: address.city, class: 'required input-medium'
 %li.state
   .control-group
     = form.label :state, class: "control-label" do |label|
       State, Province or Region
       %span.optional (optional)
     .controls
-      = form.text_field :state, :value => address.state, :class => 'input-medium'
+      = form.text_field :state, value: address.state, class: 'input-medium'
 %li.state
   .control-group
     = form.label :postcode, class: "control-label" do |label|
       Postcode
       %span.optional (optional)
     .controls
-      = form.text_field :postcode, :value => address.postcode, :class => 'input-small'
+      = form.text_field :postcode, value: address.postcode, class: 'input-small'
 %li.country
   .control-group
     = form.label :country, class: "control-label required" do |label|
       Country
       %span.required *
     .controls
-      = form.select :country, countries, :selected => (address.country ||'New Zealand'), :class => :required
+      = form.select :country, countries, selected: (address.country ||'New Zealand'), class: :required
 %li.phone
   .control-group
     = form.label :phone, class: "control-label" do |label|
       Contact Phone Number
       %span.optional (optional)
     .controls
-      = form.text_field :phone, type: 'tel', :value => @customer.phone, :placeholder => '64 3 1234567', :class => 'input-medium'
+      = form.text_field :phone, type: 'tel', value: @customer.phone, class: 'input-medium'

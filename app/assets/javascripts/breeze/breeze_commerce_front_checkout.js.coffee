@@ -82,7 +82,8 @@ if $('#checkout-form').length > 0 # i.e. if we're on the shopping cart page
   panels = ["#sign-in", "#shipping", "#billing", "#confirmation"]
 
   $("#new_customer").validate
-    # onkeyup: false,
+    onkeyup: false,
+    onclick: false
     errorElement: "span"
     errorClass: "help-inline"
     highlight: (label) ->
