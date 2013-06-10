@@ -26,9 +26,9 @@
         .checkout-body
           - if customer_signed_in?
             Signed in as #{current_commerce_customer.name}
-            \#{link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, :class => 'btn'}
+            \#{link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, class: 'btn'}
             .form-actions
-              = link_to '#', :class => "btn btn-primary", :id => "continue-1a" do
+              = link_to '#', class: "btn btn-primary", :id => "continue-1a" do
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
           - else
@@ -37,11 +37,11 @@
                 %ol.form
                   %li
                     .control-group
-                      = form.label :email, :class => "control-label" do |label|
+                      = form.label :email, class: "control-label" do |label|
                         Email
                         %span.required *
                       .controls
-                        = form.text_field :email, type: 'email', :class=>"required email", :placeholder => 'name@example.com'
+                        = form.text_field :email, class: "required"
                     %span.help-block We'll send a confirmation email to this address
                   - if @allow_returning_customer_login
                     %li
@@ -53,18 +53,18 @@
                         Password
                         %span.required *
                       = form.password_field :password
-                      = link_to 'Sign in', breeze.commerce_customer_session_path, :class => 'btn btn-primary', :id => 'button-sign_in'
+                      = link_to 'Sign in', breeze.commerce_customer_session_path, class: 'btn btn-primary', :id => 'button-sign_in'
 
             .form-actions
-              = link_to '#', :class => "btn btn-primary", :id => "continue-1b" do
+              = link_to '#', class: "btn btn-primary", :id => "continue-1b" do
                 %i.icon-arrow-down.icon-white
                 %span.title Continue to next step
         .checkout-summary
           .form-actions
             - if customer_signed_in?
-              = link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, id: 'sign-out', :class => 'btn'
+              = link_to 'Sign Out', breeze.destroy_commerce_customer_session_path, id: 'sign-out', class: 'btn'
             - else
-              = link_to 'Edit Sign In', '#', :class => "btn", :id => "edit-sign-in"
+              = link_to 'Edit Sign In', '#', class: "btn", :id => "edit-sign-in"
           .summary
             - if customer_signed_in?
               %p
@@ -83,18 +83,18 @@
             %span.number 2
             %span.description Shipping Address
         .checkout-body
-          = order_form.hidden_field :email, :class => :required, :value => @customer.email
+          = order_form.hidden_field :email, class: :required, :value => @customer.email
           = order_form.fields_for :shipping_address do |ship_form|
             %fieldset.address-shipping.address
               %ol#order_shipping_address.form
                 = render :partial => "breeze/commerce/addresses/address_fields", locals: { form: ship_form, countries: @shipping_countries, address: @customer.shipping_address }
           .form-actions
-            = link_to '#', :class => "btn btn-primary", :id => "continue-2" do
+            = link_to '#', class: "btn btn-primary", :id => "continue-2" do
               %i.icon-arrow-down.icon-white
               %span.title Continue to next step
         .checkout-summary
           .form-actions
-            = link_to '#', :class => "btn", :id => "edit-shipping" do
+            = link_to '#', class: "btn", :id => "edit-shipping" do
               %span.title Edit Shipping Address
           .summary
 
@@ -114,12 +114,12 @@
               %ol#order_billing_address.form{:style => "display: none;"}
                 = render :partial => "breeze/commerce/addresses/address_fields", locals: { form: bill_form, countries: @billing_countries, address: @customer.billing_address }
           .form-actions
-            = link_to '#', :class => "btn btn-primary", :id => "continue-3" do
+            = link_to '#', class: "btn btn-primary", :id => "continue-3" do
               %i.icon-arrow-down.icon-white
               %span.title Continue to next step
         .checkout-summary
           .form-actions
-            = link_to '#', :class => "btn", :id => "edit-payment" do
+            = link_to '#', class: "btn", :id => "edit-payment" do
               %span.title Edit Billing Address
           .summary
 
@@ -150,7 +150,7 @@
               %li
                 = label_tag :read_terms do |label|
                   .control-group
-                    = check_box_tag :read_terms, :read_terms, false, :class => :required
+                    = check_box_tag :read_terms, :read_terms, false, class: :required
                     I accept the
                     = link_to store.terms_page.permalink, :target => "_blank" do
                       terms and conditions
@@ -162,19 +162,19 @@
                 = order_form.label :comment do |label|
                   Comment
                   %span.optional (optional)
-                = order_form.text_area :comment, :class => 'input-xxlarge', :rows => 2
+                = order_form.text_area :comment, class: 'input-xxlarge', :rows => 2
           .form-actions
-            = content_tag :button, :type => :submit, :id => "continue-4", :class => "btn btn-primary btn-large" do
+            = content_tag :button, :type => :submit, :id => "continue-4", class: "btn btn-primary btn-large" do
               %i.icon-ok-sign.icon-white
               Pay Now
         .checkout-summary
           .form-actions
-            = link_to '#', :class => "btn", :id => "changed-my-mind" do
+            = link_to '#', class: "btn", :id => "changed-my-mind" do
               %span.title Edit Confirmation
 
     .cart-container.span4
       .order.clearfix
-        = link_to breeze.edit_order_path, :class => "btn", :id => "edit-items" do
+        = link_to breeze.edit_order_path, class: "btn", :id => "edit-items" do
           %i.icon-shopping-cart
           %span.title Edit Cart
         .order-identification
