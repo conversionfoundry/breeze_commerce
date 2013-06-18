@@ -21,5 +21,46 @@
           =# form.text_field :currency, :required => true, :label => "Currency"
           = form.select :currency, [['NZD - New Zealand Dollars', 'NZD'], ['AUD - Australian Dollars', 'AUD']], :required => true
 
-
+      %h1 Billing Statuses
+      %table.order_statuses
+        %tr.setting
+          %td.situation
+            Customer is browsing
+          %td.order_status
+            - if store.initial_billing_status
+              %h4
+                = store.initial_billing_status.name
+              = store.initial_billing_status.description
+            - else
+              Not defined
+        %tr.setting
+          %td.situation
+            Order has gone to checkout
+          %td.order_status
+            - if store.checkout_billing_status
+              %h4
+                = store.checkout_billing_status.name
+              = store.checkout_billing_status.description
+            - else
+              Not defined
+        %tr.setting
+          %td.situation
+            Order has been sent to payment gateway
+          %td.order_status
+            - if store.with_gateway_billing_status
+              %h4
+                = store.with_gateway_billing_status.name
+              = store.with_gateway_billing_status.description
+            - else
+              Not defined
+        %tr.setting
+          %td.situation
+            Payment has been confirmed
+          %td.order_status
+            - if store.payment_confirmed_billing_status
+              %h4
+                = store.payment_confirmed_billing_status.name
+              = store.payment_confirmed_billing_status.description
+            - else
+              Not defined
 
