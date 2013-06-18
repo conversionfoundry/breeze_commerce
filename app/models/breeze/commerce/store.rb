@@ -16,6 +16,8 @@ module Breeze
       belongs_to :with_gateway_billing_status, class_name: "Breeze::Commerce::OrderStatus"
       belongs_to :payment_confirmed_billing_status, class_name: "Breeze::Commerce::OrderStatus"
 
+      belongs_to :initial_shipping_status, class_name: "Breeze::Commerce::OrderStatus"
+
       field :allow_returning_customer_login, type: Boolean, default: true
       field :currency, default: 'NZD'
 

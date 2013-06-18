@@ -21,8 +21,11 @@
           =# form.text_field :currency, :required => true, :label => "Currency"
           = form.select :currency, [['NZD - New Zealand Dollars', 'NZD'], ['AUD - Australian Dollars', 'AUD']], :required => true
 
-      %h1 Billing Statuses
+      %h1 Order Statuses
       %table.order_statuses
+        %tr
+          %th
+            %h3 Billing Statuses
         %tr.setting
           %td.situation
             Customer is browsing
@@ -63,4 +66,16 @@
               = store.payment_confirmed_billing_status.description
             - else
               Not defined
-
+        %tr
+          %th
+            %h3 Shipping Statuses
+        %tr.setting
+          %td.situation
+            Order hasn't been processed yet
+          %td.order_status
+            - if store.initial_shipping_status
+              %h4
+                = store.initial_shipping_status.name
+              = store.initial_shipping_status.description
+            - else
+              Not defined
