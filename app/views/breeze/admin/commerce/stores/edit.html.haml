@@ -79,3 +79,13 @@
               = store.initial_shipping_status.description
             - else
               Not defined
+        %tr.setting
+          %td.situation
+            Order has been shipped
+          %td.order_status
+            - if store.shipped_shipping_status
+              %h4
+                = store.shipped_shipping_status.name
+              = store.shipped_shipping_status.description
+            - else
+              Not defined
