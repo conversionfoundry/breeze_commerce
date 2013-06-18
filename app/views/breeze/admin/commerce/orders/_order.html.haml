@@ -40,7 +40,7 @@
   %td.billing_status
     .status
       = form_for order, :as => :order, :url => admin_store_order_path(order), :remote => true do |form|
-        = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-order_id" => order.id, id: 'shipping_status_' + order.id, class: 'billing_status status', label: false}
+        = form.select :billing_status_id, @billing_statuses.map{|s| [ s.name, s.id]}, {disabled: [ Breeze::Commerce::OrderStatus.where(name: 'Browsing').first.id, Breeze::Commerce::OrderStatus.where(name: 'Started Checkout').first.id ]}, {:"data-order_id" => order.id, id: 'shipping_status_' + order.id, class: 'billing_status status', label: false}
   %td.actions.last
     %p.order-actions
       = link_to "Edit", edit_admin_store_order_path(order), :class => "small black button"
