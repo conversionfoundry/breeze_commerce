@@ -18,22 +18,22 @@ module Breeze
       field :payment_completed
       field :serialized_coupon, type: Hash
 
-      belongs_to :customer, :class_name => "Breeze::Commerce::Customer", :inverse_of => :orders
-      belongs_to :billing_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
-      belongs_to :shipping_status, :class_name => "Breeze::Commerce::OrderStatus", :inverse_of => :orders
-      has_many :line_items, :class_name => "Breeze::Commerce::LineItem" # Ideally, this would be embedded, but then we couldn't reference variant from an embedded line item
-      embeds_one :shipping_address, :class_name => "Breeze::Commerce::Address"
-      embeds_one :billing_address, :class_name => "Breeze::Commerce::Address"
-      embeds_many :notes, :class_name => "Breeze::Commerce::Note"
-      belongs_to :shipping_method, :class_name => "Breeze::Commerce::Shipping::ShippingMethod", :inverse_of => :orders
+      belongs_to :customer, class_name: "Breeze::Commerce::Customer", :inverse_of => :orders
+      belongs_to :billing_status, class_name: "Breeze::Commerce::OrderStatus", :inverse_of => :orders
+      belongs_to :shipping_status, class_name: "Breeze::Commerce::OrderStatus", :inverse_of => :orders
+      has_many :line_items, class_name: "Breeze::Commerce::LineItem" # Ideally, this would be embedded, but then we couldn't reference variant from an embedded line item
+      embeds_one :shipping_address, class_name: "Breeze::Commerce::Address"
+      embeds_one :billing_address, class_name: "Breeze::Commerce::Address"
+      embeds_many :notes, class_name: "Breeze::Commerce::Note"
+      belongs_to :shipping_method, class_name: "Breeze::Commerce::Shipping::ShippingMethod", :inverse_of => :orders
       belongs_to :country, class_name: "Breeze::Commerce::Shipping::Country"
 
       accepts_nested_attributes_for :line_items, :reject_if => lambda { |l| l[:variant_id].blank? }
 
-      scope :not_browsing, -> { ne( :billing_status => Breeze::Commerce::OrderStatus.where(name: 'Browsing').first ) }
-      scope :unfulfilled, -> { where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Not Shipped Yet").first ) }
-      scope :fulfilled, -> { where( billing_status: Breeze::Commerce::OrderStatus.where(name: 'Payment Received').first, shipping_status: Breeze::Commerce::OrderStatus.where(name: "Shipped").first ) }
-      scope :actionable, -> { nin( :billing_status => [ Breeze::Commerce::OrderStatus.where(name: 'Browsing').first, Breeze::Commerce::OrderStatus.where(name: 'Started Checkout').first ] ) }
+      scope :not_browsing, -> { ne( billing_status: Breeze::Commerce::Store.first.initial_billing_status ) }
+      scope :unfulfilled, -> { where( billing_status: Breeze::Commerce::Store.first.payment_confirmed_billing_status, shipping_status: Breeze::Commerce::Store.first.initial_shipping_status ) }
+      scope :fulfilled, -> { where( billing_status: Breeze::Commerce::Store.first.payment_confirmed_billing_status, shipping_status: Breeze::Commerce::Store.first.shipped_shipping_status ) }
+      scope :actionable, -> { nin( billing_status: [ Breeze::Commerce::Store.first.initial_billing_status, Breeze::Commerce::Store.first.checkout_billing_status ] ) }
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
@@ -46,7 +46,7 @@ module Breeze
         unless payment.succeeded # A payment can only be successful once.
           payment.update_attribute(:succeeded, true)
           self.payment_completed = true
-          self.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").first
+          self.billing_status = Breeze::Commerce::Store.first.payment_confirmed_billing_status
           self.save
 
           deliver_confirmation_emails
@@ -179,10 +179,11 @@ module Breeze
       protected
 
       def set_initial_state
-        self.billing_status ||= Breeze::Commerce::OrderStatus.billing_default
-        self.shipping_status ||= Breeze::Commerce::OrderStatus.shipping_default
-        self.country ||= Breeze::Commerce::Store.first.default_country
-        self.shipping_method ||= Breeze::Commerce::Store.first.default_shipping_method
+        store = Breeze::Commerce::Store.first
+        self.billing_status ||= store.initial_billing_status
+        self.shipping_status ||= store.initial_shipping_status
+        self.country ||= store.default_country
+        self.shipping_method ||= store.default_shipping_method
       end
 
     end

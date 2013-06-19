@@ -86,21 +86,21 @@ describe Breeze::Commerce::Order do
     end
     context "billing status is 'Browsing'" do
       it "doesn't appear in admin" do
-        @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Browsing').first
+        @order.billing_status = Breeze::Commerce::Store.first.initial_billing_status
         @order.save
         Breeze::Commerce::Order.actionable.should_not include @order
       end
     end
     context "billing status is 'Started Checkout'" do
       it "doesn't appear in admin" do
-        @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Started Checkout').first
+        @order.billing_status = Breeze::Commerce::Store.first.checkout_billing_status
         @order.save
         Breeze::Commerce::Order.actionable.should_not include @order
       end
     end
     context "billing_status is neither" do
       it "doesn't appear in admin" do
-        @order.billing_status = Breeze::Commerce::OrderStatus.billing.where(name: 'Payment Received').first
+        @order.billing_status = Breeze::Commerce::Store.first.payment_confirmed_billing_status
         @order.save
         Breeze::Commerce::Order.actionable.should include @order
       end
@@ -248,10 +248,10 @@ describe Breeze::Commerce::Order do
 				@new_order.customer.should eq @original_order.customer
 			end
 			it "has billing_status reset" do
-				@new_order.billing_status.should eq Breeze::Commerce::OrderStatus.billing_default
+				@new_order.billing_status.should eq Breeze::Commerce::Store.first.initial_billing_status
 			end
 			it "has shipping_status reset" do
-				@new_order.shipping_status.should eq Breeze::Commerce::OrderStatus.shipping_default
+				@new_order.shipping_status.should eq Breeze::Commerce::Store.first.initial_shipping_status
 			end
 		end
 		it "fails if can_resend? is false" do

@@ -17,7 +17,7 @@ module Breeze
             @orders = Breeze::Commerce::Order.unarchived.actionable.includes(:line_items).send(params[:show])
           else
             @orders = Breeze::Commerce::Order.unarchived.actionable.includes(:line_items)
-          end  
+          end
 
           @orders = @orders.to_a.sort_by{ |o| o.send(sort_method) }
           if sort_direction == "desc"
@@ -32,15 +32,15 @@ module Breeze
           end
 
         end
-        
+
         def new
           @order = Breeze::Commerce::Order.new
           @order.shipping_address ||= Breeze::Commerce::Address.new
           @order.billing_address ||= Breeze::Commerce::Address.new
-          @order.billing_status = @billing_statuses.where(name: "Payment Received").first
+          @order.billing_status = store.payment_confirmed_billing_status
           @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
         end
-        
+
         def create
           if @order.save
             redirect_to edit_admin_store_order_path(@order)
@@ -66,7 +66,7 @@ module Breeze
             flash[:notice] = "The order was saved."
 
             unless @order.shipping_status == old_shipping_status
-              Breeze::Commerce::OrderMailer.shipping_status_change_customer_notification(@order).deliver 
+              Breeze::Commerce::OrderMailer.shipping_status_change_customer_notification(@order).deliver
             end
 
             respond_to do |format|
@@ -80,7 +80,7 @@ module Breeze
             render :action => "edit"
           end
         end
-        
+
         def destroy
          @order.update_attributes(:archived => true)
          @order_count = Breeze::Commerce::Order.unarchived.count
@@ -96,12 +96,12 @@ module Breeze
           @billing_statuses = Breeze::Commerce::OrderStatus.billing.order_by(:sort_order.asc) # DRY up this repeated code
           @shipping_statuses = Breeze::Commerce::OrderStatus.shipping.order_by(:sort_order.asc)
         end
-        
+
       private
         def sort_method
           %w[transaction_completed_at total email shipping_status billing_status].include?(params[:sort]) ? params[:sort] : "transaction_completed_at"
         end
-        
+
         def sort_direction
           %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
         end
