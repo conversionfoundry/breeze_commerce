@@ -53,7 +53,7 @@ module Breeze
       end
 
       def checkout
-        @order.billing_status = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Started Checkout").first
+        @order.billing_status = Breeze::Commerce::Store.first.checkout_billing_status
         @order.save
         @customer = current_commerce_customer || Breeze::Commerce::Customer.new
         @customer.shipping_address ||= Breeze::Commerce::Address.new
@@ -66,7 +66,7 @@ module Breeze
 
       def submit
         @order.update_attributes params[:order]
-        @order.billing_status_id = Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").first.id
+        @order.billing_status = Breeze::Commerce::Store.first.with_gateway_billing_status
 
         # Set customer, if any
         if customer_signed_in?

@@ -61,7 +61,7 @@ describe "Checkout", :js => true, :type => :request do
       click_button 'submitImageButton'
 
       within ".order_confirmation" do
-        find(".order_status h3").should have_content "Payment Received"
+        find(".order_status h3").should have_content "Payment Confirmed"
       end
 
     end

@@ -13,7 +13,7 @@ module Breeze
         def install_breeze_commerce
           store = Breeze::Commerce::Store.first || Breeze::Commerce::Store.create( home_page: Breeze::Content::Page.first, allow_returning_customer_login: true )
 
-          # Generate built-in order statuses for shipping
+          # Generate built-in order statuses for billing
           if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Browsing").count == 0
             Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Browsing", :sort_order => 0,:description => "Customer has added items to his or her cart, but hasn't gone to checkout yet", :store => store)
           end
@@ -23,11 +23,11 @@ module Breeze
           if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment in process").count == 0
             Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Payment in process", :sort_order => 2, :description => "Customer has clicked Pay Now, and the order is currently with the payment processor", :store => store)
           end
-          if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").count == 0
-            Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Payment Received", :sort_order => 3, :description => "Order has been paid in full", :store => store)
+          if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Confirmed").count == 0
+            Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Payment Confirmed", :sort_order => 3, :description => "Payment has been approved by payment gateway", :store => store)
           end
-          if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Partial Payment Received").count == 0
-            Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Partial Payment Received", :sort_order => 4, :description => "Some payment has been received, but not full", :store => store)
+          if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Payment Received").count == 0
+            Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Payment Received", :sort_order => 4, :description => "Full payment has been received", :store => store)
           end
           if Breeze::Commerce::OrderStatus.where(:type => :billing, :name => "Cancelled by Customer").count == 0
             Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Cancelled by Customer", :sort_order => 5, :description => "Customer cancelled order", :store => store)
@@ -39,7 +39,7 @@ module Breeze
             Breeze::Commerce::OrderStatus.create(:type => :billing, :name => "Disputed", :sort_order => 7, :description => "Something's gone wrong", :store => store)
           end
 
-          # Generate built-in order statuses for billing
+          # Generate built-in order statuses for shipping
           if Breeze::Commerce::OrderStatus.where(:type => :shipping, :name => "Not Shipped Yet").count == 0
             Breeze::Commerce::OrderStatus.create(:type => :shipping, :name => "Not Shipped Yet", :sort_order => 0, :description => "Newly-created order", :store => store)
           end
