@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'spork'
 
-Spork.prefork do 
+Spork.prefork do
 
   ENV["RAILS_ENV"] ||= 'test'
 
@@ -27,7 +27,7 @@ Spork.prefork do
 
     config.before :each do
       Mongoid.purge!
-      load "#{ENGINE_RAILS_ROOT}/db/seeds.rb" 
+      load "#{ENGINE_RAILS_ROOT}/db/seeds.rb"
     end
 
     # Include Factory Girl syntax to simplify calls to factories
