@@ -39,7 +39,7 @@ module Breeze
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
 
-      before_validation :set_initial_state
+      before_validation :set_initial_state, :update_shipping_method
       validates_presence_of :billing_status, :shipping_status
 
       def confirm_payment(payment)
@@ -178,6 +178,13 @@ module Breeze
       end
 
       protected
+
+      # If the country changes, we may need to also change the shipping method
+      def update_shipping_method
+        unless country.shipping_methods.include? shipping_method
+          self.shipping_method = self.country.shipping_methods.unarchived.first
+        end
+      end
 
       def set_initial_state
         store = Breeze::Commerce::Store.first
