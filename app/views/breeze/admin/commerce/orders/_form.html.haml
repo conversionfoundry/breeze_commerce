@@ -46,7 +46,7 @@
                 %legend Shipping Address
                 %ol#order_shipping_address.form
                   = ship_form.text_field :name, :class => :required
-                  = ship_form.text_area :address, :class => :required, :rows => 2
+                  = ship_form.text_area :address, :class => :required, :rows => 5
                   = ship_form.text_field :city, :class => :required, :class => 'input-medium'
                   = ship_form.text_field :state, :class => 'input-medium', :label => 'State, Province or Region'
                   = ship_form.text_field :postcode, :class => 'input-small'
@@ -63,7 +63,7 @@
                     = check_box_tag :same, :same, true
                     Same as my Shipping Address
                   = bill_form.text_field :name, :class => :required
-                  = bill_form.text_area :address, :class => :required, :rows => 2
+                  = bill_form.text_area :address, :class => :required, :rows => 5
                   = bill_form.text_field :city, :class => :required, :class => 'input-medium'
                   = bill_form.text_field :state, :class => 'input-medium', :label => 'State, Province or Region'
                   = bill_form.text_field :postcode, :class => 'input-small'

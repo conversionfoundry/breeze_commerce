@@ -3,12 +3,12 @@
   %link{:href => "http://fonts.googleapis.com/css?family=Shadows+Into+Light", :rel => "stylesheet", :type => "text/css"}
 - content_for :left do
   = render :partial => "breeze/admin/commerce/shared/left"
-  
+
 = pane_layout do |main|
   - main.inner do
     = scrollable_layout do
       .order-edit{:id => "order_#{@order.id}"}
-        = render "breeze/admin/commerce/orders/form", url: breeze.edit_admin_store_order_path(@order)
+        = render "breeze/admin/commerce/orders/form", url: breeze.admin_store_order_path(@order)
       #order-payments
         %h2 Payments
         = render :partial => "breeze/admin/commerce/payments/payments", :object => @order.payments

@@ -34,6 +34,7 @@ module Breeze
       scope :unfulfilled, -> { where( billing_status: Breeze::Commerce::Store.first.payment_confirmed_billing_status, shipping_status: Breeze::Commerce::Store.first.initial_shipping_status ) }
       scope :fulfilled, -> { where( billing_status: Breeze::Commerce::Store.first.payment_confirmed_billing_status, shipping_status: Breeze::Commerce::Store.first.shipped_shipping_status ) }
       scope :actionable, -> { nin( billing_status: [ Breeze::Commerce::Store.first.initial_billing_status, Breeze::Commerce::Store.first.checkout_billing_status ] ) }
+      scope :abandoned, -> { where(billing_status: Breeze::Commerce::Store.first.initial_billing_status, created_at: {'$lt' => 2.weeks.ago}) }
 
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer

@@ -141,24 +141,44 @@ describe Breeze::Commerce::Order do
 
 
   describe "scopes" do
-    before :each do
-      @order1 = create(:order)
-      @order2 = create(:order)
-      @order3 = create(:order, archived: true)
-      @order4 = create(:order, archived: true)
-    end
-    context "unarchived scope" do
-      it "returns an array of unarchived orders" do
-        Breeze::Commerce::Order.unarchived.to_a.should eq [@order1, @order2]
-        Breeze::Commerce::Order.unarchived.should_not include @order3
-        Breeze::Commerce::Order.unarchived.should_not include @order4
+    describe "archived/unarchived scopes" do
+      before :each do
+        @order1 = create(:order)
+        @order2 = create(:order)
+        @order3 = create(:order, archived: true)
+        @order4 = create(:order, archived: true)
+      end
+      context "unarchived scope" do
+        it "returns an array of unarchived orders" do
+          Breeze::Commerce::Order.unarchived.to_a.should eq [@order1, @order2]
+          Breeze::Commerce::Order.unarchived.should_not include @order3
+          Breeze::Commerce::Order.unarchived.should_not include @order4
+        end
+      end
+      context "archived scope" do
+        it "returns an array of archived orders" do
+          Breeze::Commerce::Order.archived.to_a.should eq [@order3, @order4]
+          Breeze::Commerce::Order.archived.should_not include @order1
+          Breeze::Commerce::Order.archived.should_not include @order2
+        end
       end
     end
-    context "archived scope" do
-      it "returns an array of archived orders" do
-        Breeze::Commerce::Order.archived.to_a.should eq [@order3, @order4]
-        Breeze::Commerce::Order.archived.should_not include @order1
-        Breeze::Commerce::Order.archived.should_not include @order2
+    describe "abandoned scope" do
+      it "includes an old browsing order" do
+        order = create(:order, created_at: 1.month.ago)
+        Breeze::Commerce::Order.abandoned.should include order
+      end
+      it "excludes a recent browsing order" do
+        order = create(:order, created_at: 1.day.ago)
+        Breeze::Commerce::Order.abandoned.should_not include order
+      end
+      it "excludes an old checkout order" do
+        order = create(:order, billing_status: Breeze::Commerce::Store.first.checkout_billing_status)
+        Breeze::Commerce::Order.abandoned.should_not include order
+      end
+      it "excludes an old paid order" do
+        order = create(:order, billing_status: Breeze::Commerce::Store.first.payment_confirmed_billing_status)
+        Breeze::Commerce::Order.abandoned.should_not include order
       end
     end
   end
