@@ -30,5 +30,17 @@
           %span.before-field $
           = threshold_fields.number_field :above_threshold_price, required: true, step: 0.01, value: ( @shipping_method.above_threshold_price if @shipping_method.respond_to? :above_threshold_price )
 
+  #tag_shipping_method-details{:style => (@shipping_method.class==Breeze::Commerce::Shipping::TagShippingMethod ? "" : "display: none") }
+    = form.fieldset do
+      = fields_for :tag_shipping_method do |tag_fields|
+        %li
+          %label Tag
+          = tag_fields.select :tag, options_for_select(@tags.map{|tag| [tag.name, tag.id]})
+        %li
+          %label Price when order has an item with the tag
+          %span.before-field $
+          = tag_fields.number_field :with_tag_price, required: true, step: 0.01, value: ( @shipping_method.with_tag_price if @shipping_method.respond_to? :with_tag_price )
+
+
 - content_for :left do
   = render :partial => "breeze/admin/commerce/shared/left"

@@ -282,4 +282,34 @@ describe Breeze::Commerce::Order do
 		end
 	end
 
+  describe "has_item_with_tag? method" do
+    before :each do
+      @tag = create(:tag)
+    end
+    it "is false when there are no line_items" do
+      subject.has_item_with_tag?(@tag).should eq false
+    end
+    it "is true when a line item has the given tag" do
+      @variant = create(:variant)
+      @variant.product.tags << @tag
+      subject.line_items << create(:line_item, quantity: 1, variant: @variant)
+      subject.has_item_with_tag?(@tag).should eq true
+    end
+    it "is true when multiple line items have the given tag" do
+      @variant1 = create(:variant)
+      @variant2 = create(:variant)
+      @variant1.product.tags << @tag
+      @variant2.product.tags << @tag
+      subject.line_items << create(:line_item, quantity: 1, variant: @variant1)
+      subject.line_items << create(:line_item, quantity: 1, variant: @variant2)
+      subject.has_item_with_tag?(@tag).should eq true
+    end
+    it "is false when no line item has the given tag" do
+      @variant = create(:variant)
+      subject.line_items << create(:line_item, quantity: 1, variant: @variant)
+      subject.has_item_with_tag?(@tag).should eq false
+    end
+
+  end
+
 end

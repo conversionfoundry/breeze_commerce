@@ -140,6 +140,15 @@ module Breeze
         '$' + total.to_s + store.currency + ' ' + created_at.to_s
       end
 
+      def has_item_with_tag?(tag)
+        line_items.each do |line_item|
+          if line_item.product.tags.include? tag
+            return true
+          end
+        end
+        false
+      end
+
       def can_resend?
         if customer == nil
           return false
@@ -181,8 +190,10 @@ module Breeze
 
       # If the country changes, we may need to also change the shipping method
       def update_shipping_method
-        unless country.shipping_methods.include? shipping_method
-          self.shipping_method = self.country.shipping_methods.unarchived.first
+        if country
+          unless country.shipping_methods.include? shipping_method
+            self.shipping_method = self.country.shipping_methods.unarchived.first
+          end
         end
       end
 
