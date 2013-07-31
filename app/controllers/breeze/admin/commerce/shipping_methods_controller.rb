@@ -6,12 +6,13 @@ module Breeze
           @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
           @shipping_methods = Breeze::Commerce::Shipping::ShippingMethod.unarchived.order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
         end
-        
+
         def new
           @shipping_method = Breeze::Commerce::Shipping::ShippingMethod.new
-          @shipping_method_types = [Breeze::Commerce::Shipping::ShippingMethod, Breeze::Commerce::Shipping::ThresholdShippingMethod]
+          @shipping_method_types = [Breeze::Commerce::Shipping::ShippingMethod, Breeze::Commerce::Shipping::ThresholdShippingMethod, Breeze::Commerce::Shipping::TagShippingMethod]
+          @tags = Breeze::Commerce::Tag.all
         end
-        
+
         def create
           sanitize_input params[:shipping_method]
           if params[:shipping_method_type]
@@ -33,13 +34,14 @@ module Breeze
             @shipping_methods = Breeze::Commerce::Shipping::ShippingMethod.unarchived.where(:store_id => store.id).order_by(:created_at.desc).paginate(:page => params[:page], :per_page => 15)
             @shipping_method_count = Breeze::Commerce::Shipping::ShippingMethod.unarchived.count
           else
-            @shipping_method_types = [Breeze::Commerce::Shipping::ShippingMethod, Breeze::Commerce::Shipping::ThresholdShippingMethod]
+            @shipping_method_types = [Breeze::Commerce::Shipping::ShippingMethod, Breeze::Commerce::Shipping::ThresholdShippingMethod, Breeze::Commerce::Shipping::TagShippingMethod]
           end
         end
 
         def edit
           @shipping_method = Breeze::Commerce::Shipping::ShippingMethod.find params[:id]
-          @shipping_method_types = Breeze::Commerce::Shipping::ShippingMethod.types
+          @shipping_method_types = [Breeze::Commerce::Shipping::ShippingMethod, Breeze::Commerce::Shipping::ThresholdShippingMethod, Breeze::Commerce::Shipping::TagShippingMethod]
+          @tags = Breeze::Commerce::Tag.all
         end
 
         def update
@@ -59,7 +61,7 @@ module Breeze
           else
           end
         end
-        
+
         def destroy
           @shipping_method = Breeze::Commerce::Shipping::ShippingMethod.find params[:id]
           @shipping_method.update_attributes(:archived => true)

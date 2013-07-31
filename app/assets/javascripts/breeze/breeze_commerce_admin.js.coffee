@@ -12,7 +12,7 @@ dialogForm = (id, title, data, method, setup_function = null) ->
     close: ->
       $(this).remove()
     buttons:
-      Cancel: 
+      Cancel:
         text: 'Cancel'
         class: 'cancel'
         click: ->
@@ -51,7 +51,7 @@ dialogFormSynchronous = (id, title, data, setup_function = null) ->
     close: ->
       $(this).remove()
     buttons:
-      Cancel: 
+      Cancel:
         text: 'Cancel'
         class: 'cancel'
         click: ->
@@ -147,8 +147,13 @@ $("table.shipping_methods td.actions .edit.button").live "click", (e) ->
 $('fieldset.shipping_method_types input[name=shipping_method_type]').live "click", (e) ->
   if $(this).val() == 'breeze/commerce/shipping/threshold_shipping_method'
     $('#threshold_shipping_method-details').slideDown()
+    $('#tag_shipping_method-details').slideUp()
+  else if $(this).val() == 'breeze/commerce/shipping/tag_shipping_method'
+    $('#tag_shipping_method-details').slideDown()
+    $('#threshold_shipping_method-details').slideUp()
   else
-    $('#threshold_shipping_method-details').slideUp() 
+    $('#threshold_shipping_method-details').slideUp()
+    $('#tag_shipping_method-details').slideUp()
 
 # Variants
 $(".new.variant.button").live "click", (e) ->
@@ -295,7 +300,7 @@ coupon_forms_setup = ->
     $('#coupon_start_time_1i').val(new_date.getFullYear())
     $('#coupon_start_time_2i').val(new_date.getMonth() + 1)
     $('#coupon_start_time_3i').val(new_date.getDate())
-  
+
   $('#coupon-details #end_date').datepicker({
     dateFormat: 'D d M, yy'
   }).on "change", (e) ->
@@ -303,7 +308,7 @@ coupon_forms_setup = ->
     $('#coupon_end_time_1i').val(new_date.getFullYear())
     $('#coupon_end_time_2i').val(new_date.getMonth() + 1)
     $('#coupon_end_time_3i').val(new_date.getDate())
-  
+
   $("#coupon-details fieldset#coupon_start_time input[type=radio]").on "change", ->
     $("#coupon-details #start_date_selector").toggleClass("in")
     if $(this).val() == true
@@ -313,7 +318,7 @@ coupon_forms_setup = ->
       $('#coupon_start_time_3i').val(new_date.getDate())
       $('#coupon_start_time_4i').val(new_date.getHours())
       $('#coupon_start_time_5i').val(new_date.getMinutes())
-  
+
   $("#coupon-details fieldset#coupon_end_time input[type=radio]").on "change", ->
     $("#coupon-details #end_date_selector").toggleClass("in")
     if $(this).val() == true
