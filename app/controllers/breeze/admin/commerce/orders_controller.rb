@@ -11,7 +11,6 @@ module Breeze
         helper_method :sort_method, :sort_direction
 
         def index
-
           @filters = Breeze::Commerce::Order::FILTERS
           if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
             @orders = Breeze::Commerce::Order.unarchived.actionable.includes(:line_items).send(params[:show])
@@ -23,10 +22,10 @@ module Breeze
           if sort_direction == "desc"
             @orders = @orders.reverse
           end
-          @orders = @orders.paginate(:page => params[:page], :per_page => 10)
+
 
           respond_to do |format|
-            format.html
+            format.html { @orders = @orders.paginate(:page => params[:page], :per_page => 10) }
             format.js
             format.csv { @filename = "#{application_name} - Orders - #{Date.today.to_formatted_s(:db)}.csv" }
           end
