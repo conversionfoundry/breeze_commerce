@@ -9,12 +9,13 @@
       .box
         .filter_controls
           = select_tag_for_filter("products", @filters, params)
+          = select_tag_for_alphabet("products", params)
           = will_paginate @products
         = render :partial => "breeze/admin/commerce/products/products", :locals => { :products => @products }
 = content_for :left do
   - render :partial => "breeze/admin/commerce/shared/left"
- 
-:javascript 
+
+:javascript
   // TODO: Abstract this code out to a reusable method
 
   // Select/deselect all items from header checkbox
@@ -26,19 +27,19 @@
       products.removeAttr('checked');
     }
   });
-  
+
   // Show the with_selected actions if a checkbox is active
   $('.products-container :checkbox').live('change', function() {
     var container = $(this).closest('.container');
     $('.with-selected', container).toggle($('tbody :checked', container).length > 0);
   });
-  
+
   // TODO: separate this into two, one for each button is clearer
   $('.products-container .with-selected .button:not(.delete)').live('click', function(e) {
     var product_ids = [];
     var products = $(this).closest('.container').find('tbody :checked').closest('.product');
-    products.each(function() { 
-      product_ids.push(this.id.replace(/^product_/, 'product_ids[]=')); 
+    products.each(function() {
+      product_ids.push(this.id.replace(/^product_/, 'product_ids[]='));
     });
     var data = product_ids.join('&');
     if ($(this).is('.publish')) { data += '&product[published]=true'; }
@@ -60,13 +61,13 @@
    return false;
   });
 
-  
+
   $('.products-container .with-selected .button.delete').live('click', function() {
     var button = this;
     var product_ids = [];
     var products = $(this).closest('.container').find('tbody :checked').closest('.product');
-    products.each(function() { 
-      product_ids.push(this.id.replace(/^product_/, 'product_ids[]=')); 
+    products.each(function() {
+      product_ids.push(this.id.replace(/^product_/, 'product_ids[]='));
     });
     var data = product_ids.join('&');
 
@@ -87,7 +88,7 @@
             data: data,
             success: function(result) { eval(result); },
             error: function(result) { eval(result); }
-          });        
+          });
         },
         Cancel: function() {
           $(this).dialog('close');

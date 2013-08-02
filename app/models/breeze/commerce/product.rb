@@ -10,9 +10,9 @@ module Breeze
         {:scope => "unpublished", :label => "Unpublished Products"}
       ]
 
-      attr_accessible :view, :order, :template, :title, :subtitle, 
-        :show_in_navigation, :ssl, :seo_title, :seo_meta_description, 
-        :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids, 
+      attr_accessible :view, :order, :template, :title, :subtitle,
+        :show_in_navigation, :ssl, :seo_title, :seo_meta_description,
+        :seo_meta_keywords, :show_in_navigation, :teaser, :tag_ids,
         :property_ids, :parent_id, :options, :slug, :position
 
       has_and_belongs_to_many :tags, :class_name => "Breeze::Commerce::Tag"
@@ -20,7 +20,7 @@ module Breeze
 
       has_many :images, :class_name => "Breeze::Commerce::ProductImage"
       belongs_to :default_image, :class_name => "Breeze::Commerce::ProductImage"
-      
+
       has_many :product_relationship_children, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :parent_product
       has_many :product_relationship_parents, :class_name => "Breeze::Commerce::ProductRelationship", :inverse_of => :child_product
       has_many :variants, :class_name => "Breeze::Commerce::Variant"
@@ -30,6 +30,7 @@ module Breeze
 
       default_scope order_by([:title, :asc])
       scope :with_tag, lambda { |tag| where(tag_ids: tag.id) }
+      scope :title_starts_with, lambda { |prefix| where(title: /^#{prefix}/i) }
 
       before_validation :set_parent_id
       validates_associated :variants
@@ -40,7 +41,7 @@ module Breeze
       def related_products
         product_relationship_children.collect(&:child_product)
       end
-      
+
       def display_price_min
         variants.unarchived.published.map(&:display_price).min
       end
@@ -78,7 +79,7 @@ module Breeze
       end
 
       # Convenience method for designers
-      # ... allows setting up a conditional in product listing theme partials 
+      # ... allows setting up a conditional in product listing theme partials
       # without having to know how to find a tag in the database
       def has_tag_named? tag_name
         looked_up_tag_id = Breeze::Commerce::Tag.where(name: tag_name).only(:id).first.try(:id)
