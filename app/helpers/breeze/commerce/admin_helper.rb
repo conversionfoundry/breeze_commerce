@@ -2,7 +2,7 @@ module Breeze
   module Commerce
     module AdminHelper
       include Breeze::Commerce::ContentsHelper
-      
+
       def commerce_menu
         content_tag :ul, [
           commerce_menu_item("Orders", breeze.admin_store_orders_path, badge( Breeze::Commerce::Order.unarchived.actionable.count )),
@@ -33,7 +33,7 @@ module Breeze
           html << "</tr>"
         end.html_safe
       end
-      
+
       def uploadable_image(object, name, options)
         src = if object.send(:"#{name}?") && (image = object.send(name))
           image.respond_to?(:url) ? image.url(:thumbnail) : image
@@ -41,7 +41,7 @@ module Breeze
           "http://placehold.it/#{options[:width] || 100}x#{options[:height] || 100}"
         end
         object_name = options[:object_name] || object.class.name.demodulize.underscore
-    
+
         image_options = {
           :class => "uploadable",
           :id => options[:id] || "#{object_name}_#{name}",
@@ -99,7 +99,8 @@ module Breeze
         url = url_for(eval("admin_store_#{model}_url(options)"))
         html = %{<label for="show">Show:</label>}
         html << %{<select name="show" id="show"}
-        html << %{onchange="window.location='#{url}' + '?show=' + this.value">}
+        starting_with_param = params[:show] ? "starting_with=#{params[:starting_with]}&" : ""
+        html << %{onchange="window.location='#{url}?#{starting_with_param}show=' + this.value">}
         nvpairs.each do |pair|
           html << %{<option value="#{pair[:scope]}"}
           if params[:show] == pair[:scope] || ((params[:show].nil? || params[:show].empty?) && pair[:scope] == "all")
@@ -111,6 +112,27 @@ module Breeze
         html << %{</select>}
         html.html_safe
       end
+
+      def select_tag_for_alphabet(model, params)
+        options = { :query => params[:query] }
+        url = url_for(eval("admin_store_#{model}_url(options)"))
+        html = %{<label for="starting_with">Starting with:</label>}
+        html << %{<select name="starting_with" id="starting_with"}
+        show_param = params[:show] ? "show=#{params[:show]}&" : ""
+        html << %{onchange="window.location='#{url}?#{show_param}starting_with=' + this.value">}
+        letters = ['Any letter'] + ('a'..'z').to_a + ('0'..'9').to_a
+        letters.each do |letter|
+          html << %{<option value="#{letter}"}
+          if params[:starting_with] == letter || ((params[:starting_with].nil? || params[:starting_with].empty?) && letter == "all")
+            html << %{ selected="selected"}
+          end
+          html << %{>#{letter.humanize}}
+          html << %{</option>}
+        end
+        html << %{</select>}
+        html.html_safe
+      end
+
 
     end
   end
