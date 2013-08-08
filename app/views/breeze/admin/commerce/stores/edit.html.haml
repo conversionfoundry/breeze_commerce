@@ -89,3 +89,15 @@
               = store.shipped_shipping_status.description
             - else
               Not defined
+
+      %h1 Product Relationships
+      %table.product_relationships
+        - Breeze::Commerce::Store.first.product_relationship_kinds.each do |product_relationship|
+          %tr.product_relationship
+            %td
+              Product X
+            %td
+              = product_relationship.humanize.downcase
+            %td
+              Product Y
+

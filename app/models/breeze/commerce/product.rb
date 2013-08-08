@@ -38,8 +38,12 @@ module Breeze
       alias_method :name, :title
       alias_method :name=, :title=
 
-      def related_products
-        product_relationship_children.collect(&:child_product)
+      def related_products(relationship_kind=nil)
+        if relationship_kind
+          product_relationship_children.where(kind: relationship_kind).collect(&:child_product)
+        else
+          product_relationship_children.collect(&:child_product)
+        end
       end
 
       def display_price_min
