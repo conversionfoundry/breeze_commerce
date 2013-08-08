@@ -3,8 +3,8 @@ require 'kaminari'
 module Breeze
   module Commerce
     class ProductList < Breeze::Content::Item
-          
-      attr_accessible :title, :list_type, :product_id, :tag_ids, :container_id, :region, :view, :use_pagination, :products_per_page
+
+      attr_accessible :title, :list_type, :product_id, :tag_ids, :container_id, :region, :view, :use_pagination, :products_per_page, :relationship_kind
 
       has_and_belongs_to_many :tags, class_name: "Breeze::Commerce::Tag"
       belongs_to :product, class_name: "Breeze::Commerce::Product"
@@ -13,12 +13,13 @@ module Breeze
       field :list_type, default: 'by_tags' # :by_tags or :related
       field :use_pagination, type: Boolean
       field :products_per_page, type: Integer, default: 20
+      field :relationship_kind
 
       validates_inclusion_of :list_type, :in => [ "by_tags", "related" ]
-
+      validates_inclusion_of :relationship_kind, :in => Breeze::Commerce::Store.first.product_relationship_kinds
 
       include Breeze::Content::Mixins::Placeable
-            
+
       def products
         @products ||= determine_products
       end
@@ -42,7 +43,7 @@ module Breeze
 
           product_array
         elsif list_type == 'related'
-          product.related_products
+          product.related_products(relationship_kind)
         else
           []
         end

@@ -22,6 +22,9 @@ module Breeze
       field :allow_returning_customer_login, type: Boolean, default: true
       field :currency, default: 'NZD'
 
+      field :product_relationship_kinds, type: Array, default: [ "is_related_to", "is_similar_to", "is_complemented_by", "goes_well_with", "could_be_upsold_to" ]
+
+
       alias_method :associated_default_country, :default_country
       def default_country
         self.associated_default_country || Breeze::Commerce::Shipping::Country.first
