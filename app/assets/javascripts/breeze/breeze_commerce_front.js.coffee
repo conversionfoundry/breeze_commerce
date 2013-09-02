@@ -28,7 +28,7 @@ $(document).ready ->
       beforeSend: (xhr) ->
         xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
       type: "GET"
-      url: "products"
+      url: "/products"
       data:
         product_list_id: product_list_id
         page: page_number

@@ -10,7 +10,7 @@ module Breeze
 
         def create
           @variant = product.variants.create params[:variant]
-          if params[:options] 
+          if params[:options]
             params[:options].each do |property, option_id|
               @variant.options << Breeze::Commerce::Option.find(option_id)
             end
@@ -42,16 +42,16 @@ module Breeze
 
         def destroy
           @variant = product.variants.find params[:id]
-          @variant.update_attributes(:archived => true)
+          @variant.update_attribute(:archived, true)
         end
-        
+
         def reorder
           params[:variant].each_with_index do |id, index|
             Breeze::Commerce::Variant.find(id).update_attribute( :position, index )
           end
           render :nothing => true
         end
-        
+
       private
 
         def product
