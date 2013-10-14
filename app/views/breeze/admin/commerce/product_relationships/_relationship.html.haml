@@ -3,7 +3,7 @@
   %td.name
     = relationship.kind.humanize.downcase
   %td
-    = relationship.child_product.title if relationship.child_product
+    = relationship.child_product.unique_name if relationship.child_product
   %td
   %td.actions
     %p.relationship-actions
