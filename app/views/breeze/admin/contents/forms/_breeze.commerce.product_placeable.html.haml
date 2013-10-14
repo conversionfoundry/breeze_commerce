@@ -1,2 +1,2 @@
 = form.fieldset do
-  = form.select :product_id, Breeze::Commerce::Product.unarchived.map {|c|[ c.title, c.id ] }, { :required => false, :label => "Product"}
+  = form.select :product_id, Breeze::Commerce::Product.unarchived.map {|p|[ p.unique_name, p.id ] }, { :required => false, :label => "Product"}
