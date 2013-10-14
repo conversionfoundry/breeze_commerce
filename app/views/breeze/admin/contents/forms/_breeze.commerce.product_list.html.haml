@@ -20,10 +20,10 @@
 
 %script{:charset => "utf-8", :type => "text/javascript"}
   $(function() {
-    $('.multiselect').multiSelect();
-    $('#list_type_#{@content.list_type}').show();
-    $('input.list_type').change(function(e) {
-      $('.list_type_option').hide();
-      $( '#list_type_' + $(this).val() ).show();
-    });
+  $('.multiselect').multiSelect();
+  $('#list_type_#{@content.list_type}').show();
+  $('input.list_type').change(function(e) {
+  $('.list_type_option').hide();
+  $( '#list_type_' + $(this).val() ).show();
+  });
   });
