@@ -38,6 +38,10 @@ module Breeze
       alias_method :name, :title
       alias_method :name=, :title=
 
+      def unique_name
+        "#{title} (#{slug})"
+      end
+
       def related_products(relationship_kind=nil)
         if relationship_kind
           product_relationship_children.where(kind: relationship_kind).collect(&:child_product)

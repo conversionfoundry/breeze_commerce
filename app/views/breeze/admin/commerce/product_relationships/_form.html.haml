@@ -2,4 +2,4 @@
   %ul.product_relationship_fields
     = @product.title
     = form.select :kind, store.product_relationship_kinds.map{|r| [r.humanize.downcase, r]}, :required => true, :label => false
-    = form.select :child_product_id, @products.collect{|p| [ p.title, p.id ] }, :required => true, :label => false
+    = form.select :child_product_id, @products.collect{|p| [ p.unique_name, p.id ] }, :required => true, :label => false
