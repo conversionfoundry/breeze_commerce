@@ -1,3 +1,9 @@
+# In production, the full environment isn't loaded, so we need...
+require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/order_status.rb"
+require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/mixins/archivable.rb"
+require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/order.rb"
+require "#{Breeze::Commerce::Engine.root}/app/models/breeze/commerce/note.rb"
+
 def remove_old_orders
   puts "#{Time.now} Removing old abandoned orders..."
   deleted_order_count = Breeze::Commerce::Order.abandoned.destroy_all
