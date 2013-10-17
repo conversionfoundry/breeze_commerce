@@ -1,7 +1,7 @@
 def remove_old_orders
-  puts "Removing old abandoned orders..."
+  puts "#{Time.now} Removing old abandoned orders..."
   deleted_order_count = Breeze::Commerce::Order.abandoned.destroy_all
-  puts "Deleted #{deleted_order_count} orders"
+  puts "#{Time.now} Deleted #{deleted_order_count} orders"
 end
 
 namespace :breeze do
