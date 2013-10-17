@@ -11,12 +11,12 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = "Online Store for the Breeze CMS"
   s.description = "Breeze Commerce adds product management and a checkout funnel to Breeze."
-  
-  s.files         = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"] 
+
+  s.files         = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.require_paths = ['lib']
   s.required_ruby_version = '>= 1.9.0'
   s.required_rubygems_version = '>= 1.3.6'
-  
+
   # Dependencies
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'will_paginate', "3.0.pre4"
   s.add_dependency "twitter-bootstrap-rails"
+  s.add_dependency "whenever"
   s.add_development_dependency "capybara"
   s.add_development_dependency "launchy"
   s.add_development_dependency "mongoid-rspec"
