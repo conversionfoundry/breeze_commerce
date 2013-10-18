@@ -1,6 +1,6 @@
 # Breeze Commerce
 
-Copyright (c) 2012 LeftClick Ltc., released under the MIT license
+Copyright (c) 2012 LeftClick Ltc., released under the BSD 3 license
 
 An online store engine for Breeze CMS.
 
