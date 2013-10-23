@@ -1,11 +1,9 @@
 = breeze_form_for @coupon, as: :coupon, url: url, remote: true do |form|
-  
+
   = render "/breeze/admin/shared/error_messages", target: @coupon, object_name: :coupon
 
   = form.fieldset id: "name" do
     = form.text_field :name, label: "Coupon Name", required: true, placeholder: "20% off all orders"
-    %p.help 
-      For your reference only. Customers will not see this name.
 
   = form.fieldset id: "amount" do
     %legend Amount
@@ -37,71 +35,89 @@
       %li= text_field_tag :end_date, (@coupon.end_time || Time.now).strftime("%a %e %b, %Y")
       = form.time_select :end_time, twelve_hour: false, minute_step: 5, label: false, class: "inline"
 
-  = form.fieldset id: "customer_codes" do
-    %legend Customer Codes
+  - if @coupon.new_record?
+    .use_coupon_codes
+      = form.fieldset id: "use_coupon_codes" do
+        %legend Apply discount...
 
-    - if @coupon.new_record?
-      = label_tag "coupon_type_repeated_use", class: "inline" do
-        = radio_button_tag :coupon_type, :repeated_use, true, data: {target: "repeated_use_fields"}
-        %h4 Repeated Use
-      .help
-        %p
-          This coupon has one code, which can be used by any customer any number of times.
-        %p
-          Use this for promotions that are open to anybody.
-      .collapse.in#repeated_use_fields
-        = label_tag :code, "Code", class: "inline"
-        = text_field_tag :code, nil, placeholder: "SWORDFISH", class: "inline"
-      .clearfix
+        = label_tag "use_coupon_codes_true" do
+          = radio_button_tag :use_coupon_codes, true, true, data: {target: "coupon_codes_block"}
+          When customer has entered a code
+        = label_tag "use_coupon_codes_false" do
+          = radio_button_tag :use_coupon_codes, false, false, data: {target: "no_coupon_codes_block"}
+          Automatically for all orders
 
-      = label_tag "coupon_type_one_time_use", class: "inline" do
-        = radio_button_tag :coupon_type, :one_time_use, false, data: {target: "one_time_use_fields"}
-        %h4 One-time Use
-      .help
-        %p
-          This coupon has multiple codes, and each can be used only once.
-        %p
-          Use this for 'gift vouchers', that will be used up when they're used.
-      .collapse#one_time_use_fields
-        = label_tag :number_of_coupon_codes, "Number of coupon codes", class: "inline"
-        = number_field_tag :number_of_coupon_codes, 10, class: "inline"
-      
-      = label_tag "coupon_type_custom", class: "inline" do
-        = radio_button_tag :coupon_type, :custom, false
-        %h4 Custom
-      .help
-        %p
-          Create an empty coupon, and add codes manually later.
+      .collapse.in#coupon_codes_block
+        = form.fieldset id: "customer_codes" do
+          = label_tag "coupon_type_repeated_use", class: "inline" do
+            = radio_button_tag :coupon_type, :repeated_use, true, data: {target: "repeated_use_fields"}
+            %h4 Repeated Use
+          .help
+            %p
+              This coupon has one code, which can be used by any customer any number of times.
+            %p
+              Use this for promotions that are open to anybody.
+          .collapse.in#repeated_use_fields
+            = label_tag :code, "Code", class: "inline"
+            = text_field_tag :code, nil, placeholder: "SWORDFISH", class: "inline"
+          .clearfix
 
-    - else
-      - @coupon.coupon_codes.build if @coupon.coupon_codes.empty?
-      =# form.check_box :generate_10_codes, { checked: false }, true, false
-      .container-coupon_codes
-        %table
-          %thead
-            %tr
-              %th.code
-                Code
-              %th.max_redemptions
-                Max. Redemptions
-              %th.redemption_count
-                Redemption count
-              %th.actions
-                Actions
-          %tbody
-            = form.fields_for :coupon_codes do |coupon_code_form|
+          = label_tag "coupon_type_one_time_use", class: "inline" do
+            = radio_button_tag :coupon_type, :one_time_use, false, data: {target: "one_time_use_fields"}
+            %h4 One-time Use
+          .help
+            %p
+              This coupon has multiple codes, and each can be used only once.
+            %p
+              Use this for 'gift vouchers', that will be used up when they're used.
+          .collapse#one_time_use_fields
+            = label_tag :number_of_coupon_codes, "Number of coupon codes", class: "inline"
+            = number_field_tag :number_of_coupon_codes, 10, class: "inline"
+
+          = label_tag "coupon_type_custom", class: "inline" do
+            = radio_button_tag :coupon_type, :custom, false
+            %h4 Custom
+          .help
+            %p
+              Create an empty coupon, and add codes manually later.
+
+      .collapse#no_coupon_codes_block
+        .help
+          This coupon will apply automatically to all new orders, without the customer having to do anything.
+  - else
+
+    - if @coupon.use_coupon_codes?
+      = form.fieldset id: "customer_codes" do
+        - @coupon.coupon_codes.build if @coupon.coupon_codes.empty?
+        =# form.check_box :generate_10_codes, { checked: false }, true, false
+        .container-coupon_codes
+          %table
+            %thead
               %tr
-                %td.code
-                  = coupon_code_form.text_field :code, label: false
-                %td.max_redemptions
-                  = coupon_code_form.number_field :max_redemptions, label: false
-                %td.redemption_count
-                  = coupon_code_form.number_field :redemption_count, label: false
-                %td.actions
-                  - unless coupon_code_form.object.new_record?
-                    = coupon_code_form.hidden_field :_destroy
-                    = link_to_function "remove", "remove_coupon_code_fields(this)", class: "btn"
-
+                %th.code
+                  Code
+                %th.max_redemptions
+                  Max. Redemptions
+                %th.redemption_count
+                  Redemption count
+                %th.actions
+                  Actions
+            %tbody
+              = form.fields_for :coupon_codes do |coupon_code_form|
+                %tr
+                  %td.code
+                    = coupon_code_form.text_field :code, label: false
+                  %td.max_redemptions
+                    = coupon_code_form.number_field :max_redemptions, label: false
+                  %td.redemption_count
+                    = coupon_code_form.number_field :redemption_count, label: false
+                  %td.actions
+                    - unless coupon_code_form.object.new_record?
+                      = coupon_code_form.hidden_field :_destroy
+                      = link_to_function "remove", "remove_coupon_code_fields(this)", class: "btn"
+    - else
+      .help
+        This coupon will apply automatically to all new orders, without the customer having to do anything.
 :javascript
   function remove_coupon_code_fields(link) {
           $(link).prev("input[type=hidden]").val(true);

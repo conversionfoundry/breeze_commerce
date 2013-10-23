@@ -1,20 +1,18 @@
 %ol.payments
   - if @order.payments.any?
     = render :partial => "breeze/admin/commerce/payments/payment", :collection => @order.payments.unarchived
-  - else
-    There are no payments for this order.
-.payment#payment-new
-  %h3 Manual Payment
-  = form_for [:admin, :store, @order, Breeze::Commerce::Payment.new], :remote => true do |form|
-    %p= form.hidden_field :reference, :value => @order.id
-    %p
-      = form.label :name, 'Name'
-      = form.text_field :name
-    %p
-      = form.label :email, 'Email'
-      = form.text_field :email
-    %p
-      = form.label :amount, 'Amount'
-      = form.text_field :amount
-    %p
-      = form.submit 'Save Payment'
+  %li.payment#payment-new
+    %h3 Manual Payment
+    = form_for [:admin, :store, @order, Breeze::Commerce::Payment.new], :remote => true do |form|
+      %p= form.hidden_field :reference, :value => @order.id
+      %p
+        = form.label :name, 'Name'
+        = form.text_field :name
+      %p
+        = form.label :email, 'Email'
+        = form.text_field :email
+      %p
+        = form.label :amount, 'Amount'
+        = form.text_field :amount
+      %p
+        = form.submit 'Save Payment'

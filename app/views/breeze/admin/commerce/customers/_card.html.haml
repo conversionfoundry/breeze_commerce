@@ -1,9 +1,19 @@
-= link_to edit_admin_store_customer_path(customer) do
+- if customer
+  = link_to edit_admin_store_customer_path(customer) do
+    %p.customer-name
+      %span.name
+        = customer.name
+    %ul.customer-contact
+      %li.phone
+        = customer.phone
+      %li.email
+        = customer.email
+- else
   %p.customer-name
     %span.name
-      = customer.name
+      Guest
   %ul.customer-contact
     %li.phone
-      = customer.phone
+      = @order.billing_address.phone if @order.billing_address
     %li.email
-      = customer.email
+      = @order.email

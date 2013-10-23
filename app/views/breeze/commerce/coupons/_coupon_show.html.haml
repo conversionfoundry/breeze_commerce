@@ -4,6 +4,8 @@
       %td
         Coupon:
       %td
+        %h3
+          = @order.coupon.name
         %span.coupon_details
           - if @order.coupon.discount_type == :fixed
             %span.amount

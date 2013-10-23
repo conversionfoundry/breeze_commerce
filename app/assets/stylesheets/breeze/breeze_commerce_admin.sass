@@ -5,14 +5,14 @@
   &::-webkit-input-placeholder
     color: $colour
   /* Firefox 18- */
-  &:-moz-placeholder 
+  &:-moz-placeholder
     color: $colour
   /* Firefox 19+ */
   &::-moz-placeholder
     color: $colour
-  &:-ms-input-placeholder  
+  &:-ms-input-placeholder
     color: $colour
-  &:-input-placeholder  
+  &:-input-placeholder
     color: $colour
 
 body.breeze-admin
@@ -26,7 +26,7 @@ body.breeze-admin
   .alert
     margin: 0
     box-sizing: border-box
-  
+
   /* Bulk actions
   .container .with-selected
     position: absolute
@@ -63,6 +63,16 @@ body.breeze-admin
     legend
       padding: 0 2em
 
+  /* Orders
+  .order
+    background: transparent
+    border: none
+    -webkit-box-shadow: none
+    -moz-box-shadow:    none
+    box-shadow:         none
+
+
+
   /* Orders Index Page
   table.orders
     thead
@@ -94,9 +104,6 @@ body.breeze-admin
       li
         list-style: none
     #order-details
-      background: white url(image-path("breeze/paper_bg.jpg")) 0 0 repeat
-      @include box-shadow
-      margin: 2em
       .section
         float: left
         margin: 0 2em 0 0
@@ -132,73 +139,26 @@ body.breeze-admin
             width: 100%
             margin: 0
             padding: 0
-      table#cart
-        border-spacing: 0
-        border-collapse: collapse
-        width: 100%
-        th,
+      table.cart
         td
-          vertical-align: top
-        thead
-          tr
-            background: $colour-highlight
-            font-size: 18px
-            th
-              font-weight: normal
-              padding: 0.5em 0
-        tr.even
-          td
-            background-color: rgba(128,128,128,0.15)
-        th.total,
-        td.total
+          padding: 0.5em 0
+        td.item
+          padding: 0.5em 2em
+        td.actions
+          padding-right: 1em
           text-align: right
-        tr.line_item
-          td
-            vertical-align: middle
-            h4
-              font-size: 16px
-              margin: 0.5em 0 0 0
-            img
-              float: left
-              margin-right: 1em
-          td.price
-            text-align: right
-            font-size: 16px
-          td.quantity
-            text-align: center
-            input.line_item-quantity
-              text-align: right
-          td.total
-            font-size: 16px
-            text-align: right
-          td.actions
-            padding-right: 1em
-            text-align: right
-        tfoot
-          tr.subtotal
-            td.label_text,
-            td.total
-              border-bottom: solid 1px #cccccc
-              font-size: 16px
-              padding: 0.5em 0
-          tr.shipping
-            td
-              font-size: 16px
-              padding: 0.5em 0
-          tr.total
-            background: rgba(129,130,133,0.65)
-            td
-              color: white
-              font-size: 18px
-              font-weight: normal
-              padding: 0.5em 0
-              vertical-align: middle
-            td.total
-              font-size: 24px
-        .currency
-          font-size: 80%
+          li
+            display: inline-block
+            list-style: none
+          label
+            display: none
+        td.total
+          padding: 0.5em 1em
 
       #order-shipping_billing
+        float: left
+        clear: both
+        width: 100%
         #order-shipping,
         #order-billing
           width: 50%
@@ -226,7 +186,7 @@ body.breeze-admin
             list-style: none
             position: relative
             float: left
-            margin: 0 2em 1em 0
+            margin: 0 2em 0 0
             max-width: 20em
             padding: 1em
 
@@ -243,17 +203,14 @@ body.breeze-admin
           float: right
           margin-bottom: 1em
           width: 20em
-          padding: 1em
+          padding: 0
           textarea
             font-size: 13px
             padding: 1em
           #note-save
             float: right
 
-  #order-payments,
-    float: left
-    margin: 2em
-    width: 40%
+  #order-payments
     .payments
       float: left
       margin: 0
@@ -265,9 +222,9 @@ body.breeze-admin
         @include box-shadow
         float: left
         list-style: none
-        margin-bottom: 1em
+        margin: 0 1em 1em 0
         padding: 1em
-        width: 100%
+        width: 30em
         &.declined
           color: #b94a48
           background-color: #f2dede
@@ -276,12 +233,7 @@ body.breeze-admin
           color: #468847
           background-color: #dff0d8
           border-color: #d6e9c6
-    .payment
-      border: solid 1px #cccccc
-      float: left
-      margin-bottom: 1em
-      padding: 1em
-      width: 100%
+
 
 
 
@@ -296,7 +248,7 @@ body.breeze-admin
 
 
 
-  /* Left Panel 
+  /* Left Panel
   #left
     #store-switcher
       padding: 8px
@@ -367,7 +319,7 @@ body.breeze-admin
     cursor: pointer
 
   /* Tags Page
-  table.tags 
+  table.tags
     .published-toggle, &.variants .published-toggle
       display: inline-block
     input.tag-published
@@ -457,7 +409,7 @@ body.breeze-admin
     background: #eeeeee
     @include border-radius(0.5em)
     width: auto
-    padding: 0.5em    
+    padding: 0.5em
     margin-bottom: 0.5em
     label
       display: inline
@@ -527,14 +479,6 @@ body.breeze-admin
     &.fancy tbody tr.edit .table-actions button
       margin-left: 8px
 
-
-  #coupon-details #coupon_type li.radio_button
-    width: 140px
-    display: inline-block
-    label
-      float: none
-      display: inline
-
   h1 .new
     float: right
 
@@ -542,20 +486,20 @@ body.breeze-admin
     background-color: #6A952F
 
   /* Properties
-  table.properties 
-    tr.property 
+  table.properties
+    tr.property
       td
         padding: 0.5em
-   
+
   /* Forms
   /* TODO: Merge with Breeze Core admin design
-  #main 
+  #main
     div.actions
       background: #cccccc
       border: 1px solid #aaaaaa
       @include border-radius(4px)
       float: right
-      width: 223px 
+      width: 223px
       padding: 8px 8px 0 8px
       &.horizontal
         width: auto
@@ -564,7 +508,7 @@ body.breeze-admin
           margin: 0 0.5em 0 0
         .large.button:last-child
           margin: 0
-      .large.button 
+      .large.button
         display: block
         float: left
         width: 223px
@@ -613,6 +557,12 @@ body.breeze-admin
 
 
   /* Coupons
+  #coupon-details #coupon_type li.radio_button
+    width: 140px
+    display: inline-block
+    label
+      float: none
+      display: inline
   #coupon-details
     .inline
       display: inline-block

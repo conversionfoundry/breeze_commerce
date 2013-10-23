@@ -312,4 +312,38 @@ describe Breeze::Commerce::Order do
 
   end
 
+  describe "add_automatic_coupon" do
+    context "when no automatic coupons are available" do
+      it "doesn't serialize a coupon" do
+        @coupon = create(:coupon, use_coupon_codes: true)
+        subject.coupon.should eq nil
+      end
+    end
+    context "when an automatic coupon is available" do
+      before :each do
+        @coupon1 = create(:coupon, use_coupon_codes: false, position: 1, name: "Coupon 1")
+        @order = create(:order)
+      end
+      it "serializes the coupon" do
+        @order.coupon.should_not eq nil
+        @order.coupon.name.should eq "Coupon 1"
+      end
+      it "doesn't update the serialized coupon when re-validated" do
+        @coupon2 = create(:coupon, use_coupon_codes: false, position: 0, name: "Coupon 2")
+        @order.save
+        @order.coupon.name.should eq "Coupon 1"
+      end
+    end
+    context "when multiple automatic coupons are available" do
+      before :each do
+        @coupon1 = create(:coupon, use_coupon_codes: false, position: 1, name: "Coupon 1")
+        @coupon2 = create(:coupon, use_coupon_codes: false, position: 0, name: "Coupon 2")
+        @order = create(:order)
+      end
+      it "serializes the coupon with lowest position" do
+        @order.coupon.name.should eq "Coupon 2"
+      end
+    end
+  end
+
 end

@@ -138,4 +138,52 @@ describe Breeze::Commerce::Coupons::Coupon do
     end
   end
 
+  describe "scopes" do
+    describe "automatic" do
+      before :each do
+        @coupon1 = create(:coupon, use_coupon_codes: false)
+        @coupon2 = create(:coupon, use_coupon_codes: false)
+        @coupon3 = create(:coupon, use_coupon_codes: true)
+        @coupon4 = create(:coupon, use_coupon_codes: true)
+      end
+      it "includes coupons that don't use coupon codes" do
+        Breeze::Commerce::Coupons::Coupon.automatic.to_a.should eq [@coupon1, @coupon2]
+      end
+      it "doesn't include coupons that use coupon codes" do
+        Breeze::Commerce::Coupons::Coupon.automatic.should_not include @coupon3
+        Breeze::Commerce::Coupons::Coupon.automatic.should_not include @coupon4
+      end
+    end
+    describe "requires_coupon_code" do
+      before :each do
+        @coupon1 = create(:coupon, use_coupon_codes: false)
+        @coupon2 = create(:coupon, use_coupon_codes: false)
+        @coupon3 = create(:coupon, use_coupon_codes: true)
+        @coupon4 = create(:coupon, use_coupon_codes: true)
+      end
+      it "includes coupons that use coupon codes" do
+        Breeze::Commerce::Coupons::Coupon.requires_coupon_code.to_a.should eq [@coupon3, @coupon4]
+      end
+      it "doesn't include coupons that don't use coupon codes" do
+        Breeze::Commerce::Coupons::Coupon.requires_coupon_code.should_not include @coupon1
+        Breeze::Commerce::Coupons::Coupon.requires_coupon_code.should_not include @coupon2
+      end
+    end
+    describe "active" do
+      before :each do
+        @coupon1 = create(:coupon, published: false)
+        @coupon2 = create(:coupon, published: true)
+        @coupon_outdated = create(:coupon_outdated)
+        @coupon_future = create(:coupon_future)
+      end
+      it "excludes unpublished coupons" do
+        Breeze::Commerce::Coupons::Coupon.active.to_a.should_not include @coupon1
+      end
+
+      it "excludes coupons outside of redeemable period" do
+        Breeze::Commerce::Coupons::Coupon.active.to_a.should_not include @coupon_outdated
+        Breeze::Commerce::Coupons::Coupon.active.to_a.should_not include @coupon_future
+      end
+    end
+  end
 end

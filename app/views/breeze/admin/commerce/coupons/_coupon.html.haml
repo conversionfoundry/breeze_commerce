@@ -1,21 +1,25 @@
-= content_tag :tr, :class => :coupon, :id => "coupon_#{coupon.id}", :"data-id" => coupon.id do
+= content_tag :tr, class: "coupon #{'active' if coupon.can_redeem?}", id: "coupon_#{coupon.id}", :"data-id" => coupon.id do
   %td.name
     = coupon.name
   %td.start_time
-    = coupon.start_time
+    = coupon.start_time.to_formatted_s(:rfc822)
   %td.end_time
     - if coupon.end_time
-      = coupon.end_time
+      = coupon.end_time.to_formatted_s(:rfc822)
+      %br
       (
       = coupon.days_left
       days left )
     - else
       No end time
   %td.codes
-    = coupon.coupon_codes.count
-    total, 
-    = coupon.redemption_count
-    redeemed
+    - if coupon.use_coupon_codes
+      = coupon.coupon_codes.count
+      total,
+      = coupon.redemption_count
+      redeemed
+    - else
+      Discount applies automatically
   %td.published
     .field
       = check_box_tag "coupon_#{coupon.id}_published", "1", coupon.published, :class => "published coupon-published", style: 'display: none;'
