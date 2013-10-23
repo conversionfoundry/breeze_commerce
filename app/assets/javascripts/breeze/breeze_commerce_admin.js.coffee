@@ -193,6 +193,13 @@ $("table.orders select.status").live "change", (e) ->
 
 # Drag-and-drop sorting
 $(document).ready ->
+  $("table.coupons tbody").sortable update: (e, ui) ->
+    $.ajax
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+      url: "/admin/store/coupons/reorder.js"
+      type: "post"
+      data: "_method=put&" + $(this).sortable("serialize")
   $("table.shipping_methods tbody").sortable update: (e, ui) ->
     $.ajax
       beforeSend: (xhr) ->
@@ -333,3 +340,7 @@ coupon_forms_setup = ->
     $("#coupon-details fieldset#customer_codes .collapse").removeClass("in")
     $("#" + $(this).data("target")).addClass("in")
 
+  $("#coupon-details fieldset#use_coupon_codes input[type=radio]").on "change", ->
+    $(".collapse#coupon_codes_block").removeClass("in")
+    $(".collapse#no_coupon_codes_block").removeClass("in")
+    $("#" + $(this).data("target")).addClass("in")

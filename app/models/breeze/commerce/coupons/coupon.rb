@@ -10,10 +10,14 @@ module Breeze
         FILTERS = [
           {:scope => "all",         :label => "All Coupons"},
           {:scope => "published", :label => "Published Coupons"},
-          {:scope => "unpublished", :label => "Unpublished Coupons"}
+          {:scope => "unpublished", :label => "Unpublished Coupons"},
+          {:scope => "automatic", :label => "Discount automatically without coupon code"},
+          {:scope => "requires_coupon_code", :label => "Requires coupon code"},
+          {:scope => "active", :label => "Active Coupons"},
+          {:scope => "inactive", :label => "Inactive Coupons"}
         ]
 
-        attr_accessible :name, :start_time, :end_time, :discount_value, :discount_type, :couponable_type, :coupon_codes_attributes
+        attr_accessible :name, :start_time, :end_time, :discount_value, :discount_type, :couponable_type, :use_coupon_codes, :coupon_codes_attributes, :position
 
         field :name
         field :start_time, type: DateTime
@@ -21,6 +25,8 @@ module Breeze
         field :discount_value, type: Integer #amount in dollars or percentage
         field :discount_type, default: :fixed #fixed or percentage
         field :couponable_type, default: "Breeze::Commerce::Order" #order, line_item, line_item_group, or shipping_method
+        field :use_coupon_codes, type: Boolean, default: true
+        field :position, :type => Integer
 
         has_many :coupon_codes, class_name: "Breeze::Commerce::Coupons::CouponCode", dependent: :destroy
         accepts_nested_attributes_for :coupon_codes, allow_destroy: true, reject_if: lambda { |cc| cc[:code].blank? }
@@ -28,6 +34,20 @@ module Breeze
         validates_presence_of :name, :start_time, :discount_value, :couponable_type
         validates :discount_type, presence: true, :inclusion=> { in: [:fixed, :percentage] }
         validate :start_must_be_before_end_time
+
+        default_scope order_by([:position, :asc])
+        scope :automatic, where(use_coupon_codes: false)
+        scope :requires_coupon_code, where(use_coupon_codes: true)
+        scope :active, -> { any_in(:_id => all.select{ |c| c.can_redeem? }.map{ |r| r.id }) }
+        scope :inactive, -> { any_in(:_id => all.reject{ |c| c.can_redeem? }.map{ |r| r.id }) }
+
+        def self.in_redeemable_period
+          self.all.select {|c| c.can_redeem?}
+        end
+
+        def use_coupon_codes?
+          use_coupon_codes
+        end
 
         def generate_coupon_codes number, code, max_redemptions
           number.times do

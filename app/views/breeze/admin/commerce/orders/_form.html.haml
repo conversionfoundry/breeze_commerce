@@ -6,19 +6,9 @@
     .form-body
       %h1= @order.new_record? ? 'New Order' : "Editing Order "
       = render "/breeze/admin/shared/error_messages", :target => @order, :object_name => :order
-      #order-customer.section
+      #order-customer
         .customer
-          - if @order.customer
-            = render :partial => "breeze/admin/commerce/customers/card", :locals => {:customer => @order.customer}
-          - else
-            %p.customer-name
-              %span.name
-                Guest
-            %ul.customer-contact
-              %li.phone
-                = @order.billing_address.phone if @order.billing_address
-              %li.email
-                = @order.email
+          = render :partial => "breeze/admin/commerce/customers/card", :locals => {:order => @order, :customer => @order.customer}
           .change_customer
             = form.label :customer_id, @order.customer ? "Change customer for this order" : "Set customer for this order"
             = form.select :customer_id, Breeze::Commerce::Customer.unarchived.map {|c|[ c.name, c.id ] }, { :include_blank => 'None', :label => false}
@@ -32,12 +22,13 @@
             = @order.comment
           #order-notes
             = render :partial => "breeze/admin/commerce/notes/notes", :object => @order.notes
-        - unless @order.new_record?
-          = form.fieldset class: 'line_items' do
-            #order-line_items.section
-              = render :partial => "breeze/admin/commerce/line_items/line_items", :object => @order.line_items.unarchived, :locals => { :form => form }
-              = link_to "New line item", new_admin_store_order_line_item_path(@order), :class => "large green button new line_item"
-        #order-shipping_billing.section
+          .order-line_items
+            = render :partial => "breeze/commerce/line_items/line_items_edit", :locals => { line_items: @order.line_items.unarchived, :form => form }
+          = render :partial => "breeze/commerce/coupons/coupon_edit", locals: { order: @order }
+          = render :partial => "breeze/commerce/shipping_methods/shipping_methods_edit", locals: { order: @order }
+          = render :partial => "breeze/commerce/orders/total", locals: { order: @order }
+
+        #order-shipping_billing
           #order-shipping
             %ol.form.status
               = form.select :shipping_status_id, @shipping_statuses.map{|s| [ s.name, s.id]}, {}, {:"data-status_id" => @order.id, :class => 'shipping_status status', :label => false}

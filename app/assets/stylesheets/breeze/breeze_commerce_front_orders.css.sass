@@ -99,19 +99,33 @@ ul.orders
         .amount
           font-size: 200%
   table.coupon
+    h4
+      text-align: left
     .coupon_details
       margin-right: 2em
   table.shipping_methods
 
 
 /* Default Shopping Cart appearance
-/*   Note that there are some override sbelow for the smaller version on the checkout page
+/*   Note that there are some overrides below for the smaller version on the checkout page
 .cart-container
   position: relative
   .form-actions
     box-sizing: border-box
     .btn-group
       float: right
+  table.line_items_subtotal,
+  table.coupon,
+  table.shipping_methods,
+  table.totals
+    td
+      padding: 0 1em
+    h4
+      text-align: left
+  table.shipping_methods
+    tr.countries
+      label
+        font-size: inherit
   table.summary
     width: 100%
     margin-bottom: 1em
@@ -174,8 +188,6 @@ ul.orders
             content: ""
           &:after
             clear: both
-
-
   .cart-container
     .order
       position: relative
@@ -193,27 +205,12 @@ ul.orders
             min-width: 5em
           td.total
             min-width: 5em
-        table.coupon
-          .control-group
-            padding-right: 1em
-        table.shipping_methods
-          td
-            padding: 0.5em
-          .description
-            h4
-              margin-top: 0
-          #countries
-            padding-right: 1em
-          div.amount
-            padding-right: 2em
-        table.totals
-          border-top: #eee solid 1px
-          border-bottom: #eee solid 1px
-          width: 100%
-          td
-            padding: 0.5em
-          td.total
-            width: auto
+      table.totals
+        border-top: #eee solid 1px
+        border-bottom: #eee solid 1px
+        width: 100%
+        td.total
+          width: auto
 
   #order-result
     margin-bottom: 2em

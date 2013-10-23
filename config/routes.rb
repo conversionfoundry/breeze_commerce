@@ -1,11 +1,11 @@
-Breeze::Engine.routes.draw do  
+Breeze::Engine.routes.draw do
 
-  namespace "admin" do  
+  namespace "admin" do
     namespace "store", module: "commerce", name_prefix: "admin_store" do
       root to: "orders#index"
-      
+
       resource :store, only: [ :edit, :update]
-  
+
       resources :products, except: [:show] do
         resources :variants, except: [:index, :show] do
           put :reorder, on: :collection
@@ -32,7 +32,10 @@ Breeze::Engine.routes.draw do
         put :reorder, on: :collection
       end
 
-      resources :coupons, except: [:show]
+      resources :coupons, except: [:show] do
+        put :reorder, on: :collection
+      end
+
       resources :coupon_codes, only: [:index]
       resources :countries, except: [:index, :show]
       resources :customers, except: [:show]
@@ -40,7 +43,7 @@ Breeze::Engine.routes.draw do
       resources :shipping_methods, except: [:show] do
         put :reorder, on: :collection
       end
-  
+
     end
 
   end
@@ -49,7 +52,7 @@ Breeze::Engine.routes.draw do
     devise_for :customers, class_name: "Breeze::Commerce::Customer"#, module: :devise, controllers: {sessions: "breeze/commerce/sessions"}
   end
 
-  scope module: :commerce do        
+  scope module: :commerce do
 
     resources :products, only: [:index]
     resources :shipping_methods, only: [:index]
@@ -64,9 +67,9 @@ Breeze::Engine.routes.draw do
     end
 
     resources :customers, except: [:index]
-    
+
     get 'variants/filter', to: 'variants#filter', as: :filter_variants
-     
+
   end
 
 end

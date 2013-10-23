@@ -38,6 +38,7 @@ module Breeze
           @order.billing_address ||= Breeze::Commerce::Address.new
           @order.billing_status = store.payment_confirmed_billing_status
           @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
+          @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
         end
 
         def create
@@ -47,6 +48,7 @@ module Breeze
             @billing_statuses = Breeze::Commerce::OrderStatus.billing
             @shipping_statuses = Breeze::Commerce::OrderStatus.shipping
             @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
+            @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
             render :action => "new"
           end
         end
@@ -56,6 +58,7 @@ module Breeze
           @order.billing_address ||= Breeze::Commerce::Address.new
           @products = Breeze::Commerce::Product.unarchived.where(:store_id => store.id).order_by(:title.desc)
           @countries = Breeze::Commerce::Shipping::Country.order_by(:name.asc)
+          @shipping_methods = @order.country.shipping_methods.unarchived || Breeze::Commerce::Shipping::ShippingMethod.unarchived
         end
 
         def update

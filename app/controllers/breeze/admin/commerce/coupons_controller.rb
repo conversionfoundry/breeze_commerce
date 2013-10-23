@@ -8,10 +8,10 @@ module Breeze
         def index
           @filters = Breeze::Commerce::Coupons::Coupon::FILTERS
           if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
-            @coupons = Breeze::Commerce::Coupons::Coupon.unscoped.includes(:coupon_codes).unarchived.send(params[:show])
+            @coupons = Breeze::Commerce::Coupons::Coupon.includes(:coupon_codes).unarchived.send(params[:show])
           else
-            @coupons = Breeze::Commerce::Coupons::Coupon.unscoped.includes(:coupon_codes).unarchived
-          end  
+            @coupons = Breeze::Commerce::Coupons::Coupon.includes(:coupon_codes).unarchived
+          end
 
           @coupons = @coupons.order_by(sort_method + " " + sort_direction).paginate(:page => params[:page], :per_page => 15)
 
@@ -29,7 +29,6 @@ module Breeze
           @coupons = Breeze::Commerce::Coupons::Coupon.includes(:coupon_codes)
           @coupon_count = @coupons.count
           params[:coupon][:discount_type] = params[:coupon][:discount_type].to_sym
-
           if params[:end_never] == "true"
             params[:coupon].delete("end_time(1i)")
             params[:coupon].delete("end_time(2i)")
@@ -37,20 +36,24 @@ module Breeze
             params[:coupon].delete("end_time(4i)")
             params[:coupon].delete("end_time(5i)")
           end
+
+          # TODO: Fix this ugly hack. It was easier than figuring out how to make the form code work properly.
+          params[:coupon][:use_coupon_codes] = params["use_coupon_codes"]
+
           @coupon = Breeze::Commerce::Coupons::Coupon.create params[:coupon]
 
           if params[:coupon_type].to_sym == :repeated_use
             @coupon.generate_coupon_codes 1, params[:code], nil
           elsif params[:coupon_type].to_sym == :one_time_use
             @coupon.generate_coupon_codes params[:number_of_coupon_codes].to_i, nil, 1
-          end 
+          end
 
         end
-                
+
         def edit
           @coupon = Breeze::Commerce::Coupons::Coupon.find params[:id]
         end
-        
+
         def update
           @coupon = Breeze::Commerce::Coupons::Coupon.find params[:id]
           if params[:coupon][:discount_type]
@@ -72,14 +75,14 @@ module Breeze
           end
 
         end
-        
+
         def reorder
           params[:coupon].each_with_index do |id, index|
             Breeze::Commerce::Coupons::Coupon.find(id).update_attributes :position => index
           end
           render :nothing => true
         end
-        
+
         def destroy
           @coupon = Breeze::Commerce::Coupons::Coupon.find params[:id]
           @coupon.try :destroy
@@ -91,7 +94,7 @@ module Breeze
         def sort_method
           %w[name start_time end_time].include?(params[:sort]) ? params[:sort] : "end_time"
         end
-                
+
         def sort_direction
           %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"
         end

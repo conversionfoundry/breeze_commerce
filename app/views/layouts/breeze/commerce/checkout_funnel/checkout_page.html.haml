@@ -181,7 +181,7 @@
           %h2 Your Order
         .order-line_items
           = render :partial => "breeze/commerce/line_items/line_items_show", :locals => { line_items: @order.line_items.unarchived }
-          = render :partial => "breeze/commerce/coupons/coupon_show", locals: { order: @order }
+          = render :partial => "breeze/commerce/coupons/coupon_edit", locals: { order: @order }
           = render :partial => "breeze/commerce/shipping_methods/shipping_methods_show", locals: { order: @order }
           = render :partial => "breeze/commerce/orders/total", locals: { order: @order }
         .payment_gateway

@@ -39,7 +39,7 @@ module Breeze
       # Don't validate customer - this might be a new order created for a browsing customer, or the order might be for an anonymous guest
       # validates_presence_of :customer
 
-      before_validation :set_initial_state, :update_shipping_method
+      before_validation :set_initial_state, :update_shipping_method, :add_automatic_coupon
       validates_presence_of :billing_status, :shipping_status
 
       def confirm_payment(payment)
@@ -203,6 +203,15 @@ module Breeze
         self.shipping_status ||= store.initial_shipping_status
         self.country ||= store.default_country
         self.shipping_method ||= store.default_shipping_method
+      end
+
+      def add_automatic_coupon
+        unless serialized_coupon
+          available_automatic_coupons = Breeze::Commerce::Coupons::Coupon.unarchived.automatic.in_redeemable_period
+          if available_automatic_coupons.any?
+            serialize_coupon available_automatic_coupons.first
+          end
+        end
       end
 
     end
