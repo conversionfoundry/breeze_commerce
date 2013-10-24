@@ -17,14 +17,12 @@
               = order.coupon.discount_value.to_s + "%"
             off total order
 
-          \-
           %span.amount#order_coupon_total
-            = number_to_currency order.coupon_total
+            = "-&nbsp;#{number_to_currency order.coupon_total}".html_safe
           %span.currency
             = store.currency
       - else
-        Coupon:
         .control-group#enter_coupon
           .controls
-            = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: order.id.to_s }
+            = text_field_tag 'order[coupon_code]', "", class: '', data: { order_id: order.id.to_s }, placeholder: "Coupon code"
             = label_tag 'order[coupon_code]', "", class: 'error', generated: true
