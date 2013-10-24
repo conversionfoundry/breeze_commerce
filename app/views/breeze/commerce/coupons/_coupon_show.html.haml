@@ -2,9 +2,9 @@
   %table.coupon
     %tr
       %td
-        Coupon:
+        Discount:
       %td
-        %h3
+        %h4
           = @order.coupon.name
         %span.coupon_details
           - if @order.coupon.discount_type == :fixed
@@ -18,6 +18,6 @@
 
         \-
         %span.amount#order_coupon_total
-          = number_to_currency @order.coupon_total
+          = "-&nbsp;#{number_to_currency order.coupon_total}".html_safe
         %span.currency
           = store.currency
