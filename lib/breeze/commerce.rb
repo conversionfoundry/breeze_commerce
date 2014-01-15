@@ -1,6 +1,7 @@
 require "breeze/commerce/engine"
 require "breeze/commerce/current_order"
 require "breeze/commerce/current_cart"
+require "breeze/commerce/version"
 
 require "breeze/account"
 require "breeze/pay_online"
